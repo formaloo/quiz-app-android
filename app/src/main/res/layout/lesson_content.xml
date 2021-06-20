@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="item"
             type="co.idearun.learningapp.data.model.form.Form" />
@@ -27,8 +28,8 @@
                 android:layout_height="@dimen/img_size_xs"
                 android:layout_marginTop="@dimen/padding_2xlarge"
                 android:adjustViewBounds="true"
-                app:imageUrl="@{item.logo}"
                 android:scaleType="centerCrop"
+                app:imageUrl="@{item.logo}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -50,14 +51,14 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                ellipsize="end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_standard"
-                app:htmlTxt="@{item.description}"
-                android:textSize="@dimen/font_standard"
-                android:maxLines="2"
                 android:lines="2"
-                ellipsize="end"
+                android:maxLines="2"
+                android:textSize="@dimen/font_standard"
+                app:htmlTxt="@{item.description}"
                 app:layout_constraintStart_toStartOf="@+id/titleTv"
                 app:layout_constraintTop_toBottomOf="@+id/titleTv" />
 
@@ -86,7 +87,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/padding_3xsmall"
                     android:layout_toEndOf="@+id/categoryIv"
-                    android:text="@{item.category.title}"
+                    android:text="@{item.owner.first_name+item.owner.last_name}"
                     android:textColor="@color/gray2"
                     android:textSize="@dimen/font_standard"
                     android:textStyle="bold" />

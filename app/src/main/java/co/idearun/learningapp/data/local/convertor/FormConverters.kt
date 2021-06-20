@@ -19,6 +19,17 @@ class FormConverters {
         val type = object : TypeToken<ThemeConfig>() {}.type
         return Gson().fromJson(json, type)
     }
+    @TypeConverter
+    fun fromFormsOwner(data: FormsOwner?): String? {
+        val type = object : TypeToken<FormsOwner>() {}.type
+        return Gson().toJson(data, type)
+    }
+
+    @TypeConverter
+    fun toFormsOwner(json: String?): FormsOwner? {
+        val type = object : TypeToken<FormsOwner>() {}.type
+        return Gson().fromJson(json, type)
+    }
 
     @TypeConverter
     fun fromWidgetSettings(data: WidgetSettings?): String? {

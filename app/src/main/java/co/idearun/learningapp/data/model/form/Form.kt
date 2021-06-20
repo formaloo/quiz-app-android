@@ -39,7 +39,7 @@ data class Form(
  var text_color: String? = null,
  var field_color: String? = null,
  var button_color: String? = null,
- var owner: Any? = null,
+ var owner: FormsOwner? = null,
  var border_color: String? = null,
  var background_color: String? = null,
  var background_image: String? = null,
