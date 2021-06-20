@@ -1,4 +1,4 @@
-package co.idearun.formLocal
+package co.idearun.learningapp.data.local
 
 import android.content.Context
 import androidx.room.Database

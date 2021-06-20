@@ -35,7 +35,7 @@ import java.util.*
 const val TAG = "FormzRepo"
 
 class FormzRepo(
-    val source: FormDatasource,
+    private val source: FormDatasource,
     private val formsDao: FormDao,
     private val formsKeysDao: FormKeysDao,
 ) : FormzDataSource {

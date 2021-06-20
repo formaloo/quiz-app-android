@@ -1,6 +1,6 @@
 package co.idearun.learningapp.data.local.di
 
-import co.idearun.formLocal.FormBuilderDB
+import co.idearun.learningapp.data.local.FormBuilderDB
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 

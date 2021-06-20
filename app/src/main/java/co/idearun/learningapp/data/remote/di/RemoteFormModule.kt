@@ -31,11 +31,9 @@ fun createRemoteFormModule(
             chain.proceed(request)
         }
     }
-//
+
 
     single(named("formClient")) {
-
-
         OkHttpClient.Builder().addInterceptor(get(named("formInterceptor")) as Interceptor)
             .connectTimeout(3, TimeUnit.MINUTES)
             .readTimeout(3, TimeUnit.MINUTES)

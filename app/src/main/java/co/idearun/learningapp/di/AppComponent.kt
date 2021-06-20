@@ -11,7 +11,7 @@ const val baseurl="https://api.staging.formaloo.com/"
 
 val appComponent = listOf(
     createRemoteFormModule(baseurl,xapikey,secretkey),
+    formBuilderLocalModule,
     formRepositoryModule,
-    featureModule,
-    formBuilderLocalModule
+    featureModule
 )
