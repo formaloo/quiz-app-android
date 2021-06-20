@@ -45,7 +45,6 @@
 
         <TextView
             android:id="@+id/desc_txv"
-            style="@style/Regular"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/key_txv"
@@ -53,7 +52,7 @@
             android:layout_marginTop="@dimen/padding_xsmall"
             app:field_desc="@{field}"
             android:textAlignment="viewStart"
-            android:textColor="@color/colorGray"
+            android:textColor="@color/gray2"
             android:textSize="@dimen/font_large"
             android:visibility="@{field.description.length()>0 ? View.VISIBLE : View.GONE ,default=gone}"
             app:text_color="@{form.text_color}" />

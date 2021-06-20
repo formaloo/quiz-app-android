@@ -316,10 +316,14 @@ class BaseMethod {
 
     fun changeStatusBarColor(activity: Activity, color: Int) {
         val window = activity.window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
             window.statusBarColor = color
+
+        }else{
+
         }
+
 
     }
 

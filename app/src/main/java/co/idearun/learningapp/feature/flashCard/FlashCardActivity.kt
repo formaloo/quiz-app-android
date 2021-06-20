@@ -31,7 +31,8 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
 
         binding.lifecycleOwner = this
 
-//        baseMethod.hideAB(supportActionBar)
+        baseMethod.hideAB(supportActionBar)
+
         checkBundle()
 
     }

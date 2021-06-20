@@ -23,4 +23,7 @@
   <string name="smile">Like</string>
   <string name="love">Love</string>
   <string name="empty_txt"></string>
+  <string name="dash">-</string>
+  <string name="phone_">phone</string>
+
 </resources>

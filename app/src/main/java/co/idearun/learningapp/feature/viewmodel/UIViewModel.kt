@@ -29,8 +29,6 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
     private var formReqList = HashMap<String, String>()
     private var fileList = HashMap<String, Fields>()
 
-    private var requestPhoneVerifiyReq: RequestBody? = null
-    private var verifyPhoneVerifiyReq: RequestBody? = null
     private var files: ArrayList<MultipartBody.Part> = arrayListOf()
     private val _formData = MutableLiveData<CreateFormData>().apply { value = null }
     val formData: LiveData<CreateFormData> = _formData

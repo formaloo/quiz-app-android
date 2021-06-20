@@ -14,11 +14,11 @@
 
         <variable
             name="viewmodel"
-            type="co.idearun.form.view.form.formUI.UIViewModel" />
+            type="co.idearun.learningapp.feature.viewmodel.UIViewModel" />
 
         <variable
             name="listener"
-            type="co.idearun.form.view.form.formUI.ViewsListener" />
+            type="co.idearun.learningapp.feature.flashCard.ViewsListener" />
 
     </data>
 
