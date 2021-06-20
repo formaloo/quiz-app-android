@@ -9,5 +9,18 @@
   <string name="max_char_lenght">Maximum number of characters</string>
   <string name="max_file_size">Maximum file size</string>
   <string name="file_is_bigger_than_required_size">Max file size</string>
-
+  <string name="click_to_upload_file">Upload File</string>
+  <string name="upload_file_image_Desc">(png,jpg,gif,bmp)</string>
+  <string name="upload_file_image_doc">(txt,pdf,docx,xls,xlsx,ppt,pptx)</string>
+  <string name="no">No</string>
+  <string name="yes">Yes</string>
+  <string name="min_value">Minimum value</string>
+  <string name="max_value">Maximum value</string>
+  <string name="file_type">File type</string>
+  <string name="angry">Hate</string>
+  <string name="sad">Dislike</string>
+  <string name="neutral">Neutral</string>
+  <string name="smile">Like</string>
+  <string name="love">Love</string>
+  <string name="empty_txt"></string>
 </resources>

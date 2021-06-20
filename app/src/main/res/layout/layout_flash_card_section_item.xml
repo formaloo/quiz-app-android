@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="co.idearun.learningapp.feature.viewmodel.UIViewModel" />
+
+        <variable
+            name="listener"
+            type="co.idearun.learningapp.feature.flashCard.ViewsListener" />
+
+        <variable
+            name="field"
+            type="co.idearun.learningapp.data.model.form.Fields" />
+        <variable
+            name="form"
+            type="co.idearun.learningapp.data.model.form.Form" />
+
+        <variable
+            name="baseMethod"
+            type="co.idearun.learningapp.common.BaseMethod" />
+    </data>
+
+    <link.fls.swipestack.SwipeStack xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeStack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/padding_3xlarge"
+        android:paddingBottom="@dimen/padding_3xlarge"
+        android:paddingStart="@dimen/padding_standard"
+        android:paddingEnd="@dimen/padding_standard"
+        app:stack_rotation="0"
+        app:stack_spacing="@dimen/padding_xsmall" />
+</layout>

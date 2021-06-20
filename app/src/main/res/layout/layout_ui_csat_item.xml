@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="co.idearun.learningapp.feature.viewmodel.UIViewModel" />
+
+        <variable
+            name="listener"
+            type="co.idearun.learningapp.feature.flashCard.ViewsListener" />
+
+        <variable
+            name="field"
+            type="co.idearun.learningapp.data.model.form.Fields" />
+        <variable
+            name="form"
+            type="co.idearun.learningapp.data.model.form.Form" />
+
+        <variable
+            name="baseMethod"
+            type="co.idearun.learningapp.common.BaseMethod" />
+    </data>
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_small"
+        android:gravity="center_vertical">
+
+
+        <include
+            android:id="@+id/field_ui_header"
+            layout="@layout/layout_ui_field_header" />
+
+        <RelativeLayout
+            android:id="@+id/starlay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_xsmall"
+            android:minHeight="@dimen/btn_h_l"
+            android:layout_below="@+id/field_ui_header"
+            app:field_has_err="@{viewmodel.errorField.slug.equals(field.slug)}"
+            app:field_background="@{form}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/csat_icon_res"
+                android:layout_height="wrap_content"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/err_lay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/starlay"
+            android:visibility="@{viewmodel.errorField.slug.equals(field.slug)?View.VISIBLE:View.GONE,default=gone}">
+
+            <include
+                android:id="@+id/field_ui_footer"
+                layout="@layout/layout_ui_field_footer" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

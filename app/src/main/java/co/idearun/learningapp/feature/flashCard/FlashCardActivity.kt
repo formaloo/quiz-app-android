@@ -68,7 +68,7 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
                         next()
                     }
 
-                }, this, form, viewModel, null
+                }, this, form, viewModel
             )
 
             binding.flashcardFieldsRec.apply {

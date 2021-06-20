@@ -6,29 +6,26 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
-import co.idearun.form.R
-import co.idearun.form.view.form.flashCard.holder.*
-import co.idearun.form.view.form.formUI.UIViewModel
-import co.idearun.form.view.form.formUI.ViewsListener
-import co.idearun.formCommon.FormConstants
-import co.idearun.formCommon.FormConstants.DATE
-import co.idearun.formCommon.FormConstants.DROPDOWN
-import co.idearun.formCommon.FormConstants.FILE
-import co.idearun.formCommon.FormConstants.Like_Dislike
-import co.idearun.formCommon.FormConstants.MATRIX
-import co.idearun.formCommon.FormConstants.MULTI_SELECT
-import co.idearun.formCommon.FormConstants.PHONE_VERIFICATION
-import co.idearun.formCommon.FormConstants.SECTION
-import co.idearun.formCommon.FormConstants.SIGNATURE
-import co.idearun.formCommon.FormConstants.SINGLE_SELECT
-import co.idearun.formCommon.FormConstants.TIME
-import co.idearun.formCommon.FormConstants.YESNO
-import co.idearun.formCommon.FormConstants.nps
-import co.idearun.formCommon.FormConstants.star
-import co.idearun.formModel.form.Fields
-import co.idearun.formModel.form.Form
-import co.idearun.formModel.submit.RenderedData
+import co.idearun.learningapp.common.Constants
+import co.idearun.learningapp.common.Constants.DATE
+import co.idearun.learningapp.common.Constants.FILE
+import co.idearun.learningapp.common.Constants.Like_Dislike
+import co.idearun.learningapp.common.Constants.MATRIX
+import co.idearun.learningapp.common.Constants.MULTI_SELECT
+import co.idearun.learningapp.common.Constants.PHONE_VERIFICATION
+import co.idearun.learningapp.common.Constants.SECTION
+import co.idearun.learningapp.common.Constants.SIGNATURE
+import co.idearun.learningapp.common.Constants.SINGLE_SELECT
+import co.idearun.learningapp.common.Constants.TIME
+import co.idearun.learningapp.common.Constants.YESNO
+import co.idearun.learningapp.common.Constants.nps
+import co.idearun.learningapp.common.Constants.star
+import co.idearun.learningapp.R
+import co.idearun.learningapp.common.Constants.DROPDOWN
 import co.idearun.learningapp.data.model.form.Fields
+import co.idearun.learningapp.data.model.form.Form
+import co.idearun.learningapp.feature.flashCard.adapter.holder.*
+import co.idearun.learningapp.feature.viewmodel.UIViewModel
 import java.util.*
 
 
@@ -37,8 +34,7 @@ class FieldsFlashAdapter(
     private val swipeStackListener: SwipeStackListener,
     private val flashcardListener: FlashcardListener,
     private val form: Form,
-    private val viewmodel: UIViewModel,
-    private val rowRenderedData: Map<String, RenderedData>?
+    private val viewmodel: UIViewModel
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -253,90 +249,15 @@ class FieldsFlashAdapter(
 
         holder.setIsRecyclable(false)
 
-        val animation: Animation = AnimationUtils.loadAnimation(context, getAnimationId(position_,itemViewType))
+        val animation: Animation =
+            AnimationUtils.loadAnimation(context, getAnimationId(position_, itemViewType))
         holder.itemView.startAnimation(animation)
         lastPosition = position_
 
     }
 
     private fun getAnimationId(position_: Int, itemViewType: Int): Int {
-       return when (itemViewType) {
-            TYPE_DROP_DOWN -> {
-                if (position_ > lastPosition) R.anim.slide_in_bottom else R.anim.slide_in_top
-
-
-            }
-            TYPE_MATRIX -> {
-                if (position_ > lastPosition) R.anim.slide_in_bottom else R.anim.slide_in_top
-
-            }
-            TYPE_MULTI -> {
-                if (position_ > lastPosition) R.anim.slide_in_bottom else R.anim.slide_in_top
-
-            }
-            TYPE_SIGNLE -> {
-                if (position_ > lastPosition) R.anim.slide_in_bottom else R.anim.slide_in_top
-
-
-            }
-            TYPE_EDT -> {
-                if (position_ > lastPosition) R.anim.slide_in_bottom else R.anim.slide_in_top
-
-            }
-            TYPE_LIKE_DISLIKE -> {
-                if (position_ > lastPosition) R.anim.slide_in_bottom else R.anim.slide_in_top
-
-
-            }
-            TYPE_STAR -> {
-                if (position_ > lastPosition) R.anim.slide_in_bottom else R.anim.slide_in_top
-
-
-            }
-            TYPE_CSAT -> {
-                if (position_ > lastPosition) R.anim.slide_in_bottom else R.anim.slide_in_top
-
-
-            }
-            TYPE_NPS -> {
-                if (position_ > lastPosition) R.anim.slide_in_bottom else R.anim.slide_in_top
-
-
-            }
-            TYPE_FILE -> {
-                if (position_ > lastPosition) R.anim.slide_in_bottom else R.anim.slide_in_top
-
-
-            }
-            TYPE_SECTION -> {
-                if (position_ > lastPosition) R.anim.slide_in_bottom else R.anim.slide_in_top
-
-
-            }
-            TYPE_TIME -> {
-                if (position_ > lastPosition) R.anim.slide_in_bottom else R.anim.slide_in_top
-
-
-            }
-            TYPE_DATE -> {
-                if (position_ > lastPosition) R.anim.slide_in_bottom else R.anim.slide_in_top
-
-
-            }
-            TYPE_PHONE_VERIFICATION -> {
-                if (position_ > lastPosition) R.anim.slide_in_bottom else R.anim.slide_in_top
-
-            }
-            TYPE_SIGNATURE -> {
-                if (position_ > lastPosition) R.anim.slide_in_bottom else R.anim.slide_in_top
-
-            }
-            else -> {
-                if (position_ > lastPosition) R.anim.slide_in_bottom else R.anim.slide_in_top
-
-
-            }
-        }
+        return if (position_ > lastPosition) R.anim.slide_in_bottom else R.anim.slide_in_top
 
 
     }
@@ -365,7 +286,7 @@ class FieldsFlashAdapter(
                 TYPE_LIKE_DISLIKE
 
             }
-            FormConstants.embeded -> {
+            Constants.embeded -> {
                 TYPE_CSAT
 
             }

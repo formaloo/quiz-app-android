@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="field"
+            type="co.idearun.learningapp.data.model.form.Fields" />
+        <variable
+            name="form"
+            type="co.idearun.learningapp.data.model.form.Form" />
+
+        <variable
+            name="baseMethod"
+            type="co.idearun.learningapp.common.BaseMethod" />
+    </data>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/toolbar_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/padding_standard"
+        card_view:cardBackgroundColor="@color/white"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="0.5dp">
+
+        <TextView
+            android:id="@+id/key_txv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:text="@{field.title}"
+            android:padding="@dimen/padding_standard"
+            android:textAlignment="textStart"
+            android:lineSpacingExtra="@dimen/padding_small"
+            android:textColor="@color/black"
+            android:textSize="@dimen/font_xlarge" />
+    </androidx.cardview.widget.CardView>
+</layout>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewmodel"
+            type="co.idearun.learningapp.feature.viewmodel.UIViewModel" />
+
+        <variable
+            name="listener"
+            type="co.idearun.learningapp.feature.flashCard.ViewsListener" />
+
+        <variable
+            name="field"
+            type="co.idearun.learningapp.data.model.form.Fields" />
+        <variable
+            name="form"
+            type="co.idearun.learningapp.data.model.form.Form" />
+
+        <variable
+            name="baseMethod"
+            type="co.idearun.learningapp.common.BaseMethod" />
+        <variable
+            name="holder"
+            type="co.idearun.learningapp.feature.flashCard.adapter.holder.FlashCardNpsItemAdapter.NPSItemViewHolder" />
+
+    </data>
+
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/nps_btn"
+            nps_color="@{form}"
+            nps_data="@{viewmodel.npsPos==holder.adapterPosition?true:false}"
+            text_color="@{viewmodel.formData.form.submit_text_color}"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/btn_h_l"
+            android:textSize="@dimen/font_large"
+            android:layout_alignParentStart="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:onClick="@{()->viewmodel.npsBtnClicked(field,holder.adapterPosition)}"
+            android:text="@{String.valueOf(holder.adapterPosition)}"
+            android:textAlignment="center" />
+
+
+    </RelativeLayout>
+</layout>
