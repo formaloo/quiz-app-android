@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="co.idearun.learningapp.data.model.form.Form" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/padding_large">
+
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="@dimen/img_size_xs"
+                android:layout_height="@dimen/img_size_xs"
+                android:layout_marginTop="@dimen/padding_2xlarge"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/titleTv"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/padding_standard"
+                android:layout_marginTop="@dimen/padding_small"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="@{item.title}"
+                android:textAlignment="textStart"
+                android:textColor="@color/gray2"
+                android:textSize="@dimen/font_xlarge"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_standard"
+                android:text="@{item.description}"
+                android:textSize="@dimen/font_standard"
+                app:layout_constraintStart_toStartOf="@+id/titleTv"
+                app:layout_constraintTop_toBottomOf="@+id/titleTv" />
+
+            <RelativeLayout
+                android:id="@+id/relaviteLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/padding_2xlarge"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/imageView">
+
+                <ImageView
+                    android:id="@+id/categoryIv"
+                    android:layout_width="@dimen/icon_size_large"
+                    android:layout_height="@dimen/icon_size_large"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:padding="4dp"
+                    app:srcCompat="@drawable/ic_coding" />
+
+                <TextView
+                    android:id="@+id/categoryTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="@dimen/padding_3xsmall"
+                    android:layout_toEndOf="@+id/categoryIv"
+                    android:text="@{item.category.title}"
+                    android:textColor="@color/gray2"
+                    android:textSize="@dimen/font_standard"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/startTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:text="Start"
+                    android:textAllCaps="true"
+                    android:textColor="@color/blue_500"
+                    android:textSize="@dimen/font_standard"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:layout_width="60dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:max="100"
+                    android:progress="40"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/padding_small"
+            android:background="#FFF4F4F4"
+            app:layout_constraintBottom_toBottomOf="@id/relaviteLayout"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </LinearLayout>
+</layout>
