@@ -93,4 +93,6 @@ dependencies {
 
     implementation 'link.fls:swipestack:0.3.0'
 
+    implementation "com.airbnb.android:lottie:3.6.1"
+    implementation "com.squareup.picasso:picasso:2.71828"
 }

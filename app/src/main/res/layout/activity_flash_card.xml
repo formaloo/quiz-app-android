@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="form"
+            type="co.idearun.learningapp.data.model.form.Form" />
+
+        <variable
+            name="flashcardListener"
+            type="co.idearun.learningapp.feature.flashCard.FlashcardListener" />
+
+        <variable
+            name="viewmodel"
+            type="co.idearun.learningapp.feature.viewmodel.UIViewModel" />
+
+        <variable
+            name="listener"
+            type="co.idearun.learningapp.feature.flashCard.ViewsListener" />
+
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/flash_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/padding_small">
+
+            <ImageButton
+                android:id="@+id/flash_close_btn"
+                android:layout_width="@dimen/icon_size_large"
+                app:imageTintList="@{form.text_color}"
+                android:layout_height="@dimen/icon_size_large"
+                android:layout_alignParentStart="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="@{()->flashcardListener.closePage()}"
+                android:scaleType="center"
+                android:src="@drawable/ic_close"
+                app:tint="@color/white" />
+
+            <ImageButton
+                android:id="@+id/flash_share_btn"
+                android:layout_width="@dimen/icon_size_large"
+                app:imageTintList="@{form.text_color}"
+                android:layout_height="@dimen/icon_size_large"
+                android:layout_alignParentEnd="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="@{()->flashcardListener.share()}"
+                android:padding="@dimen/padding_small"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_share"
+                app:tint="@color/white" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/flash_bottombar"
+            android:layout_below="@+id/flash_bar"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/flashcard_fields_rec"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:nestedScrollingEnabled="false" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/flash_bottombar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:padding="@dimen/padding_small">
+
+            <ImageButton
+                android:id="@+id/flash_next_btn"
+                android:layout_width="@dimen/icon_size_large"
+                android:layout_height="@dimen/icon_size_large"
+                app:imageTintList="@{form.text_color}"
+                android:layout_alignParentStart="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="@{()->flashcardListener.next()}"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_coding"
+                app:tint="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/flashcard_skip_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/btn_h"
+                android:layout_centerHorizontal="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:gravity="center"
+                android:onClick="@{()->flashcardListener.next()}"
+                android:text="@string/skip_this_activity"
+                android:textAlignment="gravity"
+                android:textSize="@dimen/font_standard"
+                app:text_color="@{form.text_color}" />
+
+            <ImageButton
+                android:id="@+id/flash_pre_btn"
+                android:layout_width="@dimen/icon_size_large"
+                android:layout_height="@dimen/icon_size_large"
+                android:layout_alignParentEnd="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:onClick="@{()->flashcardListener.pre()}"
+                android:scaleType="fitCenter"
+                app:imageTintList="@{form.text_color}"
+                android:src="@drawable/ic_coding"
+                android:visibility="gone"
+                app:tint="@color/white" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/flashCongView"
+            android:clickable="true"
+            android:focusable="true"
+            app:backgroundTintList="@{form.background_color}"
+            android:visibility="gone"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include
+                android:id="@+id/layout_fash_cong"
+                layout="@layout/layout_flash_cong" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="form"
+            type="co.idearun.learningapp.data.model.form.Form" />
+
+        <variable
+            name="flashcardListener"
+            type="co.idearun.learningapp.feature.flashCard.FlashcardListener" />
+
+        <variable
+            name="viewmodel"
+            type="co.idearun.form.view.form.formUI.UIViewModel" />
+
+        <variable
+            name="listener"
+            type="co.idearun.form.view.form.formUI.ViewsListener" />
+
+    </data>
+
+    <RelativeLayout
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/cong_imv"
+            android:layout_width="@dimen/img_size_l"
+            android:layout_height="@dimen/img_size_l"
+            android:layout_centerHorizontal="true"
+            app:lottie_autoPlay="true"
+            android:layout_marginBottom="@dimen/padding_small"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/success" />
+
+        <TextView
+            android:id="@+id/contxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cong_imv"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/padding_standard"
+            android:text="@{form.success_message}"
+            android:textAlignment="center"
+            text_color="@{form.text_color}"
+            android:textSize="@dimen/font_2xlarge" />
+
+    </RelativeLayout>
+</layout>

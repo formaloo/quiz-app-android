@@ -1,6 +1,17 @@
 package co.idearun.learningapp.common
 
+import android.Manifest
+
 object Constants {
+
+    val PERMISSIONS_EXTERNAL_STORAGE = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    const val PERMISSION_ALL = 1
+    const val EXTERNAL_STORAGE = 2
+    const val PERMISSION_DUPLICATE = 1
+    const val REQUEST_CAPTURE_IMAGE = 100
+    const val REQUEST_GALLREY = 200
+    const val requeiredSize: Int = 500
+    const val PICKFILE_RESULT_CODE = 220
 
     const val ERRORS = "errors"
     const val GENERAL_ERRORS = "general_errors"
@@ -32,5 +43,24 @@ object Constants {
     const val PHONE_VERIFICATION = "phone_verification"
     const val Like_Dislike = "like_dislike"
 
+    const val mobile = "mobile"
+    const val landline = "landline"
+    const val both = "both"
+
+    const val image = "image"
+    const val document = "document"
+    const val all = "all"
+
+    const val irr = "irr"
+    const val irt = "irt"
+    const val usd = "usd"
+    const val eur = "eur"
+    const val other = "other"
+
+    const val embeded = "embeded"
+    const val star = "star"
+    const val like_dislike = "like dislike"
+    const val nps = "nps"
+    const val score = "score"
 
 }

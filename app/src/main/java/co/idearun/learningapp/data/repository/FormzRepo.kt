@@ -41,6 +41,11 @@ class FormzRepo(
 ) : FormzDataSource {
 
 
+    override suspend fun getFormFromDB(slug: String): Form? {
+        return formsDao.getForm(slug)
+
+    }
+
     override suspend fun submitForm(
         slug: String,
         req: HashMap<String, RequestBody>,

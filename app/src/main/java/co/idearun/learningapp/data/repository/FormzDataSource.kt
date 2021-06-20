@@ -3,6 +3,7 @@ package co.idearun.learningapp.data.repository
 import co.idearun.learningapp.common.exception.Failure
 import co.idearun.learningapp.common.functional.Either
 import co.idearun.learningapp.data.model.cat.catList.CatListRes
+import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.data.model.form.createForm.CreateFormRes
 import co.idearun.learningapp.data.model.form.formList.FormListRes
 import co.idearun.learningapp.data.model.search.SearchRes
@@ -20,4 +21,5 @@ interface FormzDataSource {
         files: List<MultipartBody.Part>?
     )
     suspend fun getForm(formSlug: String?): CreateFormRes?
+    suspend fun getFormFromDB(slug: String): Form?
 }
