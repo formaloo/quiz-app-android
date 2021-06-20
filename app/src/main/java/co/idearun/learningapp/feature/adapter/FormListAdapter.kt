@@ -11,9 +11,7 @@ import co.idearun.learningapp.databinding.LessonContentBinding
 import org.koin.core.KoinComponent
 import java.io.Serializable
 
-
-class FormListAdapter : PagingDataAdapter<Form, FormListAdapter.BtnsViewHolder>(DiffUtilCallBack()),
-    Serializable {
+class FormListAdapter : PagingDataAdapter<Form, FormListAdapter.BtnsViewHolder>(DiffUtilCallBack()), Serializable {
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): BtnsViewHolder {
         val itemView =
