@@ -27,7 +27,6 @@ class FormListAdapter : PagingDataAdapter<Form, FormListAdapter.BtnsViewHolder>(
             holder.bindItems(item)
         }
 
-        holder.setIsRecyclable(false)
     }
 
     class BtnsViewHolder(

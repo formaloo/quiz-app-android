@@ -55,7 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_standard"
-                android:lines="2"
+                android:textAlignment="textStart"
                 android:maxLines="2"
                 android:textSize="@dimen/font_standard"
                 app:htmlTxt="@{item.description}"
@@ -87,7 +87,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/padding_3xsmall"
                     android:layout_toEndOf="@+id/categoryIv"
-                    android:text="@{item.owner.first_name+item.owner.last_name}"
+                    android:text="@{item.owner.first_name+' '+item.owner.last_name}"
                     android:textColor="@color/gray2"
                     android:textSize="@dimen/font_standard"
                     android:textStyle="bold" />
