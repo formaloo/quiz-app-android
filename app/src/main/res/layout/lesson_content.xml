@@ -27,6 +27,7 @@
                 android:layout_height="@dimen/img_size_xs"
                 android:layout_marginTop="@dimen/padding_2xlarge"
                 android:adjustViewBounds="true"
+                app:imageUrl="@{item.logo}"
                 android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -52,8 +53,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_standard"
-                android:text="@{item.description}"
+                app:htmlTxt="@{item.description}"
                 android:textSize="@dimen/font_standard"
+                android:maxLines="2"
+                android:lines="2"
+                ellipsize="end"
                 app:layout_constraintStart_toStartOf="@+id/titleTv"
                 app:layout_constraintTop_toBottomOf="@+id/titleTv" />
 
