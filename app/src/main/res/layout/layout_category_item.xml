@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="category"
+            type="co.idearun.learningapp.data.model.cat.Category" />
+    </data>
+    <RelativeLayout
+        android:layout_margin="@dimen/padding_small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/titleTv"
+            android:textStyle="bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray2"
+            android:textSize="@dimen/font_large"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@{category.title}" />
+    </RelativeLayout>
+</layout>

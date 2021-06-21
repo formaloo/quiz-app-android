@@ -22,4 +22,5 @@ interface FormzDataSource {
     )
     suspend fun getForm(formSlug: String?): CreateFormRes?
     suspend fun getFormFromDB(slug: String): Form?
+    suspend fun getFormListFromDB(): List<Form>
 }

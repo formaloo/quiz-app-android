@@ -2,50 +2,66 @@ package co.idearun.learningapp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
-import androidx.drawerlayout.widget.DrawerLayout
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import co.idearun.learningapp.common.BaseMethod
-import com.google.android.material.navigation.NavigationView
+import co.idearun.learningapp.databinding.ActivityMainBinding
+import co.idearun.learningapp.feature.drawer.SortedFormListAdapter
+import co.idearun.learningapp.feature.viewmodel.FormViewModel
 import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
 
 class MainActivity : AppCompatActivity(), KoinComponent {
+    private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
     val baseMethod: BaseMethod by inject()
+    private val viewModel: FormViewModel by viewModel()
+    private lateinit var sortedFormListAdapter: SortedFormListAdapter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        setSupportActionBar(binding.appBarMain.toolbar)
+        binding.viewmodel = viewModel
+        binding.lifecycleOwner=this
+        initView()
+        initData()
+    }
 
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+    private fun initData() {
+        fetchFormList()
 
+    }
 
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
+    private fun initView() {
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.nav_home
-//                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
-            ), drawerLayout
-        )
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.nav_home), binding.drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
-    }
+        binding.navView.setupWithNavController(navController)
 
+        sortedFormListAdapter = SortedFormListAdapter()
+        binding.categoryRv.apply {
+            adapter = sortedFormListAdapter
+            layoutManager = LinearLayoutManager(this.context)
+        }
+
+    }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    private fun fetchFormList() {
+        viewModel.retrieveDBFormList()
     }
 }

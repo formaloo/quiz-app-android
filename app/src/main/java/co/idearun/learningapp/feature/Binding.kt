@@ -17,10 +17,12 @@ import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import co.idearun.learningapp.common.BaseMethod
 import co.idearun.learningapp.common.Constants
 import co.idearun.learningapp.data.model.form.Fields
 import co.idearun.learningapp.data.model.form.Form
+import co.idearun.learningapp.feature.drawer.SortedFormListAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.textfield.TextInputEditText
@@ -471,4 +473,14 @@ object Binding: KoinComponent {
         }
     }
 
+    @BindingAdapter("app:items")
+    @JvmStatic
+    fun setFormItems(recyclerView: RecyclerView, resource: ArrayList<Form>?) {
+        if (recyclerView.adapter is SortedFormListAdapter)
+            with(recyclerView.adapter as SortedFormListAdapter) {
+                resource?.let {
+                    collection = it
+                }
+            }
+    }
 }
