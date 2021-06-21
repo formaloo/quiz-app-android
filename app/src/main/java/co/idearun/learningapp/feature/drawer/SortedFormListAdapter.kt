@@ -9,6 +9,7 @@ import co.idearun.learningapp.R
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.databinding.LayoutCategoryItemBinding
 import co.idearun.learningapp.databinding.LayoutFormItemBinding
+import timber.log.Timber
 import kotlin.properties.Delegates
 
 class SortedFormListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -56,6 +57,7 @@ class SortedFormListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             }
         }
         lastForm = form
+
     }
 
     override fun getItemCount(): Int {
@@ -63,12 +65,14 @@ class SortedFormListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
+        Timber.e("${collection[position].category?.title} => ${lastForm?.category?.title}")
         return if (lastForm == null) {
             TYPE_HEADER
         } else {
             val lastFormCatSlug = lastForm?.category?.slug
             val formSlug = collection[position].category?.slug
-            if (lastFormCatSlug != null && formSlug != null && lastFormCatSlug != formSlug) {
+//            if (formSlug != null) {
+            if (formSlug != null && (lastFormCatSlug==null || lastFormCatSlug != formSlug)) {
                 TYPE_HEADER
 
             } else {
@@ -78,12 +82,14 @@ class SortedFormListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         }
 
+
     }
 
     inner class CategoryViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = LayoutCategoryItemBinding.bind(itemView)
         fun bindItems(item: Form) {
-            binding.category = item.category
+            binding.form = item
+            binding.formItemLay.form = item
             binding.lifecycleOwner = binding.titleTv.context as LifecycleOwner
         }
     }

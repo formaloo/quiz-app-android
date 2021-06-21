@@ -2,23 +2,41 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
-            name="category"
-            type="co.idearun.learningapp.data.model.cat.Category" />
+            name="form"
+            type="co.idearun.learningapp.data.model.form.Form" />
     </data>
-    <RelativeLayout
-        android:layout_margin="@dimen/padding_small"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="@dimen/padding_small"
+            android:layout_marginBottom="@dimen/padding_small"
+            android:background="@color/gray2" />
+
         <TextView
             android:id="@+id/titleTv"
-            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray2"
-            android:textSize="@dimen/font_large"
+            android:layout_marginStart="@dimen/padding_standard"
+            android:layout_marginTop="@dimen/padding_small"
+            android:layout_marginEnd="@dimen/padding_small"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="@{category.title}" />
-    </RelativeLayout>
+            android:text="@{form.category.title}"
+            android:textColor="@color/gray2"
+            android:textSize="@dimen/font_large"
+            android:textStyle="bold" />
+
+        <include
+            android:id="@+id/form_item_lay"
+            layout="@layout/layout_form_item" />
+
+    </LinearLayout>
 </layout>

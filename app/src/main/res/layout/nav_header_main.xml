@@ -1,33 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:paddingLeft="@dimen/padding_standard"
-    android:paddingTop="@dimen/padding_standard"
-    android:paddingRight="@dimen/padding_standard"
-    android:paddingBottom="@dimen/padding_standard"
-    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
-        android:layout_width="@dimen/icon_size_large"
-        android:layout_height="@dimen/icon_size_large"
-        app:srcCompat="@mipmap/ic_launcher_round" />
+    <data>
 
-    <TextView
-        android:layout_width="wrap_content"
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/padding_small"
-        android:text="FlashCard "
-        android:textSize="18sp" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/padding_standard"
+        android:paddingTop="@dimen/padding_standard"
+        android:paddingRight="@dimen/padding_standard"
+        android:paddingBottom="@dimen/padding_standard"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/markpro_bold"
-        android:text="App"
-        android:textSize="18sp" />
+        <ImageView
+            android:layout_width="@dimen/icon_size_large"
+            android:layout_height="@dimen/icon_size_large"
+            app:srcCompat="@mipmap/ic_launcher_round" />
 
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_small"
+            android:text="@{@string/app_name+' '}"
+            android:textColor="@color/gray2"
+            android:textSize="@dimen/font_xlarge" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/markpro_bold"
+            android:text="App"
+            android:textColor="@color/gray2"
+            android:textSize="@dimen/font_xlarge" />
+
+    </LinearLayout>
+</layout>
