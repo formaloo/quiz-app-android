@@ -10,6 +10,7 @@
     </data>
 
     <FrameLayout
+        android:id="@+id/form_lay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -22,6 +23,7 @@
             android:orientation="horizontal"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_width="wrap_content"
+            android:minHeight="@dimen/btn_h_l"
             android:layout_marginBottom="@dimen/padding_small"
             android:layout_height="wrap_content">
 

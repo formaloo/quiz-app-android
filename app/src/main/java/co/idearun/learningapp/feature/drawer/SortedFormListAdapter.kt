@@ -1,5 +1,7 @@
 package co.idearun.learningapp.feature.drawer
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,7 @@ import co.idearun.learningapp.R
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.databinding.LayoutCategoryItemBinding
 import co.idearun.learningapp.databinding.LayoutFormItemBinding
+import co.idearun.learningapp.feature.flashCard.FlashCardActivity
 import timber.log.Timber
 import kotlin.properties.Delegates
 
@@ -91,7 +94,12 @@ class SortedFormListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             binding.form = item
             binding.formItemLay.form = item
             binding.lifecycleOwner = binding.titleTv.context as LifecycleOwner
+            itemView.setOnClickListener{
+                openForm(item, it.context)
+            }
         }
+
+
     }
 
     inner class FormViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -99,8 +107,15 @@ class SortedFormListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         fun bindItems(item: Form) {
             binding.form = item
             binding.lifecycleOwner = binding.titleTv.context as LifecycleOwner
-
+            itemView.setOnClickListener{
+                openForm(item,it.context)
+            }
         }
     }
+    private fun openForm(item: Form, context: Context) {
+        val intent = Intent(context, FlashCardActivity::class.java)
+        intent.putExtra("form",item)
+        context.startActivity(intent)
 
+    }
 }
