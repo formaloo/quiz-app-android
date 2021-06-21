@@ -7,8 +7,10 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import co.idearun.learningapp.common.base.BaseViewModel
 import co.idearun.learningapp.data.model.form.Form
+import co.idearun.learningapp.data.model.form.createForm.CreateFormRes
 import co.idearun.learningapp.data.repository.FormzRepo
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -54,7 +56,6 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
             val formsMap = HashMap<Int, Form>()
 
-            Timber.e("%s %s", formcatSlug, lastCatSlug)
 
             if (i == 0) {
                 formsMap[TYPE_HEADER] = form
@@ -67,11 +68,35 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
             }
             lastCatSlug = formcatSlug
 
-            Timber.e("%s%s", formcatSlug, formsMap.keys)
             formsList.add(formsMap)
         }
         _formMap.value = formsList
 
+
+    }
+    fun retrieveForm() = launch {
+        val result = async(Dispatchers.IO) { repository.getFormData(formSlug) }.await()
+        result.either(::handleFailure, ::handleFormData)
+
+    }
+
+    fun retrieveFormFromDB() = launch {
+        Timber.e("retrieveForm $formSlug")
+        val result = withContext(Dispatchers.IO) { repository.getFormFromDB(formSlug ?: "") }
+        _form.value = result
+
+    }
+
+    private fun handleFormData(res: CreateFormRes) {
+        res?.let { it ->
+            it.data?.let {
+                _form.value = it.form
+                it.form?.fields_list?.let {
+                }
+            }
+
+
+        }
 
     }
 

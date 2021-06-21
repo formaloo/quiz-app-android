@@ -17,6 +17,7 @@ import co.idearun.learningapp.databinding.ActivityFlashCardBinding
 
 class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
 
+    private var form: Form? = null
     private var fieldsFlashAdapter: FieldsFlashAdapter? = null
     private var lastFieldToCheck: Fields? = null
     private var fields: ArrayList<Fields> = arrayListOf()
@@ -35,6 +36,8 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
 
         checkBundle()
 
+        initView()
+        initData()
     }
 
 
@@ -44,8 +47,7 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
                 if (it is Form) {
                     binding.form = it
                     binding.executePendingBindings()
-
-                    formDataReady(it)
+                    form = it
 
                 } else {
 
@@ -54,12 +56,9 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
         }
     }
 
-    private fun formDataReady(form: Form) {
-        viewModel.initFormSlug(form.slug)
-
+    private fun initView() {
         updateTheme(form)
-
-        form.fields_list?.let { fields ->
+        form?.fields_list?.let { fields ->
             this.fields = fields
 
             fieldsFlashAdapter = FieldsFlashAdapter(
@@ -69,7 +68,7 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
                         next()
                     }
 
-                }, this, form, viewModel
+                }, this, form!!, viewModel
             )
 
             binding.flashcardFieldsRec.apply {
@@ -91,6 +90,21 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
 
     }
 
+    private fun initData() {
+        viewModel.initFormSlug(form?.slug ?: "")
+        viewModel.getSubmitEntity()
+        viewModel.submitEntity.observe(this, {
+            it?.let {
+                if (it.newRow != true)
+                    binding.flashcardFieldsRec.scrollToPosition(it.progressNumber ?: 0)
+
+            }
+        })
+
+
+    }
+
+
     override fun closePage() {
         onBackPressed()
 
@@ -104,7 +118,13 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
         with(binding.flashcardFieldsRec) {
             var visibleItemPosition =
                 (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+            if (visibleItemPosition == 1) {
+                viewModel.getSubmitEntity()
+            }
             if (fields.size > visibleItemPosition + 1) {
+               val newRow= visibleItemPosition==fields.size-1
+                viewModel.saveEditSubmitToDB(newRow, visibleItemPosition)
+
                 Handler(Looper.getMainLooper()).postDelayed({
                     scrollToPosition(visibleItemPosition + 1)
                     binding.flashPreBtn.visible()
@@ -155,40 +175,29 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
         }
 
         //checkSkipBtn
-        if (field.required != true && field.sub_type != SECTION) {
+        val type = if (field.sub_type != null) {
+            field.sub_type
+        } else {
+            field.type
+        }
+
+        if (
+            type == Constants.DROPDOWN ||
+            type == Constants.YESNO ||
+            type == Constants.SINGLE_SELECT ||
+            type == Constants.Like_Dislike ||
+            type == Constants.star ||
+            type == Constants.embeded ||
+            type == Constants.nps ||
+            type == Constants.SECTION
+        ) {
+            binding.flashcardSkipBtn.invisible()
+
+        } else {
             binding.flashcardSkipBtn.visible()
 
-        } else {
-            binding.flashcardSkipBtn.invisible()
-
         }
 
-        //checkI'mDoneBtn
-        if (field.required == true) {
-            val type = if (field.sub_type != null) {
-                field.sub_type
-            } else {
-                field.type
-            }
-            if (
-                type == Constants.DROPDOWN ||
-                type == Constants.YESNO ||
-                type == Constants.SINGLE_SELECT ||
-                type == Constants.Like_Dislike ||
-                type == Constants.star ||
-                type == Constants.embeded ||
-                type == Constants.nps
-            ) {
-                binding.flashcardSkipBtn.invisible()
-
-            } else {
-                binding.flashcardSkipBtn.visible()
-
-            }
-        } else {
-            binding.flashcardSkipBtn.invisible()
-
-        }
 
         //checkPreBtn
         if (field.sub_type == SECTION && lastFieldToCheck?.sub_type == SECTION) {

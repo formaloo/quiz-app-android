@@ -7,6 +7,7 @@ import co.idearun.learningapp.common.BaseMethod
 import co.idearun.learningapp.common.base.BaseViewModel
 import co.idearun.learningapp.data.model.form.Fields
 import co.idearun.learningapp.data.model.form.Form
+import co.idearun.learningapp.data.model.form.SubmitEntity
 import co.idearun.learningapp.data.model.form.createForm.CreateFormData
 import co.idearun.learningapp.data.model.form.createForm.CreateFormRes
 import co.idearun.learningapp.data.repository.FormzRepo
@@ -26,6 +27,7 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
     private var formSlug: String? = null
     private var rowSlug: String? = null
+    private var progressNumber: Int? = null
     private var formReqList = HashMap<String, String>()
     private var fileList = HashMap<String, Fields>()
 
@@ -36,6 +38,8 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
     val form: LiveData<Form> = _form
     private val _submitedData = MutableLiveData<Boolean>().apply { value = null }
     val submitedData: LiveData<Boolean> = _submitedData
+    private val _submitEntity = MutableLiveData<SubmitEntity>().apply { value = null }
+    val submitEntity: LiveData<SubmitEntity> = _submitEntity
     private val _isLoading = MutableLiveData<Boolean>().apply { value = null }
     val isLoading: LiveData<Boolean> = _isLoading
     private val _fields = MutableLiveData<ArrayList<Fields>>().apply { value = null }
@@ -55,14 +59,12 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
     fun retrieveForm() = launch {
         showLoading()
-        Timber.e("retrieveForm $formSlug")
         val result = async(Dispatchers.IO) { repository.getFormData(formSlug) }.await()
         result.either(::handleFailure, ::handleFormData)
 
     }
 
     fun retrieveFormFromDB() = launch {
-        Timber.e("retrieveForm $formSlug")
         val result = withContext(Dispatchers.IO) { repository.getFormFromDB(formSlug ?: "") }
         _form.value = result
 
@@ -102,23 +104,6 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
         field?.let {
             fileList[value] = field
             initFileName(field.slug, value)
-        }
-
-    }
-
-    fun removeFileFromReq(field: Fields?) {
-        field?.let {
-            var key: String? = null
-            fileList.keys.forEach {
-                if (fileList[it] == field) {
-                    key = it
-                } else {
-
-                }
-            }
-            fileList.remove(key)
-
-            initFileName(null, "")
         }
 
     }
@@ -169,20 +154,56 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
         _selectedDate.value = date
     }
 
-    fun saveEditSubmitToDB(newRow: Boolean) = launch {
-//        repository.saveSubmit(
-//            SubmitEntity(
-//                0,
-//                Random.nextInt(),
-//                false,
-//                newRow,
-//                rowSlug,
-//                formSlug,
-//                formReqList,
-//                fileList
-//            )
-//        )
-        _submitedData.value = true
+    fun getSubmitEntity() = launch {
+        val entity = repository.getSubmitEntity(formSlug ?: "")
+        entity?.let {
+            if (entity.newRow == true) {
+                progressNumber = 0
+            } else {
+                formReqList = entity.formReq
+                fileList = entity.files
+                progressNumber = entity.progressNumber
+            }
+            Timber.e("getSubmitEntity $progressNumber ")
+
+            _submitEntity.value = entity
+        }
+
+    }
+
+
+    fun saveEditSubmitToDB(newRow: Boolean, visibleItemPosition: Int) = launch {
+        progressNumber=visibleItemPosition
+        Timber.e("if $progressNumber ")
+
+        val entity = if (progressNumber == 0) {
+            SubmitEntity(
+                0,
+                Random.nextInt(),
+                false,
+                newRow,
+                rowSlug,
+                formSlug,
+                formReqList,
+                fileList,
+                progressNumber
+            )
+
+        } else if (submitEntity.value != null) {
+            val value = submitEntity.value!!
+            value.files = fileList
+            value.formReq = formReqList
+            value.progressNumber = progressNumber
+            value
+        } else {
+            null
+        }
+
+        if (entity != null) {
+            repository.saveSubmit(entity)
+
+        }
+
 
     }
 
@@ -214,12 +235,6 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
         _errorField.value = fields
     }
 
-    private fun createRB(req: ArrayMap<String, Any>): RequestBody {
-        return RequestBody.create(
-            "application/json; charset=utf-8".toMediaTypeOrNull(),
-            JSONObject(req).toString()
-        )
-    }
 
     fun npsBtnClicked(field: Fields, pos: Int) {
         _npsPos.value = pos
@@ -228,27 +243,6 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
     fun reuiredField(it: Fields) {
         requiredField.add(it)
-    }
-
-    fun checkRequiredField(): Boolean {
-        val fileFieldsSlug = arrayListOf<String>()
-        fileList.keys.forEach {
-            fileList[it]?.slug?.let {
-                fileFieldsSlug.add(it)
-            }
-        }
-
-        requiredField.forEach {
-            Timber.e("requiredField ${it.title}")
-
-            if (!formReqList.keys.contains(it.slug) && !fileFieldsSlug.contains(it.slug)) {
-                return false
-            } else {
-
-            }
-        }
-
-        return true
     }
 
 }

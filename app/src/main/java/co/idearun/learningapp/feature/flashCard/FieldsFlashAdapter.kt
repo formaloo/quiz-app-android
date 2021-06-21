@@ -375,11 +375,11 @@ class FieldsFlashAdapter(
                     .inflate(R.layout.layout_flash_card_star_item, parent, false);
                 FlashCardStarHolder(itemView)
             }
-//            TYPE_CSAT -> {
-//                itemView = LayoutInflater.from(parent.context)
-//                    .inflate(R.layout.layout_flash_card_csat_item, parent, false);
-//                return CSATViewHolder(itemView)
-//            }
+            TYPE_CSAT -> {
+                itemView = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.layout_ui_csat_item, parent, false);
+                return FlashCardCSATHolder(itemView)
+            }
             TYPE_NPS -> {
                 itemView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.layout_flash_card_nps_item, parent, false);

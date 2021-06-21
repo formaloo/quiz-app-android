@@ -7,6 +7,6 @@ import org.koin.dsl.module
 
 val formRepositoryModule = module {
     single<FormzRepo>(named("FormzRepo")) {
-        FormzRepo(get<FormDatasource>(named("FormzDatasource")),get(),get())
+        FormzRepo(get<FormDatasource>(named("FormzDatasource")),get(),get(),get())
     }
 }

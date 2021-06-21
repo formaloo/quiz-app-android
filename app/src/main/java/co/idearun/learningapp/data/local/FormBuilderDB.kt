@@ -9,11 +9,13 @@ import co.idearun.learningapp.data.local.FormsKeys
 import co.idearun.learningapp.data.local.convertor.FormConverters
 import co.idearun.learningapp.data.local.dao.FormDao
 import co.idearun.learningapp.data.local.dao.FormKeysDao
+import co.idearun.learningapp.data.local.dao.SubmitDao
 import co.idearun.learningapp.data.model.form.Form
+import co.idearun.learningapp.data.model.form.SubmitEntity
 
 
 @Database(
-    entities = [Form::class, FormsKeys::class],
+    entities = [Form::class, FormsKeys::class,SubmitEntity::class],
     version = 1,
     exportSchema = false
 )
@@ -22,6 +24,7 @@ abstract class FormBuilderDB : RoomDatabase() {
     // DAO
     abstract fun formDao(): FormDao
     abstract fun formKeysDao(): FormKeysDao
+    abstract fun submitDao(): SubmitDao
 
     companion object {
 

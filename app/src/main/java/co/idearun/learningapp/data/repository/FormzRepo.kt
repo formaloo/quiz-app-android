@@ -8,8 +8,10 @@ import co.idearun.learningapp.common.functional.Either
 import co.idearun.learningapp.data.local.FormsKeys
 import co.idearun.learningapp.data.local.dao.FormDao
 import co.idearun.learningapp.data.local.dao.FormKeysDao
+import co.idearun.learningapp.data.local.dao.SubmitDao
 import co.idearun.learningapp.data.model.cat.catList.CatListRes
 import co.idearun.learningapp.data.model.form.Form
+import co.idearun.learningapp.data.model.form.SubmitEntity
 import co.idearun.learningapp.data.model.form.createForm.CreateFormRes
 import co.idearun.learningapp.data.model.form.formList.FormListRes
 import co.idearun.learningapp.data.model.search.SearchRes
@@ -38,8 +40,16 @@ class FormzRepo(
     private val source: FormDatasource,
     private val formsDao: FormDao,
     private val formsKeysDao: FormKeysDao,
+    private val submitDao: SubmitDao
 ) : FormzDataSource {
 
+    override suspend fun saveSubmit(submitEntity: SubmitEntity) {
+        submitDao.save(submitEntity)
+    }
+
+    override suspend fun getSubmitEntity(slug: String): SubmitEntity {
+        return submitDao.getSubmitEntity(slug)
+    }
 
     override suspend fun getFormFromDB(slug: String): Form? {
         return formsDao.getForm(slug)

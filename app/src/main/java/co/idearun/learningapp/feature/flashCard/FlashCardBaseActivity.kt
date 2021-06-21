@@ -70,10 +70,10 @@ open class FlashCardBaseActivity : AppCompatActivity(), ViewsListener, KoinCompo
         }
     }
 
-    fun updateTheme(form: Form) {
-        val hexColor = baseMethod.getHexHashtagColorFromRgbStr(form.background_color)
+    fun updateTheme(form: Form?) {
+        val hexColor = baseMethod.getHexHashtagColorFromRgbStr(form?.background_color)
 
-        if (hexColor != null || form.background_image != null) {
+        if (hexColor != null || form?.background_image != null) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
                 window.statusBarColor = ContextCompat.getColor(this, android.R.color.transparent)
@@ -82,11 +82,11 @@ open class FlashCardBaseActivity : AppCompatActivity(), ViewsListener, KoinCompo
 
         }
 
-        if (form.background_image == null && hexColor != null) {
+        if (form?.background_image == null && hexColor != null) {
             window.setBackgroundDrawable(ColorDrawable(Color.parseColor(hexColor)))
 
         } else {
-            baseMethod.loadImage(form.background_image, window, hexColor)
+            baseMethod.loadImage(form?.background_image, window, hexColor)
 
         }
 
