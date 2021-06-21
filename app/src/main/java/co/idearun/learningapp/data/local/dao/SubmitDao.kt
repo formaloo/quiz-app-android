@@ -8,7 +8,7 @@ import co.idearun.learningapp.data.model.form.SubmitEntity
 abstract class SubmitDao : FormBuilderBaseDao<SubmitEntity>() {
 
     @Query("SELECT * FROM submit")
-    abstract fun getSubmitEntityList(): List<SubmitEntity>
+    abstract suspend fun getSubmitEntityList(): List<SubmitEntity>
 
     @Query("SELECT * FROM submit WHERE formSlug = :formSlug")
     abstract suspend fun getSubmitEntity(formSlug: String): SubmitEntity

@@ -57,7 +57,7 @@ class FormzRepo(
             val files = createFilesReq(it.files)
 
             if (newRow == true && formSLug != null) {
-                submitForm(it, formSLug!!, formReq, files)
+                submitForm(it, formSLug, formReq, files)
 
             }
 
@@ -71,6 +71,10 @@ class FormzRepo(
 
     override suspend fun getSubmitEntity(slug: String): SubmitEntity {
         return submitDao.getSubmitEntity(slug)
+    }
+
+    override suspend fun getSubmitEntityList(): List<SubmitEntity> {
+        return submitDao.getSubmitEntityList()
     }
 
     override suspend fun getFormFromDB(slug: String): Form? {

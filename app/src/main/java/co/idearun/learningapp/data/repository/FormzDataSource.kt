@@ -31,4 +31,6 @@ interface FormzDataSource {
         req: HashMap<String, RequestBody>,
         files: List<MultipartBody.Part>?
     )
+
+    suspend fun getSubmitEntityList(): List<SubmitEntity>
 }

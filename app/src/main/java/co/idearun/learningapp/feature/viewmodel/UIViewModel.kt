@@ -1,6 +1,5 @@
 package co.idearun.learningapp.feature.viewmodel
 
-import android.util.ArrayMap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import co.idearun.learningapp.common.BaseMethod
@@ -15,9 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
@@ -154,8 +151,15 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
         _selectedDate.value = date
     }
 
+    fun getSubmitEntityList() = launch {
+        val list = repository.getSubmitEntityList()
+        Timber.e("getSubmitEntityList ${list.size}")
+
+    }
+
     fun getSubmitEntity() = launch {
         val entity = repository.getSubmitEntity(formSlug ?: "")
+
         entity?.let {
             if (entity.newRow == true) {
                 progressNumber = 0
@@ -164,20 +168,20 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
                 fileList = entity.files
                 progressNumber = entity.progressNumber
             }
-            Timber.e("getSubmitEntity $progressNumber ")
 
             _submitEntity.value = entity
         }
+
+        Timber.e("getSubmitEntity $progressNumber ")
 
     }
 
 
     fun saveEditSubmitToDB(newRow: Boolean, visibleItemPosition: Int) = launch {
-        progressNumber=visibleItemPosition
-        Timber.e("if $progressNumber ")
+        progressNumber = visibleItemPosition
 
-        val entity = if (progressNumber == 0) {
-            SubmitEntity(
+         if (progressNumber == 0) {
+            val value=SubmitEntity(
                 0,
                 Random.nextInt(),
                 false,
@@ -188,21 +192,22 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
                 fileList,
                 progressNumber
             )
+             repository.saveSubmit(value)
 
-        } else if (submitEntity.value != null) {
-            val value = submitEntity.value!!
-            value.files = fileList
-            value.formReq = formReqList
-            value.progressNumber = progressNumber
-            value
-        } else {
-            null
+         } else if (visibleItemPosition >= 1) {
+            repository.getSubmitEntity(formSlug ?: "")?.let{value->
+                Timber.e("if $progressNumber ")
+                value.files = fileList
+                value.formReq = formReqList
+                value.progressNumber = progressNumber
+
+                repository.saveSubmit(value)
+
+            }
+
+
         }
 
-        if (entity != null) {
-            repository.saveSubmit(entity)
-
-        }
 
 
     }

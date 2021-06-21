@@ -25,8 +25,10 @@ import java.io.File
 import java.util.*
 import co.idearun.learningapp.R
 import co.idearun.learningapp.common.FileUtils
+import co.idearun.learningapp.feature.BaseActivity
+import co.idearun.learningapp.worker.SubmitWorker
 
-open class FlashCardBaseActivity : AppCompatActivity(), ViewsListener, KoinComponent {
+open class FlashCardBaseActivity : BaseActivity(), ViewsListener, KoinComponent {
 
     private lateinit var enDatePicker: DatePickerDialog
     val viewModel: UIViewModel by viewModel()
@@ -35,8 +37,6 @@ open class FlashCardBaseActivity : AppCompatActivity(), ViewsListener, KoinCompo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        baseMethod.hideAB(supportActionBar)
-
 
     }
 

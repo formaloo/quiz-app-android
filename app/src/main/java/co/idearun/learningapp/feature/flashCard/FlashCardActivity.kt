@@ -14,6 +14,7 @@ import co.idearun.learningapp.common.extension.visible
 import co.idearun.learningapp.data.model.form.Fields
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.databinding.ActivityFlashCardBinding
+import timber.log.Timber
 
 class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
 
@@ -92,10 +93,12 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
     private fun initData() {
         viewModel.initFormSlug(form?.slug ?: "")
         viewModel.getSubmitEntity()
+        viewModel.getSubmitEntityList()
         viewModel.submitEntity.observe(this, {
             it?.let {
-                if (it.newRow != true)
-                    binding.flashcardFieldsRec.scrollToPosition(it.progressNumber ?: 0)
+                Timber.e("submitEntity ${it.newRow} ${it.progressNumber}")
+                if (it.newRow == false && it.progressNumber != null)
+                    binding.flashcardFieldsRec.scrollToPosition(it.progressNumber!! + 1)
 
             }
         })
@@ -115,13 +118,12 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
 
     override fun next() {
         with(binding.flashcardFieldsRec) {
-            var visibleItemPosition =
+            val visibleItemPosition =
                 (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-            if (visibleItemPosition == 1) {
-                viewModel.getSubmitEntity()
-            }
+
             if (fields.size > visibleItemPosition + 1) {
                 val newRow = visibleItemPosition == fields.size - 1
+                Timber.e("newRow $newRow,$visibleItemPosition")
                 viewModel.saveEditSubmitToDB(newRow, visibleItemPosition)
 
                 Handler(Looper.getMainLooper()).postDelayed({
@@ -139,6 +141,7 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
                 openCongView()
             }
         }
+
     }
 
     private fun openCongView() {
