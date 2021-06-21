@@ -37,8 +37,6 @@
 
                 <include layout="@layout/nav_header_main" />
 
-
-
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/categoryRv"
                     android:layout_width="match_parent"
