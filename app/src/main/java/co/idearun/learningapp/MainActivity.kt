@@ -9,10 +9,12 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.work.*
 import co.idearun.learningapp.common.BaseMethod
 import co.idearun.learningapp.databinding.ActivityMainBinding
 import co.idearun.learningapp.feature.drawer.SortedFormListAdapter
 import co.idearun.learningapp.feature.viewmodel.FormViewModel
+import co.idearun.learningapp.worker.SubmitWorker
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
@@ -33,6 +35,9 @@ class MainActivity : AppCompatActivity(), KoinComponent {
         binding.lifecycleOwner=this
         initView()
         initData()
+        callWorker()
+
+
     }
 
     private fun initData() {
@@ -63,5 +68,18 @@ class MainActivity : AppCompatActivity(), KoinComponent {
 
     private fun fetchFormList() {
         viewModel.retrieveDBFormList()
+    }
+
+    fun callWorker() {
+        val constraint: Constraints =
+            Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
+
+        val submitWorkRequest: OneTimeWorkRequest = OneTimeWorkRequestBuilder<SubmitWorker>()
+            .setConstraints(constraint).build()
+
+        val manager = WorkManager.getInstance(this)
+        manager.enqueueUniqueWork("Submit", ExistingWorkPolicy.KEEP, submitWorkRequest);
+
+
     }
 }

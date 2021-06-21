@@ -1,7 +1,10 @@
 package co.idearun.learningapp.data.repository
 
+import android.net.Uri
 import android.util.Log
+import android.webkit.MimeTypeMap
 import androidx.paging.*
+import co.idearun.learningapp.common.Constants
 import co.idearun.learningapp.common.exception.Failure
 import co.idearun.learningapp.common.exception.ViewFailure
 import co.idearun.learningapp.common.functional.Either
@@ -10,6 +13,7 @@ import co.idearun.learningapp.data.local.dao.FormDao
 import co.idearun.learningapp.data.local.dao.FormKeysDao
 import co.idearun.learningapp.data.local.dao.SubmitDao
 import co.idearun.learningapp.data.model.cat.catList.CatListRes
+import co.idearun.learningapp.data.model.form.Fields
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.data.model.form.SubmitEntity
 import co.idearun.learningapp.data.model.form.createForm.CreateFormRes
@@ -17,11 +21,9 @@ import co.idearun.learningapp.data.model.form.formList.FormListRes
 import co.idearun.learningapp.data.model.search.SearchRes
 import co.idearun.learningapp.data.model.submitForm.SubmitFormRes
 import co.idearun.learningapp.data.remote.FormDatasource
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -29,8 +31,10 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.HttpException
 import retrofit2.Response
+import java.io.File
 import java.io.IOException
 import java.net.SocketTimeoutException
+import java.net.URLEncoder
 import java.net.UnknownHostException
 import java.util.*
 
@@ -42,6 +46,24 @@ class FormzRepo(
     private val formsKeysDao: FormKeysDao,
     private val submitDao: SubmitDao
 ) : FormzDataSource {
+
+    override suspend fun sendSavedSubmitToServer() {
+
+        submitDao.getSubmitEntityList().map {
+            val newRow = it.newRow
+            val formSLug = it.formSlug
+            val rowSlug = it.rowSlug
+            val formReq = createFormReq(it.formReq)
+            val files = createFilesReq(it.files)
+
+            if (newRow == true && formSLug != null) {
+                submitForm(it, formSLug!!, formReq, files)
+
+            }
+
+        }
+    }
+
 
     override suspend fun saveSubmit(submitEntity: SubmitEntity) {
         submitDao.save(submitEntity)
@@ -62,6 +84,7 @@ class FormzRepo(
     }
 
     override suspend fun submitForm(
+        submitEntity: SubmitEntity,
         slug: String,
         req: HashMap<String, RequestBody>,
         files: List<MultipartBody.Part>?
@@ -73,8 +96,11 @@ class FormzRepo(
 
                 val code = response.code()
                 if (code == 200 || code == 201) {
+                    removeSentSubmitFromDB(submitEntity)
 
                 } else {
+                    submitEntity.hasFormError = true
+//                    updateSubmitEntityFromDB(submitEntity)
 
                     val jObjError = JSONObject(response.errorBody()?.string())
                     Log.e("request", "submitForm jObjError-> $jObjError")
@@ -92,7 +118,58 @@ class FormzRepo(
 
     }
 
+    private fun removeSentSubmitFromDB(submitEntity: SubmitEntity) {
+        GlobalScope.launch(Dispatchers.Main) {
+            submitDao.deleteSubmitEntity(submitEntity.uniqueId)
 
+        }
+
+    }
+
+    fun createFilesReq(filesMap: HashMap<String, Fields>): ArrayList<MultipartBody.Part> {
+        val files: ArrayList<MultipartBody.Part> = arrayListOf()
+
+        filesMap.keys.forEach {
+            files.add(prepareFilePart(filesMap[it], it))
+        }
+
+        return files
+    }
+
+    private fun prepareFilePart(
+        field: Fields?,
+        filePath: String
+    ): MultipartBody.Part {
+        val file = File(filePath)
+
+        val fileExt = MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(file).toString())
+
+        val requestBody =
+            if (field?.file_type == Constants.image || field?.type == Constants.SIGNATURE) {
+                RequestBody.create("image/png".toMediaTypeOrNull(), file)
+            } else {
+                RequestBody.create("*/$fileExt".toMediaTypeOrNull(), file)
+            }
+
+        return MultipartBody.Part.createFormData(
+            field?.slug!!, URLEncoder.encode(file.name, "utf-8"), requestBody
+        )
+
+    }
+
+    fun createFormReq(reqMap: HashMap<String, String>): HashMap<String, RequestBody> {
+        val jsonParams: HashMap<String, RequestBody> = HashMap()
+        jsonParams[""]=createPartFromString( "")
+        reqMap.keys.forEach { slug ->
+            val data = createPartFromString(reqMap[slug] ?: "")
+            jsonParams[slug] = data
+        }
+
+        return jsonParams
+    }
+    private fun createPartFromString(descriptionString: String): RequestBody {
+        return RequestBody.create(MultipartBody.FORM, descriptionString)
+    }
     override suspend fun search(searchStr: String): Either<Failure, SearchRes> {
         val call = source.search(searchStr)
         return try {
