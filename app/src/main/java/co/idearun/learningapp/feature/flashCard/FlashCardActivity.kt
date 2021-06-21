@@ -29,7 +29,6 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
         binding.listener = this
         binding.flashcardListener = this
         binding.viewmodel = viewModel
-
         binding.lifecycleOwner = this
 
         baseMethod.hideAB(supportActionBar)
@@ -122,7 +121,7 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
                 viewModel.getSubmitEntity()
             }
             if (fields.size > visibleItemPosition + 1) {
-               val newRow= visibleItemPosition==fields.size-1
+                val newRow = visibleItemPosition == fields.size - 1
                 viewModel.saveEditSubmitToDB(newRow, visibleItemPosition)
 
                 Handler(Looper.getMainLooper()).postDelayed({
