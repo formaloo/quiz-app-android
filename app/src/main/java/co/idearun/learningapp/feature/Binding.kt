@@ -16,6 +16,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatButton
+import androidx.collection.ArrayMap
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import co.idearun.learningapp.common.BaseMethod
@@ -475,7 +476,7 @@ object Binding: KoinComponent {
 
     @BindingAdapter("app:items")
     @JvmStatic
-    fun setFormItems(recyclerView: RecyclerView, resource: ArrayList<Form>?) {
+    fun setFormItems(recyclerView: RecyclerView, resource: ArrayList<HashMap<Int,Form>>?) {
         if (recyclerView.adapter is SortedFormListAdapter)
             with(recyclerView.adapter as SortedFormListAdapter) {
                 resource?.let {

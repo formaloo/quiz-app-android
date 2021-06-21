@@ -30,7 +30,7 @@
             android:layout_gravity="start">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/bg"
                 android:orientation="vertical">
@@ -38,17 +38,12 @@
                 <include layout="@layout/nav_header_main" />
 
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginHorizontal="@dimen/padding_small"
-                    android:background="@color/gray2" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/categoryRv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:items="@{viewmodel.formList}"
+                    app:items="@{viewmodel.formMap}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/layout_form_item" />
             </LinearLayout>

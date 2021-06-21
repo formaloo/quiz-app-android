@@ -29,7 +29,7 @@
             android:layout_marginEnd="@dimen/padding_small"
             android:ellipsize="end"
             android:maxLines="2"
-            android:text="@{form.category.title}"
+            android:text="@{form.category.title!=null?form.category.title:@string/other}"
             android:textColor="@color/gray2"
             android:textSize="@dimen/font_large"
             android:textStyle="bold" />
