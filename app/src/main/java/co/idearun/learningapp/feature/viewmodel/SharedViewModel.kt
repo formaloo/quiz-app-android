@@ -5,21 +5,21 @@ import co.idearun.learningapp.data.repository.sharedRepo.SharedRepository
 
 class SharedViewModel(private val repository: SharedRepository) : BaseViewModel() {
 
-    fun saveFormProgress(formProgress: HashMap<String?, Int?>) {
-        repository.saveFormProgress(formProgress)
+    fun saveLessonProgress(progress: HashMap<String?, Int?>) {
+        repository.saveLessonProgress(progress)
 
     }
 
-    fun retrieveFormProgress(): HashMap<String?, Int?> {
-        return repository.retrieveFormProgress()
+    fun retrieveLessonProgress(): HashMap<String?, Int?> {
+        return repository.retrieveLessonProgress()
 
     }
 
-    fun saveLastForm(formSlug: String) {
-        repository.saveLastForm(formSlug)
+    fun saveLastLesson(formSlug: String) {
+        repository.saveLastLesson(formSlug)
     }
 
-    fun getLastForm(): String? {
-        return repository.getLastForm()
+    fun getLastLesson(): String? {
+        return repository.getLastLesson()
     }
 }

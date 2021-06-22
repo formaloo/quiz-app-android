@@ -5,11 +5,11 @@ import co.idearun.learningapp.common.Constants
 import org.json.JSONObject
 
 interface SharedRepository {
-    fun saveFormProgress(formProgress: Map<String?, Int?>)
-    fun retrieveFormProgress(): HashMap<String?, Int?>
+    fun saveLessonProgress(progress: Map<String?, Int?>)
+    fun retrieveLessonProgress(): HashMap<String?, Int?>
 
-    fun saveLastForm(formSlug:String?)
-    fun getLastForm():String?
+    fun saveLastLesson(formSlug:String?)
+    fun getLastLesson():String?
 }
 
 
@@ -17,14 +17,14 @@ class SharedRepositoryImpl(
     private val sharedPreferences: SharedPreferences
 ) : SharedRepository {
 
-    override fun saveFormProgress(formProgress: Map<String?, Int?>) {
-        val jsonObject = JSONObject(formProgress)
-        val formProgressString = jsonObject.toString()
-        sharedPreferences.edit().putString(Constants.PREFERENCES_PROGRESS, formProgressString)
+    override fun saveLessonProgress(progress: Map<String?, Int?>) {
+        val jsonObject = JSONObject(progress)
+        val lessonsProgressString = jsonObject.toString()
+        sharedPreferences.edit().putString(Constants.PREFERENCES_PROGRESS, lessonsProgressString)
             .apply()
     }
 
-    override fun retrieveFormProgress(): HashMap<String?, Int?>{
+    override fun retrieveLessonProgress(): HashMap<String?, Int?>{
         val outputMap = hashMapOf<String?, Int?>()
 
         sharedPreferences.getString(Constants.PREFERENCES_PROGRESS,null)?.let {
@@ -41,13 +41,13 @@ class SharedRepositoryImpl(
         return outputMap
     }
 
-    override fun saveLastForm(formSlug: String?) {
-        sharedPreferences.edit().putString(Constants.PREFERENCES_LAST_FORM, formSlug).apply()
+    override fun saveLastLesson(formSlug: String?) {
+        sharedPreferences.edit().putString(Constants.PREFERENCES_LAST_Lesson, formSlug).apply()
 
     }
 
-    override fun getLastForm(): String? {
-        return sharedPreferences.getString(Constants.PREFERENCES_LAST_FORM,"")
+    override fun getLastLesson(): String? {
+        return sharedPreferences.getString(Constants.PREFERENCES_LAST_Lesson,"")
     }
 
 }

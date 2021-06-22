@@ -13,14 +13,12 @@ import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.databinding.ActivityFlashCardBinding
 import co.idearun.learningapp.feature.viewmodel.SharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
 
     private var formsProgressMap = hashMapOf<String?, Int?>()
     private var form: Form? = null
     private var fieldsFlashAdapter: FieldsFlashAdapter? = null
-    private var lastFieldToCheck: Fields? = null
     private var fields: ArrayList<Fields> = arrayListOf()
     private lateinit var binding: ActivityFlashCardBinding
     val shardedVM: SharedViewModel by viewModel()
@@ -64,8 +62,6 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
 
     private fun initView() {
 
-        updateTheme(form)
-
         binding.flashcardFieldsRec.apply {
             fieldsFlashAdapter = FieldsFlashAdapter(
                 this@FlashCardActivity,
@@ -89,12 +85,14 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
                 }
         }
 
+        updateTheme(form)
+
         checkLessonProgress()
 
     }
 
     private fun initData() {
-        shardedVM.saveLastForm(form?.slug ?: "")
+        shardedVM.saveLastLesson(form?.slug ?: "")
         viewModel.initFormSlug(form?.slug ?: "")
         viewModel.getSubmitEntity()
     }
@@ -105,7 +103,7 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
             val visibleItemPosition =
                 (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
 
-            updateFormProgress(visibleItemPosition)
+            updateLessonProgress(visibleItemPosition)
 
             if (fields.size > visibleItemPosition + 1) {
                 Handler(Looper.getMainLooper()).postDelayed({
@@ -127,7 +125,7 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
             var visibleItemPosition =
                 (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
 
-            updateFormProgress(visibleItemPosition)
+            updateLessonProgress(visibleItemPosition)
 
             if (0 <= visibleItemPosition - 1) {
                 scrollToPosition(visibleItemPosition - 1)
@@ -150,27 +148,27 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
     }
 
     private fun openCongView() {
-        updateFormProgress(0)
+        updateLessonProgress(0)
         callWorker()
         binding.flashCongView.visible()
 
     }
 
-    private fun updateFormProgress(pos: Int) {
+    private fun updateLessonProgress(pos: Int) {
         formsProgressMap[form?.slug] = pos
-        shardedVM.saveFormProgress(formsProgressMap)
+        shardedVM.saveLessonProgress(formsProgressMap)
 
     }
 
     private fun checkLessonProgress() {
-        formsProgressMap = shardedVM.retrieveFormProgress()
+        formsProgressMap = shardedVM.retrieveLessonProgress()
 
         val formSlug = form?.slug ?: ""
         val progress = formsProgressMap[form?.slug ?: ""]
 
         if (progress == null) {
             formsProgressMap[formSlug] = 0
-            shardedVM.saveFormProgress(formsProgressMap)
+            shardedVM.saveLessonProgress(formsProgressMap)
         } else {
             binding.flashcardFieldsRec.scrollToPosition(progress + 1)
         }

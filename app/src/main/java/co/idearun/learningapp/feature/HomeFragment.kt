@@ -19,7 +19,6 @@ import co.idearun.learningapp.feature.adapter.FormListListener
 import co.idearun.learningapp.feature.flashCard.FlashCardActivity
 import co.idearun.learningapp.feature.viewmodel.FormViewModel
 import co.idearun.learningapp.feature.viewmodel.SharedViewModel
-import co.idearun.learningapp.feature.viewmodel.UIViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -71,7 +70,7 @@ class HomeFragment : BaseFragment(), KoinComponent, FormListListener {
 
         viewModel.form.observe(viewLifecycleOwner, {
             it?.let {
-                val formsProgress = shardedVM.retrieveFormProgress()
+                val formsProgress = shardedVM.retrieveLessonProgress()
                 Timber.e(" viewModel.form.observe ${formsProgress[it.slug]}")
                 binding.lessonInprogress.progress = formsProgress[it.slug]
                 binding.lessonInprogress.item = it
@@ -85,7 +84,7 @@ class HomeFragment : BaseFragment(), KoinComponent, FormListListener {
     }
 
     private fun getLastFormData() {
-        shardedVM.getLastForm()?.let {
+        shardedVM.getLastLesson()?.let {
             viewModel.initFormSlug(it)
             viewModel.retrieveForm()
         }
@@ -93,7 +92,7 @@ class HomeFragment : BaseFragment(), KoinComponent, FormListListener {
     }
 
     private fun initView() {
-        val formsProgressMap = shardedVM.retrieveFormProgress()
+        val formsProgressMap = shardedVM.retrieveLessonProgress()
 
         formListAdapter = FormListAdapter(formsProgressMap, this)
 
@@ -135,7 +134,7 @@ class HomeFragment : BaseFragment(), KoinComponent, FormListListener {
 
     override fun onResume() {
         getLastFormData()
-        formListAdapter.resetProgress(shardedVM.retrieveFormProgress())
+        formListAdapter.resetProgress(shardedVM.retrieveLessonProgress())
         formListAdapter.notifyDataSetChanged()
         super.onResume()
 
