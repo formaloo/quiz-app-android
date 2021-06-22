@@ -13,12 +13,17 @@ import java.io.Serializable
 
 
 class FormListAdapter(
-    private val formsProgressMap: HashMap<String?, Int?>?,
+    progressMap: HashMap<String?, Int?>?,
     private val listener: FormListListener
 ) :
     PagingDataAdapter<Form, FormListAdapter.BtnsViewHolder>(DiffUtilCallBack()),
     Serializable {
 
+    private var formsProgressMap: HashMap<String?, Int?>?=progressMap
+
+    fun resetProgress(formsProgressMap: HashMap<String?, Int?>?){
+        this.formsProgressMap=formsProgressMap
+    }
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): BtnsViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.lesson_content, parent, false)

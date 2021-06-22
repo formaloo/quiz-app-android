@@ -73,7 +73,8 @@ class HomeFragment : BaseFragment(), KoinComponent,FormListListener {
         viewModel.form.observe(viewLifecycleOwner, {
             it?.let {
                 val formsProgress = shardedVM.retrieveFormProgress()
-                binding.lessonInprogress.progress= formsProgress[it.slug]?:0
+                Timber.e(" viewModel.form.observe ${formsProgress[it.slug]}")
+                binding.lessonInprogress.progress= formsProgress[it.slug]
                 binding.lessonInprogress.item=it
                 binding.lessonInprogress.listener=this
                 binding.executePendingBindings()
@@ -128,11 +129,12 @@ class HomeFragment : BaseFragment(), KoinComponent,FormListListener {
 
     }
 
-
     override fun onResume() {
-        super.onResume()
         getLastFormData()
+        formListAdapter.resetProgress(shardedVM.retrieveFormProgress())
         formListAdapter.notifyDataSetChanged()
+        super.onResume()
+
     }
 }
 

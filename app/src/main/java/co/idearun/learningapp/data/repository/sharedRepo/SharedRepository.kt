@@ -32,7 +32,7 @@ class SharedRepositoryImpl(
             val keysItr = jsonObject.keys()
             while (keysItr.hasNext()) {
                 val key = keysItr.next()
-                val value = jsonObject[key] as Int
+                val value = jsonObject[key] as Int?
                 outputMap[key] = value
             }
         }

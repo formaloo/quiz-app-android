@@ -16,6 +16,7 @@ import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.databinding.ActivityFlashCardBinding
 import co.idearun.learningapp.feature.viewmodel.SharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
 
@@ -33,7 +34,6 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
         binding.listener = this
         binding.flashcardListener = this
         binding.viewmodel = viewModel
-        binding.progress = 1
         binding.lifecycleOwner = this
 
 
@@ -63,20 +63,6 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
     }
 
     private fun initView() {
-        formsProgressMap = shardedVM.retrieveFormProgress()
-        val formSlug = form?.slug ?: ""
-        val progress = formsProgressMap[form?.slug ?: ""]
-
-        if (progress == null) {
-            formsProgressMap[formSlug] = 0
-            shardedVM.saveFormProgress(formsProgressMap)
-        } else {
-            binding.flashcardFieldsRec.scrollToPosition(progress + 1)
-
-        }
-
-        binding.progress = progress?:0+1
-        binding.executePendingBindings()
 
         updateTheme(form)
         form?.fields_list?.let { fields ->
@@ -109,14 +95,30 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
 
         }
 
+        formsProgressMap = shardedVM.retrieveFormProgress()
+        val formSlug = form?.slug ?: ""
+        val progress = formsProgressMap[form?.slug ?: ""]
+
+        Timber.e("initView $progress")
+
+        if (progress == null) {
+            formsProgressMap[formSlug] = 0
+            shardedVM.saveFormProgress(formsProgressMap)
+        } else {
+            Timber.e("initView $progress")
+            binding.flashcardFieldsRec.scrollToPosition(progress + 1)
+
+        }
+
+        binding.progress = (progress ?: 0) + 1
+        binding.executePendingBindings()
+
     }
 
     private fun initData() {
-        shardedVM.saveLastForm(form?.slug?:"")
-
+        shardedVM.saveLastForm(form?.slug ?: "")
         viewModel.initFormSlug(form?.slug ?: "")
         viewModel.getSubmitEntity()
-        viewModel.getSubmitEntityList()
 
 
     }
@@ -136,7 +138,8 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
     override fun next() {
         with(binding.flashcardFieldsRec) {
             val visibleItemPosition =
-                (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+                (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+            Timber.e("next $visibleItemPosition")
 
             updateNextData(visibleItemPosition, fields)
 
@@ -152,7 +155,6 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
         val newRow = visibleItemPosition == fields.size - 1
         viewModel.saveEditSubmitToDB(newRow, visibleItemPosition)
         if (newRow) {
-            formsProgressMap.remove(form?.slug)
 
         } else {
             formsProgressMap[form?.slug] = visibleItemPosition
@@ -184,6 +186,9 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
     }
 
     private fun openCongView() {
+        formsProgressMap[form?.slug] = 0
+        shardedVM.saveFormProgress(formsProgressMap)
+
         callWorker()
         binding.flashCongView.visible()
 

@@ -110,7 +110,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:text="Start"
-                    android:visibility="@{progress>0 ? view.GONE : view.VISIBLE}"                    android:textAllCaps="true"
+                    android:visibility="@{progress!=null &amp;&amp; progress>0 ? view.GONE : view.VISIBLE}"                    android:textAllCaps="true"
                     android:textColor="?attr/colorPrimary"
                     android:textSize="@dimen/font_standard"
                     android:textStyle="bold" />
@@ -123,7 +123,7 @@
                     android:layout_centerVertical="true"
                     android:max="@{item.fields_list!=null?item.fields_list.size():10}"
                     android:progress="@{progress}"
-                    android:visibility="@{progress>0 ? view.VISIBLE: view.GONE }"
+                    android:visibility="@{progress!=null &amp;&amp; progress>0 ? view.VISIBLE: view.GONE }"
                      />
 
             </RelativeLayout>
