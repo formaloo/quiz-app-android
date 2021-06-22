@@ -45,6 +45,7 @@ import java.util.*
 class BaseMethod {
     val TAG = "BaseMethod"
 
+
     fun rotateView(view: View?, deg: Float, duration: Long) {
         val rotate: ObjectAnimator = ObjectAnimator.ofFloat(view, "rotation", 0f, deg)
         //        rotate.setRepeatCount(10);

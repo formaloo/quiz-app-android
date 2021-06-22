@@ -74,8 +74,6 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
 
         }
 
-
-
         updateTheme(form)
         form?.fields_list?.let { fields ->
             this.fields = fields
@@ -124,6 +122,8 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
     }
 
     override fun share() {
+        val address = getString(R.string.DiSPLAY_FORM) + form?.address
+        baseMethod.shareVia(address, getString(R.string.share_form_link_via), this)
 
     }
 
@@ -132,33 +132,46 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
             val visibleItemPosition =
                 (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
-            val newRow = visibleItemPosition == fields.size - 1
-            viewModel.saveEditSubmitToDB(newRow, visibleItemPosition)
-            if (newRow) {
-                formsProgressMap.remove(form?.slug)
+            updateNextData(visibleItemPosition, fields)
 
-            } else {
-                formsProgressMap[form?.slug]=visibleItemPosition
-                shardedVM.saveFormProgress(formsProgressMap)
-            }
-
-            if (fields.size > visibleItemPosition + 1) {
-                Handler(Looper.getMainLooper()).postDelayed({
-                    scrollToPosition(visibleItemPosition + 1)
-                    binding.flashPreBtn.visible()
-                    if (fields.size <= visibleItemPosition + 2) {
-                        binding.flashNextBtn.invisible()
-                    } else {
-                        binding.flashNextBtn.visible()
-
-                    }
-                }, 300)
-
-            } else {
-                openCongView()
-            }
+            updateNextView(fields, visibleItemPosition, this)
         }
 
+    }
+
+    private fun updateNextData(visibleItemPosition: Int, fields: java.util.ArrayList<Fields>) {
+        val newRow = visibleItemPosition == fields.size - 1
+        viewModel.saveEditSubmitToDB(newRow, visibleItemPosition)
+        if (newRow) {
+            formsProgressMap.remove(form?.slug)
+
+        } else {
+            formsProgressMap[form?.slug] = visibleItemPosition
+            shardedVM.saveFormProgress(formsProgressMap)
+        }
+    }
+
+    private fun updateNextView(
+        fields: java.util.ArrayList<Fields>,
+        visibleItemPosition: Int,
+        recyclerView: RecyclerView
+    ) {
+        if (fields.size > visibleItemPosition + 1) {
+            Handler(Looper.getMainLooper()).postDelayed({
+                recyclerView.scrollToPosition(visibleItemPosition + 1)
+
+                binding.flashPreBtn.visible()
+                if (fields.size <= visibleItemPosition + 2) {
+                    binding.flashNextBtn.invisible()
+                } else {
+                    binding.flashNextBtn.visible()
+
+                }
+            }, 300)
+
+        } else {
+            openCongView()
+        }
     }
 
     private fun openCongView() {
@@ -172,19 +185,27 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
             var visibleItemPosition =
                 (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
 
-            formsProgressMap[form?.slug]=visibleItemPosition
-            shardedVM.saveFormProgress(formsProgressMap)
+            updatePreView(visibleItemPosition)
+            updatepreView(visibleItemPosition, this)
+        }
+    }
 
-            if (0 <= visibleItemPosition - 1) {
-                scrollToPosition(visibleItemPosition - 1)
-                binding.flashNextBtn.visible()
-                if (0 > visibleItemPosition - 2) {
-                    binding.flashPreBtn.invisible()
-                } else {
-                    binding.flashPreBtn.visible()
-                }
+    private fun updatepreView(visibleItemPosition: Int, recyclerView: RecyclerView) {
+        if (0 <= visibleItemPosition - 1) {
+            recyclerView.scrollToPosition(visibleItemPosition - 1)
+            binding.flashNextBtn.visible()
+            if (0 > visibleItemPosition - 2) {
+                binding.flashPreBtn.invisible()
+            } else {
+                binding.flashPreBtn.visible()
             }
         }
+    }
+
+    private fun updatePreView(visibleItemPosition: Int) {
+        formsProgressMap[form?.slug] = visibleItemPosition
+        shardedVM.saveFormProgress(formsProgressMap)
+
     }
 
     override fun checkField(field: Fields, pos: Int) {

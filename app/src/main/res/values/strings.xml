@@ -27,5 +27,7 @@
   <string name="dash">-</string>
   <string name="phone_">phone</string>
   <string name="other">Other</string>
+  <string name="DiSPLAY_FORM">https://formaloo.net/</string>
+  <string name="share_form_link_via">Share Form Address:</string>
 
 </resources>
