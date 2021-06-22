@@ -35,11 +35,11 @@
             app:lottie_autoPlay="true"
             android:layout_marginBottom="@dimen/padding_small"
             app:lottie_loop="true"
-            app:lottie_rawRes="@raw/success" />
+            app:lottie_rawRes="@raw/happiness" />
 
         <TextView
             android:id="@+id/contxt"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/cong_imv"
             android:layout_centerHorizontal="true"
