@@ -119,13 +119,12 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
     override fun next() {
         with(binding.flashcardFieldsRec) {
             val visibleItemPosition =
-                (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+                (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
+            val newRow = visibleItemPosition == fields.size - 1
+            Timber.e("next $newRow,$visibleItemPosition ${fields.size}")
+            viewModel.saveEditSubmitToDB(newRow, visibleItemPosition)
             if (fields.size > visibleItemPosition + 1) {
-                val newRow = visibleItemPosition == fields.size - 1
-                Timber.e("newRow $newRow,$visibleItemPosition")
-                viewModel.saveEditSubmitToDB(newRow, visibleItemPosition)
-
                 Handler(Looper.getMainLooper()).postDelayed({
                     scrollToPosition(visibleItemPosition + 1)
                     binding.flashPreBtn.visible()
@@ -145,6 +144,7 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
     }
 
     private fun openCongView() {
+        callWorker()
         binding.flashCongView.visible()
 
     }

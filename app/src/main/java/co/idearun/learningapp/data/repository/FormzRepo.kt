@@ -31,6 +31,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.HttpException
 import retrofit2.Response
+import timber.log.Timber
 import java.io.File
 import java.io.IOException
 import java.net.SocketTimeoutException
@@ -56,6 +57,7 @@ class FormzRepo(
             val formReq = createFormReq(it.formReq)
             val files = createFilesReq(it.files)
 
+            Timber.e("$newRow $formSLug")
             if (newRow == true && formSLug != null) {
                 submitForm(it, formSLug, formReq, files)
 

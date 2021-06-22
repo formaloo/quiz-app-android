@@ -102,7 +102,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
                 android:onClick="@{()->flashcardListener.next()}"
-                android:text="@string/skip_this_activity"
+                android:text="@string/next"
                 android:textAlignment="gravity"
                 android:textSize="@dimen/font_standard"
                 app:text_color="@{form.text_color}" />

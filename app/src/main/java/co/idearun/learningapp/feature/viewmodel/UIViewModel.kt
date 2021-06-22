@@ -200,6 +200,7 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
                 value.files = fileList
                 value.formReq = formReqList
                 value.progressNumber = progressNumber
+                value.newRow = newRow
 
                 repository.saveSubmit(value)
 

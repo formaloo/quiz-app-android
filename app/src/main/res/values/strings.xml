@@ -1,6 +1,7 @@
 <resources>
   <string name="app_name">Learning App</string>
   <string name="skip_this_activity">Skip this activity</string>
+  <string name="next">Next</string>
   <string name="im_done">I<![CDATA[\']]>m done</string>
   <string name="from">form</string>
   <string name="to">to</string>

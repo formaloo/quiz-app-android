@@ -9,7 +9,7 @@ data class SubmitEntity(
     val id: Int,
     val uniqueId: Int,
     var hasFormError: Boolean?,
-    val newRow: Boolean?,
+    var newRow: Boolean?,
     val rowSlug: String?,
     val formSlug: String?,
     var formReq: HashMap<String, String>,

@@ -1,7 +1,6 @@
 package co.idearun.learningapp
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -9,13 +8,11 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.work.*
 import co.idearun.learningapp.common.BaseMethod
 import co.idearun.learningapp.databinding.ActivityMainBinding
 import co.idearun.learningapp.feature.BaseActivity
 import co.idearun.learningapp.feature.drawer.SortedFormListAdapter
 import co.idearun.learningapp.feature.viewmodel.FormViewModel
-import co.idearun.learningapp.worker.SubmitWorker
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
@@ -33,7 +30,7 @@ class MainActivity : BaseActivity(), KoinComponent {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(binding.appBarMain.toolbar)
         binding.viewmodel = viewModel
-        binding.lifecycleOwner=this
+        binding.lifecycleOwner = this
         initView()
         initData()
 
