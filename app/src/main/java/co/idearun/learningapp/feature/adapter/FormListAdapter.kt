@@ -12,7 +12,10 @@ import org.koin.core.KoinComponent
 import java.io.Serializable
 
 
-class FormListAdapter(private val listener: FormListListener) :
+class FormListAdapter(
+    private val formsProgressMap: HashMap<String?, Int?>?,
+    private val listener: FormListListener
+) :
     PagingDataAdapter<Form, FormListAdapter.BtnsViewHolder>(DiffUtilCallBack()),
     Serializable {
 
@@ -25,7 +28,8 @@ class FormListAdapter(private val listener: FormListListener) :
     override fun onBindViewHolder(holder: BtnsViewHolder, position: Int) {
         val item = getItem(position)
         item?.let {
-            holder.bindItems(item, listener)
+            holder.bindItems(item, listener,formsProgressMap)
+            listener.checkLessonprogress(position, item)
         }
 
     }
@@ -35,9 +39,16 @@ class FormListAdapter(private val listener: FormListListener) :
     ) : RecyclerView.ViewHolder(itemView), Serializable, KoinComponent {
         val binding = LessonContentBinding.bind(itemView)
 
-        fun bindItems(form: Form?, listener: FormListListener) {
+        fun bindItems(
+            form: Form?,
+            listener: FormListListener,
+            formsProgressMap: HashMap<String?, Int?>?
+        ) {
             binding.item = form
-
+            formsProgressMap?.let {
+                val progress = formsProgressMap[form?.slug ?: ""]
+                binding.progress=progress
+            }
             itemView.setOnClickListener {
                 listener.openForm(form, binding.formItemLay)
 

@@ -18,6 +18,8 @@ import co.idearun.learningapp.feature.adapter.FormListAdapter
 import co.idearun.learningapp.feature.adapter.FormListListener
 import co.idearun.learningapp.feature.flashCard.FlashCardActivity
 import co.idearun.learningapp.feature.viewmodel.FormViewModel
+import co.idearun.learningapp.feature.viewmodel.SharedViewModel
+import co.idearun.learningapp.feature.viewmodel.UIViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -29,6 +31,8 @@ class HomeFragment : BaseFragment(), KoinComponent {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var formListAdapter: FormListAdapter
     private val viewModel: FormViewModel by viewModel()
+    val uiViewModel: UIViewModel by viewModel()
+    val shardedVM: SharedViewModel by viewModel()
 
 
     override fun getViewModel(): BaseViewModel = viewModel
@@ -71,15 +75,24 @@ class HomeFragment : BaseFragment(), KoinComponent {
 
         })
 
+
     }
 
     private fun initView() {
-        formListAdapter = FormListAdapter(object : FormListListener {
+        val formsProgressMap = shardedVM.retrieveFormProgress()
+
+        formListAdapter = FormListAdapter(formsProgressMap,object : FormListListener {
             override fun openForm(form: Form?, formItemLay: View) {
                 val intent = Intent(requireActivity(), FlashCardActivity::class.java)
                 val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), formItemLay, ViewCompat.getTransitionName(formItemLay)!!)
                 intent.putExtra("form", form)
                 startActivity(intent,options.toBundle())
+
+            }
+
+            override fun checkLessonprogress(position: Int, item: Form) {
+                uiViewModel.initFormSlug(item.slug)
+                uiViewModel.getSubmitEntity()
 
             }
         })

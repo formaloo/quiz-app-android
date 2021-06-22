@@ -5,4 +5,4 @@ import co.idearun.learningapp.data.model.form.Form
 
 interface FormListListener {
     fun openForm(form: Form?, formItemLay: View)
-}
+    fun checkLessonprogress(position: Int, item: Form) }

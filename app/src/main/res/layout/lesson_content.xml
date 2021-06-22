@@ -6,6 +6,14 @@
     <data>
 
         <variable
+            name="progress"
+            type="Integer" />
+
+        <variable
+            name="view"
+            type="android.view.View" />
+
+        <variable
             name="item"
             type="co.idearun.learningapp.data.model.form.Form" />
     </data>
@@ -15,8 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:transitionName="form_item_lay"
         android:orientation="vertical"
+        android:transitionName="form_item_lay"
         tools:targetApi="lollipop">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -58,8 +66,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/padding_standard"
-                android:textAlignment="textStart"
                 android:maxLines="2"
+                android:textAlignment="textStart"
                 android:textSize="@dimen/font_standard"
                 app:htmlTxt="@{item.description}"
                 app:layout_constraintStart_toStartOf="@+id/titleTv"
@@ -102,19 +110,21 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:text="Start"
-                    android:textAllCaps="true"
+                    android:visibility="@{progress>0 ? view.GONE : view.VISIBLE}"                    android:textAllCaps="true"
                     android:textColor="@color/blue_500"
                     android:textSize="@dimen/font_standard"
                     android:textStyle="bold" />
 
                 <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/form_progress"
                     android:layout_width="60dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:max="100"
-                    android:progress="40"
-                    android:visibility="gone" />
+                    android:max="@{item.fields_list!=null?item.fields_list.size():10}"
+                    android:progress="@{progress}"
+                    android:visibility="@{progress>0 ? view.VISIBLE: view.GONE }"
+                     />
 
             </RelativeLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

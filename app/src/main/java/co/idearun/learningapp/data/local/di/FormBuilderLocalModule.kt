@@ -1,7 +1,11 @@
 package co.idearun.learningapp.data.local.di
 
+import android.app.Application
+import android.content.Context
+import android.content.SharedPreferences
 import co.idearun.learningapp.common.BaseMethod
 import co.idearun.learningapp.data.local.FormBuilderDB
+import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
@@ -12,5 +16,9 @@ val formBuilderLocalModule = module {
     factory { (get() as FormBuilderDB).formKeysDao() }
     factory { (get() as FormBuilderDB).submitDao() }
     single { BaseMethod() }
-
+    single {
+        provideSharePreferences(androidApplication())
+    }
 }
+private fun provideSharePreferences(app: Application): SharedPreferences =
+    app.getSharedPreferences("SharedPreferences", Context.MODE_PRIVATE)

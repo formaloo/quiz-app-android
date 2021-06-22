@@ -3,8 +3,6 @@ package co.idearun.learningapp.feature.flashCard
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.transition.Explode
-import android.view.Window
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,15 +14,18 @@ import co.idearun.learningapp.common.extension.visible
 import co.idearun.learningapp.data.model.form.Fields
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.databinding.ActivityFlashCardBinding
-import timber.log.Timber
+import co.idearun.learningapp.feature.viewmodel.SharedViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
 
+    private var formsProgressMap = hashMapOf<String?, Int?>()
     private var form: Form? = null
     private var fieldsFlashAdapter: FieldsFlashAdapter? = null
     private var lastFieldToCheck: Fields? = null
     private var fields: ArrayList<Fields> = arrayListOf()
     private lateinit var binding: ActivityFlashCardBinding
+    val shardedVM: SharedViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +62,20 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
     }
 
     private fun initView() {
+        formsProgressMap = shardedVM.retrieveFormProgress()
+        val formSlug = form?.slug ?: ""
+        val progress = formsProgressMap[form?.slug ?: ""]
+
+        if (progress == null) {
+            formsProgressMap[formSlug] = 0
+            shardedVM.saveFormProgress(formsProgressMap)
+        } else {
+            binding.flashcardFieldsRec.scrollToPosition(progress + 1)
+
+        }
+
+
+
         updateTheme(form)
         form?.fields_list?.let { fields ->
             this.fields = fields
@@ -98,14 +113,6 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
         viewModel.initFormSlug(form?.slug ?: "")
         viewModel.getSubmitEntity()
         viewModel.getSubmitEntityList()
-        viewModel.submitEntity.observe(this, {
-            it?.let {
-                Timber.e("submitEntity ${it.newRow} ${it.progressNumber}")
-                if (it.newRow == false && it.progressNumber != null)
-                    binding.flashcardFieldsRec.scrollToPosition(it.progressNumber!! + 1)
-
-            }
-        })
 
 
     }
@@ -122,11 +129,19 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
 
     override fun next() {
         with(binding.flashcardFieldsRec) {
-            val visibleItemPosition = (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+            val visibleItemPosition =
+                (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
             val newRow = visibleItemPosition == fields.size - 1
-            Timber.e("next $newRow,$visibleItemPosition ${fields.size}")
             viewModel.saveEditSubmitToDB(newRow, visibleItemPosition)
+            if (newRow) {
+                formsProgressMap.remove(form?.slug)
+
+            } else {
+                formsProgressMap[form?.slug]=visibleItemPosition
+                shardedVM.saveFormProgress(formsProgressMap)
+            }
+
             if (fields.size > visibleItemPosition + 1) {
                 Handler(Looper.getMainLooper()).postDelayed({
                     scrollToPosition(visibleItemPosition + 1)
@@ -156,6 +171,9 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
         with(binding.flashcardFieldsRec) {
             var visibleItemPosition =
                 (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+
+            formsProgressMap[form?.slug]=visibleItemPosition
+            shardedVM.saveFormProgress(formsProgressMap)
 
             if (0 <= visibleItemPosition - 1) {
                 scrollToPosition(visibleItemPosition - 1)
@@ -199,11 +217,11 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
             binding.flashcardSkipBtn.invisible()
 
         } else {
-            if (field.required==true) {
+            if (field.required == true) {
                 binding.flashcardSkipBtn.invisible()
                 binding.flashcardDoneBtn.visible()
 
-            }else{
+            } else {
                 binding.flashcardSkipBtn.visible()
                 binding.flashcardDoneBtn.invisible()
 
