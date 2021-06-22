@@ -91,11 +91,11 @@
                 android:layout_width="@dimen/icon_size_large"
                 android:layout_height="@dimen/icon_size_large"
                 app:imageTintList="@{form.text_color}"
-                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="@{()->flashcardListener.next()}"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_coding"
+                android:src="@android:drawable/ic_media_next"
                 app:tint="@color/white" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -115,12 +115,12 @@
                 android:id="@+id/flash_pre_btn"
                 android:layout_width="@dimen/icon_size_large"
                 android:layout_height="@dimen/icon_size_large"
-                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="@{()->flashcardListener.pre()}"
                 android:scaleType="fitCenter"
+                android:src="@android:drawable/ic_media_previous"
                 app:imageTintList="@{form.text_color}"
-                android:src="@drawable/ic_coding"
                 android:visibility="gone"
                 app:tint="@color/white" />
 
