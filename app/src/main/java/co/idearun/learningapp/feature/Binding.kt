@@ -495,7 +495,7 @@ object Binding : KoinComponent {
 
     @BindingAdapter("app:items")
     @JvmStatic
-    fun setFieldItems(recyclerView: RecyclerView, resource: ArrayList<Fields>) {
+    fun setFieldItems(recyclerView: RecyclerView, resource: ArrayList<Fields>?) {
         if (recyclerView.adapter is FieldsFlashAdapter)
             with(recyclerView.adapter as FieldsFlashAdapter) {
                 resource?.let {

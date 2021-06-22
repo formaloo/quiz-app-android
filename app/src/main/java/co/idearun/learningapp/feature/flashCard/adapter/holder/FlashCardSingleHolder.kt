@@ -4,6 +4,7 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.util.TypedValue
 import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.RadioGroup
@@ -87,7 +88,15 @@ class FlashCardSingleHolder(view: View) : RecyclerView.ViewHolder(view) {
         }
 
         for (i in 1..items.size) {
-            val rdbtn = RadioButton(context)
+            val layoutParams = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            layoutParams.bottomMargin = 20
+
+            val rdbtn = RadioButton(value_rg.context)
+            rdbtn.layoutParams = layoutParams
+
             rdbtn.id = View.generateViewId()
             items[i - 1].title?.let {
                 rdbtn.text = it
@@ -99,7 +108,7 @@ class FlashCardSingleHolder(view: View) : RecyclerView.ViewHolder(view) {
 
             rdbtn.setTextSize(
                 TypedValue.COMPLEX_UNIT_PX,
-                context.resources.getDimension(R.dimen.font_large)
+                context.resources.getDimension(R.dimen.font_xlarge)
             )
 
             Binding.getHexColor(form.text_color)?.let {

@@ -15,5 +15,5 @@
         android:ellipsize="end"
         android:textAlignment="viewStart"
         android:textColor="@color/colorBlack"
-        android:textSize="@dimen/font_standard" />
+        android:textSize="@dimen/font_2xlarge" />
 </RelativeLayout>

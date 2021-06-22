@@ -120,7 +120,7 @@ class FlashCardMultiHolder(view: View) : RecyclerView.ViewHolder(view) {
         val context = checkBox.context
         checkBox.setTextSize(
             TypedValue.COMPLEX_UNIT_PX,
-            context.resources.getDimension(co.idearun.learningapp.R.dimen.font_large)
+            context.resources.getDimension(co.idearun.learningapp.R.dimen.font_xlarge)
         )
 
         Binding.getHexColor(form.text_color)?.let {

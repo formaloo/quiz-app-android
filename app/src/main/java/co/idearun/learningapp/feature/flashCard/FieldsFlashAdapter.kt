@@ -57,9 +57,6 @@ class FieldsFlashAdapter(
         private val TYPE_SIGNATURE = 13
         private val TYPE_CSAT = 14
     }
-
-
-
     internal var collection: ArrayList<Fields> by Delegates.observable(arrayListOf()) { _, _, _ ->
         notifyDataSetChanged()
 

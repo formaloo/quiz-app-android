@@ -39,14 +39,13 @@ class FlashCardSectionHolder(view: View, private val swipeStackListener: SwipeSt
             .alpha(1.0f)
             .setListener(null);
 
-        setSwipeStack(arrayListOf(item,item), form, swipeStackListener, pos)
+        setSwipeStack(arrayListOf(item,item), form,  pos)
 
     }
 
     private fun setSwipeStack(
         fields: ArrayList<Fields>?,
         form: Form,
-        listener: SwipeStackListener,
         fieldsPos: Int
     ) {
         val swipeStackAdapter = SwipeStackAdapter(fields ?: arrayListOf(), form)

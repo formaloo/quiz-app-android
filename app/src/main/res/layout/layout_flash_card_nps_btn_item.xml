@@ -42,7 +42,7 @@
             text_color="@{viewmodel.formData.form.submit_text_color}"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/btn_h_l"
-            android:textSize="@dimen/font_large"
+            android:textSize="@dimen/font_xlarge"
             android:layout_alignParentStart="true"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:onClick="@{()->viewmodel.npsBtnClicked(field,holder.adapterPosition)}"

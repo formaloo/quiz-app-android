@@ -76,17 +76,22 @@ class FlashCardMatrixHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         for (g in groups) {
             val value_rg = RadioGroup(context)
-            val layoutParams = LinearLayout.LayoutParams(
+            val lp = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
-            layoutParams.setMargins(16, 0, 16, 16)
-            value_rg.layoutParams = layoutParams
+
+            lp.setMargins(16, 0, 16, 32)
+
+            value_rg.layoutParams = lp
+
+            lp.setMargins(0, 0, 0, 28)
 
             val title = TextView(context).apply {
+                layoutParams=lp
                 setTextSize(
                     TypedValue.COMPLEX_UNIT_PX,
-                    context.resources.getDimension(R.dimen.font_large)
+                    context.resources.getDimension(R.dimen.font_2xlarge)
                 )
 
                 setLineSpacing(0f, 1.33f)
@@ -114,6 +119,11 @@ class FlashCardMatrixHolder(view: View) : RecyclerView.ViewHolder(view) {
                 val rdbtn = RadioButton(value_rg.context)
                 rdbtn.layoutParams = layoutParams
 
+                rdbtn.setTextSize(
+                    TypedValue.COMPLEX_UNIT_PX,
+                    context.resources.getDimension(R.dimen.font_2xlarge)
+                )
+
                 rdbtn.id = View.generateViewId()
                 choices[i - 1].title?.let {
                     rdbtn.text = it
@@ -125,7 +135,7 @@ class FlashCardMatrixHolder(view: View) : RecyclerView.ViewHolder(view) {
 
                 rdbtn.setTextSize(
                     TypedValue.COMPLEX_UNIT_PX,
-                    context.resources.getDimension(R.dimen.font_large)
+                    context.resources.getDimension(R.dimen.font_xlarge)
                 )
 
                 Binding.getHexColor(form.text_color)?.let {
@@ -167,8 +177,8 @@ class FlashCardMatrixHolder(view: View) : RecyclerView.ViewHolder(view) {
                 val borderParam =
                     RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 3)
                 borderParam.setMargins(16, 16, 16, 0)
-                layoutParams.weight = 1f
-                layoutParams.gravity = Gravity.CENTER_HORIZONTAL
+                lp.weight = 1f
+                lp.gravity = Gravity.CENTER_HORIZONTAL
                 view.layoutParams = borderParam
                 view.setBackgroundColor(ContextCompat.getColor(context, R.color.gray2))
                 value_rg.addView(view)

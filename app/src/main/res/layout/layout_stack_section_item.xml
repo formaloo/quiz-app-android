@@ -34,8 +34,8 @@
             android:text="@{field.title}"
             android:padding="@dimen/padding_standard"
             android:textAlignment="textStart"
-            android:lineSpacingExtra="@dimen/padding_small"
+            android:lineSpacingExtra="@dimen/padding_standard"
             android:textColor="@color/black"
-            android:textSize="@dimen/font_xlarge" />
+            android:textSize="@dimen/font_3xlarge" />
     </androidx.cardview.widget.CardView>
 </layout>

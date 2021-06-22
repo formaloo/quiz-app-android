@@ -44,11 +44,11 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
             it.getSerializable("form")?.let {
                 if (it is Form) {
                     binding.form = it
+                    binding.executePendingBindings()
+
                     it.fields_list?.let {
                         this.fields = it
                     }
-
-                    binding.executePendingBindings()
                     form = it
 
                 } else {
@@ -59,17 +59,16 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
     }
 
     private fun initView() {
+        fieldsFlashAdapter = FieldsFlashAdapter(
+            this@FlashCardActivity,
+            object : SwipeStackListener {
+                override fun onSwipeEnd(position: Int) {
+                    next()
+                }
+            }, this@FlashCardActivity, form!!, viewModel
+        )
 
         binding.flashcardFieldsRec.apply {
-            fieldsFlashAdapter = FieldsFlashAdapter(
-                this@FlashCardActivity,
-                object : SwipeStackListener {
-                    override fun onSwipeEnd(position: Int) {
-                        next()
-                    }
-                }, this@FlashCardActivity, form!!, viewModel
-            )
-
             adapter = fieldsFlashAdapter
             layoutManager =
                 object : LinearLayoutManager(context, RecyclerView.HORIZONTAL, false) {
@@ -82,7 +81,7 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
                     }
                 }
         }
-
+        fieldsFlashAdapter?.collection=fields
         updateTheme(form)
 
         checkLessonProgress()
