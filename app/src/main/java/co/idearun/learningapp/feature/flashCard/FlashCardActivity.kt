@@ -3,6 +3,8 @@ package co.idearun.learningapp.feature.flashCard
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.transition.Explode
+import android.view.Window
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +33,8 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
         binding.flashcardListener = this
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
+
+
 
         baseMethod.hideAB(supportActionBar)
 

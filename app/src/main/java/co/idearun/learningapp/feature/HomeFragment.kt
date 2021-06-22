@@ -1,16 +1,22 @@
 package co.idearun.learningapp.feature
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.ViewCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import co.idearun.learningapp.common.base.BaseFragment
 import co.idearun.learningapp.common.base.BaseViewModel
 import co.idearun.learningapp.common.exception.Failure
+import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.databinding.FragmentHomeBinding
 import co.idearun.learningapp.feature.adapter.FormListAdapter
+import co.idearun.learningapp.feature.adapter.FormListListener
+import co.idearun.learningapp.feature.flashCard.FlashCardActivity
 import co.idearun.learningapp.feature.viewmodel.FormViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -69,7 +75,15 @@ class HomeFragment : BaseFragment(), KoinComponent {
     }
 
     private fun initView() {
-        formListAdapter = FormListAdapter()
+        formListAdapter = FormListAdapter(object : FormListListener {
+            override fun openForm(form: Form?, formItemLay: View) {
+                val intent = Intent(requireActivity(), FlashCardActivity::class.java)
+                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), formItemLay, ViewCompat.getTransitionName(formItemLay)!!)
+                intent.putExtra("form", form)
+                startActivity(intent,options.toBundle())
+
+            }
+        })
 
         binding.lessonRv.apply {
             adapter = formListAdapter

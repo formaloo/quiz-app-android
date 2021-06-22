@@ -11,10 +11,13 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/form_item_lay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
-        android:orientation="vertical">
+        android:transitionName="form_item_lay"
+        android:orientation="vertical"
+        tools:targetApi="lollipop">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
