@@ -108,7 +108,7 @@ class FlashCardMatrixHolder(view: View) : RecyclerView.ViewHolder(view) {
 
             for (i in 1..choices.size) {
                 val layoutParams = LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.WRAP_CONTENT
                 )
                 layoutParams.bottomMargin = 20

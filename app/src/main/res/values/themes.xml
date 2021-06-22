@@ -34,4 +34,9 @@
         <item name="hintTextColor">@color/text_input</item>
 
     </style>
+
+
+    <style name="SplashTheme" parent="Theme.LearningApp">
+        <item name="android:windowBackground">@drawable/back_splash</item>
+    </style>
 </resources>

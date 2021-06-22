@@ -192,10 +192,11 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
                 fileList,
                 progressNumber
             )
+             _submitEntity.value = value
              repository.saveSubmit(value)
 
          } else if (visibleItemPosition >= 1) {
-            repository.getSubmitEntity(formSlug ?: "")?.let{value->
+            submitEntity.value?.let{value->
                 Timber.e("if $progressNumber ")
                 value.files = fileList
                 value.formReq = formReqList

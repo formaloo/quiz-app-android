@@ -49,7 +49,6 @@ class HomeFragment : BaseFragment(), KoinComponent {
         initView()
         initData()
 
-
     }
 
     private fun initData() {

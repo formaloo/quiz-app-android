@@ -16,6 +16,7 @@
         <variable
             name="field"
             type="co.idearun.learningapp.data.model.form.Fields" />
+
         <variable
             name="form"
             type="co.idearun.learningapp.data.model.form.Form" />
@@ -27,32 +28,34 @@
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:padding="@dimen/padding_small">
 
         <include
             android:id="@+id/field_ui_header"
             layout="@layout/layout_ui_field_header" />
 
-        <HorizontalScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/matrix_scrollview"
-            android:scrollbars="horizontal"
-            app:field_background="@{form}"
-            app:field_has_err="@{viewmodel.errorField.slug.equals(field.slug)}"
             android:layout_width="match_parent"
-            android:padding="@dimen/padding_xsmall"
-            android:minHeight="@dimen/btn_h_l"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@+id/field_ui_header"
             android:layout_alignParentStart="true"
+            android:minHeight="@dimen/btn_h_l"
             android:orientation="horizontal"
-            android:visibility="visible">
+            android:padding="@dimen/padding_xsmall"
+            android:scrollbars="horizontal"
+            android:visibility="visible"
+            app:field_background="@{form}"
+            app:field_has_err="@{viewmodel.errorField.slug.equals(field.slug)}">
+
             <LinearLayout
                 android:id="@+id/matrix_lay"
-                android:orientation="vertical"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"/>
-        </HorizontalScrollView>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" />
+        </androidx.core.widget.NestedScrollView>
+
         <RelativeLayout
             android:id="@+id/err_lay"
             android:layout_width="match_parent"

@@ -165,7 +165,7 @@ class FormzRepo(
 
     fun createFormReq(reqMap: HashMap<String, String>): HashMap<String, RequestBody> {
         val jsonParams: HashMap<String, RequestBody> = HashMap()
-        jsonParams[""]=createPartFromString( "")
+        jsonParams[""] = createPartFromString("")
         reqMap.keys.forEach { slug ->
             val data = createPartFromString(reqMap[slug] ?: "")
             jsonParams[slug] = data
@@ -173,9 +173,11 @@ class FormzRepo(
 
         return jsonParams
     }
+
     private fun createPartFromString(descriptionString: String): RequestBody {
         return RequestBody.create(MultipartBody.FORM, descriptionString)
     }
+
     override suspend fun search(searchStr: String): Either<Failure, SearchRes> {
         val call = source.search(searchStr)
         return try {
@@ -227,13 +229,13 @@ class FormzRepo(
 
                                 withContext(Dispatchers.IO) {
 
+                                    formsDao.deleteAllFromTable()
                                     formsKeysDao.saveFormsKeys(
                                         FormsKeys(
                                             0,
                                             formsData.current_page ?: 1
                                         )
                                     )
-
                                     formList.map {
                                         async { getForm(it.slug) }
                                     }.awaitAll().let {

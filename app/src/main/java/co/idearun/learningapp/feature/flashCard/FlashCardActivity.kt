@@ -122,8 +122,7 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
 
     override fun next() {
         with(binding.flashcardFieldsRec) {
-            val visibleItemPosition =
-                (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
+            val visibleItemPosition = (layoutManager as LinearLayoutManager).findFirstVisibleItemPosition()
 
             val newRow = visibleItemPosition == fields.size - 1
             Timber.e("next $newRow,$visibleItemPosition ${fields.size}")
@@ -200,7 +199,15 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
             binding.flashcardSkipBtn.invisible()
 
         } else {
-            binding.flashcardSkipBtn.visible()
+            if (field.required==true) {
+                binding.flashcardSkipBtn.invisible()
+                binding.flashcardDoneBtn.visible()
+
+            }else{
+                binding.flashcardSkipBtn.visible()
+                binding.flashcardDoneBtn.invisible()
+
+            }
 
         }
 

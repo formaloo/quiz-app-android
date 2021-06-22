@@ -41,7 +41,7 @@ class FlashCardSectionHolder(view: View, private val swipeStackListener: SwipeSt
             .alpha(1.0f)
             .setListener(null);
 
-        setSwipeStack(arrayListOf(item), form, swipeStackListener, pos)
+        setSwipeStack(arrayListOf(item,item,item,item), form, swipeStackListener, pos)
 
     }
 
@@ -57,13 +57,10 @@ class FlashCardSectionHolder(view: View, private val swipeStackListener: SwipeSt
 
         binding.swipeStack.setListener(object : SwipeStack.SwipeStackListener {
             override fun onViewSwipedToLeft(position: Int) {
-                swipeStackListener.onSwipeEnd(fieldsPos)
-
 
             }
 
             override fun onViewSwipedToRight(position: Int) {
-                swipeStackListener.onSwipeEnd(fieldsPos)
 
             }
 
