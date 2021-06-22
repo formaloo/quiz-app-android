@@ -26,13 +26,12 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
 import timber.log.Timber
 
-class HomeFragment : BaseFragment(), KoinComponent,FormListListener {
+class HomeFragment : BaseFragment(), KoinComponent, FormListListener {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var formListAdapter: FormListAdapter
     private val viewModel: FormViewModel by viewModel()
-    val uiViewModel: UIViewModel by viewModel()
-    val shardedVM: SharedViewModel by viewModel()
+    private val shardedVM: SharedViewModel by viewModel()
 
 
     override fun getViewModel(): BaseViewModel = viewModel
@@ -74,9 +73,9 @@ class HomeFragment : BaseFragment(), KoinComponent,FormListListener {
             it?.let {
                 val formsProgress = shardedVM.retrieveFormProgress()
                 Timber.e(" viewModel.form.observe ${formsProgress[it.slug]}")
-                binding.lessonInprogress.progress= formsProgress[it.slug]
-                binding.lessonInprogress.item=it
-                binding.lessonInprogress.listener=this
+                binding.lessonInprogress.progress = formsProgress[it.slug]
+                binding.lessonInprogress.item = it
+                binding.lessonInprogress.listener = this
                 binding.executePendingBindings()
             }
 
@@ -96,7 +95,7 @@ class HomeFragment : BaseFragment(), KoinComponent,FormListListener {
     private fun initView() {
         val formsProgressMap = shardedVM.retrieveFormProgress()
 
-        formListAdapter = FormListAdapter(formsProgressMap,this)
+        formListAdapter = FormListAdapter(formsProgressMap, this)
 
         binding.lessonRv.apply {
             adapter = formListAdapter
@@ -104,11 +103,16 @@ class HomeFragment : BaseFragment(), KoinComponent,FormListListener {
         }
 
     }
+
     override fun openForm(form: Form?, formItemLay: View) {
         val intent = Intent(requireActivity(), FlashCardActivity::class.java)
-        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), formItemLay, ViewCompat.getTransitionName(formItemLay)!!)
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+            requireActivity(),
+            formItemLay,
+            ViewCompat.getTransitionName(formItemLay)!!
+        )
         intent.putExtra("form", form)
-        startActivity(intent,options.toBundle())
+        startActivity(intent, options.toBundle())
 
     }
 

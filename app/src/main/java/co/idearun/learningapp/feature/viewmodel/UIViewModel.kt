@@ -2,43 +2,30 @@ package co.idearun.learningapp.feature.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import co.idearun.learningapp.common.BaseMethod
 import co.idearun.learningapp.common.base.BaseViewModel
 import co.idearun.learningapp.data.model.form.Fields
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.data.model.form.SubmitEntity
 import co.idearun.learningapp.data.model.form.createForm.CreateFormData
-import co.idearun.learningapp.data.model.form.createForm.CreateFormRes
 import co.idearun.learningapp.data.repository.FormzRepo
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
-import org.json.JSONObject
 import timber.log.Timber
 import java.io.File
-import kotlin.random.Random
 
 class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
     private var formSlug: String? = null
-    private var rowSlug: String? = null
-    private var progressNumber: Int? = null
     private var formReqList = HashMap<String, String>()
     private var fileList = HashMap<String, Fields>()
-
     private var files: ArrayList<MultipartBody.Part> = arrayListOf()
+
     private val _formData = MutableLiveData<CreateFormData>().apply { value = null }
     val formData: LiveData<CreateFormData> = _formData
     private val _form = MutableLiveData<Form>().apply { value = null }
     val form: LiveData<Form> = _form
-    private val _submitedData = MutableLiveData<Boolean>().apply { value = null }
-    val submitedData: LiveData<Boolean> = _submitedData
     private val _submitEntity = MutableLiveData<SubmitEntity>().apply { value = null }
     val submitEntity: LiveData<SubmitEntity> = _submitEntity
-    private val _isLoading = MutableLiveData<Boolean>().apply { value = null }
-    val isLoading: LiveData<Boolean> = _isLoading
     private val _fields = MutableLiveData<ArrayList<Fields>>().apply { value = null }
     val fields: LiveData<ArrayList<Fields>> = _fields
     private val _errorField = MutableLiveData<Fields>().apply { value = null }
@@ -54,43 +41,9 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
     private var requiredField = arrayListOf<Fields>()
 
-    fun retrieveForm() = launch {
-        showLoading()
-        val result = async(Dispatchers.IO) { repository.getFormData(formSlug) }.await()
-        result.either(::handleFailure, ::handleFormData)
-
-    }
-
-    fun retrieveFormFromDB() = launch {
-        val result = withContext(Dispatchers.IO) { repository.getFormFromDB(formSlug ?: "") }
-        _form.value = result
-
-    }
-
-    private fun handleFormData(res: CreateFormRes) {
-        res?.let { it ->
-            it.data?.let {
-                Timber.e("calc ${it.form?.fields_list}")
-                _formData.value = it
-                it.form?.fields_list?.let {
-                    _fields.value = it
-                    hideLoading()
-                }
-            }
-
-            hideLoading()
-
-        }
-
-    }
-
 
     fun initFormSlug(slug: String) {
         formSlug = slug
-    }
-
-    fun initRowSlug(slug: String) {
-        rowSlug = slug
     }
 
     fun addKeyValueToReq(slug: String, value: Any) {
@@ -131,30 +84,10 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
         }
     }
 
-    fun showLoading() {
-
-        _isLoading.value = true
-    }
-
-    fun hideLoading() {
-        _isLoading.value = false
-
-    }
-
-    fun initSelectedTime(time: String) {
-        Timber.e("initSelectedTime $time")
-        _selectedTime.value = time
-    }
 
     fun initSelectedDate(date: String) {
         Timber.e("initSelectedDate $date")
         _selectedDate.value = date
-    }
-
-    fun getSubmitEntityList() = launch {
-        val list = repository.getSubmitEntityList()
-        Timber.e("getSubmitEntityList ${list.size}")
-
     }
 
     fun getSubmitEntity() = launch {
@@ -162,47 +95,35 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
         entity?.let {
             if (entity.newRow == true) {
-                progressNumber = 0
             } else {
                 formReqList = entity.formReq
                 fileList = entity.files
-                progressNumber = entity.progressNumber
             }
 
             _submitEntity.value = entity
         }
 
-        Timber.e("getSubmitEntity $progressNumber ")
 
     }
 
 
     fun saveEditSubmitToDB(newRow: Boolean, visibleItemPosition: Int) = launch {
-        progressNumber = visibleItemPosition
-
-         if (progressNumber == 0) {
-            val value=SubmitEntity(
+        if (visibleItemPosition == 0) {
+            val value = SubmitEntity(
                 0,
-                Random.nextInt(),
-                false,
                 newRow,
-                rowSlug,
                 formSlug,
                 formReqList,
-                fileList,
-                progressNumber
+                fileList
             )
-             _submitEntity.value = value
-             repository.saveSubmit(value)
+            _submitEntity.value = value
+            repository.saveSubmit(value)
 
-         } else if (visibleItemPosition >= 1) {
-            submitEntity.value?.let{value->
-                Timber.e("if $progressNumber ")
+        } else if (visibleItemPosition >= 1) {
+            submitEntity.value?.let { value ->
                 value.files = fileList
                 value.formReq = formReqList
-                value.progressNumber = progressNumber
                 value.newRow = newRow
-
                 repository.saveSubmit(value)
 
             }
@@ -211,20 +132,8 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
         }
 
 
-
     }
 
-    fun errorFind(it: JSONObject, baseMethod: BaseMethod) {
-        it.keys().forEach { key ->
-            val err = baseMethod.retrieveErr(it, key)
-            val errField = Fields()
-            errField.slug = key
-            errField.title = err
-            _errorField.value = errField
-        }
-
-
-    }
 
     fun setErrorToField(it: Fields, msg: String) {
         val errField = Fields()
@@ -232,14 +141,6 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
         errField.title = msg
         _errorField.value = errField
 
-    }
-
-    fun hideErrorField() {
-        val fields = Fields()
-        fields.slug = null
-        fields.title = ""
-
-        _errorField.value = fields
     }
 
 
