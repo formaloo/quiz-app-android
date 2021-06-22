@@ -26,7 +26,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
 import timber.log.Timber
 
-class HomeFragment : BaseFragment(), KoinComponent {
+class HomeFragment : BaseFragment(), KoinComponent,FormListListener {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var formListAdapter: FormListAdapter
@@ -58,6 +58,11 @@ class HomeFragment : BaseFragment(), KoinComponent {
     private fun initData() {
         fetchFormList(true)
 
+        shardedVM.getLastForm()?.let {
+         viewModel.initFormSlug(it)
+         viewModel.retrieveForm()
+        }
+
         viewModel.failure.observe(viewLifecycleOwner, {
             when (it) {
                 is Failure.FeatureFailure -> renderFailure(it.msgRes)
@@ -70,7 +75,11 @@ class HomeFragment : BaseFragment(), KoinComponent {
 
         viewModel.form.observe(viewLifecycleOwner, {
             it?.let {
-                Timber.e("forms $it")
+                val formsProgress = shardedVM.retrieveFormProgress()
+                binding.lessonInprogress.progress= formsProgress[it.slug]?:0
+                binding.lessonInprogress.item=it
+                binding.lessonInprogress.listener=this
+                binding.executePendingBindings()
             }
 
         })
@@ -81,21 +90,7 @@ class HomeFragment : BaseFragment(), KoinComponent {
     private fun initView() {
         val formsProgressMap = shardedVM.retrieveFormProgress()
 
-        formListAdapter = FormListAdapter(formsProgressMap,object : FormListListener {
-            override fun openForm(form: Form?, formItemLay: View) {
-                val intent = Intent(requireActivity(), FlashCardActivity::class.java)
-                val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), formItemLay, ViewCompat.getTransitionName(formItemLay)!!)
-                intent.putExtra("form", form)
-                startActivity(intent,options.toBundle())
-
-            }
-
-            override fun checkLessonprogress(position: Int, item: Form) {
-                uiViewModel.initFormSlug(item.slug)
-                uiViewModel.getSubmitEntity()
-
-            }
-        })
+        formListAdapter = FormListAdapter(formsProgressMap,this)
 
         binding.lessonRv.apply {
             adapter = formListAdapter
@@ -103,7 +98,13 @@ class HomeFragment : BaseFragment(), KoinComponent {
         }
 
     }
+    override fun openForm(form: Form?, formItemLay: View) {
+        val intent = Intent(requireActivity(), FlashCardActivity::class.java)
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), formItemLay, ViewCompat.getTransitionName(formItemLay)!!)
+        intent.putExtra("form", form)
+        startActivity(intent,options.toBundle())
 
+    }
 
     private fun fetchFormList(force: Boolean) {
         lifecycleScope.launch {

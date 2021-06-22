@@ -9,14 +9,12 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.text.Html
-import android.util.Log
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatButton
-import androidx.collection.ArrayMap
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import co.idearun.learningapp.common.BaseMethod
@@ -26,6 +24,7 @@ import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.feature.drawer.SortedFormListAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import org.koin.core.KoinComponent
@@ -34,7 +33,7 @@ import java.lang.reflect.Field
 import java.text.SimpleDateFormat
 import java.util.*
 
-object Binding: KoinComponent {
+object Binding : KoinComponent {
     val baseMethod: BaseMethod by inject()
 
     const val TAG = "Binding"
@@ -270,10 +269,18 @@ object Binding: KoinComponent {
     }
 
     @JvmStatic
+    @BindingAdapter("app:progressTint")
+    fun progressTint(view: LinearProgressIndicator, color: String?) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            view.progressTintList = baseMethod.getColorStateList(color)
+        }
+    }
+
+    @JvmStatic
     @BindingAdapter("app:backgroundTintList")
     fun backgroundTintList(view: View, color: String?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            view.backgroundTintList =  baseMethod.getColorStateList(color)
+            view.backgroundTintList = baseMethod.getColorStateList(color)
         }
     }
 
@@ -476,7 +483,7 @@ object Binding: KoinComponent {
 
     @BindingAdapter("app:items")
     @JvmStatic
-    fun setFormItems(recyclerView: RecyclerView, resource: ArrayList<HashMap<Int,Form>>?) {
+    fun setFormItems(recyclerView: RecyclerView, resource: ArrayList<HashMap<Int, Form>>?) {
         if (recyclerView.adapter is SortedFormListAdapter)
             with(recyclerView.adapter as SortedFormListAdapter) {
                 resource?.let {

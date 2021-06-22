@@ -29,7 +29,6 @@ class FormListAdapter(
         val item = getItem(position)
         item?.let {
             holder.bindItems(item, listener,formsProgressMap)
-            listener.checkLessonprogress(position, item)
         }
 
     }

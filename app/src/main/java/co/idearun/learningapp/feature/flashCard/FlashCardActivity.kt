@@ -33,6 +33,7 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
         binding.listener = this
         binding.flashcardListener = this
         binding.viewmodel = viewModel
+        binding.progress = 1
         binding.lifecycleOwner = this
 
 
@@ -74,6 +75,9 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
 
         }
 
+        binding.progress = progress?:0+1
+        binding.executePendingBindings()
+
         updateTheme(form)
         form?.fields_list?.let { fields ->
             this.fields = fields
@@ -108,6 +112,8 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
     }
 
     private fun initData() {
+        shardedVM.saveLastForm(form?.slug?:"")
+
         viewModel.initFormSlug(form?.slug ?: "")
         viewModel.getSubmitEntity()
         viewModel.getSubmitEntityList()
@@ -135,6 +141,9 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
             updateNextData(visibleItemPosition, fields)
 
             updateNextView(fields, visibleItemPosition, this)
+
+            binding.progress = visibleItemPosition + 1
+
         }
 
     }
@@ -187,6 +196,8 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
 
             updatePreView(visibleItemPosition)
             updatepreView(visibleItemPosition, this)
+
+            binding.progress = visibleItemPosition
         }
     }
 

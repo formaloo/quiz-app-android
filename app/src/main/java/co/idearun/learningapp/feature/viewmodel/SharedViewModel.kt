@@ -15,4 +15,11 @@ class SharedViewModel(private val repository: SharedRepository) : BaseViewModel(
 
     }
 
+    fun saveLastForm(formSlug: String) {
+        repository.saveLastForm(formSlug)
+    }
+
+    fun getLastForm(): String? {
+        return repository.getLastForm()
+    }
 }

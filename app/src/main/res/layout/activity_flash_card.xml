@@ -4,6 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="progress"
+            type="Integer" />
+
+        <variable
+            name="view"
+            type="android.view.View" />
 
         <variable
             name="form"
@@ -47,6 +54,18 @@
                 android:src="@drawable/ic_close"
                 app:imageTintList="@{form.text_color}"
                 app:tint="@color/white" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/form_progress"
+                android:layout_centerVertical="true"
+                android:layout_width="match_parent"
+                android:layout_toEndOf="@+id/flash_close_btn"
+                android:layout_toStartOf="@+id/flash_share_btn"
+                android:layout_height="wrap_content"
+                app:progressTint="@{form.text_color}"
+                android:layout_centerHorizontal="true"
+                android:max="@{form.fields_list!=null?form.fields_list.size():10}"
+                android:progress="@{progress}" />
 
             <ImageButton
                 android:id="@+id/flash_share_btn"

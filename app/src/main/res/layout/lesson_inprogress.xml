@@ -1,89 +1,116 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/padding_standard"
-    android:background="@drawable/lesson_inprogress_bg"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="@dimen/img_size_xs"
-        android:layout_height="@dimen/img_size_xs"
-        android:layout_marginTop="@dimen/padding_2xlarge"
-        android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        tools:srcCompat="@tools:sample/avatars" />
+        <variable
+            name="progress"
+            type="Integer" />
 
+        <variable
+            name="listener"
+            type="co.idearun.learningapp.feature.adapter.FormListListener" />
 
-    <TextView
-        android:id="@+id/titleTv"
+        <variable
+            name="view"
+            type="android.view.View" />
+
+        <variable
+            name="item"
+            type="co.idearun.learningapp.data.model.form.Form" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/padding_2xlarge"
-        android:ellipsize="end"
-        android:maxLines="3"
-        android:paddingHorizontal="@dimen/padding_xlarge"
-        android:text="Kotlin ktor: code server without pain and hurt"
-        android:textAlignment="center"
-        android:textColor="@color/gray2"
-        android:textSize="@dimen/font_xlarge" />
+        android:layout_margin="@dimen/padding_standard"
+        android:background="@drawable/lesson_inprogress_bg"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/continueBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="38dp"
-        android:layout_marginTop="@dimen/padding_2xlarge"
-        android:background="@drawable/button_start"
-        android:paddingHorizontal="@dimen/padding_large"
-        android:text="continue this lesson"
-        android:textAllCaps="true"
-        android:textColor="@color/white" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="@dimen/padding_standard"
-        android:background="#FFF4F4F4" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="@dimen/img_size_xs"
+            android:layout_height="@dimen/img_size_xs"
+            android:layout_marginTop="@dimen/padding_2xlarge"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            app:imageUrl="@{item.logo}"
+            tools:srcCompat="@tools:sample/avatars" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/padding_standard"
-        android:orientation="horizontal"
-        android:padding="@dimen/padding_small">
 
         <TextView
-            android:id="@+id/progressTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lesson Completion"
-            android:textColor="@color/gray2"
-            android:textSize="@dimen/font_small" />
-
-        <TextView
-            android:id="@+id/percentTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:text="20%"
-            android:textColor="@color/gray2"
-            android:textSize="@dimen/font_small" />
-
-
-        <com.google.android.material.progressindicator.LinearProgressIndicator
-            android:id="@+id/progressBar"
+            android:id="@+id/titleTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/progressTv"
-            android:layout_marginTop="@dimen/padding_small"
-            android:max="100"
-            android:progress="20" />
+            android:layout_marginTop="@dimen/padding_2xlarge"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:paddingHorizontal="@dimen/padding_xlarge"
+            android:text="@{item.title}"
+            android:textAlignment="center"
+            android:textColor="@color/gray2"
+            android:textSize="@dimen/font_xlarge" />
 
-    </RelativeLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/continueBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:transitionName="form_item_lay"
+            tools:targetApi="lollipop"
+            android:layout_marginTop="@dimen/padding_2xlarge"
+            android:background="@drawable/button_start"
+            android:onClick="@{(v)->listener.openForm(item,v)}"
+            android:paddingHorizontal="@dimen/padding_large"
+            android:text="continue this lesson"
+            android:textAllCaps="true"
+            android:textColor="@color/white" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/padding_standard"
+            android:background="#FFF4F4F4" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="@dimen/padding_standard"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding_small">
+
+            <TextView
+                android:id="@+id/progressTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lesson Completion"
+                android:textColor="@color/gray2"
+                android:textSize="@dimen/font_small" />
+
+            <TextView
+                android:id="@+id/percentTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="@{Integer.toString(progress/100)+' '+'%'}"
+                android:textColor="@color/gray2"
+                android:textSize="@dimen/font_small" />
+
+            <com.google.android.material.progressindicator.LinearProgressIndicator
+                android:id="@+id/progressBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/progressTv"
+                android:layout_marginTop="@dimen/padding_small"
+                android:max="@{item.fields_list!=null?item.fields_list.size():10}"
+                android:progress="@{progress}"
+                android:visibility="@{progress>0 ? view.VISIBLE: view.GONE }" />
+
+        </RelativeLayout>
 
 
-</LinearLayout>
+    </LinearLayout>
+</layout>

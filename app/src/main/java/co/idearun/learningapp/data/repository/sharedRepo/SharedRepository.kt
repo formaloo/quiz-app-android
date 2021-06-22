@@ -7,6 +7,9 @@ import org.json.JSONObject
 interface SharedRepository {
     fun saveFormProgress(formProgress: Map<String?, Int?>)
     fun retrieveFormProgress(): HashMap<String?, Int?>
+
+    fun saveLastForm(formSlug:String?)
+    fun getLastForm():String?
 }
 
 
@@ -36,6 +39,15 @@ class SharedRepositoryImpl(
 
 
         return outputMap
+    }
+
+    override fun saveLastForm(formSlug: String?) {
+        sharedPreferences.edit().putString(Constants.PREFERENCES_LAST_FORM, formSlug).apply()
+
+    }
+
+    override fun getLastForm(): String? {
+        return sharedPreferences.getString(Constants.PREFERENCES_LAST_FORM,"")
     }
 
 }

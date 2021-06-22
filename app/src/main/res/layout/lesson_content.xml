@@ -111,7 +111,7 @@
                     android:layout_centerVertical="true"
                     android:text="Start"
                     android:visibility="@{progress>0 ? view.GONE : view.VISIBLE}"                    android:textAllCaps="true"
-                    android:textColor="@color/blue_500"
+                    android:textColor="?attr/colorPrimary"
                     android:textSize="@dimen/font_standard"
                     android:textStyle="bold" />
 
