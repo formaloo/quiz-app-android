@@ -35,6 +35,7 @@ class FormListAdapter(
         item?.let {
             holder.bindItems(item, listener,formsProgressMap)
         }
+        holder.setIsRecyclable(false)
 
     }
 
@@ -58,6 +59,7 @@ class FormListAdapter(
 
             }
         }
+
 
     }
 

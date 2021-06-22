@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 import timber.log.Timber
 import java.io.File
+import kotlin.random.Random
 
 class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
@@ -111,6 +112,8 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
         if (visibleItemPosition == 0) {
             val value = SubmitEntity(
                 0,
+                Random.nextInt(),
+
                 newRow,
                 formSlug,
                 formReqList,

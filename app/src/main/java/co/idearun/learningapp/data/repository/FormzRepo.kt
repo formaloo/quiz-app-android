@@ -53,7 +53,6 @@ class FormzRepo(
         submitDao.getSubmitEntityList().map {
             val newRow = it.newRow
             val formSLug = it.formSlug
-            val rowSlug = it.rowSlug
             val formReq = createFormReq(it.formReq)
             val files = createFilesReq(it.files)
 
@@ -105,7 +104,6 @@ class FormzRepo(
                     removeSentSubmitFromDB(submitEntity)
 
                 } else {
-                    submitEntity.hasFormError = true
 //                    updateSubmitEntityFromDB(submitEntity)
 
                     val jObjError = JSONObject(response.errorBody()?.string())

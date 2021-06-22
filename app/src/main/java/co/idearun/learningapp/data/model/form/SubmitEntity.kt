@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 data class SubmitEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
+    val uniqueId: Int,
     var newRow: Boolean?,
     val formSlug: String?,
     var formReq: HashMap<String, String>,
