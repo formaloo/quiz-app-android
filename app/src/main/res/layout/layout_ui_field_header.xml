@@ -40,7 +40,7 @@
             android:text="@{field.required?field.title+'*':field.title}"
             android:textAlignment="viewStart"
             android:textColor="@color/colorBlack"
-            android:textSize="@dimen/font_xlarge"
+            android:textSize="@dimen/font_3xlarge"
             app:text_color="@{form.text_color}" />
 
         <TextView
@@ -53,7 +53,7 @@
             app:field_desc="@{field}"
             android:textAlignment="viewStart"
             android:textColor="@color/gray2"
-            android:textSize="@dimen/font_large"
+            android:textSize="@dimen/font_2xlarge"
             android:visibility="@{field.description.length()>0 ? View.VISIBLE : View.GONE ,default=gone}"
             app:text_color="@{form.text_color}" />
 

@@ -52,7 +52,7 @@
                 android:gravity="start|center_vertical"
                 android:minHeight="@dimen/btn_h_l"
                 android:textAlignment="textStart"
-                android:textSize="@dimen/font_large"
+                android:textSize="@dimen/font_xlarge"
                 app:textCursorDrawable="@{form.text_color}"
                 app:text_color="@{form.text_color}" />
 

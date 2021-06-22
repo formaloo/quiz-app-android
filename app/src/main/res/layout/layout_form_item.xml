@@ -43,7 +43,7 @@
                 android:maxLines="2"
                 android:text="@{form.title}"
                 android:textColor="@color/gray2"
-                android:textSize="@dimen/font_large" />
+                android:textSize="@dimen/font_xlarge" />
         </LinearLayout>
 
     </FrameLayout>

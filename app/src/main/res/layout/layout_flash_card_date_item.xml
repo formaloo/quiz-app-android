@@ -58,7 +58,7 @@
                 android:text="@{viewmodel.selectedDate}"
                 android:textAlignment="viewStart"
                 android:textColor="@color/colorBlack"
-                android:textSize="@dimen/font_large"
+                android:textSize="@dimen/font_xlarge"
                 app:text_color="@{form.text_color}" />
 
         </RelativeLayout>

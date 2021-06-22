@@ -81,7 +81,7 @@
                 android:layout_marginTop="@dimen/padding_xsmall"
                 android:textAlignment="viewStart"
                 android:textColor="@color/gray2"
-                android:textSize="@dimen/font_standard"
+                android:textSize="@dimen/font_xlarge"
                 android:visibility="gone" />
 
             <TextView
@@ -96,7 +96,7 @@
                 android:textAlignment="viewStart"
                 android:text="@{viewmodel.fieldFielName.slug==field.slug?viewmodel.fieldFielName.title:@string/empty_txt,default=@string/empty_txt}"
                 android:textColor="@color/gray2"
-                android:textSize="@dimen/font_standard"
+                android:textSize="@dimen/font_xlarge"
                 android:visibility="gone" />
 
             <ImageButton
