@@ -16,12 +16,12 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
 
-    private var formsProgressMap = hashMapOf<String?, Int?>()
-    private var form: Form? = null
-    private var fieldsFlashAdapter: FieldsFlashAdapter? = null
-    private var fields: ArrayList<Fields> = arrayListOf()
     private lateinit var binding: ActivityFlashCardBinding
-    val shardedVM: SharedViewModel by viewModel()
+    private val shardedVM: SharedViewModel by viewModel()
+    private var fieldsFlashAdapter: FieldsFlashAdapter? = null
+    private var form: Form? = null
+    private var lessonsProgressMap = hashMapOf<String?, Int?>()
+    private var fields: ArrayList<Fields> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +30,6 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
         binding.flashcardListener = this
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
-
-
 
         baseMethod.hideAB(supportActionBar)
 
@@ -155,20 +153,20 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
     }
 
     private fun updateLessonProgress(pos: Int) {
-        formsProgressMap[form?.slug] = pos
-        shardedVM.saveLessonProgress(formsProgressMap)
+        lessonsProgressMap[form?.slug] = pos
+        shardedVM.saveLessonProgress(lessonsProgressMap)
 
     }
 
     private fun checkLessonProgress() {
-        formsProgressMap = shardedVM.retrieveLessonProgress()
+        lessonsProgressMap = shardedVM.retrieveLessonProgress()
 
         val formSlug = form?.slug ?: ""
-        val progress = formsProgressMap[form?.slug ?: ""]
+        val progress = lessonsProgressMap[form?.slug ?: ""]
 
         if (progress == null) {
-            formsProgressMap[formSlug] = 0
-            shardedVM.saveLessonProgress(formsProgressMap)
+            lessonsProgressMap[formSlug] = 0
+            shardedVM.saveLessonProgress(lessonsProgressMap)
         } else {
             binding.flashcardFieldsRec.scrollToPosition(progress + 1)
         }
