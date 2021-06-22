@@ -44,6 +44,7 @@
                     app:items="@{viewmodel.formMap}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/layout_form_item" />
+
             </LinearLayout>
 
         </com.google.android.material.navigation.NavigationView>
