@@ -32,7 +32,6 @@ class FlashCardMultiHolder(view: View) : RecyclerView.ViewHolder(view) {
         pos: Int,
         listener: ViewsListener,
         form: Form,
-        flashcardListener: FlashcardListener,
         uiViewModel: UIViewModel
     ) {
         binding.field = item
@@ -45,7 +44,6 @@ class FlashCardMultiHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.viewmodel = uiViewModel
         binding.lifecycleOwner = binding.choicesListLay.context as LifecycleOwner
 
-        flashcardListener.checkField(item, pos)
 
         if (item.required == true) {
             uiViewModel.reuiredField(item)

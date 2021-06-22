@@ -21,7 +21,6 @@ class FlashCardDateHolder(view: View) : RecyclerView.ViewHolder(view) {
         pos: Int,
         listener: ViewsListener,
         form: Form,
-        flashcardListener: FlashcardListener,
         uiViewModel: UIViewModel
     ) {
         binding.field = field
@@ -31,7 +30,6 @@ class FlashCardDateHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.fieldUiHeader.field = field
         binding.fieldUiHeader.form = form
         binding.lifecycleOwner = binding.keyTxv.context as LifecycleOwner
-        flashcardListener.checkField(field, pos)
 
         val context = binding.keyTxv.context
 

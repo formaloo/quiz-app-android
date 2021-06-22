@@ -23,6 +23,7 @@ interface FormService {
         private const val FORM_DETAIL = "${VERSION2}forms/form/{slug}/"
         private const val CAT_LIST = "${VERSION2}forms/category/list/"
         private const val submitForm = "${VERSION1}forms/form/{slug}/submit/"
+
     }
 
     @GET(FORMS)

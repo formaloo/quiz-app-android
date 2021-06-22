@@ -28,7 +28,6 @@ class FlashCardNPSHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.listener = listener
         binding.fieldUiHeader.field = item
         binding.fieldUiHeader.form = form
-        flashcardListener.checkField(item, pos)
 
         binding.viewmodel = uiViewModel
         binding.lifecycleOwner = binding.npsRec.context as LifecycleOwner

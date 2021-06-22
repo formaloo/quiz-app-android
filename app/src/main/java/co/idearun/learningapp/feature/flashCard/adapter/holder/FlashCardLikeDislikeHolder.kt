@@ -35,7 +35,6 @@ class FlashCardLikeDislikeHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.fieldUiFooter.field = field
         binding.fieldUiFooter.viewmodel = viewmodel
 
-        flashcardListener.checkField(field, pos)
 
         Binding.getHexColor(form.text_color)?.let {
             binding.dislikeBtn.setColorFilter(Color.parseColor(it))

@@ -22,14 +22,12 @@ class FlashCardSectionHolder(view: View, private val swipeStackListener: SwipeSt
         pos: Int,
         listener: ViewsListener,
         form: Form,
-        flashcardListener: FlashcardListener,
         uiViewModel: UIViewModel
     ) {
         binding.field = item
         binding.form = form
         binding.listener = listener
         binding.lifecycleOwner = binding.swipeStack.context as LifecycleOwner
-        flashcardListener.checkField(item, pos)
 
         // Prepare the View for the animation
         binding.swipeStack.visible()

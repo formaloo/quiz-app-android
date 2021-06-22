@@ -33,10 +33,6 @@ class FlashCardStarHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.fieldUiFooter.field = item
         binding.fieldUiFooter.viewmodel = uiViewModel
 
-
-        flashcardListener.checkField(item, pos)
-
-
         Binding.getHexColor(form.text_color)?.let {
             val colorStateList = ColorStateList(
                 arrayOf(

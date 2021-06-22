@@ -31,11 +31,6 @@ class FlashCardDropDownHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.fieldUiFooter.field = item
         binding.fieldUiFooter.viewmodel = viewmodel
 
-
-
-
-        flashcardListener.checkField(item, pos)
-
         val dropAdapter = DropDownItemsAdapter(form)
 
         binding.valueSpinner.apply {

@@ -34,7 +34,6 @@ class FlashCardMatrixHolder(view: View) : RecyclerView.ViewHolder(view) {
         pos: Int,
         listener: ViewsListener,
         form: Form,
-        flashcardListener: FlashcardListener,
         uiViewModel: UIViewModel
     ) {
         binding.field = item
@@ -47,7 +46,6 @@ class FlashCardMatrixHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.fieldUiFooter.field = item
         binding.fieldUiFooter.viewmodel = uiViewModel
 
-        flashcardListener.checkField(item, pos)
 
         var choices = arrayListOf<ChoiceItem>()
         var groups = arrayListOf<ChoiceItem>()

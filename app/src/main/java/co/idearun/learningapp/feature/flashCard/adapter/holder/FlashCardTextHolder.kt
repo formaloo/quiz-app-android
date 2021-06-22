@@ -24,7 +24,6 @@ class FlashCardTextHolder(view: View) : RecyclerView.ViewHolder(view) {
         position_: Int,
         listener: ViewsListener,
         form: Form,
-        flashcardListener: FlashcardListener,
         uiViewModel: UIViewModel
     ) {
         binding.field = item
@@ -36,9 +35,6 @@ class FlashCardTextHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.fieldUiFooter.field = item
         binding.fieldUiFooter.viewmodel = uiViewModel
         binding.lifecycleOwner = binding.errLay.context as LifecycleOwner
-
-
-        flashcardListener.checkField(item, position_)
 
         checkDataValueType(binding.valueEdt, item)
 

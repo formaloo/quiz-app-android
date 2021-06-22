@@ -41,7 +41,6 @@ class FlashCardSingleHolder(view: View) : RecyclerView.ViewHolder(view) {
         val context = binding.valueRg.context
         binding.lifecycleOwner = context as LifecycleOwner
 
-        flashcardListener.checkField(field, pos)
 
         val type = field.type
         if (type != null && type.equals(Constants.YESNO)) {

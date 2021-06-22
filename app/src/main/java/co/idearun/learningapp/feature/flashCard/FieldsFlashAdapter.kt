@@ -27,6 +27,7 @@ import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.feature.flashCard.adapter.holder.*
 import co.idearun.learningapp.feature.viewmodel.UIViewModel
 import java.util.*
+import kotlin.properties.Delegates
 
 
 class FieldsFlashAdapter(
@@ -38,28 +39,28 @@ class FieldsFlashAdapter(
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var lastPosition = RecyclerView.NO_POSITION
-    private val TYPE_DROP_DOWN = 0
-    private val TYPE_MULTI = 1
-    private val TYPE_SIGNLE = 2
-    private val TYPE_EDT = 3
-    private val TYPE_LIKE_DISLIKE = 4
-    private val TYPE_STAR = 5
-    private val TYPE_NPS = 6
-    private val TYPE_FILE = 7
-    private val TYPE_SECTION = 8
-    private val TYPE_TIME = 9
-    private val TYPE_DATE = 10
-    private val TYPE_MATRIX = 11
-    private val TYPE_PHONE_VERIFICATION = 12
-    private val TYPE_SIGNATURE = 13
-    private val TYPE_CSAT = 14
+    companion  object  {
+        private var lastPosition = RecyclerView.NO_POSITION
+        private val TYPE_DROP_DOWN = 0
+        private val TYPE_MULTI = 1
+        private val TYPE_SIGNLE = 2
+        private val TYPE_EDT = 3
+        private val TYPE_LIKE_DISLIKE = 4
+        private val TYPE_STAR = 5
+        private val TYPE_NPS = 6
+        private val TYPE_FILE = 7
+        private val TYPE_SECTION = 8
+        private val TYPE_TIME = 9
+        private val TYPE_DATE = 10
+        private val TYPE_MATRIX = 11
+        private val TYPE_PHONE_VERIFICATION = 12
+        private val TYPE_SIGNATURE = 13
+        private val TYPE_CSAT = 14
+    }
 
 
-    internal var collection = arrayListOf<Fields>()
 
-    fun setCollection(items: ArrayList<Fields>) {
-        collection = items
+    internal var collection: ArrayList<Fields> by Delegates.observable(arrayListOf()) { _, _, _ ->
         notifyDataSetChanged()
 
     }
@@ -83,7 +84,6 @@ class FieldsFlashAdapter(
                     listener,
                     flashcardListener,
                     form, viewmodel
-
                 )
 
             }
@@ -93,7 +93,7 @@ class FieldsFlashAdapter(
                     position_,
                     listener,
                     form,
-                    flashcardListener,
+                    
                     viewmodel
                 )
 
@@ -101,7 +101,7 @@ class FieldsFlashAdapter(
             TYPE_MULTI -> {
                 (holder as FlashCardMultiHolder).bindItems(
                     btnItem, position_,
-                    listener, form, flashcardListener, viewmodel
+                    listener, form,  viewmodel
                 )
 
             }
@@ -122,7 +122,7 @@ class FieldsFlashAdapter(
                     position_,
                     listener,
                     form,
-                    flashcardListener,
+                    
                     viewmodel
                 )
 
@@ -187,7 +187,7 @@ class FieldsFlashAdapter(
                     position_,
                     listener,
                     form,
-                    flashcardListener,
+                    
                     viewmodel
                 )
 
@@ -198,7 +198,7 @@ class FieldsFlashAdapter(
                     position_,
                     listener,
                     form,
-                    flashcardListener,
+                    
                     viewmodel
                 )
 
@@ -209,7 +209,7 @@ class FieldsFlashAdapter(
                     position_,
                     listener,
                     form,
-                    flashcardListener,
+                    
                     viewmodel
                 )
 
@@ -220,7 +220,7 @@ class FieldsFlashAdapter(
                     position_,
                     listener,
                     form,
-                    flashcardListener,
+                    
                     viewmodel
                 )
             }
@@ -230,7 +230,7 @@ class FieldsFlashAdapter(
                     position_,
                     listener,
                     form,
-                    flashcardListener,
+                    
                     viewmodel
                 )
             }
@@ -240,7 +240,7 @@ class FieldsFlashAdapter(
                     position_,
                     listener,
                     form,
-                    flashcardListener,
+                    
                     viewmodel
                 )
 

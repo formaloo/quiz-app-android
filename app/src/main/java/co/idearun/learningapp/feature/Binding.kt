@@ -22,6 +22,7 @@ import co.idearun.learningapp.common.Constants
 import co.idearun.learningapp.data.model.form.Fields
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.feature.drawer.SortedFormListAdapter
+import co.idearun.learningapp.feature.flashCard.FieldsFlashAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.progressindicator.LinearProgressIndicator
@@ -491,4 +492,16 @@ object Binding : KoinComponent {
                 }
             }
     }
+
+    @BindingAdapter("app:items")
+    @JvmStatic
+    fun setFieldItems(recyclerView: RecyclerView, resource: ArrayList<Fields>) {
+        if (recyclerView.adapter is FieldsFlashAdapter)
+            with(recyclerView.adapter as FieldsFlashAdapter) {
+                resource?.let {
+                    collection = it
+                }
+            }
+    }
+
 }
