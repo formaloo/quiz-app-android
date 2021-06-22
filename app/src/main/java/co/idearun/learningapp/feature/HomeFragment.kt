@@ -58,10 +58,7 @@ class HomeFragment : BaseFragment(), KoinComponent,FormListListener {
     private fun initData() {
         fetchFormList(true)
 
-        shardedVM.getLastForm()?.let {
-         viewModel.initFormSlug(it)
-         viewModel.retrieveForm()
-        }
+        getLastFormData()
 
         viewModel.failure.observe(viewLifecycleOwner, {
             when (it) {
@@ -84,6 +81,14 @@ class HomeFragment : BaseFragment(), KoinComponent,FormListListener {
 
         })
 
+
+    }
+
+    private fun getLastFormData() {
+        shardedVM.getLastForm()?.let {
+            viewModel.initFormSlug(it)
+            viewModel.retrieveForm()
+        }
 
     }
 
@@ -124,5 +129,10 @@ class HomeFragment : BaseFragment(), KoinComponent,FormListListener {
     }
 
 
+    override fun onResume() {
+        super.onResume()
+        getLastFormData()
+        formListAdapter.notifyDataSetChanged()
+    }
 }
 
