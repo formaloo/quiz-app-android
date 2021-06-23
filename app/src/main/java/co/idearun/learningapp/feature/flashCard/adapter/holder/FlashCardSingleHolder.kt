@@ -1,5 +1,6 @@
 package co.idearun.learningapp.feature.flashCard.adapter.holder
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.util.TypedValue
@@ -84,67 +85,71 @@ class FlashCardSingleHolder(view: View) : RecyclerView.ViewHolder(view) {
         }
 
         for (i in 1..items.size) {
-            val layoutParams = LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-            layoutParams.bottomMargin = 48
+            value_rg.addView(createRadioButton(form,uiViewModel,items,field,i,context))
+        }
+    }
 
+    private fun createRadioButton(
+        form: Form,
+        uiViewModel: UIViewModel,
+        items: java.util.ArrayList<ChoiceItem>,
+        field: Fields,
+        i: Int,
+        context: Context
+    ): RadioButton {
+        val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        layoutParams.bottomMargin = 48
 
-            val rdbtn = RadioButton(value_rg.context)
-            rdbtn.layoutParams = layoutParams
-            rdbtn.setPadding(48, 48, 48, 48)
-            rdbtn.minLines=2
+        val rdbtn = RadioButton(context)
+        rdbtn.layoutParams = layoutParams
+        rdbtn.setPadding(48, 48, 48, 48)
+        rdbtn.minLines=2
 
-            Binding.getHexColor(form.field_color)?.let {
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                    rdbtn.setBackgroundColor(Color.parseColor(it))
-                }
+        Binding.getHexColor(form.field_color)?.let {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                rdbtn.setBackgroundColor(Color.parseColor(it))
             }
+        }
 
 
-            rdbtn.id = View.generateViewId()
-            items[i - 1].title?.let {
-                rdbtn.text = it
-            }
+        rdbtn.id = View.generateViewId()
+        items[i - 1].title?.let {
+            rdbtn.text = it
+        }
 
-            items[i - 1].image?.let {
+        items[i - 1].image?.let {
 
-            }
+        }
 
-            rdbtn.setTextSize(
-                TypedValue.COMPLEX_UNIT_PX,
-                context.resources.getDimension(R.dimen.font_xlarge)
-            )
+        rdbtn.setTextSize(
+            TypedValue.COMPLEX_UNIT_PX,
+            context.resources.getDimension(R.dimen.font_xlarge)
+        )
 
-            Binding.getHexColor(form.text_color)?.let {
-                rdbtn.setTextColor(Color.parseColor(it))
+        Binding.getHexColor(form.text_color)?.let {
+            rdbtn.setTextColor(Color.parseColor(it))
 
-                val colorStateList = ColorStateList(
-                    arrayOf(
-                        intArrayOf(-android.R.attr.state_enabled),
-                        intArrayOf(android.R.attr.state_enabled)
-                    ), intArrayOf(
-                        Color.parseColor(it) //disabled
-                        , Color.parseColor(it) //enabled
-                    )
+            val colorStateList = ColorStateList(
+                arrayOf(
+                    intArrayOf(-android.R.attr.state_enabled),
+                    intArrayOf(android.R.attr.state_enabled)
+                ), intArrayOf(
+                    Color.parseColor(it) //disabled
+                    , Color.parseColor(it) //enabled
                 )
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                    rdbtn.buttonTintList = colorStateList
-                }
+            )
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                rdbtn.buttonTintList = colorStateList
             }
+        }
 
-            value_rg.addView(rdbtn)
-
-
-
-            rdbtn.setOnClickListener {
-                items[i - 1].slug?.let { slug ->
-                    uiViewModel.addKeyValueToReq(field.slug!!, slug)
-                }
-
+        rdbtn.setOnClickListener {
+            items[i - 1].slug?.let { slug ->
+                uiViewModel.addKeyValueToReq(field.slug!!, slug)
             }
 
         }
+
+        return rdbtn
     }
 }
