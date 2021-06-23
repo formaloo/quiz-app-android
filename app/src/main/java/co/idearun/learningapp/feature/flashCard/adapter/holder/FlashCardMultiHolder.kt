@@ -102,13 +102,15 @@ class FlashCardMultiHolder(view: View) : RecyclerView.ViewHolder(view) {
     ): View {
 
         val layoutParams = LinearLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        layoutParams.bottomMargin = 20
+        layoutParams.bottomMargin = 48
 
         val checkBox = CheckBox(ll.context)
         checkBox.layoutParams = layoutParams
+        checkBox.setPadding(48, 48, 48, 48)
+        checkBox.minLines=2
 
         choice.title?.let {
             checkBox.text = it
@@ -139,7 +141,11 @@ class FlashCardMultiHolder(view: View) : RecyclerView.ViewHolder(view) {
                 checkBox.buttonTintList = colorStateList
             }
         }
-
+        Binding.getHexColor(form.field_color)?.let {
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                checkBox.setBackgroundColor(Color.parseColor(it))
+            }
+        }
 
         checkBox.setOnCheckedChangeListener { compoundButton, b ->
 

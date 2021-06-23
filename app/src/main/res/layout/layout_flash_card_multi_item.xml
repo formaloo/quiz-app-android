@@ -40,8 +40,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/padding_xsmall"
-            app:field_background="@{form}"
-            app:field_has_err="@{viewmodel.errorField.slug.equals(field.slug)}"
             android:layout_below="@+id/field_ui_header"
             android:orientation="vertical">
 
