@@ -33,7 +33,6 @@ import kotlin.properties.Delegates
 class FieldsFlashAdapter(
     private val listener: ViewsListener,
     private val swipeStackListener: SwipeStackListener,
-    private val flashcardListener: FlashcardListener,
     private val form: Form,
     private val viewmodel: UIViewModel
 ) :
@@ -79,7 +78,6 @@ class FieldsFlashAdapter(
                     btnItem,
                     position_,
                     listener,
-                    flashcardListener,
                     form, viewmodel
                 )
 
@@ -108,7 +106,6 @@ class FieldsFlashAdapter(
                     position_,
                     listener,
                     form,
-                    flashcardListener,
                     viewmodel
                 )
 
@@ -130,7 +127,6 @@ class FieldsFlashAdapter(
                     position_,
                     listener,
                     form,
-                    flashcardListener,
                     viewmodel
                 )
 
@@ -141,7 +137,6 @@ class FieldsFlashAdapter(
                     position_,
                     listener,
                     form,
-                    flashcardListener,
                     viewmodel
                 )
 
@@ -152,8 +147,7 @@ class FieldsFlashAdapter(
                     position_,
                     listener,
                     form,
-                    viewmodel,
-                    flashcardListener
+                    viewmodel
                 )
 
             }
@@ -163,7 +157,6 @@ class FieldsFlashAdapter(
                     position_,
                     listener,
                     form,
-                    flashcardListener,
                     viewmodel
                 )
 

@@ -19,22 +19,18 @@ class FlashCardNpsItemAdapter(
     private val fields: Fields,
     private val form: Form,
     private val viewmodel: UIViewModel,
-    private val errLay: RelativeLayout,
-    private val flashcardListener: FlashcardListener
-) :
-    RecyclerView.Adapter<FlashCardNpsItemAdapter.NPSItemViewHolder>() {
+    private val errLay: RelativeLayout
+) : RecyclerView.Adapter<FlashCardNpsItemAdapter.NPSItemViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NPSItemViewHolder {
         val itemView: View = LayoutInflater.from(parent.context)
             .inflate(R.layout.layout_flash_card_nps_btn_item, parent, false);
         return NPSItemViewHolder(itemView)
-
-
     }
 
     override fun onBindViewHolder(holder: NPSItemViewHolder, position_: Int) {
-        holder.bindItems(fields, position_, form, viewmodel, errLay, flashcardListener)
+        holder.bindItems(fields, position_, form, viewmodel, errLay)
 
         holder.setIsRecyclable(false)
     }
@@ -58,8 +54,7 @@ class FlashCardNpsItemAdapter(
             position_: Int,
             form: Form,
             viewmodel: UIViewModel,
-            errLay: RelativeLayout,
-            listener: FlashcardListener
+            errLay: RelativeLayout
 
         ) {
             binding.field = field
@@ -70,7 +65,6 @@ class FlashCardNpsItemAdapter(
 
             binding.npsBtn.setOnClickListener {
                 viewmodel.npsBtnClicked(field, absoluteAdapterPosition)
-                listener.next()
             }
             if (field.required == true) {
                 viewmodel.reuiredField(field)

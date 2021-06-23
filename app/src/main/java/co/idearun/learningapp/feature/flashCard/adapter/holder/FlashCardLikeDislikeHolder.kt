@@ -22,7 +22,6 @@ class FlashCardLikeDislikeHolder(view: View) : RecyclerView.ViewHolder(view) {
         pos: Int,
         listener: ViewsListener,
         form: Form,
-        flashcardListener: FlashcardListener,
         viewmodel: UIViewModel
     ) {
         binding.field = field
@@ -45,7 +44,6 @@ class FlashCardLikeDislikeHolder(view: View) : RecyclerView.ViewHolder(view) {
             changeBtnActivity(binding.dislikeBtn, binding.likeBtn, form, false)
             viewmodel.addKeyValueToReq(field.slug!!, -1)
             hideErr(binding, viewmodel)
-            flashcardListener.next()
 
         }
 
@@ -53,7 +51,6 @@ class FlashCardLikeDislikeHolder(view: View) : RecyclerView.ViewHolder(view) {
             changeBtnActivity(binding.likeBtn, binding.dislikeBtn, form, true)
             viewmodel.addKeyValueToReq(field.slug!!, 1)
             hideErr(binding, viewmodel)
-            flashcardListener.next()
 
         }
 

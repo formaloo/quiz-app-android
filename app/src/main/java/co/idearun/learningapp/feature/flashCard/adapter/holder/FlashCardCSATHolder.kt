@@ -22,8 +22,7 @@ class FlashCardCSATHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         position_: Int,
         listener: ViewsListener,
         form: Form,
-        viewmodel: UIViewModel,
-        flashcardListener: FlashcardListener
+        viewmodel: UIViewModel
     ) {
         binding.field = field
         binding.form = form
@@ -39,7 +38,7 @@ class FlashCardCSATHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var selectedItem: Int? = null
 
 
-        setUpCSATIconList(field, viewmodel, selectedItem, flashcardListener)
+        setUpCSATIconList(field, viewmodel, selectedItem)
 
         if (field.required == true) {
             viewmodel.reuiredField(field)
@@ -53,8 +52,7 @@ class FlashCardCSATHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private fun setUpCSATIconList(
         field: Fields,
         viewmodel: UIViewModel,
-        selectedItem: Int?,
-        flashcardListener: FlashcardListener
+        selectedItem: Int?
     ) {
         val list = when (field.thumbnail_type) {
             CSATThumbnailType.flat_face.name -> {
@@ -128,7 +126,6 @@ class FlashCardCSATHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 override fun csatSelected(pos: Int) {
                     viewmodel.addKeyValueToReq(field.slug!!, pos)
                     hideErr(binding, viewmodel)
-                    flashcardListener.next()
                 }
 
             })

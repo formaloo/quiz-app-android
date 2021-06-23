@@ -28,7 +28,6 @@ class FlashCardSingleHolder(view: View) : RecyclerView.ViewHolder(view) {
         pos: Int,
         listener: ViewsListener,
         form: Form,
-        flashcardListener: FlashcardListener,
         uiViewModel: UIViewModel
     ) {
         binding.field = field
@@ -64,8 +63,7 @@ class FlashCardSingleHolder(view: View) : RecyclerView.ViewHolder(view) {
                 binding.valueRg,
                 ArrayList(it),
                 form,
-                uiViewModel,
-                flashcardListener
+                uiViewModel
             )
 
         }
@@ -77,7 +75,6 @@ class FlashCardSingleHolder(view: View) : RecyclerView.ViewHolder(view) {
         items: ArrayList<ChoiceItem>,
         form: Form,
         uiViewModel: UIViewModel,
-        flashcardListener: FlashcardListener
     ) {
         val context = value_rg.context
         val type = field.type
@@ -136,7 +133,6 @@ class FlashCardSingleHolder(view: View) : RecyclerView.ViewHolder(view) {
                 items[i - 1].slug?.let { slug ->
                     uiViewModel.addKeyValueToReq(field.slug!!, slug)
                 }
-                flashcardListener.next()
 
             }
 

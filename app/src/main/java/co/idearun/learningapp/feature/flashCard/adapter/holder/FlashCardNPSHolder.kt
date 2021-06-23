@@ -20,7 +20,6 @@ class FlashCardNPSHolder(view: View) : RecyclerView.ViewHolder(view) {
         pos: Int,
         listener: ViewsListener,
         form: Form,
-        flashcardListener: FlashcardListener,
         uiViewModel: UIViewModel
     ) {
         binding.field = item
@@ -28,7 +27,6 @@ class FlashCardNPSHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.listener = listener
         binding.fieldUiHeader.field = item
         binding.fieldUiHeader.form = form
-
         binding.viewmodel = uiViewModel
         binding.lifecycleOwner = binding.npsRec.context as LifecycleOwner
         binding.fieldUiFooter.field = item
@@ -37,7 +35,7 @@ class FlashCardNPSHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         binding.npsRec.apply {
             adapter =
-                FlashCardNpsItemAdapter(item, form, uiViewModel, binding.errLay, flashcardListener)
+                FlashCardNpsItemAdapter(item, form, uiViewModel, binding.errLay)
             layoutManager = GridLayoutManager(context, 11)
             addItemDecoration(DividerItemDecoration(context, RecyclerView.HORIZONTAL))
         }

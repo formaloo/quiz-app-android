@@ -18,7 +18,6 @@ class FlashCardDropDownHolder(view: View) : RecyclerView.ViewHolder(view) {
         item: Fields,
         pos: Int,
         listener: ViewsListener,
-        flashcardListener: FlashcardListener,
         form: Form, viewmodel: UIViewModel
     ) {
         binding.field = item
@@ -49,7 +48,6 @@ class FlashCardDropDownHolder(view: View) : RecyclerView.ViewHolder(view) {
                     dropAdapter.getItem(position)?.slug?.let { slug ->
                         viewmodel.addKeyValueToReq(item.slug!!, slug)
                     }
-                    flashcardListener.next()
                 }
 
             }

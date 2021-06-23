@@ -47,7 +47,7 @@
 
             <ImageButton
                 android:id="@+id/like_btn"
-                android:src="@drawable/ic_like_border"
+                android:src="@drawable/selector_like"
                 android:scaleType="fitCenter"
                 android:layout_marginEnd="@dimen/padding_large"
                 android:padding="@dimen/padding_2xsmall"
@@ -59,7 +59,7 @@
             <ImageButton
                 android:id="@+id/dislike_btn"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_dislike_border"
+                android:src="@drawable/selector_dislike"
                 android:layout_toEndOf="@+id/like_btn"
                 android:padding="@dimen/padding_2xsmall"
                 android:background="?attr/selectableItemBackgroundBorderless"

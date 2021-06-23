@@ -21,7 +21,6 @@ class FlashCardStarHolder(view: View) : RecyclerView.ViewHolder(view) {
         pos: Int,
         listener: ViewsListener,
         form: Form,
-        flashcardListener: FlashcardListener,
         uiViewModel: UIViewModel
     ) {
         binding.field = item
@@ -51,7 +50,6 @@ class FlashCardStarHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.starRating.setOnRatingBarChangeListener { ratingBar, fl, b ->
             uiViewModel.addKeyValueToReq(item.slug!!, fl)
             hideErr(binding, uiViewModel)
-            flashcardListener.next()
         }
 
         if (item.required == true) {

@@ -65,7 +65,7 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
                 override fun onSwipeEnd(position: Int) {
                     next()
                 }
-            }, this@FlashCardActivity, form!!, viewModel
+            }, form!!, viewModel
         )
 
         binding.flashcardFieldsRec.apply {
