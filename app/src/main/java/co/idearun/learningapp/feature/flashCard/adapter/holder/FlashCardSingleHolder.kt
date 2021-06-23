@@ -97,57 +97,58 @@ class FlashCardSingleHolder(view: View) : RecyclerView.ViewHolder(view) {
         i: Int,
         context: Context
     ): RadioButton {
-        val layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        layoutParams.bottomMargin = 48
+
 
         val rdbtn = RadioButton(context)
-        rdbtn.layoutParams = layoutParams
-        rdbtn.setPadding(48, 48, 48, 48)
-        rdbtn.minLines=2
 
-        Binding.getHexColor(form.field_color)?.let {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                rdbtn.setBackgroundColor(Color.parseColor(it))
+        rdbtn.apply {
+            val lp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            lp.bottomMargin = 48
+
+            layoutParams = lp
+            setPadding(48, 48, 48, 48)
+            minLines=2
+
+            Binding.getHexColor(form.field_color)?.let {
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    setBackgroundColor(Color.parseColor(it))
+                }
             }
-        }
-
-
-        rdbtn.id = View.generateViewId()
-        items[i - 1].title?.let {
-            rdbtn.text = it
-        }
-
-        items[i - 1].image?.let {
-
-        }
-
-        rdbtn.setTextSize(
-            TypedValue.COMPLEX_UNIT_PX,
-            context.resources.getDimension(R.dimen.font_xlarge)
-        )
-
-        Binding.getHexColor(form.text_color)?.let {
-            rdbtn.setTextColor(Color.parseColor(it))
-
-            val colorStateList = ColorStateList(
-                arrayOf(
-                    intArrayOf(-android.R.attr.state_enabled),
-                    intArrayOf(android.R.attr.state_enabled)
-                ), intArrayOf(
-                    Color.parseColor(it) //disabled
-                    , Color.parseColor(it) //enabled
-                )
+            setTextSize(
+                TypedValue.COMPLEX_UNIT_PX,
+                context.resources.getDimension(R.dimen.font_xlarge)
             )
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                rdbtn.buttonTintList = colorStateList
-            }
-        }
 
-        rdbtn.setOnClickListener {
-            items[i - 1].slug?.let { slug ->
-                uiViewModel.addKeyValueToReq(field.slug!!, slug)
+            id = View.generateViewId()
+            text = items[i - 1].title?:""
+
+            items[i - 1].image?.let {
+
             }
 
+            Binding.getHexColor(form.text_color)?.let {
+                setTextColor(Color.parseColor(it))
+
+                val colorStateList = ColorStateList(
+                    arrayOf(
+                        intArrayOf(-android.R.attr.state_enabled),
+                        intArrayOf(android.R.attr.state_enabled)
+                    ), intArrayOf(
+                        Color.parseColor(it) //disabled
+                        , Color.parseColor(it) //enabled
+                    )
+                )
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    buttonTintList = colorStateList
+                }
+            }
+
+            setOnClickListener {
+                items[i - 1].slug?.let { slug ->
+                    uiViewModel.addKeyValueToReq(field.slug!!, slug)
+                }
+
+            }
         }
 
         return rdbtn
