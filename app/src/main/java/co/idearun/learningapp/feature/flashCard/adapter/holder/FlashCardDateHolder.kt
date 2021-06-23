@@ -31,25 +31,11 @@ class FlashCardDateHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.fieldUiHeader.form = form
         binding.lifecycleOwner = binding.keyTxv.context as LifecycleOwner
 
-        val context = binding.keyTxv.context
+        if (field.required == true) {
+            uiViewModel.reuiredField(field)
 
-        Binding.getHexColor(form.text_color)?.let { it ->
-            val colorStateList = ColorStateList(
-                arrayOf(
-                    intArrayOf(-R.attr.state_enabled),
-                    intArrayOf(R.attr.state_enabled)
-                ), intArrayOf(
-                    Color.parseColor(it) //disabled
-                    , Color.parseColor(it) //enabled
-                )
-            )
+        } else {
 
-            if (field.required == true) {
-                uiViewModel.reuiredField(field)
-
-            } else {
-
-            }
         }
     }
 

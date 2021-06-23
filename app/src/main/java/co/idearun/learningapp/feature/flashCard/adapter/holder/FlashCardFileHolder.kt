@@ -91,20 +91,6 @@ class FlashCardFileHolder(view: View) : RecyclerView.ViewHolder(view) {
             binding.removeFileBtn.visible()
         }
 
-        Binding.getHexColor(form.text_color)?.let {
-            val colorStateList = ColorStateList(
-                arrayOf(
-                    intArrayOf(-android.R.attr.state_enabled),
-                    intArrayOf(android.R.attr.state_enabled)
-                ), intArrayOf(
-                    Color.parseColor(it) //disabled
-                    , Color.parseColor(it) //enabled
-                )
-            )
-//            binding.starRating.progressTintList = colorStateList
-        }
-
-
         viewmodel.fieldFielName.observe(context as LifecycleOwner, {
             it?.let {
                 if (it.slug == field.slug) {

@@ -25,7 +25,6 @@ class FlashCardDropDownHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.form = form
         binding.fieldUiHeader.field = item
         binding.fieldUiHeader.form = form
-//        binding.listener = listener
         binding.viewmodel = viewmodel
         binding.lifecycleOwner = binding.spinnerValueLay.context as LifecycleOwner
         binding.fieldUiFooter.field = item
