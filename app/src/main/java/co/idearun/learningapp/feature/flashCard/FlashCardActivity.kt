@@ -79,8 +79,11 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
                     override fun canScrollHorizontally(): Boolean {
                         return false
                     }
+
                 }
+
         }
+
         fieldsFlashAdapter?.collection=fields
         updateTheme(form)
 

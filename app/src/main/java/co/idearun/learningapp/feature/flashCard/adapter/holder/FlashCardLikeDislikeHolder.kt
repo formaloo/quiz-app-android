@@ -5,13 +5,11 @@ import android.view.View
 import android.widget.ImageButton
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
-import co.idearun.learningapp.R
 import co.idearun.learningapp.common.extension.invisible
 import co.idearun.learningapp.data.model.form.Fields
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.databinding.LayoutFlashCardLikeDislikeItemBinding
 import co.idearun.learningapp.feature.Binding
-import co.idearun.learningapp.feature.flashCard.FlashcardListener
 import co.idearun.learningapp.feature.flashCard.ViewsListener
 import co.idearun.learningapp.feature.viewmodel.UIViewModel
 
@@ -40,15 +38,20 @@ class FlashCardLikeDislikeHolder(view: View) : RecyclerView.ViewHolder(view) {
             binding.likeBtn.setColorFilter(Color.parseColor(it))
         }
 
+
         binding.dislikeBtn.setOnClickListener {
-            changeBtnActivity(binding.dislikeBtn, binding.likeBtn, form, false)
+            it.isSelected = true
+            binding.likeBtn.isSelected = false
+
             viewmodel.addKeyValueToReq(field.slug!!, -1)
             hideErr(binding, viewmodel)
 
         }
 
         binding.likeBtn.setOnClickListener {
-            changeBtnActivity(binding.likeBtn, binding.dislikeBtn, form, true)
+            it.isSelected = true
+            binding.dislikeBtn.isSelected = false
+
             viewmodel.addKeyValueToReq(field.slug!!, 1)
             hideErr(binding, viewmodel)
 
@@ -69,39 +72,5 @@ class FlashCardLikeDislikeHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     }
 
-    private fun changeBtnActivity(
-        activeBtn: ImageButton,
-        deActiveBtn: ImageButton,
-        form: Form,
-        likeBtn: Boolean
-    ) {
-
-        activeBtn.apply {
-            if (likeBtn) {
-                setImageResource(R.drawable.ic_like)
-
-            } else {
-                setImageResource(R.drawable.ic_dislike)
-
-            }
-            Binding.getHexColor(form.text_color)?.let {
-                setColorFilter(Color.parseColor(it))
-            }
-
-        }
-
-        deActiveBtn.apply {
-            if (likeBtn) {
-                setImageResource(R.drawable.ic_dislike_border)
-
-            } else {
-                setImageResource(R.drawable.ic_like_border)
-
-            }
-            Binding.getHexColor(form.text_color)?.let {
-                setColorFilter(Color.parseColor(it))
-            }
-        }
-    }
 
 }

@@ -131,7 +131,6 @@
                 android:text="@string/im_done"
                 android:textAlignment="gravity"
                 android:textSize="@dimen/font_standard"
-                android:visibility="gone"
                 app:text_color="@{form.text_color}" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -157,7 +156,6 @@
                 android:padding="@dimen/padding_small"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_arrow_left"
-                android:visibility="gone"
                 app:imageTintList="@{form.text_color}"
                 app:tint="@color/white" />
 
