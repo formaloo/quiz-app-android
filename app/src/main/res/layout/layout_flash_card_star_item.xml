@@ -44,17 +44,17 @@
             android:layout_below="@+id/field_ui_header"
             android:minHeight="@dimen/btn_h_l"
             android:padding="@dimen/padding_xsmall"
-            app:field_background="@{form}"
-            app:field_has_err="@{viewmodel.errorField.slug.equals(field.slug)}">
+            app:field_background="@{form}">
 
             <androidx.appcompat.widget.AppCompatRatingBar
                 android:id="@+id/star_rating"
-                style="?android:attr/ratingBarStyleIndicator"
+                style="?android:attr/ratingBarStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:isIndicator="false"
                 android:numStars="5"
+                android:padding="@dimen/padding_small"
                 android:stepSize="1" />
 
         </RelativeLayout>
