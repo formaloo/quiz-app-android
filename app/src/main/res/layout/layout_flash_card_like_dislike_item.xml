@@ -16,6 +16,7 @@
         <variable
             name="field"
             type="co.idearun.learningapp.data.model.form.Fields" />
+
         <variable
             name="form"
             type="co.idearun.learningapp.data.model.form.Form" />
@@ -25,9 +26,10 @@
             type="co.idearun.learningapp.common.BaseMethod" />
     </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="@dimen/padding_small">
 
 
@@ -35,49 +37,49 @@
             android:id="@+id/field_ui_header"
             layout="@layout/layout_ui_field_header" />
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/ldlay"
-            android:layout_below="@+id/field_ui_header"
             android:layout_width="match_parent"
-            app:field_has_err="@{viewmodel.errorField.slug.equals(field.slug)}"
-            app:field_background="@{form}"
-            android:padding="@dimen/padding_small"
+            android:layout_height="wrap_content"
             android:minHeight="@dimen/btn_h_l"
-            android:layout_height="wrap_content">
+            android:orientation="horizontal"
+            android:background="@null">
 
             <ImageButton
                 android:id="@+id/like_btn"
-                android:src="@drawable/selector_like"
-                android:scaleType="fitCenter"
-                android:layout_marginEnd="@dimen/padding_large"
-                android:padding="@dimen/padding_2xsmall"
-                android:layout_alignParentStart="true"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/img_size_l"
+                android:layout_marginEnd="@dimen/padding_small"
+                android:layout_weight="1"
+                app:field_background="@{form}"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:layout_width="@dimen/icon_size_large"
-                android:layout_height="@dimen/icon_size_large"/>
+                android:padding="@dimen/padding_small"
+                android:scaleType="fitCenter"
+                android:src="@drawable/selector_like" />
 
             <ImageButton
                 android:id="@+id/dislike_btn"
-                android:scaleType="fitCenter"
-                android:src="@drawable/selector_dislike"
-                android:layout_toEndOf="@+id/like_btn"
-                android:padding="@dimen/padding_2xsmall"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/img_size_l"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/padding_small"
+                app:field_background="@{form}"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:layout_width="@dimen/icon_size_large"
-                android:layout_height="@dimen/icon_size_large"/>
+                android:padding="@dimen/padding_small"
+                android:scaleType="fitCenter"
+                android:src="@drawable/selector_dislike" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/err_lay"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ldlay"
             android:visibility="@{viewmodel.errorField.slug.equals(field.slug)?View.VISIBLE:View.GONE,default=gone}">
 
             <include
                 android:id="@+id/field_ui_footer"
                 layout="@layout/layout_ui_field_footer" />
         </RelativeLayout>
-    </RelativeLayout>
+    </LinearLayout>
 </layout>
