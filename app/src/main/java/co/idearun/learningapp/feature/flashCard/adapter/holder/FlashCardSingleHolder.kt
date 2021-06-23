@@ -17,7 +17,6 @@ import co.idearun.learningapp.data.model.form.Fields
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.databinding.LayoutFlashCardSignleItemBinding
 import co.idearun.learningapp.feature.Binding
-import co.idearun.learningapp.feature.flashCard.FlashcardListener
 import co.idearun.learningapp.feature.flashCard.ViewsListener
 import co.idearun.learningapp.feature.viewmodel.UIViewModel
 
@@ -89,10 +88,20 @@ class FlashCardSingleHolder(view: View) : RecyclerView.ViewHolder(view) {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
-            layoutParams.bottomMargin = 20
+            layoutParams.bottomMargin = 48
+
 
             val rdbtn = RadioButton(value_rg.context)
             rdbtn.layoutParams = layoutParams
+            rdbtn.setPadding(48, 48, 48, 48)
+            rdbtn.minLines=2
+
+            Binding.getHexColor(form.field_color)?.let {
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+                    rdbtn.setBackgroundColor(Color.parseColor(it))
+                }
+            }
+
 
             rdbtn.id = View.generateViewId()
             items[i - 1].title?.let {

@@ -35,8 +35,6 @@
 
         <RadioGroup
             android:id="@+id/value_rg"
-            app:field_background="@{form}"
-            app:field_has_err="@{viewmodel.errorField.slug.equals(field.slug)}"
             android:layout_width="match_parent"
             android:padding="@dimen/padding_xsmall"
             android:minHeight="@dimen/btn_h_l"
