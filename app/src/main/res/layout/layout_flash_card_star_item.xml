@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/field_ui_header"
             android:minHeight="@dimen/btn_h_l"
-            android:padding="@dimen/padding_xsmall"
+            android:padding="@dimen/padding_standard"
             app:field_background="@{form}">
 
             <androidx.appcompat.widget.AppCompatRatingBar
@@ -54,7 +54,7 @@
                 android:layout_centerVertical="true"
                 android:isIndicator="false"
                 android:numStars="5"
-                android:padding="@dimen/padding_small"
+                android:paddingTop="@dimen/padding_small"
                 android:stepSize="1" />
 
         </RelativeLayout>
