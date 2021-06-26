@@ -37,5 +37,6 @@
   <string name="lesson_list_desc">Take lessons based on the skills you chose.</string>
   <string name="made_by_desc">Made with passion by Formaloo</string>
   <string name="appAddress">https://play.google.com/store/apps/details?id=co.idearun.learningapp</string>
+  <string name="about">About</string>
 
 </resources>

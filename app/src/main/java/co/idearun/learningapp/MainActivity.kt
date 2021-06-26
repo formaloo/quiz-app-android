@@ -29,6 +29,7 @@ class MainActivity : BaseActivity(), KoinComponent {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         setSupportActionBar(binding.appBarMain.toolbar)
+        baseMethod.showBackBtn(supportActionBar)
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
         initView()
@@ -56,6 +57,9 @@ class MainActivity : BaseActivity(), KoinComponent {
             layoutManager = LinearLayoutManager(this.context)
         }
 
+        binding.about.setOnClickListener {
+            navController.navigate(R.id.about)
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
