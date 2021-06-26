@@ -142,8 +142,8 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
     }
 
     override fun share() {
-        val address = getString(R.string.DiSPLAY_FORM) + form?.address
-        baseMethod.shareVia(address, getString(R.string.share_form_link_via), this)
+      val shareTxt="I'm learning ${form?.title?:""} in Learning App. Check it out on your phone: ${getString(R.string.appAddress)}"
+        baseMethod.shareVia(shareTxt, getString(R.string.app_name), this)
 
     }
 

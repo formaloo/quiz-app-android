@@ -29,23 +29,67 @@
             android:layout_height="match_parent"
             android:layout_gravity="start">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/bg"
-                android:orientation="vertical">
+                android:background="@color/bg">
 
-                <include layout="@layout/nav_header_main" />
+                <include
+                    android:id="@+id/nav_header"
+                    layout="@layout/nav_header_main" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/categoryRv"
+                    android:layout_below="@+id/nav_header"
+                    android:layout_above="@+id/about"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:items="@{viewmodel.formMap}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/layout_form_item" />
+                <LinearLayout
+                    android:id="@+id/about"
+                    android:layout_above="@+id/made_by_txv"
+                    android:orientation="horizontal"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:layout_width="wrap_content"
+                    android:layout_margin="@dimen/padding_standard"
+                    android:layout_height="wrap_content">
 
-            </LinearLayout>
+                    <ImageView
+                        android:id="@+id/iconTv"
+                        android:layout_width="@dimen/icon_size_standard"
+                        android:layout_height="@dimen/icon_size_standard"
+                        android:layout_marginEnd="@dimen/padding_standard"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_flashcard" />
+
+                    <TextView
+                        android:id="@+id/titleTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="About"
+                        android:textColor="@color/gray2"
+                        android:textSize="@dimen/font_xlarge" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/made_by_txv"
+                    android:layout_alignParentBottom="true"
+                    android:textAlignment="center"
+                    android:paddingTop="@dimen/padding_xsmall"
+                    android:paddingBottom="@dimen/padding_xsmall"
+                    android:paddingStart="@dimen/padding_standard"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/font_small"
+                    android:text="@string/made_by_desc"
+                    android:textColor="@color/gray2" />
+
+            </RelativeLayout>
 
         </com.google.android.material.navigation.NavigationView>
     </androidx.drawerlayout.widget.DrawerLayout>
