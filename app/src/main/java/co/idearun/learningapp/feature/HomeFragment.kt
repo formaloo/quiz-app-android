@@ -82,10 +82,16 @@ class HomeFragment : BaseFragment(), KoinComponent, FormListListener {
     }
 
     private fun getLastFormData() {
-        shardedVM.getLastLesson()?.let {
-            viewModel.initFormSlug(it)
+        val lastLesson = shardedVM.getLastLesson()
+        if (lastLesson?.isNotEmpty()==true){
+            viewModel.initFormSlug(lastLesson)
             viewModel.retrieveFormFromDB()
+
+        }else{
+            binding.lessonInprogress.progress =0
+            binding.executePendingBindings()
         }
+
 
     }
 

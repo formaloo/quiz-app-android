@@ -149,6 +149,8 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
 
     private fun openCongView() {
         updateLessonProgress(0)
+        shardedVM.saveLastLesson("")
+
         callWorker()
         binding.flashCongView.visible()
 

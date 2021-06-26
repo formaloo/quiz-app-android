@@ -9,7 +9,11 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.text.Html
+import android.transition.Fade
+import android.transition.Transition
+import android.transition.TransitionManager
 import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -33,6 +37,7 @@ import org.koin.core.inject
 import java.lang.reflect.Field
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 object Binding : KoinComponent {
     val baseMethod: BaseMethod by inject()
@@ -69,6 +74,20 @@ object Binding : KoinComponent {
             }
         }
 
+    }
+
+
+    @JvmStatic
+    @BindingAdapter("app:isVisisble", "app:form")
+    fun isVisible(view: ViewGroup, progress: Int?, form: Form?) {
+        val show = progress ?: 0 > 0 && form?.slug?.isNotEmpty() == true
+
+        val transition: Transition = Fade()
+        transition.duration = 1000
+        transition.addTarget(view)
+        TransitionManager.beginDelayedTransition(view, transition)
+
+        view.visibility = if (show) View.VISIBLE else View.GONE
     }
 
     @JvmStatic
