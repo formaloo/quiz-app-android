@@ -44,7 +44,18 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-
+        <TextView
+            android:id="@+id/made_by_txv"
+            android:textAlignment="center"
+            android:paddingTop="@dimen/padding_2xsmall"
+            android:paddingBottom="@dimen/padding_small"
+            android:layout_width="match_parent"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_height="wrap_content"
+            android:background="@color/bg"
+            android:textSize="@dimen/font_small"
+            android:text="@string/made_by_desc"
+            android:textColor="@color/gray2" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
