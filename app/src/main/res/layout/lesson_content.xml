@@ -98,7 +98,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/padding_3xsmall"
                     android:layout_toEndOf="@+id/categoryIv"
-                    android:text="@{item.owner.first_name+' '+item.owner.last_name}"
+                    android:text="@{item.category.title!=null?item.category.title:@string/other}"
                     android:textColor="@color/gray2"
                     android:textSize="@dimen/font_standard"
                     android:textStyle="bold" />
