@@ -81,7 +81,6 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     }
 
     fun retrieveFormFromDB() = launch {
-        Timber.e("retrieveForm $formSlug")
         val result = withContext(Dispatchers.IO) { repository.getFormFromDB(formSlug ?: "") }
         _form.value = result
 

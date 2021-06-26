@@ -23,9 +23,31 @@
     </data>
 
     <LinearLayout
+        android:visibility="@{item.slug!=null?view.VISIBLE:view.GONE}"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/padding_standard"
+        android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/last_lesson_title"
+        android:textColor="@color/gray1"
+        android:textSize="@dimen/font_standard"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/font_standard"
+        android:text="@string/last_lesson_desc"
+        android:textColor="@color/gray2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/padding_small"
+        android:layout_height="wrap_content"
         android:background="@drawable/lesson_inprogress_bg"
         android:gravity="center_horizontal"
         android:orientation="vertical">
@@ -65,7 +87,7 @@
             android:background="@drawable/button_start"
             android:onClick="@{(v)->listener.openForm(item,v)}"
             android:paddingHorizontal="@dimen/padding_large"
-            android:text="continue this lesson"
+            android:text="@string/continue_this_lesson"
             android:textAllCaps="true"
             android:textColor="@color/white" />
 
@@ -86,7 +108,7 @@
                 android:id="@+id/progressTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Lesson Completion"
+                android:text="@string/lesson_completion"
                 android:textColor="@color/gray2"
                 android:textSize="@dimen/font_small" />
 
@@ -112,5 +134,6 @@
         </RelativeLayout>
 
 
+    </LinearLayout>
     </LinearLayout>
 </layout>

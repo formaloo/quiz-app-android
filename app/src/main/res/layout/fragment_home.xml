@@ -20,22 +20,6 @@
             android:orientation="vertical">
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/padding_standard"
-                android:layout_marginTop="@dimen/category_item_width"
-                android:text="Your Learning"
-                android:textColor="@color/gray1"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/padding_standard"
-                android:text="Jump back into your most recent lesson."
-                android:textColor="@color/gray2" />
-
             <include
                 android:id="@+id/lesson_inprogress"
                 layout="@layout/lesson_inprogress" />
@@ -45,15 +29,17 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/padding_standard"
                 android:layout_marginTop="@dimen/padding_3xlarge"
-                android:text="Your Lessons"
+                android:text="@string/your_lessons"
                 android:textColor="@color/gray1"
+                android:textSize="@dimen/font_standard"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/padding_standard"
-                android:text="Take lessons based on the skills you chose."
+                android:textSize="@dimen/font_standard"
+                android:text="@string/lesson_list_desc"
                 android:textColor="@color/gray2" />
 
 

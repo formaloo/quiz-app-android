@@ -10,36 +10,39 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="false"
         android:background="@color/bg"
+        android:fitsSystemWindows="false"
         tools:context=".MainActivity">
 
-        <com.google.android.material.card.MaterialCardView
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <include layout="@layout/content_main" />
+
+        </androidx.core.widget.NestedScrollView>
+
+
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardElevation="@dimen/cardview_default_elevation"
-            app:cardCornerRadius="@dimen/btn_radios_standard"
-            android:layout_margin="@dimen/padding_standard"
-            app:cardBackgroundColor="@color/colorGlass">
+            android:layout_marginStart="@dimen/padding_standard"
+            android:layout_marginEnd="@dimen/padding_standard"
+            android:background="@android:color/transparent"
+            android:theme="@style/Theme.DrawerApp.AppBarOverlay"
+            app:elevation="@dimen/cardview_default_elevation">
 
-            <com.google.android.material.appbar.AppBarLayout
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_marginTop="@dimen/padding_xsmall"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/Theme.DrawerApp.AppBarOverlay">
+                android:layout_height="?attr/actionBarSize"
+                android:background="@drawable/back_appbar"
+                app:layout_scrollFlags="scroll|enterAlways"
+                app:popupTheme="@style/Theme.DrawerApp.PopupOverlay" />
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="?attr/colorPrimary"
-                    app:popupTheme="@style/Theme.DrawerApp.PopupOverlay" />
-
-            </com.google.android.material.appbar.AppBarLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-        <include layout="@layout/content_main" />
-
+        </com.google.android.material.appbar.AppBarLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
