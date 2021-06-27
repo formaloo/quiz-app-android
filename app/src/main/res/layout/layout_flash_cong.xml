@@ -33,7 +33,7 @@
             android:layout_height="@dimen/img_size_l"
             android:layout_centerHorizontal="true"
             app:lottie_autoPlay="true"
-            android:layout_marginBottom="@dimen/padding_small"
+            android:layout_marginBottom="@dimen/padding_xlarge"
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/happiness" />
 
@@ -43,8 +43,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/cong_imv"
             android:layout_centerHorizontal="true"
+            android:layout_margin="@dimen/padding_standard"
             android:layout_marginBottom="@dimen/padding_standard"
-            android:text="@{form.success_message}"
+            app:htmlTxt="@{form.success_message}"
             android:textAlignment="center"
             text_color="@{form.text_color}"
             android:textSize="@dimen/font_2xlarge" />

@@ -48,6 +48,7 @@ class LessonActivity : FlashCardBaseActivity(), LessonListener {
             it.getSerializable("form")?.let {
                 if (it is Form) {
                     binding.form = it
+                    binding.layoutFashCong.form = it
                     binding.executePendingBindings()
 
                     it.fields_list?.let {
