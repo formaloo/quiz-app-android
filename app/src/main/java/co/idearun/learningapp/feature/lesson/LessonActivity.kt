@@ -39,7 +39,13 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
 
         checkBundle()
         initView()
+
+        binding.form = form
+        binding.layoutFashCong.form = form
+        binding.executePendingBindings()
+
         initData()
+
     }
 
 
@@ -47,9 +53,6 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
         intent.extras?.let {
             it.getSerializable("form")?.let {
                 if (it is Form) {
-                    binding.form = it
-                    binding.layoutFashCong.form = it
-                    binding.executePendingBindings()
 
                     it.fields_list?.let {
                         this.fields = it
@@ -89,10 +92,11 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
 
         }
 
-        fieldsFlashAdapter?.collection = fields
+
         updateTheme(form)
 
         checkLessonProgress()
+
 
     }
 

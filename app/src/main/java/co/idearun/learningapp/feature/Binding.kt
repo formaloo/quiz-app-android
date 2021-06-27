@@ -578,10 +578,11 @@ object Binding : KoinComponent {
 
     @BindingAdapter("app:items")
     @JvmStatic
-    fun setFieldItems(recyclerView: RecyclerView, resource: ArrayList<Fields>?) {
+    fun setFieldItems(recyclerView: RecyclerView, resource: Form?) {
         if (recyclerView.adapter is LessonFieldsAdapter)
             with(recyclerView.adapter as LessonFieldsAdapter) {
-                resource?.let {
+                resource?.fields_list?.let {
+                    it.add(0,Fields("form_title_logo",resource.title,resource.description,resource.logo,"meta","section"))
                     collection = it
                 }
             }

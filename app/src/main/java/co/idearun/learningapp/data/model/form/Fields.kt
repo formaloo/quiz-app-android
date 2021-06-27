@@ -4,12 +4,13 @@ import java.io.Serializable
 
 data class Fields(
     var slug: String? = null,
-    var answer_description: String? = null,
-    var created_at: String? = null,
-    var type: String? = null,
-    var sub_type: String? = null,
     var title: String? = null,
     var description: String? = null,
+    var logo: String? = null,
+    var type: String? = null,
+    var sub_type: String? = null,
+    var answer_description: String? = null,
+    var created_at: String? = null,
     var thumbnail_type: String? = null,
     var position: Int? = null,
     var required: Boolean? = null,

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="view"
+            type="android.view.View" />
 
         <variable
             name="field"
@@ -28,19 +31,49 @@
         card_view:cardCornerRadius="4dp"
         card_view:cardElevation="0.5dp">
 
-        <TextView
-            android:id="@+id/key_txv"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            app:autoSizeMaxTextSize="@dimen/font_4xlarge"
-            app:autoSizeMinTextSize="@dimen/font_standard"
-            app:autoSizeStepGranularity="1sp"
-            app:autoSizeTextType="uniform"
-            android:lineSpacingExtra="@dimen/padding_standard"
-            android:padding="@dimen/padding_standard"
-            app:htmlTxt="@{field.description}"
-            android:textAlignment="center"
-            android:textColor="@color/black" />
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/img_size_l"
+                android:layout_height="@dimen/img_size_l"
+                android:scaleType="fitCenter"
+                android:visibility="@{field.logo!=null &amp;&amp; field.logo.length()>0 ?view.VISIBLE:view.GONE }"
+                android:layout_margin="@dimen/padding_large"
+                app:imageUrl="@{field.logo}" />
+
+            <TextView
+                android:id="@+id/title_txv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingExtra="@dimen/padding_standard"
+                android:padding="@dimen/padding_standard"
+                android:textAlignment="center"
+                android:visibility="@{field.title!=null &amp;&amp; field.title.length()>0 ?view.VISIBLE:view.GONE }"
+                android:layout_marginBottom="@dimen/padding_standard"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="@dimen/font_large"
+                android:text="@{field.title}" />
+
+            <TextView
+                android:id="@+id/key_txv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:lineSpacingExtra="@dimen/padding_standard"
+                android:padding="@dimen/padding_standard"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                app:autoSizeMaxTextSize="@dimen/font_4xlarge"
+                app:autoSizeMinTextSize="@dimen/font_standard"
+                app:autoSizeStepGranularity="1sp"
+                app:autoSizeTextType="uniform"
+                app:htmlTxt="@{field.description}" />
+
+        </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 </layout>

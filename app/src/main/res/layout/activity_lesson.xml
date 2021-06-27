@@ -94,7 +94,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
-                app:items="@{form.fields_list}"
+                app:items="@{form}"
                 android:nestedScrollingEnabled="false"
                 tools:targetApi="lollipop" />
 
