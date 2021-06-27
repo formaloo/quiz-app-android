@@ -31,20 +31,6 @@ class StarHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.fieldUiFooter.field = item
         binding.fieldUiFooter.viewmodel = uiViewModel
 
-        Binding.getHexColor(form.text_color)?.let {
-            val colorStateList = ColorStateList(
-                arrayOf(
-                    intArrayOf(-R.attr.state_enabled),
-                    intArrayOf(R.attr.state_enabled)
-                ), intArrayOf(
-                    Color.parseColor(it) //disabled
-                    , Color.parseColor(it) //enabled
-                )
-            )
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                binding.starRating.progressTintList = colorStateList
-            }
-        }
 
         binding.starRating.setOnRatingBarChangeListener { ratingBar, fl, b ->
             uiViewModel.addKeyValueToReq(item.slug!!, fl)

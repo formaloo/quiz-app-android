@@ -53,6 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:isIndicator="false"
+                app:progressTint="@{form.text_color}"
                 android:numStars="5"
                 android:paddingTop="@dimen/padding_small"
                 android:stepSize="1" />

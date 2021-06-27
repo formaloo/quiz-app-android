@@ -20,6 +20,7 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatRatingBar
 import androidx.appcompat.widget.AppCompatSpinner
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -299,6 +300,14 @@ object Binding : KoinComponent {
     @JvmStatic
     @BindingAdapter("app:progressTint")
     fun progressTint(view: LinearProgressIndicator, color: String?) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            view.progressTintList = baseMethod.getColorStateList(color)
+        }
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:progressTint")
+    fun progressTint(view: AppCompatRatingBar, color: String?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             view.progressTintList = baseMethod.getColorStateList(color)
         }
