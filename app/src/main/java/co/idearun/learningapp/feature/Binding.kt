@@ -26,8 +26,8 @@ import co.idearun.learningapp.common.BaseMethod
 import co.idearun.learningapp.common.Constants
 import co.idearun.learningapp.data.model.form.Fields
 import co.idearun.learningapp.data.model.form.Form
-import co.idearun.learningapp.feature.drawer.SortedFormListAdapter
-import co.idearun.learningapp.feature.flashCard.FieldsFlashAdapter
+import co.idearun.learningapp.feature.drawer.SortedLessonListAdapter
+import co.idearun.learningapp.feature.lesson.adapter.LessonFieldsAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.progressindicator.LinearProgressIndicator
@@ -547,8 +547,8 @@ object Binding : KoinComponent {
     @BindingAdapter("app:items")
     @JvmStatic
     fun setFormItems(recyclerView: RecyclerView, resource: ArrayList<HashMap<Int, Form>>?) {
-        if (recyclerView.adapter is SortedFormListAdapter)
-            with(recyclerView.adapter as SortedFormListAdapter) {
+        if (recyclerView.adapter is SortedLessonListAdapter)
+            with(recyclerView.adapter as SortedLessonListAdapter) {
                 resource?.let {
                     collection = it
                 }
@@ -558,8 +558,8 @@ object Binding : KoinComponent {
     @BindingAdapter("app:items")
     @JvmStatic
     fun setFieldItems(recyclerView: RecyclerView, resource: ArrayList<Fields>?) {
-        if (recyclerView.adapter is FieldsFlashAdapter)
-            with(recyclerView.adapter as FieldsFlashAdapter) {
+        if (recyclerView.adapter is LessonFieldsAdapter)
+            with(recyclerView.adapter as LessonFieldsAdapter) {
                 resource?.let {
                     collection = it
                 }

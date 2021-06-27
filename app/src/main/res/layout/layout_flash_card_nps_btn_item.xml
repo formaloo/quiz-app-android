@@ -11,7 +11,7 @@
 
         <variable
             name="listener"
-            type="co.idearun.learningapp.feature.flashCard.ViewsListener" />
+            type="co.idearun.learningapp.feature.lesson.listener.FieldsListener" />
 
         <variable
             name="field"
@@ -25,7 +25,7 @@
             type="co.idearun.learningapp.common.BaseMethod" />
         <variable
             name="holder"
-            type="co.idearun.learningapp.feature.flashCard.adapter.holder.FlashCardNpsItemAdapter.NPSItemViewHolder" />
+            type="co.idearun.learningapp.feature.lesson.adapter.holder.NpsItemAdapter.NPSItemViewHolder" />
 
     </data>
 
@@ -43,7 +43,6 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/btn_h_l"
             android:textSize="@dimen/font_xlarge"
-
             android:layout_alignParentStart="true"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:onClick="@{()->viewmodel.npsBtnClicked(field,holder.adapterPosition)}"

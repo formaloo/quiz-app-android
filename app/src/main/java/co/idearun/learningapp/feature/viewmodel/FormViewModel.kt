@@ -2,7 +2,6 @@ package co.idearun.learningapp.feature.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -16,7 +15,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import timber.log.Timber
 
 class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
@@ -31,23 +29,20 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     private val _pagingData = MutableLiveData<PagingData<Form>>().apply { value = null }
     val pagingData: LiveData<PagingData<Form>> = _pagingData
 
-    private val _formList = MutableLiveData<ArrayList<Form>>().apply { value = null }
-    val formList: LiveData<ArrayList<Form>> = _formList
-
     private val _formMap = MutableLiveData<ArrayList<HashMap<Int, Form>>>().apply { value = null }
     val formMap: LiveData<ArrayList<HashMap<Int, Form>>> = _formMap
 
-    fun fetchFormList(force: Boolean): Flow<PagingData<Form>> {
+    fun fetchLessonList(force: Boolean): Flow<PagingData<Form>> {
         return repository.fetchForms(force).cachedIn(viewModelScope)
     }
 
-    fun retrieveDBFormList() = launch {
+    fun retrieveDBLessonList() = launch {
         val result = withContext(Dispatchers.IO) { repository.getFormListFromDB() }
-        sortFormList(result)
+        sortLessonList(result)
 
     }
 
-    private fun sortFormList(result: List<Form>) {
+    private fun sortLessonList(result: List<Form>) {
         val TYPE_HEADER = 0
         val TYPE_ITEM = 1
         val OTHER = "other"
@@ -82,32 +77,14 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
 
     }
-    fun retrieveForm() = launch {
-        val result = async(Dispatchers.IO) { repository.getFormData(formSlug) }.await()
-        result.either(::handleFailure, ::handleFormData)
 
-    }
-
-    fun retrieveFormFromDB() = launch {
+    fun retrieveLessonFromDB() = launch {
         val result = withContext(Dispatchers.IO) { repository.getFormFromDB(formSlug ?: "") }
         _form.value = result
 
     }
 
-    private fun handleFormData(res: CreateFormRes) {
-        res?.let { it ->
-            it.data?.let {
-                _form.value = it.form
-                it.form?.fields_list?.let {
-                }
-            }
-
-
-        }
-
-    }
-
-    fun initFormSlug(slug: String) {
+    fun initLessonSlug(slug: String) {
         this.formSlug = slug
     }
 
@@ -115,9 +92,9 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         _isLoading.value=false
     }
 
-    fun getFormList(force: Boolean) =launch{
+    fun getLessonsList(force: Boolean) =launch{
         _isLoading.value=true
-        fetchFormList(force).collectLatest { pagingData ->
+        fetchLessonList(force).collectLatest { pagingData ->
             _pagingData.value=pagingData
             _isLoading.value=false
 

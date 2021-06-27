@@ -16,7 +16,7 @@
         android:theme="@style/Theme.LearningApp"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".MainActivity"
+            android:name=".feature.MainActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".feature.flashCard.FlashCardActivity" />
+        <activity android:name=".feature.lesson.LessonActivity" />
     </application>
 
 </manifest>

@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:background="@color/bg"
         android:fitsSystemWindows="false"
-        tools:context=".MainActivity">
+        tools:context=".feature.MainActivity">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

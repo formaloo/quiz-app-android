@@ -16,14 +16,14 @@
         android:id="@+id/lessons_swipe_to_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:onRefreshListener="@{() -> vm.getFormList(true)}"
+        app:onRefreshListener="@{() -> vm.getLessonsList(true)}"
         app:refreshing="@{vm.isLoading}">
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/lessons_sv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".MainActivity">
+            tools:context=".feature.MainActivity">
 
             <LinearLayout
                 android:layout_width="match_parent"

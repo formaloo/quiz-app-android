@@ -10,7 +10,7 @@
 
         <variable
             name="flashcardListener"
-            type="co.idearun.learningapp.feature.flashCard.FlashcardListener" />
+            type="co.idearun.learningapp.feature.lesson.listener.LessonListener" />
 
         <variable
             name="viewmodel"
@@ -18,7 +18,7 @@
 
         <variable
             name="listener"
-            type="co.idearun.learningapp.feature.flashCard.ViewsListener" />
+            type="co.idearun.learningapp.feature.lesson.listener.FieldsListener" />
 
     </data>
 

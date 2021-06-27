@@ -11,7 +11,7 @@
 
         <variable
             name="listener"
-            type="co.idearun.learningapp.feature.flashCard.ViewsListener" />
+            type="co.idearun.learningapp.feature.lesson.listener.FieldsListener" />
 
         <variable
             name="field"
@@ -51,6 +51,8 @@
                 android:layout_height="@dimen/img_size_l"
                 android:layout_marginEnd="@dimen/padding_small"
                 android:layout_weight="1"
+                android:onClick="@{(v)->viewmodel.addKeyValueToReq(field.slug,1)}"
+                app:imageTintList="@{form.text_color}"
                 app:field_background="@{form}"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="@dimen/padding_small"
@@ -64,6 +66,8 @@
                 android:layout_weight="1"
                 android:layout_marginStart="@dimen/padding_small"
                 app:field_background="@{form}"
+                app:imageTintList="@{form.text_color}"
+                android:onClick="@{()->viewmodel.addKeyValueToReq(field.slug,-1)}"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="@dimen/padding_small"
                 android:scaleType="fitCenter"

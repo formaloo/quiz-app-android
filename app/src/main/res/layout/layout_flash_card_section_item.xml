@@ -9,7 +9,7 @@
 
         <variable
             name="listener"
-            type="co.idearun.learningapp.feature.flashCard.ViewsListener" />
+            type="co.idearun.learningapp.feature.lesson.listener.FieldsListener" />
 
         <variable
             name="field"

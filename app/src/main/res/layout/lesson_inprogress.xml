@@ -11,7 +11,7 @@
 
         <variable
             name="listener"
-            type="co.idearun.learningapp.feature.adapter.FormListListener" />
+            type="co.idearun.learningapp.feature.home.adapter.LessonListListener" />
 
         <variable
             name="view"
@@ -86,7 +86,7 @@
                 android:layout_height="38dp"
                 android:layout_marginTop="@dimen/padding_2xlarge"
                 android:background="@drawable/button_start"
-                android:onClick="@{(v)->listener.openForm(item,v)}"
+                android:onClick="@{(v)->listener.openLesson(item,v)}"
                 android:paddingHorizontal="@dimen/padding_large"
                 android:text="@string/continue_this_lesson"
                 android:textAllCaps="true"
