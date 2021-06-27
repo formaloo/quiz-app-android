@@ -198,7 +198,7 @@ object Binding : KoinComponent {
 //    fun setPenColor(view: SignaturePad, color: String?) {
 //        val txtColor = getHexColor(color) ?: convertRgbToHex("55", "55", "55")
 //        view.setPenColor(Color.parseColor(txtColor))
-//
+
 //    }
 
     @JvmStatic
@@ -208,13 +208,14 @@ object Binding : KoinComponent {
         status?.let {
             val txtColor = getHexColor(form.text_color) ?: convertRgbToHex("55", "55", "55")
             val fieldColor = getHexColor(form.field_color) ?: convertRgbToHex("242", "242", "242")
+            val background_color = getHexColor(form.background_color) ?: convertRgbToHex("242", "242", "242")
 
             if (it) {
                 view.background = ColorDrawable(Color.parseColor(txtColor))
                 view.setTextColor(Color.parseColor(fieldColor))
 
             } else {
-                view.background = null
+                view.background = ColorDrawable(Color.parseColor(background_color))
                 view.setTextColor(Color.parseColor(txtColor))
 
             }

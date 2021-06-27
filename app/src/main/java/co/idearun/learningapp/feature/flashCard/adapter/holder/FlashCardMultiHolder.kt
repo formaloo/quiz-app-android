@@ -19,14 +19,16 @@ import co.idearun.learningapp.data.model.form.Fields
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.databinding.LayoutFlashCardMultiItemBinding
 import co.idearun.learningapp.feature.Binding
-import co.idearun.learningapp.feature.flashCard.FlashcardListener
 import co.idearun.learningapp.feature.flashCard.ViewsListener
 import co.idearun.learningapp.feature.viewmodel.UIViewModel
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
+import org.apache.commons.lang3.StringUtils
 
 class FlashCardMultiHolder(view: View) : RecyclerView.ViewHolder(view) {
     val binding = LayoutFlashCardMultiItemBinding.bind(view)
+    private var valuesList = arrayListOf<String>()
+
     fun bindItems(
         item: Fields,
         pos: Int,
@@ -59,6 +61,7 @@ class FlashCardMultiHolder(view: View) : RecyclerView.ViewHolder(view) {
                     item,
                     binding.choicesListLay,
                     form
+                ,uiViewModel
                 )
 
             }
@@ -70,7 +73,8 @@ class FlashCardMultiHolder(view: View) : RecyclerView.ViewHolder(view) {
         choice: ChoiceItem,
         field: Fields,
         choicesListLay: LinearLayout,
-        form: Form
+        form: Form,
+        uiViewModel: UIViewModel
     ) {
         val layoutParams = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
@@ -86,7 +90,7 @@ class FlashCardMultiHolder(view: View) : RecyclerView.ViewHolder(view) {
                 choice,
                 field,
                 choicesListLay,
-                form,
+                form,uiViewModel
             )
         (ll as ViewGroup).addView(boxLay)
 
@@ -98,74 +102,69 @@ class FlashCardMultiHolder(view: View) : RecyclerView.ViewHolder(view) {
         choice: ChoiceItem,
         item: Fields,
         ll: LinearLayout,
-        form: Form
+        form: Form,
+        uiViewModel: UIViewModel
     ): View {
 
-        val layoutParams = LinearLayout.LayoutParams(
+        val lp = LinearLayout.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        layoutParams.bottomMargin = 48
+        lp.bottomMargin = 48
 
         val checkBox = CheckBox(ll.context)
-        checkBox.layoutParams = layoutParams
-        checkBox.setPadding(48, 48, 48, 48)
-        checkBox.minLines=2
+        checkBox.apply {
+            layoutParams = lp
+            setPadding(48, 48, 48, 48)
+            minLines=2
+            setButtonDrawable(R.color.transparent);
 
-        choice.title?.let {
-            checkBox.text = it
-        }
-        choice.image?.let {
-            setImage(it, checkBox)
-        }
+            choice.title?.let {
+                text = it
+            }
+            choice.image?.let {
+                setImage(it, this)
+            }
 
-        val context = checkBox.context
-        checkBox.setTextSize(
-            TypedValue.COMPLEX_UNIT_PX,
-            context.resources.getDimension(co.idearun.learningapp.R.dimen.font_xlarge)
-        )
-
-        Binding.getHexColor(form.text_color)?.let {
-            checkBox.setTextColor(Color.parseColor(it))
-
-            val colorStateList = ColorStateList(
-                arrayOf(
-                    intArrayOf(-R.attr.state_enabled),
-                    intArrayOf(R.attr.state_enabled)
-                ), intArrayOf(
-                    Color.parseColor(it) //disabled
-                    , Color.parseColor(it) //enabled
-                )
+            val context = context
+            setTextSize(
+                TypedValue.COMPLEX_UNIT_PX,
+                context.resources.getDimension(co.idearun.learningapp.R.dimen.font_xlarge)
             )
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                checkBox.buttonTintList = colorStateList
-            }
-        }
-        Binding.getHexColor(form.field_color)?.let {
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                checkBox.setBackgroundColor(Color.parseColor(it))
-            }
-        }
 
-        checkBox.setOnCheckedChangeListener { compoundButton, b ->
+            Binding.fieldBackground(this, form, false)
+            Binding.setTextColor(this,form.text_color)
 
-            choice.slug?.let { choiceSlug ->
-                if (b) {
-//                    valuesList.add(choiceSlug)
+            setOnCheckedChangeListener { compoundButton, b ->
+                if (b){
+                    Binding.selectedFieldBackground(this, form, false)
+                    Binding.setSelectedTextColor(this,form)
 
-                } else {
-//                    if (valuesList.contains(choiceSlug)) {
-//                        valuesList.remove(choiceSlug)
+                }else{
+                    Binding.fieldBackground(this, form, false)
+                    Binding.setTextColor(this,form.text_color)
 
-//                    } else {
-//
-//                    }
+                }
+                choice.slug?.let { choiceSlug ->
+                    if (b) {
+                        valuesList.add(choiceSlug)
+
+                    } else {
+                        if (valuesList.contains(choiceSlug)) {
+                            valuesList.remove(choiceSlug)
+
+                        } else {
+
+                        }
+                    }
+
+                    uiViewModel.addKeyValueToReq(item.slug!!, StringUtils.join(valuesList, ","))
+
                 }
 
-
             }
-
         }
+
 
         return checkBox
     }

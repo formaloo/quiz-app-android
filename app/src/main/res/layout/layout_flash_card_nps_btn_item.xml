@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -43,6 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="@dimen/btn_h_l"
             android:textSize="@dimen/font_xlarge"
+
             android:layout_alignParentStart="true"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:onClick="@{()->viewmodel.npsBtnClicked(field,holder.adapterPosition)}"
