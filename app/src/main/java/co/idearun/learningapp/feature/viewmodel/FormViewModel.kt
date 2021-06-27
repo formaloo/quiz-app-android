@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import androidx.paging.map
 import co.idearun.learningapp.common.base.BaseViewModel
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.data.model.form.createForm.CreateFormRes
@@ -97,7 +98,6 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         fetchLessonList(force).collectLatest { pagingData ->
             _pagingData.value=pagingData
             _isLoading.value=false
-
         }
 
     }

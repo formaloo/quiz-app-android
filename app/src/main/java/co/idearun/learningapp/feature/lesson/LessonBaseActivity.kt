@@ -27,7 +27,7 @@ import co.idearun.learningapp.common.FileUtils
 import co.idearun.learningapp.feature.BaseActivity
 import co.idearun.learningapp.feature.lesson.listener.FieldsListener
 
-open class FlashCardBaseActivity : BaseActivity(), FieldsListener, KoinComponent {
+open class LessonBaseActivity : BaseActivity(), FieldsListener, KoinComponent {
 
     private lateinit var enDatePicker: DatePickerDialog
     val viewModel: UIViewModel by viewModel()
@@ -232,7 +232,7 @@ open class FlashCardBaseActivity : BaseActivity(), FieldsListener, KoinComponent
 
     override fun openUrl(v: String) {
         if (v.isNotEmpty() && URLUtil.isValidUrl(v)) {
-            baseMethod.openUri(this@FlashCardBaseActivity, v)
+            baseMethod.openUri(this@LessonBaseActivity, v)
         }
     }
 

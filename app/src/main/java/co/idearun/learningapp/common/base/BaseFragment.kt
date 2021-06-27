@@ -12,11 +12,13 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import co.idearun.learningapp.common.BaseMethod
 import co.idearun.learningapp.common.NavigationCommand
+import org.koin.android.ext.android.inject
 import org.koin.core.KoinComponent
 
 abstract class BaseFragment : Fragment(), KoinComponent {
-//    val baseMethod: BaseMethod by inject()
+    val baseMethod: BaseMethod by inject()
 
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

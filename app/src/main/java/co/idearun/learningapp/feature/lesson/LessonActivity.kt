@@ -18,7 +18,7 @@ import co.idearun.learningapp.feature.lesson.listener.SwipeStackListener
 import co.idearun.learningapp.feature.viewmodel.SharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class LessonActivity : FlashCardBaseActivity(), LessonListener {
+class LessonActivity : LessonBaseActivity(), LessonListener {
 
     private lateinit var binding: ActivityLessonBinding
     private val shardedVM: SharedViewModel by viewModel()

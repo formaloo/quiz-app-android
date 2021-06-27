@@ -47,6 +47,7 @@
                     app:items="@{viewmodel.formMap}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/layout_form_item" />
+
                 <LinearLayout
                     android:id="@+id/about"
                     android:layout_above="@+id/made_by_txv"
@@ -74,6 +75,7 @@
                         android:text="About"
                         android:textColor="@color/gray2"
                         android:textSize="@dimen/font_xlarge" />
+
                 </LinearLayout>
 
                 <TextView

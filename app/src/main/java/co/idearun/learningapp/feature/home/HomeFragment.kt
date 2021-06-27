@@ -80,7 +80,6 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener {
         })
         viewModel.pagingData.observe(viewLifecycleOwner, {
             it?.let {pagingData->
-                Timber.e("pagingData $it")
                 lifecycleScope.launch {
                     formListAdapter.submitData(pagingData)
 
