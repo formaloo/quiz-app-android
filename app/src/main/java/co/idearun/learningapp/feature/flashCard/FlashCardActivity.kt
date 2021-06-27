@@ -7,12 +7,14 @@ import androidx.databinding.DataBindingUtil.setContentView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import co.idearun.learningapp.R
+import co.idearun.learningapp.common.extension.invisible
 import co.idearun.learningapp.common.extension.visible
 import co.idearun.learningapp.data.model.form.Fields
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.databinding.ActivityFlashCardBinding
 import co.idearun.learningapp.feature.viewmodel.SharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
 
@@ -84,7 +86,7 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
 
         }
 
-        fieldsFlashAdapter?.collection=fields
+        fieldsFlashAdapter?.collection = fields
         updateTheme(form)
 
         checkLessonProgress()
@@ -102,8 +104,9 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
         with(binding.flashcardFieldsRec) {
             val visibleItemPosition =
                 (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+            Timber.e("next $visibleItemPosition")
 
-            updateLessonProgress(visibleItemPosition)
+            updateLessonProgress(visibleItemPosition+1)
 
             if (fields.size > visibleItemPosition + 1) {
                 Handler(Looper.getMainLooper()).postDelayed({
@@ -114,6 +117,8 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
                 openCongView()
             }
 
+            binding.flashPreBtn.visible()
+
             binding.progress = visibleItemPosition + 1
 
         }
@@ -122,16 +127,23 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
 
     override fun pre() {
         with(binding.flashcardFieldsRec) {
-            var visibleItemPosition =
+            val visibleItemPosition =
                 (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
 
-            updateLessonProgress(visibleItemPosition)
+            Timber.e("pre $visibleItemPosition")
+
+            updateLessonProgress(visibleItemPosition-1)
 
             if (0 <= visibleItemPosition - 1) {
                 scrollToPosition(visibleItemPosition - 1)
 
             }
 
+            if (visibleItemPosition==1){
+                binding.flashPreBtn.invisible()
+            }
+
+            binding.flashNextBtn.visible()
             binding.progress = visibleItemPosition
         }
     }
@@ -142,7 +154,10 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
     }
 
     override fun share() {
-      val shareTxt="I'm learning ${form?.title?:""} in Learning App. Check it out on your phone: ${getString(R.string.appAddress)}"
+        val shareTxt =
+            "I'm learning ${form?.title ?: ""} in Learning App. Check it out on your phone: ${
+                getString(R.string.appAddress)
+            }"
         baseMethod.shareVia(shareTxt, getString(R.string.app_name), this)
 
     }
@@ -168,13 +183,21 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
         val formSlug = form?.slug ?: ""
         val progress = lessonsProgressMap[form?.slug ?: ""]
 
-        if (progress == null) {
+        Timber.e("checkLessonProgress $progress")
+        if (progress == null || progress==0) {
             lessonsProgressMap[formSlug] = 0
             shardedVM.saveLessonProgress(lessonsProgressMap)
         } else {
-            binding.flashcardFieldsRec.scrollToPosition(progress + 1)
+            binding.flashPreBtn.visible()
+            binding.flashcardFieldsRec.scrollToPosition(progress +1)
         }
-        binding.progress = (progress ?: 0) + 1
+
+        if (progress?:0==0){
+            binding.flashPreBtn.invisible()
+
+        }
+
+        binding.progress = (progress ?: 0)
         binding.executePendingBindings()
 
     }

@@ -131,6 +131,7 @@
                 android:text="@string/im_done"
                 android:textAlignment="gravity"
                 android:textSize="@dimen/font_standard"
+                android:visibility="gone"
                 app:text_color="@{form.text_color}" />
 
             <androidx.appcompat.widget.AppCompatButton
@@ -140,6 +141,7 @@
                 android:layout_centerHorizontal="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
+                android:visibility="gone"
                 android:onClick="@{()->flashcardListener.next()}"
                 android:text="@string/skip_this_activity"
                 android:textAlignment="gravity"

@@ -33,7 +33,6 @@ class SwipeStackAdapter(
         var view = convertView
         val item = mData[position]
 
-        Timber.e("getView $item")
         if (convertView == null) {
 
             view = LayoutInflater.from(parent.context)
