@@ -105,15 +105,15 @@ class FlashCardSingleHolder(view: View) : RecyclerView.ViewHolder(view) {
             val lp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             lp.bottomMargin = 48
 
+
             layoutParams = lp
             setPadding(48, 48, 48, 48)
             minLines=2
+            setButtonDrawable(android.R.color.transparent);
 
-            Binding.getHexColor(form.field_color)?.let {
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                    setBackgroundColor(Color.parseColor(it))
-                }
-            }
+            Binding.fieldBackground(this, form, false)
+            Binding.setTextColor(this,form.text_color)
+
             setTextSize(
                 TypedValue.COMPLEX_UNIT_PX,
                 context.resources.getDimension(R.dimen.font_xlarge)
@@ -126,20 +126,15 @@ class FlashCardSingleHolder(view: View) : RecyclerView.ViewHolder(view) {
 
             }
 
-            Binding.getHexColor(form.text_color)?.let {
-                setTextColor(Color.parseColor(it))
+            setOnCheckedChangeListener { compoundButton, b ->
+                if (b){
+                    Binding.selectedFieldBackground(this, form, false)
+                    Binding.setSelectedTextColor(this,form)
 
-                val colorStateList = ColorStateList(
-                    arrayOf(
-                        intArrayOf(-android.R.attr.state_enabled),
-                        intArrayOf(android.R.attr.state_enabled)
-                    ), intArrayOf(
-                        Color.parseColor(it) //disabled
-                        , Color.parseColor(it) //enabled
-                    )
-                )
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                    buttonTintList = colorStateList
+                }else{
+                    Binding.fieldBackground(this, form, false)
+                    Binding.setTextColor(this,form.text_color)
+
                 }
             }
 

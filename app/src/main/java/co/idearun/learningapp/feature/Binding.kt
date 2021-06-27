@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.ColorInt
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.BindingAdapter
@@ -191,6 +192,7 @@ object Binding : KoinComponent {
 
     }
 
+
 //    @JvmStatic
 //    @BindingAdapter("penColor")
 //    fun setPenColor(view: SignaturePad, color: String?) {
@@ -362,6 +364,46 @@ object Binding : KoinComponent {
     }
 
     @JvmStatic
+    @BindingAdapter("field_background", "field_has_err")
+    fun selectedFieldBackground(view: View, form: Form?, hasErr: Boolean?) {
+        val shapedrawable = GradientDrawable()
+        val errdrawable = GradientDrawable()
+
+        form?.text_color?.let {
+            val fieldColor = getHexColor(it) ?: convertRgbToHex("242", "242", "242")
+            shapedrawable.setColor(Color.parseColor(fieldColor))
+
+        }
+        form?.text_color?.let {
+            val borderColor = getHexColor(it) ?: convertRgbToHex("255", "255", "255")
+            shapedrawable.setStroke(4, Color.parseColor(borderColor))
+
+        }
+
+
+        shapedrawable.cornerRadius = 3f
+
+        errdrawable.setColor(Color.parseColor("#1BFB9B9B"))
+        errdrawable.setStroke(4, Color.parseColor("#F43A3B"))
+
+        if (hasErr == true) {
+            view.background = errdrawable
+
+        } else {
+            view.background = shapedrawable
+        }
+
+
+    }
+    @JvmStatic
+    @BindingAdapter("text_color")
+    fun setSelectedTextColor(view: TextView,form: Form?) {
+        val txtColor = getHexColor(form?.background_color) ?: convertRgbToHex("55", "55", "55")
+        view.setTextColor(Color.parseColor(txtColor))
+
+    }
+
+    @JvmStatic
     @BindingAdapter("btn_background")
     fun btnBackgroundShape(view: View, color: String?) {
         val shapedrawable = GradientDrawable()
@@ -523,4 +565,10 @@ object Binding : KoinComponent {
             }
     }
 
+    @ColorInt fun darkenColor(@ColorInt color: Int): Int {
+        return Color.HSVToColor(FloatArray(3).apply {
+            Color.colorToHSV(color, this)
+            this[2] *= 0.8f
+        })
+    }
 }

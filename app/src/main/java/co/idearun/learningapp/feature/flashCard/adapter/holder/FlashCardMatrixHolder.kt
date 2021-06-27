@@ -1,5 +1,6 @@
 package co.idearun.learningapp.feature.flashCard.adapter.holder
 
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -8,11 +9,12 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.util.TypedValue
-import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.core.content.ContextCompat
+import android.widget.LinearLayout
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import co.idearun.learningapp.R
@@ -21,7 +23,6 @@ import co.idearun.learningapp.data.model.form.Fields
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.databinding.LayoutFlashCardMatrixItemBinding
 import co.idearun.learningapp.feature.Binding
-import co.idearun.learningapp.feature.flashCard.FlashcardListener
 import co.idearun.learningapp.feature.flashCard.ViewsListener
 import co.idearun.learningapp.feature.viewmodel.UIViewModel
 import com.squareup.picasso.Picasso
@@ -29,6 +30,8 @@ import com.squareup.picasso.Target
 
 class FlashCardMatrixHolder(view: View) : RecyclerView.ViewHolder(view) {
     val binding = LayoutFlashCardMatrixItemBinding.bind(view)
+    val checkedAnswer = HashMap<String, String>()
+
     fun bindItems(
         item: Fields,
         pos: Int,
@@ -61,7 +64,8 @@ class FlashCardMatrixHolder(view: View) : RecyclerView.ViewHolder(view) {
             binding.matrixLay,
             choices,
             groups,
-            form
+            form,
+            uiViewModel
         )
     }
 
@@ -70,29 +74,49 @@ class FlashCardMatrixHolder(view: View) : RecyclerView.ViewHolder(view) {
         container: LinearLayout,
         choices: ArrayList<ChoiceItem>,
         groups: ArrayList<ChoiceItem>,
-        form: Form
+        form: Form,
+        uiViewModel: UIViewModel
     ) {
         val context = container.context
 
         for (g in groups) {
-            val value_rg = RadioGroup(context)
             val lp = LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT
             )
 
+            val value_rg = CreateRadioGroup(context, form, g, uiViewModel, choices, field, lp)
+
+            container.addView(value_rg)
+
+        }
+
+    }
+
+    private fun CreateRadioGroup(
+        context: Context,
+        form: Form,
+        g: ChoiceItem,
+        uiViewModel: UIViewModel,
+        choices: ArrayList<ChoiceItem>,
+        fields: Fields,
+        lp: LinearLayout.LayoutParams
+    ): RadioGroup {
+        val value_rg = RadioGroup(context)
+        value_rg.apply {
             lp.setMargins(16, 0, 16, 32)
 
-            value_rg.layoutParams = lp
+            layoutParams = lp
 
             lp.setMargins(0, 0, 0, 28)
 
             val title = TextView(context).apply {
-                layoutParams=lp
+                layoutParams = lp
                 setTextSize(
                     TypedValue.COMPLEX_UNIT_PX,
                     context.resources.getDimension(R.dimen.font_2xlarge)
                 )
+                setPadding(48, 48, 48, 48)
 
                 setLineSpacing(0f, 1.33f)
 
@@ -100,92 +124,106 @@ class FlashCardMatrixHolder(view: View) : RecyclerView.ViewHolder(view) {
                     setTextColor(Color.parseColor(Binding.getHexColor(form.text_color)))
 
                 }
+                form.background_color?.let {
+                    setBackgroundColor(Binding.darkenColor(Color.parseColor(Binding.getHexColor(form.background_color))))
+
+                }
                 setTypeface(typeface, Typeface.BOLD)
 
                 text = g.title
             }
 
-            value_rg.addView(title)
+            addView(title)
 
-            value_rg.orientation = LinearLayout.VERTICAL
+            orientation = LinearLayout.VERTICAL
 
             for (i in 1..choices.size) {
-                val layoutParams = LinearLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.WRAP_CONTENT
-                )
-                layoutParams.bottomMargin = 20
-
-                val rdbtn = RadioButton(value_rg.context)
-                rdbtn.layoutParams = layoutParams
-
-                rdbtn.setTextSize(
-                    TypedValue.COMPLEX_UNIT_PX,
-                    context.resources.getDimension(R.dimen.font_2xlarge)
-                )
-
-                rdbtn.id = View.generateViewId()
-                choices[i - 1].title?.let {
-                    rdbtn.text = it
-                }
-                choices[i - 1].image?.let {
-
-                    setRadioImage(it, rdbtn)
-                }
-
-                rdbtn.setTextSize(
-                    TypedValue.COMPLEX_UNIT_PX,
-                    context.resources.getDimension(R.dimen.font_xlarge)
-                )
-
-                Binding.getHexColor(form.text_color)?.let {
-                    rdbtn.setTextColor(Color.parseColor(it))
-
-                    val colorStateList = ColorStateList(
-                        arrayOf(
-                            intArrayOf(-android.R.attr.state_enabled),
-                            intArrayOf(android.R.attr.state_enabled)
-                        ), intArrayOf(
-                            Color.parseColor(it) //disabled
-                            , Color.parseColor(it) //enabled
-                        )
+                addView(
+                    createRadioButton(
+                        form,
+                        uiViewModel,
+                        choices,
+                        fields,
+                        i,
+                        context,
+                        g
                     )
-                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                        rdbtn.buttonTintList = colorStateList
-                    }
-                }
-
-                rdbtn.setOnClickListener {
-                    if (g.slug != null && choices[i - 1].slug != null) {
-//                        checkedAnswer[g.slug!!] = choices[i - 1].slug!!
-//                        viewmodel.addKeyValueToReq(
-//                            field.slug!!,
-//                            getStr(checkedAnswer)
-//                        )
-                    }
-
-                }
-
-
-
-                value_rg.addView(rdbtn)
-            }
-
-            container.addView(value_rg)
-            if (!groups.last().equals(g)) {
-                val view = View(context)
-                val borderParam =
-                    RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 3)
-                borderParam.setMargins(16, 16, 16, 0)
-                lp.weight = 1f
-                lp.gravity = Gravity.CENTER_HORIZONTAL
-                view.layoutParams = borderParam
-                view.setBackgroundColor(ContextCompat.getColor(context, R.color.gray2))
-                value_rg.addView(view)
+                )
 
             }
         }
 
+
+
+        return value_rg
+    }
+
+    private fun createRadioButton(
+        form: Form,
+        uiViewModel: UIViewModel,
+        items: java.util.ArrayList<ChoiceItem>,
+        field: Fields,
+        i: Int,
+        context: Context,
+        g: ChoiceItem
+    ): RadioButton {
+
+
+        val rdbtn = RadioButton(context)
+
+        rdbtn.apply {
+            val lp = LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+            )
+            lp.bottomMargin = 48
+
+            layoutParams = lp
+            setPadding(48, 48, 48, 48)
+            minLines = 2
+            setButtonDrawable(android.R.color.transparent);
+
+
+            Binding.fieldBackground(this, form, false)
+            Binding.setTextColor(this,form.text_color)
+
+
+            setTextSize(
+                TypedValue.COMPLEX_UNIT_PX,
+                context.resources.getDimension(R.dimen.font_xlarge)
+            )
+
+            id = View.generateViewId()
+            text = items[i - 1].title ?: ""
+
+            items[i - 1].image?.let {
+                setRadioImage(it, this)
+            }
+            setOnCheckedChangeListener { compoundButton, b ->
+                if (b){
+                    Binding.selectedFieldBackground(this, form, false)
+                    Binding.setSelectedTextColor(this,form)
+
+                }else{
+                    Binding.fieldBackground(this, form, false)
+                    Binding.setTextColor(this,form.text_color)
+
+                }
+            }
+
+            setOnClickListener {
+                if (g.slug != null && items[i - 1].slug != null) {
+                    checkedAnswer[g.slug!!] = items[i - 1].slug!!
+                    uiViewModel.addKeyValueToReq(
+                        field.slug!!,
+                        getStr(checkedAnswer)
+                    )
+                }
+
+            }
+        }
+
+        return rdbtn
     }
 
     private fun setRadioImage(it: String, rdbtn: RadioButton) {
@@ -218,4 +256,18 @@ class FlashCardMatrixHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     }
 
+    private fun getStr(checkedAnswer: HashMap<String, String>): String {
+        var str = "{"
+        val lastItem = checkedAnswer.keys.last()
+        checkedAnswer.keys.forEach {
+            str += "\"$it\":\"${checkedAnswer[it]}\""
+            str += if (!it.equals(lastItem)) {
+                ","
+            } else {
+                "}"
+
+            }
+        }
+        return str
+    }
 }

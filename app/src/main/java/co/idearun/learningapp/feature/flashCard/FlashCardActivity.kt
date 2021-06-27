@@ -104,7 +104,6 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
         with(binding.flashcardFieldsRec) {
             val visibleItemPosition =
                 (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-            Timber.e("next $visibleItemPosition")
 
             updateLessonProgress(visibleItemPosition+1)
 
@@ -130,7 +129,6 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
             val visibleItemPosition =
                 (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
 
-            Timber.e("pre $visibleItemPosition")
 
             updateLessonProgress(visibleItemPosition-1)
 
@@ -183,7 +181,6 @@ class FlashCardActivity : FlashCardBaseActivity(), FlashcardListener {
         val formSlug = form?.slug ?: ""
         val progress = lessonsProgressMap[form?.slug ?: ""]
 
-        Timber.e("checkLessonProgress $progress")
         if (progress == null || progress==0) {
             lessonsProgressMap[formSlug] = 0
             shardedVM.saveLessonProgress(lessonsProgressMap)

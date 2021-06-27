@@ -45,9 +45,7 @@
             android:orientation="horizontal"
             android:padding="@dimen/padding_xsmall"
             android:scrollbars="horizontal"
-            android:visibility="visible"
-            app:field_background="@{form}"
-            app:field_has_err="@{viewmodel.errorField.slug.equals(field.slug)}">
+            android:visibility="visible">
 
             <LinearLayout
                 android:id="@+id/matrix_lay"
