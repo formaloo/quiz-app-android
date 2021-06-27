@@ -41,6 +41,7 @@ class HomeFragment : BaseFragment(), KoinComponent, FormListListener {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding.vm = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
         return binding.root
 
@@ -54,7 +55,7 @@ class HomeFragment : BaseFragment(), KoinComponent, FormListListener {
     }
 
     private fun initData() {
-        fetchFormList(true)
+        viewModel.getFormList(true)
 
         getLastFormData()
 
@@ -66,6 +67,7 @@ class HomeFragment : BaseFragment(), KoinComponent, FormListListener {
 
                 }
             }
+            viewModel.stopLoading()
         })
 
         viewModel.form.observe(viewLifecycleOwner, {
@@ -74,6 +76,16 @@ class HomeFragment : BaseFragment(), KoinComponent, FormListListener {
                 binding.lessonInprogress.item = it
                 binding.lessonInprogress.listener = this
                 binding.executePendingBindings()
+            }
+
+        })
+        viewModel.pagingData.observe(viewLifecycleOwner, {
+            it?.let {pagingData->
+                Timber.e("pagingData $it")
+                lifecycleScope.launch {
+                    formListAdapter.submitData(pagingData)
+
+                }
             }
 
         })
@@ -117,20 +129,10 @@ class HomeFragment : BaseFragment(), KoinComponent, FormListListener {
 
     }
 
-    private fun fetchFormList(force: Boolean) {
-        lifecycleScope.launch {
-            viewModel.fetchFormList(force).collectLatest { pagingData ->
-                formListAdapter.submitData(pagingData)
-
-            }
-        }
-
-    }
-
 
     private fun renderFailure(message: String?) {
         Timber.e("renderFailure $message")
-        fetchFormList(true)
+        viewModel.getFormList(true)
 
     }
 

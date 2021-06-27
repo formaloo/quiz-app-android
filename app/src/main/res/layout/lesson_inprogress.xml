@@ -29,6 +29,7 @@
         android:animateLayoutChanges="true"
         android:orientation="vertical"
         app:form="@{item}"
+        android:visibility="visible"
         app:isVisisble="@{progress}">
 
         <TextView

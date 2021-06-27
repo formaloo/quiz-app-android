@@ -2,6 +2,7 @@ package co.idearun.learningapp.feature.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -12,6 +13,7 @@ import co.idearun.learningapp.data.repository.FormzRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -22,6 +24,12 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
     private val _form = MutableLiveData<Form>().apply { value = null }
     val form: LiveData<Form> = _form
+
+    private val _isLoading = MutableLiveData<Boolean>().apply { value = null }
+    val isLoading: LiveData<Boolean> = _isLoading
+
+    private val _pagingData = MutableLiveData<PagingData<Form>>().apply { value = null }
+    val pagingData: LiveData<PagingData<Form>> = _pagingData
 
     private val _formList = MutableLiveData<ArrayList<Form>>().apply { value = null }
     val formList: LiveData<ArrayList<Form>> = _formList
@@ -101,6 +109,20 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
     fun initFormSlug(slug: String) {
         this.formSlug = slug
+    }
+
+    fun stopLoading() {
+        _isLoading.value=false
+    }
+
+    fun getFormList(force: Boolean) =launch{
+        _isLoading.value=true
+        fetchFormList(force).collectLatest { pagingData ->
+            _pagingData.value=pagingData
+            _isLoading.value=false
+
+        }
+
     }
 
 }
