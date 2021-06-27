@@ -78,7 +78,7 @@ class SortedLessonListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
             binding.form = item
             binding.formItemLay.form = item
             binding.lifecycleOwner = binding.titleTv.context as LifecycleOwner
-            itemView.setOnClickListener{
+            binding.formItemLay.formLay.setOnClickListener{
                 openForm(item, it.context)
             }
         }
