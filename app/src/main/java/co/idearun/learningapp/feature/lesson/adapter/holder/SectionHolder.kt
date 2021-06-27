@@ -38,7 +38,7 @@ class SectionHolder(view: View, private val swipeStackListener: SwipeStackListen
             .alpha(1.0f)
             .setListener(null);
 
-        setSwipeStack(arrayListOf(item,item), form,  pos)
+        setSwipeStack(arrayListOf(item), form,  pos)
 
     }
 

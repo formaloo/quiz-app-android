@@ -123,6 +123,7 @@ class MultiHolder(view: View) : RecyclerView.ViewHolder(view) {
             choice.image?.let {
                 setImage(it, this)
             }
+            textAlignment = View.TEXT_ALIGNMENT_CENTER
 
             val context = context
             setTextSize(
@@ -130,16 +131,16 @@ class MultiHolder(view: View) : RecyclerView.ViewHolder(view) {
                 context.resources.getDimension(co.idearun.learningapp.R.dimen.font_xlarge)
             )
 
-            Binding.fieldBackground(this, form, false)
+            Binding.fieldBackground(this, form)
             Binding.setTextColor(this,form.text_color)
 
             setOnCheckedChangeListener { compoundButton, b ->
                 if (b){
-                    Binding.selectedFieldBackground(this, form, false)
+                    Binding.selectedFieldBackground(this, form)
                     Binding.setSelectedTextColor(this,form)
 
                 }else{
-                    Binding.fieldBackground(this, form, false)
+                    Binding.fieldBackground(this, form)
                     Binding.setTextColor(this,form.text_color)
 
                 }

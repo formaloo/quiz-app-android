@@ -1,14 +1,11 @@
 package co.idearun.learningapp.feature.lesson.adapter.holder
 
-import android.graphics.Color
 import android.view.View
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
-import co.idearun.learningapp.common.extension.invisible
 import co.idearun.learningapp.data.model.form.Fields
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.databinding.LayoutFlashCardLikeDislikeItemBinding
-import co.idearun.learningapp.feature.Binding
 import co.idearun.learningapp.feature.lesson.listener.FieldsListener
 import co.idearun.learningapp.feature.viewmodel.UIViewModel
 
@@ -51,8 +48,6 @@ class LikeDislikeHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         }
     }
-
-
 
 
 }

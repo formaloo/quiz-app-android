@@ -45,7 +45,7 @@
             android:onClick="@{()->listener.openDatePicker(field)}"
             android:padding="@dimen/padding_xsmall"
             app:field_background="@{form}"
-            app:field_has_err="@{viewmodel.errorField.slug.equals(field.slug)}">
+            >
 
             <TextView
                 android:id="@+id/key_txv"

@@ -16,6 +16,7 @@
         <variable
             name="field"
             type="co.idearun.learningapp.data.model.form.Fields" />
+
         <variable
             name="form"
             type="co.idearun.learningapp.data.model.form.Form" />
@@ -41,20 +42,32 @@
             android:layout_below="@+id/field_ui_header"
             android:minHeight="@dimen/btn_h_l"
             android:padding="@dimen/padding_xsmall"
-            android:visibility="visible"
-            app:field_has_err="@{viewmodel.errorField.slug.equals(field.slug)}"
-            app:field_background="@{form}">
+            android:visibility="visible">
 
             <androidx.appcompat.widget.AppCompatSpinner
                 android:id="@+id/value_spinner"
+                field_background="@{form}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:backgroundTint="@color/colorBlack" />
+                app:items="@{field.choice_items}" />
 
+            <ImageButton
+                android:layout_width="@dimen/icon_size_standard"
+                android:layout_height="@dimen/icon_size_standard"
+                android:background="@null"
+                android:layout_marginEnd="@dimen/padding_standard"
+                android:layout_alignParentEnd="true"
+                android:clickable="false"
+                android:layout_centerVertical="true"
+                android:focusable="false"
+                android:scaleType="centerInside"
+                android:src="@android:drawable/arrow_down_float"
+                app:imageTintList="@{form.text_color}" />
 
         </RelativeLayout>
+
         <RelativeLayout
             android:id="@+id/err_lay"
             android:layout_width="match_parent"

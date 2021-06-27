@@ -43,7 +43,7 @@
             android:padding="@dimen/padding_xsmall"
             android:minHeight="@dimen/btn_h_l"
             android:layout_below="@+id/field_ui_header"
-            app:field_has_err="@{viewmodel.errorField.slug.equals(field.slug)}"
+
             app:field_background="@{form}">
 
             <androidx.recyclerview.widget.RecyclerView

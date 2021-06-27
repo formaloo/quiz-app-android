@@ -13,7 +13,7 @@
         android:lines="1"
         android:layout_margin="@dimen/padding_small"
         android:ellipsize="end"
-        android:textAlignment="viewStart"
+        android:textAlignment="center"
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/font_2xlarge" />
 </RelativeLayout>

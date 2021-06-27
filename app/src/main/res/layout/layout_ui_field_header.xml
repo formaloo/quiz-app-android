@@ -28,6 +28,8 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_marginTop="@dimen/padding_standard"
+        android:layout_marginEnd="@dimen/padding_standard"
+        android:layout_marginStart="@dimen/padding_standard"
         android:layout_marginBottom="@dimen/padding_large"
         android:layout_height="wrap_content">
 
@@ -38,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:text="@{field.required?field.title+'*':field.title}"
-            android:textAlignment="viewStart"
+            android:textAlignment="center"
             android:textColor="@color/colorBlack"
             android:textSize="@dimen/font_3xlarge"
             app:text_color="@{form.text_color}" />
@@ -51,7 +53,7 @@
             android:layout_alignParentStart="true"
             android:layout_marginTop="@dimen/padding_xsmall"
             app:field_desc="@{field}"
-            android:textAlignment="viewStart"
+            android:textAlignment="center"
             android:textColor="@color/gray2"
             android:textSize="@dimen/font_2xlarge"
             android:visibility="@{field.description.length()>0 ? View.VISIBLE : View.GONE ,default=gone}"

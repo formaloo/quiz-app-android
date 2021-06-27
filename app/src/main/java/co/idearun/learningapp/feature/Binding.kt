@@ -20,14 +20,17 @@ import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatButton
+import androidx.appcompat.widget.AppCompatSpinner
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import co.idearun.learningapp.common.BaseMethod
 import co.idearun.learningapp.common.Constants
+import co.idearun.learningapp.data.model.form.ChoiceItem
 import co.idearun.learningapp.data.model.form.Fields
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.feature.drawer.SortedLessonListAdapter
 import co.idearun.learningapp.feature.lesson.adapter.LessonFieldsAdapter
+import co.idearun.learningapp.feature.lesson.adapter.holder.DropDownItemsAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.progressindicator.LinearProgressIndicator
@@ -35,6 +38,7 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import org.koin.core.KoinComponent
 import org.koin.core.inject
+import timber.log.Timber
 import java.lang.reflect.Field
 import java.text.SimpleDateFormat
 import java.util.*
@@ -208,7 +212,8 @@ object Binding : KoinComponent {
         status?.let {
             val txtColor = getHexColor(form.text_color) ?: convertRgbToHex("55", "55", "55")
             val fieldColor = getHexColor(form.field_color) ?: convertRgbToHex("242", "242", "242")
-            val background_color = getHexColor(form.background_color) ?: convertRgbToHex("242", "242", "242")
+            val background_color =
+                getHexColor(form.background_color) ?: convertRgbToHex("242", "242", "242")
 
             if (it) {
                 view.background = ColorDrawable(Color.parseColor(txtColor))
@@ -332,8 +337,8 @@ object Binding : KoinComponent {
     }
 
     @JvmStatic
-    @BindingAdapter("field_background", "field_has_err")
-    fun fieldBackground(view: View, form: Form?, hasErr: Boolean?) {
+    @BindingAdapter("field_background")
+    fun fieldBackground(view: View, form: Form?) {
         val shapedrawable = GradientDrawable()
         val errdrawable = GradientDrawable()
 
@@ -354,19 +359,14 @@ object Binding : KoinComponent {
         errdrawable.setColor(Color.parseColor("#1BFB9B9B"))
         errdrawable.setStroke(4, Color.parseColor("#F43A3B"))
 
-        if (hasErr == true) {
-            view.background = errdrawable
-
-        } else {
-            view.background = shapedrawable
-        }
+        view.background = shapedrawable
 
 
     }
 
     @JvmStatic
-    @BindingAdapter("field_background", "field_has_err")
-    fun selectedFieldBackground(view: View, form: Form?, hasErr: Boolean?) {
+    @BindingAdapter("selectedFieldBackground")
+    fun selectedFieldBackground(view: View, form: Form?) {
         val shapedrawable = GradientDrawable()
         val errdrawable = GradientDrawable()
 
@@ -387,18 +387,14 @@ object Binding : KoinComponent {
         errdrawable.setColor(Color.parseColor("#1BFB9B9B"))
         errdrawable.setStroke(4, Color.parseColor("#F43A3B"))
 
-        if (hasErr == true) {
-            view.background = errdrawable
-
-        } else {
-            view.background = shapedrawable
-        }
+        view.background = shapedrawable
 
 
     }
+
     @JvmStatic
     @BindingAdapter("text_color")
-    fun setSelectedTextColor(view: TextView,form: Form?) {
+    fun setSelectedTextColor(view: TextView, form: Form?) {
         val txtColor = getHexColor(form?.background_color) ?: convertRgbToHex("55", "55", "55")
         view.setTextColor(Color.parseColor(txtColor))
 
@@ -546,6 +542,22 @@ object Binding : KoinComponent {
 
     @BindingAdapter("app:items")
     @JvmStatic
+    fun setItems(
+        spinner: AppCompatSpinner,
+        items: ArrayList<ChoiceItem>
+    ) {
+        Timber.e("items ${items.size}")
+        if (spinner.adapter is DropDownItemsAdapter)
+            with(spinner.adapter as DropDownItemsAdapter) {
+                listItemsTxt = items
+                (spinner.adapter as DropDownItemsAdapter).notifyDataSetChanged()
+
+            }
+
+    }
+
+    @BindingAdapter("app:items")
+    @JvmStatic
     fun setFormItems(recyclerView: RecyclerView, resource: ArrayList<HashMap<Int, Form>>?) {
         if (recyclerView.adapter is SortedLessonListAdapter)
             with(recyclerView.adapter as SortedLessonListAdapter) {
@@ -566,7 +578,8 @@ object Binding : KoinComponent {
             }
     }
 
-    @ColorInt fun darkenColor(@ColorInt color: Int): Int {
+    @ColorInt
+    fun darkenColor(@ColorInt color: Int): Int {
         return Color.HSVToColor(FloatArray(3).apply {
             Color.colorToHSV(color, this)
             this[2] *= 0.8f

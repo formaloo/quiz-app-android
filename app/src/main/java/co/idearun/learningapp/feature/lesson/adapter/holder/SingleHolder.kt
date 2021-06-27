@@ -103,13 +103,14 @@ class SingleHolder(view: View) : RecyclerView.ViewHolder(view) {
             val lp = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             lp.bottomMargin = 48
 
+            textAlignment = View.TEXT_ALIGNMENT_CENTER
 
             layoutParams = lp
             setPadding(48, 48, 48, 48)
             minLines=2
             setButtonDrawable(android.R.color.transparent);
 
-            Binding.fieldBackground(this, form, false)
+            Binding.fieldBackground(this, form,)
             Binding.setTextColor(this,form.text_color)
 
             setTextSize(
@@ -126,11 +127,11 @@ class SingleHolder(view: View) : RecyclerView.ViewHolder(view) {
 
             setOnCheckedChangeListener { compoundButton, b ->
                 if (b){
-                    Binding.selectedFieldBackground(this, form, false)
+                    Binding.selectedFieldBackground(this, form)
                     Binding.setSelectedTextColor(this,form)
 
                 }else{
-                    Binding.fieldBackground(this, form, false)
+                    Binding.fieldBackground(this, form,)
                     Binding.setTextColor(this,form.text_color)
 
                 }

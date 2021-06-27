@@ -18,14 +18,7 @@ class DropDownHolder(view: View) : RecyclerView.ViewHolder(view) {
         listener: FieldsListener,
         form: Form, viewmodel: UIViewModel
     ) {
-        binding.field = item
-        binding.form = form
-        binding.fieldUiHeader.field = item
-        binding.fieldUiHeader.form = form
-        binding.viewmodel = viewmodel
-        binding.lifecycleOwner = binding.spinnerValueLay.context as LifecycleOwner
-        binding.fieldUiFooter.field = item
-        binding.fieldUiFooter.viewmodel = viewmodel
+
 
         val dropAdapter = DropDownItemsAdapter(form)
 
@@ -51,11 +44,15 @@ class DropDownHolder(view: View) : RecyclerView.ViewHolder(view) {
             }
 
         }
-
-        item.choice_items?.let { items ->
-            dropAdapter.listItemsTxt = items
-
-        }
+        binding.field = item
+        binding.form = form
+        binding.fieldUiHeader.field = item
+        binding.fieldUiHeader.form = form
+        binding.viewmodel = viewmodel
+        binding.fieldUiFooter.field = item
+        binding.fieldUiFooter.viewmodel = viewmodel
+        binding.lifecycleOwner = binding.spinnerValueLay.context as LifecycleOwner
+        binding.executePendingBindings()
 
         if (item.required == true) {
             viewmodel.reuiredField(item)

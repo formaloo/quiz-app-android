@@ -8,6 +8,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.util.Log
 import android.util.TypedValue
+import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -116,6 +117,7 @@ class MatrixHolder(view: View) : RecyclerView.ViewHolder(view) {
                     context.resources.getDimension(R.dimen.font_2xlarge)
                 )
                 setPadding(48, 48, 48, 48)
+                textAlignment = View.TEXT_ALIGNMENT_CENTER
 
                 setLineSpacing(0f, 1.33f)
 
@@ -181,10 +183,10 @@ class MatrixHolder(view: View) : RecyclerView.ViewHolder(view) {
             setPadding(48, 48, 48, 48)
             minLines = 2
             setButtonDrawable(android.R.color.transparent);
+            textAlignment = View.TEXT_ALIGNMENT_CENTER
 
-
-            Binding.fieldBackground(this, form, false)
-            Binding.setTextColor(this,form.text_color)
+            Binding.fieldBackground(this, form)
+            Binding.setTextColor(this, form.text_color)
 
 
             setTextSize(
@@ -199,13 +201,13 @@ class MatrixHolder(view: View) : RecyclerView.ViewHolder(view) {
                 setRadioImage(it, this)
             }
             setOnCheckedChangeListener { compoundButton, b ->
-                if (b){
-                    Binding.selectedFieldBackground(this, form, false)
-                    Binding.setSelectedTextColor(this,form)
+                if (b) {
+                    Binding.selectedFieldBackground(this, form)
+                    Binding.setSelectedTextColor(this, form)
 
-                }else{
-                    Binding.fieldBackground(this, form, false)
-                    Binding.setTextColor(this,form.text_color)
+                } else {
+                    Binding.fieldBackground(this, form)
+                    Binding.setTextColor(this, form.text_color)
 
                 }
             }

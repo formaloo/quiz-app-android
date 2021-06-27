@@ -31,13 +31,7 @@ class DropDownItemsAdapter(private val form: Form) : BaseAdapter() {
             vh = view.tag as ItemRowHolder
 
         }
-
-
         vh.label.text = listItemsTxt[position].title
-//        Binding.getHexColor(form.text_color)?.let {
-//            vh.label.setTextColor(Color.parseColor(it))
-//        }
-
         return view
     }
 

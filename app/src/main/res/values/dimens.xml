@@ -18,6 +18,7 @@
     <dimen name="font_xlarge">18sp</dimen>
     <dimen name="font_2xlarge">20sp</dimen>
     <dimen name="font_3xlarge">24sp</dimen>
+    <dimen name="font_4xlarge">28sp</dimen>
 
     <dimen name="btn_radios_standard">7dp</dimen>
     <dimen name="btn_radios_small">3dp</dimen>
