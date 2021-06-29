@@ -19,6 +19,7 @@ import co.idearun.learningapp.feature.Binding
 import co.idearun.learningapp.feature.lesson.listener.FieldsListener
 import co.idearun.learningapp.feature.viewmodel.UIViewModel
 
+
 class SingleHolder(view: View) : RecyclerView.ViewHolder(view) {
     val binding = LayoutFlashCardSignleItemBinding.bind(view)
     fun bindItems(
