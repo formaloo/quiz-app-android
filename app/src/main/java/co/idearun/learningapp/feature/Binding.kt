@@ -1,12 +1,14 @@
 package co.idearun.learningapp.feature
 
 import android.R
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
+import android.net.Uri
 import android.os.Build
 import android.text.Html
 import android.transition.Fade
@@ -88,6 +90,14 @@ object Binding : KoinComponent {
     fun setHtmlTxt(txv: HtmlTextView, txt: String?) {
         txt?.let {
             txv.setHtml(txt, HtmlHttpImageGetter(txv))
+            txv.setOnClickATagListener { widget, spannedText, href ->
+                if (href?.isNotEmpty()==true) {
+                    val intent = Intent(Intent.ACTION_VIEW)
+                    intent.data = Uri.parse(href)
+                    txv.context.startActivity(intent)
+                }
+                 true
+            }
         }
 
     }

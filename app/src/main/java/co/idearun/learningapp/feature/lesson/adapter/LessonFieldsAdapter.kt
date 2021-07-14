@@ -27,6 +27,7 @@ import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.feature.lesson.listener.FieldsListener
 import co.idearun.learningapp.feature.lesson.listener.SwipeStackListener
 import co.idearun.learningapp.feature.lesson.adapter.holder.*
+import co.idearun.learningapp.feature.lesson.listener.LessonListener
 import co.idearun.learningapp.feature.viewmodel.UIViewModel
 import java.util.*
 import kotlin.properties.Delegates
@@ -34,6 +35,7 @@ import kotlin.properties.Delegates
 
 class LessonFieldsAdapter(
     private val listener: FieldsListener,
+    private val lessonListener: LessonListener,
     private val swipeStackListener: SwipeStackListener,
     private val form: Form,
     private val viewmodel: UIViewModel
@@ -80,7 +82,7 @@ class LessonFieldsAdapter(
                     btnItem,
                     position_,
                     listener,
-                    form, viewmodel
+                    form, viewmodel,lessonListener
                 )
 
             }

@@ -68,12 +68,12 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
 
     private fun initView() {
         fieldsFlashAdapter = LessonFieldsAdapter(
-            this@LessonActivity,
+            this@LessonActivity,this,
             object : SwipeStackListener {
                 override fun onSwipeEnd(position: Int) {
                     next()
                 }
-            }, form!!, viewModel
+            }, form!!, viewModel,
         )
 
         binding.flashcardFieldsRec.apply {

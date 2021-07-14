@@ -8,6 +8,7 @@ import co.idearun.learningapp.data.model.form.Fields
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.databinding.LayoutFlashCardDropdownItemBinding
 import co.idearun.learningapp.feature.lesson.listener.FieldsListener
+import co.idearun.learningapp.feature.lesson.listener.LessonListener
 import co.idearun.learningapp.feature.viewmodel.UIViewModel
 
 class DropDownHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -16,12 +17,13 @@ class DropDownHolder(view: View) : RecyclerView.ViewHolder(view) {
         item: Fields,
         pos: Int,
         listener: FieldsListener,
-        form: Form, viewmodel: UIViewModel
+        form: Form, viewmodel: UIViewModel, lessonListener: LessonListener
     ) {
 
 
         val dropAdapter = DropDownItemsAdapter(form)
 
+        var userSelect=false
         binding.valueSpinner.apply {
             adapter = dropAdapter
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -38,12 +40,18 @@ class DropDownHolder(view: View) : RecyclerView.ViewHolder(view) {
 
                     dropAdapter.getItem(position)?.slug?.let { slug ->
                         viewmodel.addKeyValueToReq(item.slug!!, slug)
+                        if (userSelect){
+                            lessonListener.next()
+                        }else{
+                            userSelect=true
+                        }
                     }
                 }
 
             }
 
         }
+
         binding.field = item
         binding.form = form
         binding.fieldUiHeader.field = item
