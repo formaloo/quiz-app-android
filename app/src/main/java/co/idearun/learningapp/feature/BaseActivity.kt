@@ -22,6 +22,5 @@ open class BaseActivity : AppCompatActivity() {
         val manager = WorkManager.getInstance(this)
         manager.enqueueUniqueWork("Submit", ExistingWorkPolicy.KEEP, submitWorkRequest);
 
-
     }
 }

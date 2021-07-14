@@ -39,6 +39,8 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import org.koin.core.KoinComponent
 import org.koin.core.inject
+import org.sufficientlysecure.htmltextview.HtmlHttpImageGetter
+import org.sufficientlysecure.htmltextview.HtmlTextView
 import timber.log.Timber
 import java.lang.reflect.Field
 import java.text.SimpleDateFormat
@@ -81,7 +83,14 @@ object Binding : KoinComponent {
         }
 
     }
+    @BindingAdapter("app:htmlTxt")
+    @JvmStatic
+    fun setHtmlTxt(txv: HtmlTextView, txt: String?) {
+        txt?.let {
+            txv.setHtml(txt, HtmlHttpImageGetter(txv))
+        }
 
+    }
 
     @JvmStatic
     @BindingAdapter("app:isVisisble", "app:form")

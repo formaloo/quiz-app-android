@@ -27,17 +27,15 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/padding_standard"
-            android:layout_marginEnd="@dimen/padding_standard"
             android:background="@android:color/transparent"
             android:theme="@style/Theme.DrawerApp.AppBarOverlay"
             app:elevation="@dimen/cardview_default_elevation">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
-                android:layout_marginTop="@dimen/padding_xsmall"
+                android:layout_margin="@dimen/padding_xsmall"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="@dimen/btn_h_l"
                 android:background="@drawable/back_appbar"
                 app:layout_scrollFlags="scroll|enterAlways"
                 app:popupTheme="@style/Theme.DrawerApp.PopupOverlay" />

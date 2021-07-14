@@ -21,7 +21,6 @@ class AboutFragment : BaseFragment() {
 
     override fun getViewModel(): BaseViewModel = shardedVM
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

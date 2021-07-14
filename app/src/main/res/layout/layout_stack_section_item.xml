@@ -59,7 +59,7 @@
                 android:textSize="@dimen/font_large"
                 android:text="@{field.title}" />
 
-            <TextView
+            <org.sufficientlysecure.htmltextview.HtmlTextView
                 android:id="@+id/key_txv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
