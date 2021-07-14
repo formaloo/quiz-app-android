@@ -10,6 +10,10 @@
             type="Integer" />
 
         <variable
+            name="done"
+            type="Boolean" />
+
+        <variable
             name="view"
             type="android.view.View" />
 
@@ -110,9 +114,9 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:text="Start"
+                    android:text="@{done?@string/review:@string/start}"
                     android:textAllCaps="true"
-                    android:textColor="?attr/colorPrimary"
+                    android:textColor="@{done?@color/colorGreen: android.R.attr.colorPrimary}"
                     android:textSize="@dimen/font_standard"
                     android:textStyle="bold"
                     android:visibility="@{progress!=null &amp;&amp; progress>0 ? view.GONE : view.VISIBLE}" />

@@ -139,7 +139,6 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
 
     private fun checkNeedActionFields(pos: Int): Boolean {
         val type = fieldsFlashAdapter?.collection?.get(pos)?.type
-        Timber.e("checkNeedActionFields $type ")
 
         if (type == Constants.SINGLE_SELECT  ||type == Constants.DROPDOWN || type == Constants.YESNO || type == Constants.RATING  || type == Constants.META ) {
             binding.flashcardDoneBtn.invisible()
@@ -192,8 +191,18 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
         updateLessonProgress(0)
         shardedVM.saveLastLesson("")
 
+        updateDoneLessonList()
+
         callWorker()
         binding.flashCongView.visible()
+
+    }
+
+    private fun updateDoneLessonList() {
+        val doneLessonList = shardedVM.getDoneLessonList()
+        doneLessonList?.add(form?.slug?:"")
+        shardedVM.saveDoneLessonList(doneLessonList?: mutableSetOf())
+
 
     }
 

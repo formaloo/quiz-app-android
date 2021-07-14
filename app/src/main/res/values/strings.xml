@@ -38,5 +38,7 @@
   <string name="made_by_desc">Made with passion by Formaloo</string>
   <string name="appAddress">https://play.google.com/store/apps/details?id=co.idearun.learningapp</string>
   <string name="about">About</string>
+  <string name="review">Review</string>
+  <string name="start">Start</string>
 
 </resources>

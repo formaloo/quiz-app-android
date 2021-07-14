@@ -22,4 +22,12 @@ class SharedViewModel(private val repository: SharedRepository) : BaseViewModel(
     fun getLastLesson(): String? {
         return repository.getLastLesson()
     }
+
+    fun saveDoneLessonList(formSlug: MutableSet<String>) {
+        repository.saveDoneLessonList(formSlug)
+    }
+
+    fun getDoneLessonList(): MutableSet<String>? {
+        return repository.getDoneLessonList()
+    }
 }

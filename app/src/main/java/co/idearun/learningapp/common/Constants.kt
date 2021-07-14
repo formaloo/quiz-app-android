@@ -68,5 +68,6 @@ object Constants {
 
     const val PREFERENCES_PROGRESS = "PREFERENCES_PROGRESS"
     const val PREFERENCES_LAST_Lesson = "PREFERENCES_LAST_FORM"
+    const val PREFERENCES_DONE_Lesson_LIST = "PREFERENCES_DONE_Lesson_LIST"
 
 }

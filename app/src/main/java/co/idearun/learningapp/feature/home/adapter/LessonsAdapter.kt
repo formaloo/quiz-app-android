@@ -14,16 +14,18 @@ import java.io.Serializable
 
 class LessonsAdapter(
     progressMap: HashMap<String?, Int?>?,
+    private val doneList: MutableSet<String>?,
     private val listener: LessonListListener
 ) :
     PagingDataAdapter<Form, LessonsAdapter.ViewHolder>(DiffUtilCallBack()),
     Serializable {
 
-    private var formsProgressMap: HashMap<String?, Int?>?=progressMap
+    private var formsProgressMap: HashMap<String?, Int?>? = progressMap
 
-    fun resetProgress(formsProgressMap: HashMap<String?, Int?>?){
-        this.formsProgressMap=formsProgressMap
+    fun resetProgress(formsProgressMap: HashMap<String?, Int?>?) {
+        this.formsProgressMap = formsProgressMap
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
         val itemView =
             LayoutInflater.from(parent.context).inflate(R.layout.lesson_content, parent, false)
@@ -33,7 +35,7 @@ class LessonsAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         item?.let {
-            holder.bindItems(item, listener,formsProgressMap)
+            holder.bindItems(item, listener, formsProgressMap, doneList)
         }
         holder.setIsRecyclable(false)
 
@@ -47,12 +49,17 @@ class LessonsAdapter(
         fun bindItems(
             form: Form?,
             listener: LessonListListener,
-            formsProgressMap: HashMap<String?, Int?>?
+            formsProgressMap: HashMap<String?, Int?>?,
+            doneList: MutableSet<String>?
         ) {
             binding.item = form
             formsProgressMap?.let {
                 val progress = formsProgressMap[form?.slug ?: ""]
-                binding.progress=progress
+                binding.progress = progress
+            }
+
+            doneList?.let {
+               binding.done=it.contains(form?.slug)
             }
             itemView.setOnClickListener {
                 listener.openLesson(form, binding.formItemLay)
