@@ -7,6 +7,7 @@ import androidx.databinding.DataBindingUtil.setContentView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import co.idearun.learningapp.R
+import co.idearun.learningapp.common.Constants
 import co.idearun.learningapp.common.extension.invisible
 import co.idearun.learningapp.common.extension.visible
 import co.idearun.learningapp.data.model.form.Fields
@@ -17,6 +18,7 @@ import co.idearun.learningapp.feature.lesson.listener.LessonListener
 import co.idearun.learningapp.feature.lesson.listener.SwipeStackListener
 import co.idearun.learningapp.feature.viewmodel.SharedViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class LessonActivity : LessonBaseActivity(), LessonListener {
 
@@ -68,12 +70,13 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
 
     private fun initView() {
         fieldsFlashAdapter = LessonFieldsAdapter(
-            this@LessonActivity,this,
+            this@LessonActivity, this,
             object : SwipeStackListener {
                 override fun onSwipeEnd(position: Int) {
                     next()
                 }
-            }, form!!, viewModel,
+            },
+            form!!, viewModel,
         )
 
         binding.flashcardFieldsRec.apply {
@@ -112,12 +115,15 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
             val visibleItemPosition =
                 (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
 
-            updateLessonProgress(visibleItemPosition + 1)
+            val next = visibleItemPosition + 1
+            updateLessonProgress(next)
 
-            if (fields.size > visibleItemPosition + 1) {
+            if (fields.size > next) {
                 Handler(Looper.getMainLooper()).postDelayed({
-                    scrollToPosition(visibleItemPosition + 1)
-                }, 150)
+                    scrollToPosition(next)
+                }, Constants.SCROLL_DELAY)
+
+                checkNeedActionFields(next)
 
             } else {
                 openCongView()
@@ -125,10 +131,25 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
 
             binding.flashPreBtn.visible()
 
-            binding.progress = visibleItemPosition + 1
+            binding.progress = next
 
         }
 
+    }
+
+    private fun checkNeedActionFields(pos: Int): Boolean {
+        val type = fieldsFlashAdapter?.collection?.get(pos)?.type
+        Timber.e("checkNeedActionFields $type ")
+
+        if (type == Constants.SINGLE_SELECT  ||type == Constants.DROPDOWN || type == Constants.YESNO || type == Constants.RATING  || type == Constants.META ) {
+            binding.flashcardDoneBtn.invisible()
+
+        } else {
+            binding.flashcardDoneBtn.visible()
+
+        }
+
+        return false
     }
 
     override fun pre() {

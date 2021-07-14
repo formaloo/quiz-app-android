@@ -1,16 +1,15 @@
 package co.idearun.learningapp.feature.lesson.adapter.holder
 
-import android.R
-import android.content.res.ColorStateList
-import android.graphics.Color
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import co.idearun.learningapp.common.extension.invisible
+import co.idearun.learningapp.common.Constants
 import co.idearun.learningapp.data.model.form.Fields
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.databinding.LayoutFlashCardStarItemBinding
-import co.idearun.learningapp.feature.Binding
 import co.idearun.learningapp.feature.lesson.listener.FieldsListener
+import co.idearun.learningapp.feature.lesson.listener.LessonListener
 import co.idearun.learningapp.feature.viewmodel.UIViewModel
 
 class StarHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -20,7 +19,8 @@ class StarHolder(view: View) : RecyclerView.ViewHolder(view) {
         pos: Int,
         listener: FieldsListener,
         form: Form,
-        uiViewModel: UIViewModel
+        uiViewModel: UIViewModel,
+        lessonListener: LessonListener
     ) {
         binding.field = item
         binding.form = form
@@ -34,6 +34,9 @@ class StarHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         binding.starRating.setOnRatingBarChangeListener { ratingBar, fl, b ->
             uiViewModel.addKeyValueToReq(item.slug!!, fl)
+            Handler(Looper.getMainLooper()).postDelayed({
+                lessonListener.next()
+            }, Constants.AUTO_NEXT_DELAY)
         }
 
         if (item.required == true) {

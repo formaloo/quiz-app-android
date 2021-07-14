@@ -1,9 +1,12 @@
 package co.idearun.learningapp.feature.lesson.adapter.holder
 
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import co.idearun.learningapp.common.Constants
 import co.idearun.learningapp.common.extension.invisible
 import co.idearun.learningapp.data.model.form.Fields
 import co.idearun.learningapp.data.model.form.Form
@@ -11,6 +14,7 @@ import co.idearun.learningapp.databinding.LayoutUiCsatItemBinding
 import co.idearun.learningapp.feature.lesson.listener.FieldsListener
 import co.idearun.learningapp.feature.lesson.adapter.*
 import co.idearun.learningapp.feature.lesson.listener.CSATListener
+import co.idearun.learningapp.feature.lesson.listener.LessonListener
 import co.idearun.learningapp.feature.viewmodel.UIViewModel
 
 class CSATHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -22,7 +26,8 @@ class CSATHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         position_: Int,
         listener: FieldsListener,
         form: Form,
-        viewmodel: UIViewModel
+        viewmodel: UIViewModel,
+        lessonListener: LessonListener
     ) {
         binding.field = field
         binding.form = form
@@ -38,7 +43,7 @@ class CSATHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var selectedItem: Int? = null
 
 
-        setUpCSATIconList(field, viewmodel, selectedItem)
+        setUpCSATIconList(field, viewmodel, selectedItem,lessonListener)
 
         if (field.required == true) {
             viewmodel.reuiredField(field)
@@ -52,7 +57,8 @@ class CSATHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private fun setUpCSATIconList(
         field: Fields,
         viewmodel: UIViewModel,
-        selectedItem: Int?
+        selectedItem: Int?,
+        lessonListener: LessonListener
     ) {
         val list = when (field.thumbnail_type) {
             CSATThumbnailType.flat_face.name -> {
@@ -125,7 +131,9 @@ class CSATHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             adapter = CSATAdapter(list, (selectedItem ?: 0) - 1, object : CSATListener {
                 override fun csatSelected(pos: Int) {
                     viewmodel.addKeyValueToReq(field.slug!!, pos)
-
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        lessonListener.next()
+                    }, Constants.AUTO_NEXT_DELAY)
                 }
 
             })

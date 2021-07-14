@@ -110,7 +110,7 @@ class LessonFieldsAdapter(
                     position_,
                     listener,
                     form,
-                    viewmodel
+                    viewmodel,lessonListener
                 )
 
             }
@@ -131,7 +131,7 @@ class LessonFieldsAdapter(
                     position_,
                     listener,
                     form,
-                    viewmodel
+                    viewmodel,lessonListener
                 )
 
             }
@@ -141,7 +141,7 @@ class LessonFieldsAdapter(
                     position_,
                     listener,
                     form,
-                    viewmodel
+                    viewmodel,lessonListener
                 )
 
             }
@@ -151,7 +151,7 @@ class LessonFieldsAdapter(
                     position_,
                     listener,
                     form,
-                    viewmodel
+                    viewmodel,lessonListener
                 )
 
             }
@@ -161,7 +161,7 @@ class LessonFieldsAdapter(
                     position_,
                     listener,
                     form,
-                    viewmodel
+                    viewmodel,lessonListener
                 )
 
             }

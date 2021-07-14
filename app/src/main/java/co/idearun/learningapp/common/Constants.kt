@@ -4,6 +4,9 @@ import android.Manifest
 
 object Constants {
 
+    const val AUTO_NEXT_DELAY: Long = 400
+    const val SCROLL_DELAY: Long = 150
+
     val PERMISSIONS_EXTERNAL_STORAGE = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     const val PERMISSION_ALL = 1
     const val EXTERNAL_STORAGE = 2

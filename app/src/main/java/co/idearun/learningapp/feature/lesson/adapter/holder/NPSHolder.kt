@@ -9,6 +9,7 @@ import co.idearun.learningapp.data.model.form.Fields
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.databinding.LayoutFlashCardNpsItemBinding
 import co.idearun.learningapp.feature.lesson.listener.FieldsListener
+import co.idearun.learningapp.feature.lesson.listener.LessonListener
 import co.idearun.learningapp.feature.viewmodel.UIViewModel
 
 
@@ -19,7 +20,8 @@ class NPSHolder(view: View) : RecyclerView.ViewHolder(view) {
         pos: Int,
         listener: FieldsListener,
         form: Form,
-        uiViewModel: UIViewModel
+        uiViewModel: UIViewModel,
+        lessonListener: LessonListener
     ) {
         binding.field = item
         binding.form = form
@@ -34,7 +36,7 @@ class NPSHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         binding.npsRec.apply {
             adapter =
-                NpsItemAdapter(item, form, uiViewModel, binding.errLay)
+                NpsItemAdapter(item, form, uiViewModel, binding.errLay,lessonListener)
             layoutManager = GridLayoutManager(context, 11)
             addItemDecoration(DividerItemDecoration(context, RecyclerView.HORIZONTAL))
         }

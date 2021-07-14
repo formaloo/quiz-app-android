@@ -40,8 +40,8 @@
                 android:layout_marginTop="@dimen/padding_2xlarge"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                app:imageUrl="@{item.logo}"
                 android:src="@drawable/ic_flashcard"
+                app:imageUrl="@{item.logo}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -62,7 +62,7 @@
                 app:layout_constraintStart_toEndOf="@+id/imageView"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <org.sufficientlysecure.htmltextview.HtmlTextView
+            <TextView
                 ellipsize="end"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -111,10 +111,11 @@
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:text="Start"
-                    android:visibility="@{progress!=null &amp;&amp; progress>0 ? view.GONE : view.VISIBLE}"                    android:textAllCaps="true"
+                    android:textAllCaps="true"
                     android:textColor="?attr/colorPrimary"
                     android:textSize="@dimen/font_standard"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="@{progress!=null &amp;&amp; progress>0 ? view.GONE : view.VISIBLE}" />
 
                 <com.google.android.material.progressindicator.LinearProgressIndicator
                     android:id="@+id/form_progress"
@@ -124,8 +125,7 @@
                     android:layout_centerVertical="true"
                     android:max="@{item.fields_list!=null?item.fields_list.size():10}"
                     android:progress="@{progress}"
-                    android:visibility="@{progress!=null &amp;&amp; progress>0 ? view.VISIBLE: view.GONE }"
-                     />
+                    android:visibility="@{progress!=null &amp;&amp; progress>0 ? view.VISIBLE: view.GONE }" />
 
             </RelativeLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

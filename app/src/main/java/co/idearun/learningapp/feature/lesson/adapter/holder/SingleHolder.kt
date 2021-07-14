@@ -1,6 +1,8 @@
 package co.idearun.learningapp.feature.lesson.adapter.holder
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +19,7 @@ import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.databinding.LayoutFlashCardSignleItemBinding
 import co.idearun.learningapp.feature.Binding
 import co.idearun.learningapp.feature.lesson.listener.FieldsListener
+import co.idearun.learningapp.feature.lesson.listener.LessonListener
 import co.idearun.learningapp.feature.viewmodel.UIViewModel
 
 
@@ -27,7 +30,8 @@ class SingleHolder(view: View) : RecyclerView.ViewHolder(view) {
         pos: Int,
         listener: FieldsListener,
         form: Form,
-        uiViewModel: UIViewModel
+        uiViewModel: UIViewModel,
+        lessonListener: LessonListener
     ) {
         binding.field = field
         binding.form = form
@@ -62,7 +66,7 @@ class SingleHolder(view: View) : RecyclerView.ViewHolder(view) {
                 binding.valueRg,
                 ArrayList(it),
                 form,
-                uiViewModel
+                uiViewModel,lessonListener
             )
 
         }
@@ -74,6 +78,7 @@ class SingleHolder(view: View) : RecyclerView.ViewHolder(view) {
         items: ArrayList<ChoiceItem>,
         form: Form,
         uiViewModel: UIViewModel,
+        lessonListener: LessonListener,
     ) {
         val context = value_rg.context
         val type = field.type
@@ -84,7 +89,7 @@ class SingleHolder(view: View) : RecyclerView.ViewHolder(view) {
         }
 
         for (i in 1..items.size) {
-            value_rg.addView(createRadioButton(form,uiViewModel,items,field,i,context))
+            value_rg.addView(createRadioButton(form,uiViewModel,items,field,i,context,lessonListener))
         }
     }
 
@@ -94,7 +99,8 @@ class SingleHolder(view: View) : RecyclerView.ViewHolder(view) {
         items: java.util.ArrayList<ChoiceItem>,
         field: Fields,
         i: Int,
-        context: Context
+        context: Context,
+        lessonListener: LessonListener
     ): RadioButton {
 
 
@@ -141,6 +147,10 @@ class SingleHolder(view: View) : RecyclerView.ViewHolder(view) {
             setOnClickListener {
                 items[i - 1].slug?.let { slug ->
                     uiViewModel.addKeyValueToReq(field.slug!!, slug)
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        lessonListener.next()
+                    }, Constants.AUTO_NEXT_DELAY)
+
                 }
 
             }

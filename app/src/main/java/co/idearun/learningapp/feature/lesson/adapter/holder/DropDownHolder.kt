@@ -1,9 +1,12 @@
 package co.idearun.learningapp.feature.lesson.adapter.holder
 
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.AdapterView
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.RecyclerView
+import co.idearun.learningapp.common.Constants
 import co.idearun.learningapp.data.model.form.Fields
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.databinding.LayoutFlashCardDropdownItemBinding
@@ -41,7 +44,10 @@ class DropDownHolder(view: View) : RecyclerView.ViewHolder(view) {
                     dropAdapter.getItem(position)?.slug?.let { slug ->
                         viewmodel.addKeyValueToReq(item.slug!!, slug)
                         if (userSelect){
-                            lessonListener.next()
+                            Handler(Looper.getMainLooper()).postDelayed({
+                                lessonListener.next()
+                            }, Constants.AUTO_NEXT_DELAY)
+
                         }else{
                             userSelect=true
                         }
