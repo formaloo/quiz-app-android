@@ -55,6 +55,7 @@
             android:textColor="@color/white"
             android:text="Home"
             android:id="@+id/home"
+            android:onClick="@{()->flashcardListener.closePage()}"
             android:textSize="@dimen/font_standard"
             android:background="?attr/colorPrimary"/>
         
