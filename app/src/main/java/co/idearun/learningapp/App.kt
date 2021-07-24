@@ -19,7 +19,6 @@ open class App : Application(), Configuration.Provider {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         } else {
-
         }
 
         AppCenter.start(this, "657491c6-00b7-478b-985c-d1f6c86981e0",
