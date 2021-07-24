@@ -199,11 +199,9 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
     }
 
     private fun updateDoneLessonList() {
-        val doneLessonList = shardedVM.getDoneLessonList()
-        doneLessonList?.add(form?.slug?:"")
-        shardedVM.saveDoneLessonList(doneLessonList?: mutableSetOf())
-
-
+        val doneLessonList = shardedVM.getDoneLessonList()?: mutableSetOf()
+        doneLessonList.add(form?.slug?:"")
+        shardedVM.saveDoneLessonList(doneLessonList)
     }
 
     private fun updateLessonProgress(pos: Int) {

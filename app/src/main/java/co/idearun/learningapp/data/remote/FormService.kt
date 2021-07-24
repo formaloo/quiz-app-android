@@ -7,6 +7,7 @@ import co.idearun.learningapp.data.model.search.SearchRes
 import co.idearun.learningapp.data.model.submitForm.SubmitFormRes
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
@@ -26,12 +27,6 @@ interface FormService {
         private const val SEARCH = "${VERSION2}forms/search/?"
 
     }
-
-    @GET(FORMS)
-    fun getFormList(
-        @Query("page") page: Int,
-        @Query("page_size") page_size: Int
-    ): Call<FormListRes>
 
     @GET(FORMS)
     suspend fun getForms(

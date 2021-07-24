@@ -22,16 +22,18 @@
 
     </data>
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:gravity="center"
+        android:padding="@dimen/padding_large"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/cong_imv"
-            android:layout_width="@dimen/img_size_l"
-            android:layout_height="@dimen/img_size_l"
-            android:layout_centerHorizontal="true"
+            android:layout_width="match_parent"
+            android:layout_marginHorizontal="@dimen/padding_large"
+            android:layout_height="@dimen/lottie"
             app:lottie_autoPlay="true"
             android:layout_marginBottom="@dimen/padding_xlarge"
             app:lottie_loop="true"
@@ -41,14 +43,20 @@
             android:id="@+id/contxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/cong_imv"
-            android:layout_centerHorizontal="true"
-            android:layout_margin="@dimen/padding_standard"
-            android:layout_marginBottom="@dimen/padding_standard"
+            android:layout_marginBottom="@dimen/padding_xlarge"
             app:htmlTxt="@{form.success_message}"
             android:textAlignment="center"
             text_color="@{form.text_color}"
             android:textSize="@dimen/font_2xlarge" />
 
-    </RelativeLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Home"
+            android:id="@+id/home"
+            android:textSize="@dimen/font_standard"
+            android:background="?attr/colorPrimary"/>
+        
+    </LinearLayout>
 </layout>

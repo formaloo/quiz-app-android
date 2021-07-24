@@ -54,6 +54,8 @@
     <dimen name="slider_size">200dp</dimen>
 
     <dimen name="navigation_view_width">250dp</dimen>
+    
+    <dimen name="lottie">300dp</dimen>
 
 
     <dimen name="filter_group_width">150dp</dimen>
