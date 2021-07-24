@@ -16,13 +16,14 @@ interface FormService {
     companion object {
         private const val VERSION1 = "v1/"
         private const val VERSION2 = "v2/"
+        private const val VERSION3 = "v3/"
 
-        private const val FORMS = "${VERSION2}forms/list/?pagination=0"
+        private const val FORMS = "${VERSION3}forms/?tags=tpOuD6hR&pagination=0"
+        private const val FORM_DETAIL = "${VERSION3}form-displays/address/{address}/"
+        private const val submitForm = "${VERSION3}form-displays/slug/{slug}/submit/"
+        private const val CAT_LIST = "${VERSION2}forms/category/list/"
         private const val SEARCH_FORMS = "${VERSION2}forms/list/?"
         private const val SEARCH = "${VERSION2}forms/search/?"
-        private const val FORM_DETAIL = "${VERSION2}forms/form/{slug}/"
-        private const val CAT_LIST = "${VERSION2}forms/category/list/"
-        private const val submitForm = "${VERSION1}forms/form/{slug}/submit/"
 
     }
 
@@ -51,7 +52,7 @@ interface FormService {
 
 
     @GET(FORM_DETAIL)
-    fun getFormDetail(@Path("slug") slug: String?): Call<CreateFormRes>
+    fun getFormDetail(@Path("address") address: String?): Call<CreateFormRes>
 
     @Multipart
     @POST(submitForm)

@@ -221,6 +221,8 @@ class FormzRepo(
 
                         val endOfPaginationReached = if (force) {
                             val response = source.getForms((loadKey?.current_page ?: 0) + 1)
+
+                            Timber.e("response $response")
                             val formsData = response.body()?.data
                             val formList = formsData?.forms
                             if (formList != null) {
@@ -235,7 +237,7 @@ class FormzRepo(
                                         )
                                     )
                                     formList.map {
-                                        async { getForm(it.slug) }
+                                        async { getForm(it.address) }
                                     }.awaitAll().let {
                                         val forms = arrayListOf<Form>()
                                         it.forEach {
@@ -275,8 +277,8 @@ class FormzRepo(
     }
 
 
-    override suspend fun getFormData(formSlug: String?): Either<Failure, CreateFormRes> {
-        val call = source.getFormData(formSlug)
+    override suspend fun getFormData(formAddress: String?): Either<Failure, CreateFormRes> {
+        val call = source.getFormData(formAddress)
         return try {
             request(call, { it.toCreateFormRes() }, CreateFormRes.empty())
         } catch (e: Exception) {
@@ -284,8 +286,8 @@ class FormzRepo(
         }
     }
 
-    override suspend fun getForm(formSlug: String?): CreateFormRes? {
-        val call = source.getFormData(formSlug).execute()
+    override suspend fun getForm(formAddress: String?): CreateFormRes? {
+        val call = source.getFormData(formAddress).execute()
         return call.body()
 
     }

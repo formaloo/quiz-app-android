@@ -13,8 +13,7 @@ import java.util.concurrent.TimeUnit
 
 fun createRemoteFormModule(
     baseUrl: String,
-    appToken: String,
-    userToken: String
+    appToken: String
 ) = module {
 
     factory(named("formInterceptor")) {
@@ -24,7 +23,6 @@ fun createRemoteFormModule(
             val request =
                 original.newBuilder()
                     .header("x-api-key", appToken)
-                    .header("Authorization", "JWT " + userToken)
                     .method(original.method, original.body)
                     .build()
 

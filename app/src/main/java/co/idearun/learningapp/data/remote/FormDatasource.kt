@@ -11,7 +11,7 @@ import okhttp3.RequestBody
 class FormDatasource(private val service: FormService) {
     suspend fun getForms(page: Int) = service.getForms(page, 20)
     fun getCatList() = service.getCategories()
-    fun getFormData(formSlug: String?) = service.getFormDetail(formSlug)
+    fun getFormData(formAddress: String?) = service.getFormDetail(formAddress)
     fun search(searchStr: String) = service.search(searchStr)
     fun searchForms(searchStr: String) = service.searchForms(searchStr)
     fun submitForm(
