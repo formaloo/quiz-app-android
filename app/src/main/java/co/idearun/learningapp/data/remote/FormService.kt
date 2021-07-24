@@ -18,7 +18,7 @@ interface FormService {
         private const val VERSION2 = "v2/"
         private const val VERSION3 = "v3/"
 
-        private const val FORMS = "${VERSION3}forms/?tags=tpOuD6hR&pagination=0"
+        private const val FORMS = "${VERSION3}form-displays/tag/learn-android-tag/?pagination=0"
         private const val FORM_DETAIL = "${VERSION3}form-displays/address/{address}/"
         private const val submitForm = "${VERSION3}form-displays/slug/{slug}/submit/"
         private const val CAT_LIST = "${VERSION2}forms/category/list/"
