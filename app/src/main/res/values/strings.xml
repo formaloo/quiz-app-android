@@ -27,7 +27,7 @@
   <string name="dash">-</string>
   <string name="phone_">phone</string>
   <string name="other">Other</string>
-  <string name="DiSPLAY_FORM">https://formaloo.net/</string>
+  <string name="formaloo_site_address">https://formaloo.net/</string>
   <string name="share_form_link_via">Share Form Address:</string>
     <string name="last_lesson_title">Your Learning</string>
   <string name="last_lesson_desc">Jump back into your most recent lesson.</string>
@@ -36,6 +36,7 @@
   <string name="your_lessons">Your Lessons</string>
   <string name="lesson_list_desc">Take lessons based on the skills you chose.</string>
   <string name="made_by_desc">Made with passion by Formaloo</string>
+  <string name="made_by_desc2">Made with passion by</string>
   <string name="appAddress">https://play.google.com/store/apps/details?id=co.idearun.learningapp</string>
   <string name="about">About</string>
   <string name="review">Review</string>

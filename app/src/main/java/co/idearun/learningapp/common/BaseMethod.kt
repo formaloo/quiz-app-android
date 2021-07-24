@@ -132,11 +132,11 @@ class BaseMethod {
         return null
     }
 
-    fun openUri(activity: Activity, uri: String) {
+    fun openUri(ctx: Context, uri: String) {
         if (uri.isNotEmpty()) {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.data = Uri.parse(uri)
-            activity.startActivity(intent)
+            ctx.startActivity(intent)
         }
 
     }

@@ -14,6 +14,7 @@ import co.idearun.learningapp.common.base.BaseViewModel
 import co.idearun.learningapp.common.exception.Failure
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.databinding.FragmentHomeBinding
+import co.idearun.learningapp.feature.MainListener
 import co.idearun.learningapp.feature.home.adapter.LessonsAdapter
 import co.idearun.learningapp.feature.home.adapter.LessonListListener
 import co.idearun.learningapp.feature.lesson.LessonActivity
@@ -24,7 +25,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
 import timber.log.Timber
 
-class HomeFragment : BaseFragment(), KoinComponent, LessonListListener {
+class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainListener {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var formListAdapter: LessonsAdapter

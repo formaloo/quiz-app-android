@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+    
+        <variable
+            name="listener"
+            type="co.idearun.learningapp.feature.MainListener" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -33,7 +36,10 @@
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
-                android:layout_margin="@dimen/padding_xsmall"
+                android:layout_marginTop="@dimen/padding_xsmall"
+                android:layout_marginBottom="@dimen/padding_xsmall"
+                android:layout_marginStart="@dimen/padding_standard"
+                android:layout_marginEnd="@dimen/padding_standard"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/btn_h_l"
                 android:background="@drawable/back_appbar"
@@ -45,6 +51,7 @@
         <TextView
             android:id="@+id/made_by_txv"
             android:textAlignment="center"
+            android:onClick="@{(v)->listener.openFormaloo(v)}"
             android:paddingTop="@dimen/padding_2xsmall"
             android:paddingBottom="@dimen/padding_small"
             android:layout_width="match_parent"

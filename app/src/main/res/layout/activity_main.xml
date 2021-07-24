@@ -6,6 +6,9 @@
     <data>
 
         <variable
+            name="listener"
+            type="co.idearun.learningapp.feature.MainListener" />
+        <variable
             name="viewmodel"
             type="co.idearun.learningapp.feature.viewmodel.FormViewModel" />
     </data>
@@ -41,7 +44,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/categoryRv"
                     android:layout_below="@+id/nav_header"
-                    android:layout_above="@+id/about"
+                    android:layout_above="@+id/navMore"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:items="@{viewmodel.formMap}"
@@ -49,12 +52,17 @@
                     tools:listitem="@layout/layout_form_item" />
 
                 <LinearLayout
+                    android:id="@+id/navMore"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                <LinearLayout
                     android:id="@+id/about"
-                    android:layout_above="@+id/made_by_txv"
                     android:orientation="horizontal"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:layout_width="wrap_content"
-                    android:layout_margin="@dimen/padding_standard"
+                    android:layout_width="match_parent"
+                    android:padding="@dimen/padding_standard"
                     android:layout_height="wrap_content">
 
                     <ImageView
@@ -77,19 +85,39 @@
                         android:textSize="@dimen/font_xlarge" />
 
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/made_by_txv"
-                    android:layout_alignParentBottom="true"
-                    android:textAlignment="center"
-                    android:paddingTop="@dimen/padding_xsmall"
-                    android:paddingBottom="@dimen/padding_xsmall"
+                
+                <LinearLayout
+                    android:id="@+id/madeby"
+                    android:onClick="@{(v)->listener.openFormaloo(v)}"
+                    android:orientation="horizontal"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:layout_width="match_parent"
                     android:paddingStart="@dimen/padding_standard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/font_small"
-                    android:text="@string/made_by_desc"
-                    android:textColor="@color/gray2" />
+                    android:paddingEnd="@dimen/padding_small"
+                    android:paddingTop="@dimen/padding_small"
+                    android:paddingBottom="@dimen/padding_small"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/made_by_txv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        android:text="@string/made_by_desc2"
+                        android:textColor="@color/gray2"
+                        android:textSize="@dimen/font_small" />
+                    <ImageView
+                        android:id="@+id/iconmadeby"
+                        android:padding="@dimen/padding_2xsmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/icon_size_standard"
+                        android:adjustViewBounds="true"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/formaloo_text_logo" />
+                </LinearLayout>
+
+           
+                </LinearLayout>
 
             </RelativeLayout>
 

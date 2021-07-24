@@ -23,7 +23,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
 import timber.log.Timber
 
-class MainActivity : BaseActivity(), KoinComponent {
+class MainActivity : BaseActivity(), KoinComponent,MainListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
     val baseMethod: BaseMethod by inject()
@@ -38,6 +38,8 @@ class MainActivity : BaseActivity(), KoinComponent {
 
 
         binding.viewmodel = viewModel
+        binding.listener = this
+        binding.appBarMain.listener = this
         binding.lifecycleOwner = this
         initView()
 
@@ -83,6 +85,7 @@ class MainActivity : BaseActivity(), KoinComponent {
             binding.drawerLayout.close()
             navController.navigate(R.id.about)
         }
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
