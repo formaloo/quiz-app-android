@@ -33,7 +33,9 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
         super.onCreate(savedInstanceState)
         binding = setContentView(this, R.layout.activity_lesson)
         binding.listener = this
+        binding.layoutFashCong.flashcardListener = this
         binding.layoutFashCong.listener = this
+        binding.layoutFashCong.viewmodel = viewModel
         binding.flashcardListener = this
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
