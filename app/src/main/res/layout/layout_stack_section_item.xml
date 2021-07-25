@@ -65,7 +65,6 @@
                 android:layout_height="match_parent"
                 android:lineSpacingExtra="@dimen/padding_standard"
                 android:padding="@dimen/padding_standard"
-                android:textIsSelectable="true"
                 android:textAlignment="textStart"
                 android:textColor="@color/black"
                 app:autoSizeMaxTextSize="@dimen/font_4xlarge"
