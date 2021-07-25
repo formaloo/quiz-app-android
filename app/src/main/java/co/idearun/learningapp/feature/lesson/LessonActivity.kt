@@ -110,6 +110,11 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
         shardedVM.saveLastLesson(form?.slug ?: "")
         viewModel.initFormSlug(form?.slug ?: "")
         viewModel.getSubmitEntity()
+//        viewModel.submitEntity.observe(this,{
+//            it?.let {
+//
+//            }
+//        })
     }
 
 
@@ -117,6 +122,8 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
         with(binding.flashcardFieldsRec) {
             val visibleItemPosition =
                 (layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+
+            viewModel.saveEditSubmitToDB(false, visibleItemPosition)
 
             val next = visibleItemPosition + 1
             updateLessonProgress(next)
@@ -136,6 +143,8 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
 
             binding.progress = next
 
+
+            Timber.e("visibleItemPosition$visibleItemPosition")
         }
 
     }
@@ -143,7 +152,7 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
     private fun checkNeedActionFields(pos: Int): Boolean {
         val type = fieldsFlashAdapter?.collection?.get(pos)?.type
 
-        if (type == Constants.SINGLE_SELECT  ||type == Constants.DROPDOWN || type == Constants.YESNO || type == Constants.RATING  || type == Constants.META ) {
+        if (type == Constants.SINGLE_SELECT || type == Constants.DROPDOWN || type == Constants.YESNO || type == Constants.RATING || type == Constants.META) {
             binding.flashcardDoneBtn.invisible()
 
         } else {
@@ -193,6 +202,10 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
     private fun openCongView() {
         updateLessonProgress(-1)
         shardedVM.saveLastLesson("")
+        val visibleItemPosition =
+            (binding.flashcardFieldsRec.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+        Timber.e("visibleItemPosition$visibleItemPosition")
+        viewModel.saveEditSubmitToDB(true, visibleItemPosition)
         callWorker()
         binding.flashCongView.visible()
 
@@ -225,6 +238,11 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
 
         binding.progress = (progress ?: 0)
         binding.executePendingBindings()
+
+    }
+
+    override fun onPause() {
+        super.onPause()
 
     }
 

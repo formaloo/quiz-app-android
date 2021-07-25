@@ -49,8 +49,8 @@ class FormzRepo(
 ) : FormzDataSource {
 
     override suspend fun sendSavedSubmitToServer() {
-
-        submitDao.getSubmitEntityList().map {
+        val submitEntityList = submitDao.getSubmitEntityList()
+        submitEntityList.map {
             val newRow = it.newRow
             val formSLug = it.formSlug
             val formReq = createFormReq(it.formReq)
