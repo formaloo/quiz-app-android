@@ -27,15 +27,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/padding_standard"
-        android:focusable="true"
-        android:clickable="true"
         card_view:cardBackgroundColor="@color/white"
         card_view:cardCornerRadius="4dp"
         card_view:cardElevation="0.5dp">
 
         <LinearLayout
-            android:focusable="true"
-            android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -63,14 +59,12 @@
                 android:textSize="@dimen/font_large"
                 android:text="@{field.title}" />
 
-            <org.sufficientlysecure.htmltextview.HtmlTextView
+            <TextView
                 android:id="@+id/key_txv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:lineSpacingExtra="@dimen/padding_standard"
                 android:padding="@dimen/padding_standard"
-                android:focusable="false"
-                android:clickable="false"
                 android:textIsSelectable="true"
                 android:textAlignment="textStart"
                 android:textColor="@color/black"

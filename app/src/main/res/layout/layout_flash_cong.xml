@@ -39,7 +39,7 @@
             app:lottie_loop="true"
             app:lottie_rawRes="@raw/happiness" />
 
-        <org.sufficientlysecure.htmltextview.HtmlTextView
+        <TextView
             android:id="@+id/contxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

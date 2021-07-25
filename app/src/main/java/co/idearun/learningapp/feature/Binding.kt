@@ -1,14 +1,12 @@
 package co.idearun.learningapp.feature
 
 import android.R
-import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
-import android.net.Uri
 import android.os.Build
 import android.text.Html
 import android.transition.Fade
@@ -28,6 +26,8 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import co.idearun.learningapp.common.BaseMethod
 import co.idearun.learningapp.common.Constants
+import co.idearun.learningapp.common.HtmlHttpImageGetter
+import co.idearun.learningapp.common.MyHtmlTagHandler
 import co.idearun.learningapp.data.model.form.ChoiceItem
 import co.idearun.learningapp.data.model.form.Fields
 import co.idearun.learningapp.data.model.form.Form
@@ -41,8 +41,6 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import org.koin.core.KoinComponent
 import org.koin.core.inject
-import org.sufficientlysecure.htmltextview.HtmlHttpImageGetter
-import org.sufficientlysecure.htmltextview.HtmlTextView
 import timber.log.Timber
 import java.lang.reflect.Field
 import java.text.SimpleDateFormat
@@ -78,29 +76,32 @@ object Binding : KoinComponent {
     fun setHtmlTxt(txv: TextView, txt: String?) {
         txt?.let {
             txv.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Html.fromHtml(txt, Html.FROM_HTML_MODE_COMPACT)
+                Html.fromHtml(
+                    txt, Html.FROM_HTML_MODE_COMPACT, HtmlHttpImageGetter(txv),
+                    MyHtmlTagHandler()
+                )
             } else {
                 Html.fromHtml(txt)
             }
         }
 
     }
-    @BindingAdapter("app:htmlTxt")
-    @JvmStatic
-    fun setHtmlTxt(txv: HtmlTextView, txt: String?) {
-        txt?.let {
-            txv.setHtml(txt, HtmlHttpImageGetter(txv))
-            txv.setOnClickATagListener { widget, spannedText, href ->
-                if (href?.isNotEmpty()==true) {
-                    val intent = Intent(Intent.ACTION_VIEW)
-                    intent.data = Uri.parse(href)
-                    txv.context.startActivity(intent)
-                }
-                 true
-            }
-        }
-
-    }
+//    @BindingAdapter("app:htmlTxt")
+//    @JvmStatic
+//    fun setHtmlTxt(txv: HtmlTextView, txt: String?) {
+//        txt?.let {
+//            txv.setHtml(txt, HtmlHttpImageGetter(txv))
+//            txv.setOnClickATagListener { widget, spannedText, href ->
+//                if (href?.isNotEmpty()==true) {
+//                    val intent = Intent(Intent.ACTION_VIEW)
+//                    intent.data = Uri.parse(href)
+//                    txv.context.startActivity(intent)
+//                }
+//                 true
+//            }
+//        }
+//
+//    }
 
     @JvmStatic
     @BindingAdapter("app:isVisisble", "app:form")
@@ -161,6 +162,7 @@ object Binding : KoinComponent {
                             ) ?: "-"
                         }"
             }
+
             Constants.SHORT_TEXT -> {
                 if (field.max_length != null) {
                     context.getString(co.idearun.learningapp.R.string.max_char_lenght) + " : " + field.max_length
@@ -169,6 +171,7 @@ object Binding : KoinComponent {
                     ""
                 }
             }
+
             else -> {
 
                 ""
@@ -601,7 +604,17 @@ object Binding : KoinComponent {
         if (recyclerView.adapter is LessonFieldsAdapter)
             with(recyclerView.adapter as LessonFieldsAdapter) {
                 resource?.fields_list?.let {
-                    it.add(0,Fields("form_title_logo",resource.title,resource.description,resource.logo,"meta","section"))
+                    it.add(
+                        0,
+                        Fields(
+                            "form_title_logo",
+                            resource.title,
+                            resource.description,
+                            resource.logo,
+                            "meta",
+                            "section"
+                        )
+                    )
                     collection = it
                 }
             }
