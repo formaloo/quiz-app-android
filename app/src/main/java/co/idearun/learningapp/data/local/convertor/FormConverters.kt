@@ -80,14 +80,26 @@ class FormConverters {
     }
 
     @TypeConverter
-    fun fromFields(data: ArrayList<Fields>?): String? {
+    fun fromFieldsList(data: ArrayList<Fields>?): String? {
         val type = object : TypeToken<ArrayList<Fields>>() {}.type
         return Gson().toJson(data, type)
     }
 
     @TypeConverter
-    fun toFields(json: String?): ArrayList<Fields>? {
+    fun toFieldsList(json: String?): ArrayList<Fields>? {
         val type = object : TypeToken<ArrayList<Fields>>() {}.type
+        return Gson().fromJson(json, type)
+    }
+
+    @TypeConverter
+    fun fromFields(data: HashMap<String,Any?>?): String? {
+        val type = object : TypeToken<HashMap<String,Any?>>() {}.type
+        return Gson().toJson(data, type)
+    }
+
+    @TypeConverter
+    fun toFields(json: String?): HashMap<String,Any?>? {
+        val type = object : TypeToken<HashMap<String,Any?>>() {}.type
         return Gson().fromJson(json, type)
     }
 

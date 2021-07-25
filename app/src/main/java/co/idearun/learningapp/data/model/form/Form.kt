@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey
 import co.idearun.learningapp.data.model.cat.Category
 import java.io.Serializable
 import java.util.*
+import kotlin.collections.HashMap
 
 @Entity
 data class Form(

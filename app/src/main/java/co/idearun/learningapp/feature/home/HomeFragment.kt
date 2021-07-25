@@ -76,6 +76,8 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
                 binding.lessonInprogress.item = it
                 binding.lessonInprogress.listener = this
                 binding.executePendingBindings()
+
+
             }
 
         })

@@ -120,7 +120,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:text="@{Integer.toString(progress/100)+' '+'%'}"
+                    android:text="@{Integer.toString((progress*100)/(item.fields_list.size()==0?1:item.fields_list.size()))+' '+'%'}"
                     android:textColor="@color/gray2"
                     android:textSize="@dimen/font_small" />
 
