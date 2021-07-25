@@ -189,20 +189,11 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
     }
 
     private fun openCongView() {
-        updateLessonProgress(0)
+        updateLessonProgress(-1)
         shardedVM.saveLastLesson("")
-
-        updateDoneLessonList()
-
         callWorker()
         binding.flashCongView.visible()
 
-    }
-
-    private fun updateDoneLessonList() {
-        val doneLessonList = shardedVM.getDoneLessonList()?: mutableSetOf()
-        doneLessonList.add(form?.slug?:"")
-        shardedVM.saveDoneLessonList(doneLessonList)
     }
 
     private fun updateLessonProgress(pos: Int) {
@@ -217,7 +208,7 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
         val formSlug = form?.slug ?: ""
         val progress = lessonsProgressMap[form?.slug ?: ""]
 
-        if (progress == null || progress == 0) {
+        if (progress == null || progress == 0 || progress == -1) {
             lessonsProgressMap[formSlug] = 0
             shardedVM.saveLessonProgress(lessonsProgressMap)
         } else {

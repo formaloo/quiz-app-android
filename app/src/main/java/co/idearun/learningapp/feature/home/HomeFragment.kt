@@ -107,7 +107,7 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
     }
 
     private fun initView() {
-        formListAdapter = LessonsAdapter(shardedVM.retrieveLessonProgress(), shardedVM.getDoneLessonList(),this)
+        formListAdapter = LessonsAdapter(shardedVM.retrieveLessonProgress(), this)
 
         binding.lessonRv.apply {
             adapter = formListAdapter

@@ -7,11 +7,8 @@ import org.json.JSONObject
 interface SharedRepository {
     fun saveLessonProgress(progress: Map<String?, Int?>)
     fun retrieveLessonProgress(): HashMap<String?, Int?>
-
     fun saveLastLesson(formSlug: String?)
     fun getLastLesson(): String?
-    fun getDoneLessonList(): MutableSet<String>?
-    fun saveDoneLessonList(formSlug: MutableSet<String>?)
 }
 
 
@@ -48,14 +45,6 @@ class SharedRepositoryImpl(
 
     }
 
-    override fun getDoneLessonList(): MutableSet<String>? {
-        return sharedPreferences.getStringSet(Constants.PREFERENCES_DONE_Lesson_LIST, setOf())
-    }
-
-    override fun saveDoneLessonList(formSlug: MutableSet<String>?) {
-        sharedPreferences.edit().putStringSet(Constants.PREFERENCES_DONE_Lesson_LIST, formSlug).apply()
-
-    }
 
     override fun getLastLesson(): String? {
         return sharedPreferences.getString(Constants.PREFERENCES_LAST_Lesson, "")

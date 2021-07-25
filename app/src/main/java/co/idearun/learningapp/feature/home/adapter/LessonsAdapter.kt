@@ -14,7 +14,6 @@ import java.io.Serializable
 
 class LessonsAdapter(
     progressMap: HashMap<String?, Int?>?,
-    private val doneList: MutableSet<String>?,
     private val listener: LessonListListener
 ) :
     PagingDataAdapter<Form, LessonsAdapter.ViewHolder>(DiffUtilCallBack()),
@@ -35,7 +34,7 @@ class LessonsAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         item?.let {
-            holder.bindItems(item, listener, formsProgressMap, doneList)
+            holder.bindItems(item, listener, formsProgressMap)
         }
         holder.setIsRecyclable(false)
 
@@ -49,18 +48,17 @@ class LessonsAdapter(
         fun bindItems(
             form: Form?,
             listener: LessonListListener,
-            formsProgressMap: HashMap<String?, Int?>?,
-            doneList: MutableSet<String>?
+            formsProgressMap: HashMap<String?, Int?>?
         ) {
             binding.item = form
+
             formsProgressMap?.let {
                 val progress = formsProgressMap[form?.slug ?: ""]
                 binding.progress = progress
+                binding.done = progress == -1
+
             }
 
-            doneList?.let {
-               binding.done=it.contains(form?.slug)
-            }
             itemView.setOnClickListener {
                 listener.openLesson(form, binding.formItemLay)
 

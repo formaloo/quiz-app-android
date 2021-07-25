@@ -171,8 +171,7 @@
             android:background="@color/white"
             android:clickable="true"
             android:focusable="true"
-            android:visibility="gone"
-            app:backgroundTintList="@{form.background_color}">
+            android:visibility="gone">
 
             <include
                 android:id="@+id/layout_fash_cong"
