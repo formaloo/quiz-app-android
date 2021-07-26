@@ -94,6 +94,7 @@ class MainActivity : BaseActivity(), KoinComponent,MainListener {
     }
 
     private fun fetchFormList() {
+        viewModel.getLessonsList(true)
         viewModel.retrieveDBLessonList()
     }
 

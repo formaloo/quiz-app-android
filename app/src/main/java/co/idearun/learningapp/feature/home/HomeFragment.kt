@@ -32,7 +32,6 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
     private val viewModel: FormViewModel by viewModel()
     private val shardedVM: SharedViewModel by viewModel()
 
-
     override fun getViewModel(): BaseViewModel = viewModel
 
     override fun onCreateView(
@@ -55,7 +54,6 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
     }
 
     private fun initData() {
-        viewModel.getLessonsList(true)
 
         getLastFormData()
 
@@ -140,7 +138,7 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
     override fun onResume() {
         getLastFormData()
         formListAdapter.resetProgress(shardedVM.retrieveLessonProgress())
-        formListAdapter.notifyDataSetChanged()
+        viewModel.getLessonsList(false)
         super.onResume()
 
     }

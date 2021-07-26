@@ -246,6 +246,7 @@ class LessonFieldsAdapter(
         val animation: Animation =
             AnimationUtils.loadAnimation(context, getAnimationId(position_, itemViewType))
         holder.itemView.startAnimation(animation)
+//
         lastPosition = position_
 
     }

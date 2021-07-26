@@ -23,6 +23,7 @@ class LessonsAdapter(
 
     fun resetProgress(formsProgressMap: HashMap<String?, Int?>?) {
         this.formsProgressMap = formsProgressMap
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
@@ -60,7 +61,7 @@ class LessonsAdapter(
             }
 
             itemView.setOnClickListener {
-                listener.openLesson(form, binding.formItemLay)
+                listener.openLesson(form, binding.formItemLay,)
 
             }
         }
