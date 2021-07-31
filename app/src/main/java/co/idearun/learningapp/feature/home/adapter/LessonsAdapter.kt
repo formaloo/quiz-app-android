@@ -54,8 +54,6 @@ class LessonsAdapter(
             binding.progress = progress?:0
             binding.done = progress?:0 == -1
 
-            Timber.e("bindItems startTv ${binding.startTv.isVisible() } ")
-            Timber.e("bindItems formProgress ${binding.formProgress.isVisible() } ")
             itemView.setOnClickListener {
                 listener.openLesson(form, binding.formItemLay)
 
