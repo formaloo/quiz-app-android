@@ -6,24 +6,24 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import co.idearun.learningapp.R
+import co.idearun.learningapp.common.extension.isVisible
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.databinding.LessonContentBinding
 import org.koin.core.KoinComponent
+import timber.log.Timber
 import java.io.Serializable
 
 
 class LessonsAdapter(
     progressMap: HashMap<String?, Int?>?,
     private val listener: LessonListListener
-) :
-    PagingDataAdapter<Form, LessonsAdapter.ViewHolder>(DiffUtilCallBack()),
+) : PagingDataAdapter<Form, LessonsAdapter.ViewHolder>(DiffUtilCallBack()),
     Serializable {
 
     private var formsProgressMap: HashMap<String?, Int?>? = progressMap
 
     fun resetProgress(formsProgressMap: HashMap<String?, Int?>?) {
         this.formsProgressMap = formsProgressMap
-        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
@@ -35,7 +35,7 @@ class LessonsAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
         item?.let {
-            holder.bindItems(item, listener, formsProgressMap)
+            holder.bindItems(item, listener, (formsProgressMap?: hashMapOf())[item.slug])
         }
         holder.setIsRecyclable(false)
 
@@ -49,19 +49,17 @@ class LessonsAdapter(
         fun bindItems(
             form: Form?,
             listener: LessonListListener,
-            formsProgressMap: HashMap<String?, Int?>?
+            progress:Int?
         ) {
             binding.item = form
 
-            formsProgressMap?.let {
-                val progress = formsProgressMap[form?.slug ?: ""]
-                binding.progress = progress
-                binding.done = progress == -1
+            binding.progress = progress?:0
+            binding.done = progress?:0 == -1
 
-            }
-
+            Timber.e("bindItems startTv ${binding.startTv.isVisible() } ")
+            Timber.e("bindItems formProgress ${binding.formProgress.isVisible() } ")
             itemView.setOnClickListener {
-                listener.openLesson(form, binding.formItemLay,)
+                listener.openLesson(form, binding.formItemLay)
 
             }
         }

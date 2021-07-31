@@ -55,8 +55,6 @@ class FormzRepo(
             val formSLug = it.formSlug
             val formReq = createFormReq(it.formReq)
             val files = createFilesReq(it.files)
-
-            Timber.e("$newRow $formSLug")
             if (newRow == true && formSLug != null) {
                 submitForm(it, formSLug, formReq, files)
 

@@ -115,12 +115,12 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:text="@{done!=null &amp;&amp; done ?@string/review:@string/start}"
+                    android:text="@{done ?@string/review:@string/start,default=@string/start}"
                     android:textAllCaps="true"
-                    android:textColor="@{done?@color/colorGreen: android.R.attr.colorPrimary}"
+                    android:textColor="@{done?@color/colorGreen: @color/learning,default= @color/learning}"
                     android:textSize="@dimen/font_standard"
                     android:textStyle="bold"
-                    android:visibility="@{progress!=null &amp;&amp; progress>0 ? view.GONE : view.VISIBLE}" />
+                    android:visibility="@{progress>0 ? view.GONE : view.VISIBLE,default= visible}" />
 
                 <com.google.android.material.progressindicator.LinearProgressIndicator
                     android:id="@+id/form_progress"
@@ -130,7 +130,7 @@
                     android:layout_centerVertical="true"
                     android:max="@{item.fields_list!=null?item.fields_list.size():10}"
                     android:progress="@{progress}"
-                    android:visibility="@{progress!=null &amp;&amp; progress>0 ? view.VISIBLE: view.GONE }" />
+                    android:visibility="@{ progress>0 ? view.VISIBLE: view.GONE,default=gone }" />
 
             </RelativeLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

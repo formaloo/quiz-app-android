@@ -110,7 +110,6 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
     fun saveEditSubmitToDB(newRow: Boolean, visibleItemPosition: Int) = launch {
         if (visibleItemPosition == 0) {
-            Timber.e("newRow1 $newRow")
             val value = SubmitEntity(
                 0,
                 Random.nextInt(),
@@ -123,11 +122,7 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
             repository.saveSubmit(value)
 
         } else if (visibleItemPosition >= 1) {
-            Timber.e("newRow2 $newRow")
-
             submitEntity.value?.let { value ->
-                Timber.e("newRow3 $newRow")
-
                 value.files = fileList
                 value.formReq = formReqList
                 value.newRow = newRow

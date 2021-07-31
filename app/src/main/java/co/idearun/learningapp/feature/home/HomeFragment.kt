@@ -54,6 +54,7 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
     }
 
     private fun initData() {
+        viewModel.getLessonsList(true)
 
         getLastFormData()
 
@@ -97,7 +98,6 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
         if (lastLesson?.isNotEmpty()==true){
             viewModel.initLessonSlug(lastLesson)
             viewModel.retrieveLessonFromDB()
-
         }else{
             binding.lessonInprogress.progress =0
             binding.executePendingBindings()
@@ -138,6 +138,7 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
     override fun onResume() {
         getLastFormData()
         formListAdapter.resetProgress(shardedVM.retrieveLessonProgress())
+
         viewModel.getLessonsList(false)
         super.onResume()
 
