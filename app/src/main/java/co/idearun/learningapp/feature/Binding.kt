@@ -66,11 +66,8 @@ object Binding : KoinComponent {
     @BindingAdapter("app:imageUrl")
     @JvmStatic
     fun loadImage(view: ImageView, url: String?) {
-//        view.setImageDrawable(ContextCompat.getDrawable(view.context,R.drawable.ic_flashcard))
-        url?.let {
-            Glide.with(view.context).load(url).into(view)
-        }
-
+        val source=url?:ContextCompat.getDrawable(view.context,co.idearun.learningapp.R.drawable.ic_flashcard)
+        Glide.with(view.context).load(source).into(view)
     }
 
     @BindingAdapter("app:htmlTxt")

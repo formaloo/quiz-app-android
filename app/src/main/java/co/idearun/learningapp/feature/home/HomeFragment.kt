@@ -9,14 +9,15 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
 import co.idearun.learningapp.common.base.BaseFragment
 import co.idearun.learningapp.common.base.BaseViewModel
 import co.idearun.learningapp.common.exception.Failure
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.databinding.FragmentHomeBinding
 import co.idearun.learningapp.feature.MainListener
-import co.idearun.learningapp.feature.home.adapter.LessonsAdapter
 import co.idearun.learningapp.feature.home.adapter.LessonListListener
+import co.idearun.learningapp.feature.home.adapter.LessonsAdapter
 import co.idearun.learningapp.feature.lesson.LessonActivity
 import co.idearun.learningapp.feature.viewmodel.FormViewModel
 import co.idearun.learningapp.feature.viewmodel.SharedViewModel
@@ -24,6 +25,7 @@ import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
 import timber.log.Timber
+
 
 class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainListener {
 
@@ -80,6 +82,7 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
             }
 
         })
+
         viewModel.pagingData.observe(viewLifecycleOwner, {
             it?.let {pagingData->
                 lifecycleScope.launch {
@@ -112,6 +115,7 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
         binding.lessonRv.apply {
             adapter = formListAdapter
             layoutManager = LinearLayoutManager(this.context)
+
         }
 
     }
@@ -138,7 +142,6 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
     override fun onResume() {
         getLastFormData()
         formListAdapter.resetProgress(shardedVM.retrieveLessonProgress())
-
         viewModel.getLessonsList(false)
         super.onResume()
 

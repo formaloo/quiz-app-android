@@ -13,5 +13,6 @@ class DiffUtilCallBack : DiffUtil.ItemCallback<Form>() {
                 && oldItem.title == newItem.title
                 && oldItem.visit_count == newItem.visit_count
                 && oldItem.submit_count == newItem.submit_count
+                && oldItem.logo == newItem.logo
     }
 }

@@ -37,8 +37,6 @@ class LessonsAdapter(
         item?.let {
             holder.bindItems(item, listener, (formsProgressMap?: hashMapOf())[item.slug])
         }
-        holder.setIsRecyclable(false)
-
     }
 
     class ViewHolder(
