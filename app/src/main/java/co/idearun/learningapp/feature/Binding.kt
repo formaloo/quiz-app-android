@@ -22,6 +22,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatRatingBar
 import androidx.appcompat.widget.AppCompatSpinner
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import co.idearun.learningapp.common.BaseMethod
@@ -65,6 +66,7 @@ object Binding : KoinComponent {
     @BindingAdapter("app:imageUrl")
     @JvmStatic
     fun loadImage(view: ImageView, url: String?) {
+        view.setImageDrawable(ContextCompat.getDrawable(view.context,R.drawable.ic_flashcard))
         url?.let {
             Glide.with(view.context).load(url).into(view)
         }
