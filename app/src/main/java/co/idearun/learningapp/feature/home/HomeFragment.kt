@@ -20,6 +20,7 @@ import co.idearun.learningapp.feature.home.adapter.LessonsAdapter
 import co.idearun.learningapp.feature.lesson.LessonActivity
 import co.idearun.learningapp.feature.viewmodel.FormViewModel
 import co.idearun.learningapp.feature.viewmodel.SharedViewModel
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
@@ -28,7 +29,7 @@ import timber.log.Timber
 
 class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainListener {
 
-    private var openedForm: Form?=null
+    private var openedForm: Form? = null
     private lateinit var binding: FragmentHomeBinding
     private lateinit var formListAdapter: LessonsAdapter
     private val viewModel: FormViewModel by viewModel()
@@ -56,7 +57,7 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
     }
 
     private fun initData() {
-        viewModel.getLessonsList(true)
+        getLessonsList(true)
 
         getLastLessonData()
 
@@ -81,27 +82,17 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
 
         })
 
-        viewModel.pagingData.observe(viewLifecycleOwner, {
-            it?.let {pagingData->
-                lifecycleScope.launch {
-                    formListAdapter.submitData(pagingData)
-
-                }
-            }
-
-        })
-
 
     }
 
     private fun getLastLessonData() {
         val lastLesson = shardedVM.getLastLesson()
-        if (lastLesson?.isNotEmpty()==true){
+        if (lastLesson?.isNotEmpty() == true) {
             viewModel.initLessonSlug(lastLesson)
             viewModel.retrieveLessonFromDB()
 
-        }else{
-            binding.lessonInprogress.progress =0
+        } else {
+            binding.lessonInprogress.progress = 0
             binding.executePendingBindings()
         }
 
@@ -119,8 +110,8 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
 
     }
 
-    override fun openLessonPage(form: Form?, formItemLay: View,progress:Int) {
-        openedForm=form
+    override fun openLessonPage(form: Form?, formItemLay: View, progress: Int) {
+        openedForm = form
         val intent = Intent(requireActivity(), LessonActivity::class.java)
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
             requireActivity(),
@@ -133,18 +124,27 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
 
     }
 
-
-
     private fun renderFailure(message: String?) {
         Timber.e("renderFailure $message")
-        viewModel.getLessonsList(true)
+        getLessonsList(true)
 
     }
 
     override fun onResume() {
+        getLessonsList(true)
         getLastLessonData()
-        formListAdapter.resetProgress(shardedVM.retrieveLessonProgress(),openedForm)
+        formListAdapter.resetProgress(shardedVM.retrieveLessonProgress(), openedForm)
         super.onResume()
+
+    }
+
+    fun getLessonsList(force: Boolean) {
+        lifecycleScope.launch {
+            viewModel.fetchLessonList(force).collectLatest { pagingData ->
+                formListAdapter.submitData(pagingData)
+
+            }
+        }
 
     }
 }
