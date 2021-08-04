@@ -20,8 +20,12 @@ class LessonsAdapter(
 
     private var formsProgressMap: HashMap<String?, Int?>? = progressMap
 
-    fun resetProgress(formsProgressMap: HashMap<String?, Int?>?) {
+    fun resetProgress(formsProgressMap: HashMap<String?, Int?>?, openedForm: Form?) {
         this.formsProgressMap = formsProgressMap
+        openedForm?.let {
+            val index = this.snapshot().indexOf(openedForm)
+            notifyItemChanged(index)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
@@ -48,7 +52,6 @@ class LessonsAdapter(
             progress:Int?
         ) {
             binding.item = form
-
             binding.progress = progress?:0
             binding.done = progress?:0 == -1
             binding.listener =listener

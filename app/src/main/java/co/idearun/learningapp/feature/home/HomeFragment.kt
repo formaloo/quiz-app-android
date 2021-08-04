@@ -28,6 +28,7 @@ import timber.log.Timber
 
 class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainListener {
 
+    private var openedForm: Form?=null
     private lateinit var binding: FragmentHomeBinding
     private lateinit var formListAdapter: LessonsAdapter
     private val viewModel: FormViewModel by viewModel()
@@ -76,7 +77,6 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
                 binding.lessonInprogress.listener = this
                 binding.executePendingBindings()
 
-
             }
 
         })
@@ -99,6 +99,7 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
         if (lastLesson?.isNotEmpty()==true){
             viewModel.initLessonSlug(lastLesson)
             viewModel.retrieveLessonFromDB()
+
         }else{
             binding.lessonInprogress.progress =0
             binding.executePendingBindings()
@@ -119,6 +120,7 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
     }
 
     override fun openLessonPage(form: Form?, formItemLay: View,progress:Int) {
+        openedForm=form
         val intent = Intent(requireActivity(), LessonActivity::class.java)
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
             requireActivity(),
@@ -132,6 +134,7 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
     }
 
 
+
     private fun renderFailure(message: String?) {
         Timber.e("renderFailure $message")
         viewModel.getLessonsList(true)
@@ -140,8 +143,7 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
 
     override fun onResume() {
         getLastLessonData()
-        formListAdapter.resetProgress(shardedVM.retrieveLessonProgress())
-        viewModel.getLessonsList(false)
+        formListAdapter.resetProgress(shardedVM.retrieveLessonProgress(),openedForm)
         super.onResume()
 
     }
