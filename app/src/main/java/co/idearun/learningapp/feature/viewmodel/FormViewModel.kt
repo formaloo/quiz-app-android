@@ -24,9 +24,6 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     private val _form = MutableLiveData<Form>().apply { value = null }
     val form: LiveData<Form> = _form
 
-    private val _isLoading = MutableLiveData<Boolean>().apply { value = null }
-    val isLoading: LiveData<Boolean> = _isLoading
-
     private val _pagingData = MutableLiveData<PagingData<Form>>().apply { value = null }
     val pagingData: LiveData<PagingData<Form>> = _pagingData
 
@@ -89,15 +86,10 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         this.formSlug = slug
     }
 
-    fun stopLoading() {
-        _isLoading.value=false
-    }
 
     fun getLessonsList(force: Boolean) =launch{
-        _isLoading.value=true
         fetchLessonList(force).collectLatest { pagingData ->
             _pagingData.value=pagingData
-            _isLoading.value=false
         }
 
     }

@@ -20,6 +20,9 @@
         <variable
             name="item"
             type="co.idearun.learningapp.data.model.form.Form" />
+        <variable
+            name="listener"
+            type="co.idearun.learningapp.feature.home.adapter.LessonListListener" />
     </data>
 
     <LinearLayout
@@ -28,6 +31,7 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:orientation="vertical"
+        android:onClick="@{(v)->listener.openLessonPage(item,v,progress)}"
         android:transitionName="form_item_lay"
         tools:targetApi="lollipop">
 

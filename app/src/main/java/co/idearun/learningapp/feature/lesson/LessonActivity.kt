@@ -33,12 +33,12 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
         super.onCreate(savedInstanceState)
         binding = setContentView(this, R.layout.activity_lesson)
         binding.listener = this
-        binding.layoutFashCong.flashcardListener = this
-        binding.layoutFashCong.listener = this
-        binding.layoutFashCong.viewmodel = viewModel
         binding.flashcardListener = this
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
+        binding.layoutFashCong.flashcardListener = this
+        binding.layoutFashCong.listener = this
+        binding.layoutFashCong.viewmodel = viewModel
 
         baseMethod.hideAB(supportActionBar)
 
@@ -56,6 +56,7 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
 
     private fun checkBundle() {
         intent.extras?.let {
+           val progress= it.getInt("progress")?:0
             it.getSerializable("form")?.let {
                 if (it is Form) {
 
@@ -110,11 +111,6 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
         shardedVM.saveLastLesson(form?.slug ?: "")
         viewModel.initFormSlug(form?.slug ?: "")
         viewModel.getSubmitEntity()
-//        viewModel.submitEntity.observe(this,{
-//            it?.let {
-//
-//            }
-//        })
     }
 
 

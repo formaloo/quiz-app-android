@@ -15,9 +15,10 @@
 <!--        android:id="@+id/lessons_swipe_to_refresh"-->
 <!--        android:layout_width="match_parent"-->
 <!--        android:layout_height="match_parent"-->
-<!--        app:onRefreshListener="@{() -> vm.getLessonsList(true)}"-->
-<!--        app:refreshing="@{vm.isLoading}">-->
+<!--        android:fillViewport="true"-->
+<!--        app:onRefreshListener="@{() -> vm.getLessonsList(true)}">-->
 
+       
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

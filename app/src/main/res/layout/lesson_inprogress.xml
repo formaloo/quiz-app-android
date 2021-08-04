@@ -96,7 +96,7 @@
                 android:layout_height="38dp"
                 android:layout_marginTop="@dimen/padding_2xlarge"
                 android:background="@drawable/button_start"
-                android:onClick="@{(v)->listener.openLesson(item,v)}"
+                android:onClick="@{(v)->listener.openLessonPage(item,v,progress)}"
                 android:paddingHorizontal="@dimen/padding_large"
                 android:text="@string/continue_this_lesson"
                 android:textAllCaps="true"

@@ -6,11 +6,9 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
 import co.idearun.learningapp.R
-import co.idearun.learningapp.common.extension.isVisible
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.databinding.LessonContentBinding
 import org.koin.core.KoinComponent
-import timber.log.Timber
 import java.io.Serializable
 
 
@@ -53,11 +51,8 @@ class LessonsAdapter(
 
             binding.progress = progress?:0
             binding.done = progress?:0 == -1
+            binding.listener =listener
 
-            itemView.setOnClickListener {
-                listener.openLesson(form, binding.formItemLay)
-
-            }
         }
 
 

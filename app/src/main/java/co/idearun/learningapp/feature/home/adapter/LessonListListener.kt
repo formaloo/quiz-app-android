@@ -4,4 +4,4 @@ import android.view.View
 import co.idearun.learningapp.data.model.form.Form
 
 interface LessonListListener {
-    fun openLesson(form: Form?, formItemLay: View)}
+    fun openLessonPage(form: Form?, formItemLay: View,progress:Int)}

@@ -9,7 +9,6 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.SimpleItemAnimator
 import co.idearun.learningapp.common.base.BaseFragment
 import co.idearun.learningapp.common.base.BaseViewModel
 import co.idearun.learningapp.common.exception.Failure
@@ -58,7 +57,7 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
     private fun initData() {
         viewModel.getLessonsList(true)
 
-        getLastFormData()
+        getLastLessonData()
 
         viewModel.failure.observe(viewLifecycleOwner, {
             when (it) {
@@ -68,7 +67,6 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
 
                 }
             }
-            viewModel.stopLoading()
         })
 
         viewModel.form.observe(viewLifecycleOwner, {
@@ -96,7 +94,7 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
 
     }
 
-    private fun getLastFormData() {
+    private fun getLastLessonData() {
         val lastLesson = shardedVM.getLastLesson()
         if (lastLesson?.isNotEmpty()==true){
             viewModel.initLessonSlug(lastLesson)
@@ -120,7 +118,7 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
 
     }
 
-    override fun openLesson(form: Form?, formItemLay: View) {
+    override fun openLessonPage(form: Form?, formItemLay: View,progress:Int) {
         val intent = Intent(requireActivity(), LessonActivity::class.java)
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
             requireActivity(),
@@ -128,6 +126,7 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
             ViewCompat.getTransitionName(formItemLay)!!
         )
         intent.putExtra("form", form)
+        intent.putExtra("progress", progress)
         startActivity(intent, options.toBundle())
 
     }
@@ -140,7 +139,7 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
     }
 
     override fun onResume() {
-        getLastFormData()
+        getLastLessonData()
         formListAdapter.resetProgress(shardedVM.retrieveLessonProgress())
         viewModel.getLessonsList(false)
         super.onResume()
