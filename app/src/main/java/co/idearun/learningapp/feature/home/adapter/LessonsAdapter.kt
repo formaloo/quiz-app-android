@@ -9,14 +9,14 @@ import co.idearun.learningapp.R
 import co.idearun.learningapp.data.model.form.Form
 import co.idearun.learningapp.databinding.LessonContentBinding
 import org.koin.core.KoinComponent
+import timber.log.Timber
 import java.io.Serializable
 
 
 class LessonsAdapter(
     progressMap: HashMap<String?, Int?>?,
     private val listener: LessonListListener
-) : PagingDataAdapter<Form, LessonsAdapter.ViewHolder>(DiffUtilCallBack()),
-    Serializable {
+) : PagingDataAdapter<Form, LessonsAdapter.ViewHolder>(DiffUtilCallBack()), Serializable {
 
     private var formsProgressMap: HashMap<String?, Int?>? = progressMap
 
@@ -57,8 +57,6 @@ class LessonsAdapter(
             binding.listener =listener
 
         }
-
-
     }
 
 }

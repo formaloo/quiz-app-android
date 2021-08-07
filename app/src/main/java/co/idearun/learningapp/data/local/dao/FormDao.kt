@@ -28,7 +28,7 @@ abstract class FormDao : FormBuilderBaseDao<Form>() {
 
     suspend fun save(form: Form) {
         insert(form.apply {
-            last_submit_time?.let {
+            created_at?.let {
                 updated_at_date = converStrToDate(it)?.time
             }
         })

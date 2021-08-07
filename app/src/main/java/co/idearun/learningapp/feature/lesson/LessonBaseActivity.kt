@@ -26,11 +26,14 @@ import co.idearun.learningapp.R
 import co.idearun.learningapp.common.FileUtils
 import co.idearun.learningapp.feature.BaseActivity
 import co.idearun.learningapp.feature.lesson.listener.FieldsListener
+import co.idearun.learningapp.feature.viewmodel.FormViewModel
 
 open class LessonBaseActivity : BaseActivity(), FieldsListener, KoinComponent {
 
     private lateinit var enDatePicker: DatePickerDialog
     val viewModel: UIViewModel by viewModel()
+     val formVM: FormViewModel by viewModel()
+
     var _field: Fields? = null
     val baseMethod: BaseMethod by inject()
 

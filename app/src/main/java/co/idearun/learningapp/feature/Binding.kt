@@ -27,8 +27,8 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import co.idearun.learningapp.common.BaseMethod
 import co.idearun.learningapp.common.Constants
-import co.idearun.learningapp.common.HtmlHttpImageGetter
-import co.idearun.learningapp.common.MyHtmlTagHandler
+import co.idearun.learningapp.common.GlideImageGetter
+import co.idearun.learningapp.common.MyTagHandler
 import co.idearun.learningapp.data.model.form.ChoiceItem
 import co.idearun.learningapp.data.model.form.Fields
 import co.idearun.learningapp.data.model.form.Form
@@ -66,21 +66,25 @@ object Binding : KoinComponent {
     @BindingAdapter("app:imageUrl")
     @JvmStatic
     fun loadImage(view: ImageView, url: String?) {
-        val source=url?:ContextCompat.getDrawable(view.context,co.idearun.learningapp.R.drawable.ic_flashcard)
+        val source = url ?: ContextCompat.getDrawable(
+            view.context,
+            co.idearun.learningapp.R.drawable.ic_flashcard
+        )
         Glide.with(view.context).load(source).into(view)
     }
 
     @BindingAdapter("app:htmlTxt")
     @JvmStatic
     fun setHtmlTxt(txv: TextView, txt: String?) {
+
         txt?.let {
             txv.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(
-                    txt, Html.FROM_HTML_MODE_COMPACT, HtmlHttpImageGetter(txv),
-                    MyHtmlTagHandler()
+                    txt, Html.FROM_HTML_MODE_LEGACY, GlideImageGetter(txv),
+                    MyTagHandler()
                 )
             } else {
-                Html.fromHtml(txt)
+                Html.fromHtml(txt, GlideImageGetter(txv), MyTagHandler())
             }
         }
 

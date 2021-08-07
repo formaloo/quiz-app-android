@@ -21,8 +21,11 @@ import co.idearun.learningapp.data.model.form.formList.FormListRes
 import co.idearun.learningapp.data.model.search.SearchRes
 import co.idearun.learningapp.data.model.submitForm.SubmitFormRes
 import co.idearun.learningapp.data.remote.FormDatasource
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -210,6 +213,7 @@ class FormzRepo(
                         val loadKey = when (loadType) {
                             LoadType.REFRESH -> null
                             LoadType.PREPEND -> return MediatorResult.Success(endOfPaginationReached = true)
+
                             LoadType.APPEND -> {
                                 state.lastItemOrNull()
                                     ?: return MediatorResult.Success(endOfPaginationReached = true)
@@ -226,26 +230,23 @@ class FormzRepo(
                             if (formList != null) {
 
                                 withContext(Dispatchers.IO) {
-
-                                    formsDao.deleteAllFromTable()
                                     formsKeysDao.saveFormsKeys(
                                         FormsKeys(
                                             0,
                                             formsData.current_page ?: 1
                                         )
                                     )
+                                    formsDao.save(formList)
+
                                     formList.map {
-                                        async { getForm(it.address) }
-                                    }.awaitAll().let {
-                                        val forms = arrayListOf<Form>()
-                                        it.forEach {
-                                            it?.data?.form?.let {
-                                                forms.add(it)
+                                        withContext(Dispatchers.Default) { getForm(it.address) }?.apply {
+                                            data?.form?.let {
+                                                formsDao.save(it)
                                             }
                                         }
-                                        formsDao.save(forms)
 
                                     }
+
                                 }
                             }
 

@@ -131,7 +131,6 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
     }
 
     override fun onResume() {
-        getLessonsList(true)
         getLastLessonData()
         formListAdapter.resetProgress(shardedVM.retrieveLessonProgress(), openedForm)
         super.onResume()
