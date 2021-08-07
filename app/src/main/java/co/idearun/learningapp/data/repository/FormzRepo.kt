@@ -224,7 +224,7 @@ class FormzRepo(
                         val endOfPaginationReached = if (force) {
                             val response = source.getForms((loadKey?.current_page ?: 0) + 1)
 
-                            Timber.e("response $response")
+                            Timber.d("response $response")
                             val formsData = response.body()?.data
                             val formList = formsData?.forms
                             if (formList != null) {
@@ -238,14 +238,14 @@ class FormzRepo(
                                     )
                                     formsDao.save(formList)
 
-                                    formList.map {
-                                        withContext(Dispatchers.Default) { getForm(it.address) }?.apply {
-                                            data?.form?.let {
-                                                formsDao.save(it)
-                                            }
-                                        }
-
-                                    }
+//                                    formList.map {
+//                                        withContext(Dispatchers.Default) { getForm(it.address) }?.apply {
+//                                            data?.form?.let {
+//                                                formsDao.save(it)
+//                                            }
+//                                        }
+//
+//                                    }
 
                                 }
                             }

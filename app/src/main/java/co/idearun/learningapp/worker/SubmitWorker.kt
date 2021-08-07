@@ -18,14 +18,14 @@ class SubmitWorker(
 
     override suspend fun doWork(): Result = coroutineScope {
         try {
-            Timber.e("doWork")
+            Timber.d("doWork")
             val repo: FormzRepo = get(named("FormzRepo"))
             repo.sendSavedSubmitToServer()
 
             Result.success()
 
         } catch (ex: Exception) {
-            Timber.e(ex, "Error ")
+            Timber.d(ex, "Error ")
             Result.failure()
         }
     }

@@ -580,7 +580,7 @@ object Binding : KoinComponent {
         spinner: AppCompatSpinner,
         items: ArrayList<ChoiceItem>
     ) {
-        Timber.e("items ${items.size}")
+        Timber.d("items ${items.size}")
         if (spinner.adapter is DropDownItemsAdapter)
             with(spinner.adapter as DropDownItemsAdapter) {
                 listItemsTxt = items

@@ -125,7 +125,7 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
     }
 
     private fun renderFailure(message: String?) {
-        Timber.e("renderFailure $message")
+        Timber.d("renderFailure $message")
         getLessonsList(true)
 
     }

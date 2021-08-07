@@ -37,11 +37,6 @@ open class LessonBaseActivity : BaseActivity(), FieldsListener, KoinComponent {
     var _field: Fields? = null
     val baseMethod: BaseMethod by inject()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
         when (requestCode) {
@@ -194,7 +189,7 @@ open class LessonBaseActivity : BaseActivity(), FieldsListener, KoinComponent {
 
     fun resultIsReady(it: Uri) {
         FileUtils(this).getPath(it)?.let { path ->
-            Timber.e("Path $path");
+            Timber.d("Path $path");
 
             if (checkFileSize(_field, path)) {
                 viewModel.setErrorToField(
@@ -228,7 +223,7 @@ open class LessonBaseActivity : BaseActivity(), FieldsListener, KoinComponent {
     }
 
     override fun openFilePicker(field: Fields?, type: String, action: String) {
-        Timber.e("openFilePicker")
+        Timber.d("openFilePicker")
         _field = field
         openFilePickerInten(type, action)
     }

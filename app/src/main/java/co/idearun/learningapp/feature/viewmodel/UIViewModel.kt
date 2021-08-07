@@ -73,10 +73,10 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
         val fileList = files
 
         fileList.forEach { mp ->
-            Timber.e("removeFile ${mp.body}")
+            Timber.d("removeFile ${mp.body}")
 
             mp.headers?.let { headers ->
-                Timber.e("headers $headers")
+                Timber.d("headers $headers")
                 if (slug != null && headers.toString().contains(slug)) {
                     files.remove(mp)
                 }
@@ -87,7 +87,7 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
 
     fun initSelectedDate(date: String) {
-        Timber.e("initSelectedDate $date")
+        Timber.d("initSelectedDate $date")
         _selectedDate.value = date
     }
 

@@ -20,6 +20,7 @@ import kotlinx.coroutines.withContext
 class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
     private var formSlug: String = ""
+    private var formAddress: String = ""
 
     private val _form = MutableLiveData<Form>().apply { value = null }
     val form: LiveData<Form> = _form
@@ -81,9 +82,25 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         _form.value = result
 
     }
+    fun getFormData() = launch {
+        val result = withContext(Dispatchers.IO) { repository.getFormData(formAddress ?: "") }
+        result.either(::handleFailure, ::handleFormData)
+
+
+    }
+
+    fun handleFormData(res: CreateFormRes) {
+        res?.data?.form?.let {
+            _form.value =it
+        }
+    }
 
     fun initLessonSlug(slug: String) {
         this.formSlug = slug
+    }
+
+    fun initLessonAddress(slug: String) {
+        this.formAddress = slug
     }
 
 
