@@ -106,7 +106,7 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
     private fun initData() {
         formVM.initLessonSlug(form?.slug ?: "")
         formVM.initLessonAddress(form?.address ?: "")
-        formVM.getFormData()
+        formVM.retrieveLessonFromDB()
 
         formVM.form.observe(this, {
             it?.let {

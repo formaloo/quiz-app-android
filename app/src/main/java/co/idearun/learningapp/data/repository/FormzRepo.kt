@@ -238,14 +238,16 @@ class FormzRepo(
                                     )
                                     formsDao.save(formList)
 
-//                                    formList.map {
-//                                        withContext(Dispatchers.Default) { getForm(it.address) }?.apply {
-//                                            data?.form?.let {
-//                                                formsDao.save(it)
-//                                            }
-//                                        }
-//
-//                                    }
+                                    val list= arrayListOf<Form>()
+                                    formList.map {
+                                        withContext(Dispatchers.Default) { getForm(it.address) }?.apply {
+                                            data?.form?.let {
+                                                list.add(it)
+                                            }
+                                        }
+
+                                    }
+                                    formsDao.save(list)
 
                                 }
                             }
