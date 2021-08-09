@@ -49,7 +49,6 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
 
     }
 
-
     private fun checkBundle() {
         intent.extras?.let {
             val progress = it.getInt("progress") ?: 0
@@ -60,6 +59,7 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
                         this.fields = it
                     }
                     form = it
+
 
                 } else {
 
@@ -96,9 +96,7 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
         }
 
 
-        updateTheme(form)
 
-        checkLessonProgress()
 
 
     }
@@ -106,15 +104,22 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
     private fun initData() {
         formVM.initLessonSlug(form?.slug ?: "")
         formVM.initLessonAddress(form?.address ?: "")
-        formVM.retrieveLessonFromDB()
+        formVM.getFormData()
+
+        shardedVM.saveLastLesson(form?.slug ?: "")
+
+        viewModel.initFormSlug(form?.slug ?: "")
+        viewModel.getSubmitEntity()
 
         formVM.form.observe(this, {
             it?.let {
-                Timber.d("form form db ${it.fields_list?.size}")
                 form = it
                 it.fields_list?.let {
                     this.fields = it
                 }
+                checkLessonProgress()
+                updateTheme(form)
+
                 binding.form = form
                 binding.layoutFashCong.form = form
                 binding.executePendingBindings()
@@ -123,9 +128,6 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
 
         })
 
-        shardedVM.saveLastLesson(form?.slug ?: "")
-        viewModel.initFormSlug(form?.slug ?: "")
-        viewModel.getSubmitEntity()
     }
 
 

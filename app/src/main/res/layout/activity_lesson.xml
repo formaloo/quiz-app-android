@@ -178,5 +178,14 @@
                 layout="@layout/layout_flash_cong" />
 
         </RelativeLayout>
+        
+        <ImageView
+            android:background="@color/white"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="center"
+	        android:visibility="@{form.fields_list.size()>0?view.GONE:view.VISIBLE,default=visible}"
+            android:id="@+id/lesson_loading_imv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </RelativeLayout>
 </layout>
