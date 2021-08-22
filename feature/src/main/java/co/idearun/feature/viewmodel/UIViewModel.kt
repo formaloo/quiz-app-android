@@ -2,6 +2,7 @@ package co.idearun.feature.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import co.idearun.common.base.BaseViewModel
 import co.idearun.data.model.form.Fields
 import co.idearun.data.model.form.Form
@@ -91,7 +92,7 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
         _selectedDate.value = date
     }
 
-    fun getSubmitEntity() = launch {
+    fun getSubmitEntity() = viewModelScope.launch {
         val entity = repository.getSubmitEntity(formSlug ?: "")
 
         entity?.let {
@@ -108,7 +109,7 @@ class UIViewModel(private val repository: FormzRepo) : BaseViewModel() {
     }
 
 
-    fun saveEditSubmitToDB(newRow: Boolean, visibleItemPosition: Int) = launch {
+    fun saveEditSubmitToDB(newRow: Boolean, visibleItemPosition: Int) = viewModelScope.launch {
         if (visibleItemPosition == 0) {
             val value = SubmitEntity(
                 0,

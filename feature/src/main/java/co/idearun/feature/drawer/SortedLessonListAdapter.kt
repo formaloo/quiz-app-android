@@ -19,7 +19,7 @@ class SortedLessonListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
     private val TYPE_HEADER = 0
     private val TYPE_ITEM = 1
 
-    internal var collection: ArrayList<HashMap<Int,Form>> by Delegates.observable(arrayListOf()) { _, _, _ ->
+    internal var collection: ArrayList<HashMap<Int, Form>> by Delegates.observable(arrayListOf()) { _, _, _ ->
         notifyDataSetChanged()
 
     }
@@ -32,11 +32,13 @@ class SortedLessonListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
                     .inflate(R.layout.layout_category_item, parent, false);
                 CategoryViewHolder(itemView)
             }
+
             TYPE_ITEM -> {
                 itemView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.layout_form_item, parent, false);
                 FormViewHolder(itemView)
             }
+
             else -> {
                 itemView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.layout_form_item, parent, false);
@@ -55,6 +57,7 @@ class SortedLessonListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
                 (holder as CategoryViewHolder).bindItems(form)
 
             }
+
             TYPE_ITEM -> {
                 (holder as FormViewHolder).bindItems(form)
 
@@ -78,11 +81,10 @@ class SortedLessonListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
             binding.form = item
             binding.formItemLay.form = item
             binding.lifecycleOwner = binding.titleTv.context as LifecycleOwner
-            binding.formItemLay.formLay.setOnClickListener{
+            binding.formItemLay.formLay.setOnClickListener {
                 openForm(item, it.context)
             }
         }
-
 
 
     }
@@ -92,15 +94,15 @@ class SortedLessonListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
         fun bindItems(item: Form?) {
             binding.form = item
             binding.lifecycleOwner = binding.titleTv.context as LifecycleOwner
-            itemView.setOnClickListener{
-                openForm(item,it.context)
+            itemView.setOnClickListener {
+                openForm(item, it.context)
             }
         }
     }
 
     private fun openForm(item: Form?, context: Context) {
         val intent = Intent(context, LessonActivity::class.java)
-        intent.putExtra("form",item)
+        intent.putExtra("form", item)
         context.startActivity(intent)
 
     }

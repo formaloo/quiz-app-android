@@ -30,8 +30,6 @@ class LikeDislikeHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.listener = listener
         binding.viewmodel = viewmodel
         binding.lifecycleOwner = binding.dislikeBtn.context as LifecycleOwner
-        binding.fieldUiFooter.field = field
-        binding.fieldUiFooter.viewmodel = viewmodel
 
         binding.dislikeBtn.setOnClickListener {
             it.isSelected = true

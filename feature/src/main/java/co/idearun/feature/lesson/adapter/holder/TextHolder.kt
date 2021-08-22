@@ -30,13 +30,11 @@ class TextHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.listener = listener
         binding.fieldUiHeader.field = item
         binding.fieldUiHeader.form = form
-        binding.fieldUiFooter.field = item
-        binding.fieldUiFooter.viewmodel = uiViewModel
-        binding.lifecycleOwner = binding.errLay.context as LifecycleOwner
+        binding.lifecycleOwner = itemView.context as LifecycleOwner
 
         checkDataValueType(binding.valueEdt, item)
 
-        val context = binding.errLay.context
+        val context = itemView.context
 
         if (item.required == true) {
             uiViewModel.reuiredField(item)

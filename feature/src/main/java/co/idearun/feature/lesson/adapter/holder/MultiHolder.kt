@@ -39,8 +39,6 @@ class MultiHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.listener = listener
         binding.fieldUiHeader.field = item
         binding.fieldUiHeader.form = form
-        binding.fieldUiFooter.viewmodel = uiViewModel
-        binding.fieldUiFooter.field = item
         binding.viewmodel = uiViewModel
         binding.lifecycleOwner = binding.choicesListLay.context as LifecycleOwner
 

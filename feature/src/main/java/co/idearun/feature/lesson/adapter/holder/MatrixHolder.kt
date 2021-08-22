@@ -45,8 +45,6 @@ class MatrixHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.fieldUiHeader.form = form
         binding.viewmodel = uiViewModel
         binding.lifecycleOwner = binding.matrixLay.context as LifecycleOwner
-        binding.fieldUiFooter.field = item
-        binding.fieldUiFooter.viewmodel = uiViewModel
 
 
         var choices = arrayListOf<ChoiceItem>()

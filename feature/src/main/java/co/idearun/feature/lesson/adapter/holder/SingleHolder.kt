@@ -39,8 +39,6 @@ class SingleHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.listener = listener
         binding.fieldUiHeader.field = field
         binding.fieldUiHeader.form = form
-        binding.fieldUiFooter.field = field
-        binding.fieldUiFooter.viewmodel = uiViewModel
         val context = binding.valueRg.context
         binding.lifecycleOwner = context as LifecycleOwner
 

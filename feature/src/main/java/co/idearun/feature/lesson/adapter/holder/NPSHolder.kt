@@ -30,13 +30,11 @@ class NPSHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.fieldUiHeader.form = form
         binding.viewmodel = uiViewModel
         binding.lifecycleOwner = binding.npsRec.context as LifecycleOwner
-        binding.fieldUiFooter.field = item
-        binding.fieldUiFooter.viewmodel = uiViewModel
 
 
         binding.npsRec.apply {
             adapter =
-                NpsItemAdapter(item, form, uiViewModel, binding.errLay,lessonListener)
+                NpsItemAdapter(item, form, uiViewModel,lessonListener)
             layoutManager = GridLayoutManager(context, 11)
             addItemDecoration(DividerItemDecoration(context, RecyclerView.HORIZONTAL))
         }

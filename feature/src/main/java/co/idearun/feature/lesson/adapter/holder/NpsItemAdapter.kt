@@ -21,7 +21,6 @@ class NpsItemAdapter(
     private val fields: Fields,
     private val form: Form,
     private val viewmodel: UIViewModel,
-    private val errLay: RelativeLayout,
     private val lessonListener: LessonListener
 ) : RecyclerView.Adapter<NpsItemAdapter.NPSItemViewHolder>() {
 
@@ -33,7 +32,7 @@ class NpsItemAdapter(
     }
 
     override fun onBindViewHolder(holder: NPSItemViewHolder, position_: Int) {
-        holder.bindItems(fields, position_, form, viewmodel, errLay,lessonListener)
+        holder.bindItems(fields, position_, form, viewmodel, lessonListener)
 
         holder.setIsRecyclable(false)
     }
@@ -57,7 +56,6 @@ class NpsItemAdapter(
             position_: Int,
             form: Form,
             viewmodel: UIViewModel,
-            errLay: RelativeLayout,
             lessonListener: LessonListener
 
         ) {

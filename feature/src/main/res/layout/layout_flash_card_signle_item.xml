@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <import type="android.view.View" />
@@ -24,7 +25,7 @@
             type="co.idearun.common.BaseMethod" />
     </data>
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/padding_small">
@@ -32,27 +33,22 @@
         <include
             android:id="@+id/field_ui_header"
             layout="@layout/layout_ui_field_header" />
-
+        <androidx.core.widget.NestedScrollView
+            android:layout_below="@+id/field_ui_header"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <RadioGroup
             android:id="@+id/value_rg"
             android:layout_width="match_parent"
-            android:padding="@dimen/padding_xsmall"
-            android:minHeight="@dimen/btn_h_l"
             android:layout_height="wrap_content"
             android:layout_below="@+id/field_ui_header"
             android:layout_alignParentStart="true"
+            android:minHeight="@dimen/btn_h_l"
             android:orientation="horizontal"
-            android:visibility="visible" />
-        <RelativeLayout
-            android:id="@+id/err_lay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/value_rg"
-            android:visibility="@{viewmodel.errorField.slug.equals(field.slug)?View.VISIBLE:View.GONE,default=gone}">
-
-            <include
-                android:id="@+id/field_ui_footer"
-                layout="@layout/layout_ui_field_footer" />
-        </RelativeLayout>
+            android:padding="@dimen/padding_xsmall"
+            android:visibility="visible"
+            android:layout_alignParentLeft="true" />
+        </androidx.core.widget.NestedScrollView>
+        
     </RelativeLayout>
 </layout>

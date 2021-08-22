@@ -9,11 +9,14 @@ import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.text.Html
+import android.text.Layout
+import android.text.method.LinkMovementMethod
 import android.transition.Fade
 import android.transition.Transition
 import android.transition.TransitionManager
 import android.view.View
 import android.view.ViewGroup
+import android.webkit.WebView
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -46,6 +49,16 @@ import timber.log.Timber
 import java.lang.reflect.Field
 import java.text.SimpleDateFormat
 import java.util.*
+import android.view.MotionEvent
+
+import android.text.style.ClickableSpan
+
+import android.text.Spannable
+
+import android.view.View.OnTouchListener
+
+
+
 
 
 object Binding : KoinComponent {
@@ -77,6 +90,38 @@ object Binding : KoinComponent {
     @JvmStatic
     fun setHtmlTxt(txv: TextView, txt: String?) {
 
+        txv.setOnTouchListener { v, event ->
+            var ret = false
+            val text = (v as TextView).text
+            val stext = Spannable.Factory.getInstance().newSpannable(text)
+            val widget = v as TextView
+            val action = event.action
+            if (action == MotionEvent.ACTION_UP ||
+                action == MotionEvent.ACTION_DOWN
+            ) {
+                var x = event.x.toInt()
+                var y = event.y.toInt()
+                x -= widget.totalPaddingLeft
+                y -= widget.totalPaddingTop
+                x += widget.scrollX
+                y += widget.scrollY
+                val layout: Layout = widget.layout
+                val line: Int = layout.getLineForVertical(y)
+                val off: Int = layout.getOffsetForHorizontal(line, x.toFloat())
+                val link = stext.getSpans(
+                    off, off,
+                    ClickableSpan::class.java
+                )
+                if (link.isNotEmpty()) {
+                    if (action == MotionEvent.ACTION_UP) {
+                        link[0].onClick(widget)
+                    }
+                    ret = true
+                }
+            }
+            ret
+        }
+
         txt?.let {
             txv.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(
@@ -86,6 +131,36 @@ object Binding : KoinComponent {
             } else {
                 Html.fromHtml(txt, GlideImageGetter(txv), MyTagHandler())
             }
+        }
+
+    }
+
+    @BindingAdapter("app:htmlSimpeTxt")
+    @JvmStatic
+    fun setSimpleHtmlTxt(txv: TextView, txt: String?) {
+
+        txv.movementMethod = LinkMovementMethod.getInstance()
+
+        txt?.let {
+            txv.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Html.fromHtml(txt, Html.FROM_HTML_MODE_LEGACY)
+            } else {
+                Html.fromHtml(txt)
+            }
+        }
+
+    }
+
+    @BindingAdapter("app:loadData")
+    @JvmStatic
+    fun loadData(webView: WebView, txt: String?) {
+
+        txt?.let {
+            webView.settings.loadWithOverviewMode = true
+            webView.settings.useWideViewPort = false
+            webView.loadDataWithBaseURL(null, it, "text/html", "utf-8", null);
+
+
         }
 
     }
@@ -254,42 +329,6 @@ object Binding : KoinComponent {
 
     }
 
-//    @JvmStatic
-//    @BindingAdapter("pin_color")
-//    fun pin_color(view: PinView?, form: Form?) {
-//        val txtColor = getHexColor(form?.text_color) ?: convertRgbToHex("55", "55", "55")
-//        val fieldColor = getHexColor(form?.field_color) ?: convertRgbToHex("242", "242", "242")
-//
-////        val shapedrawable = GradientDrawable()
-////        shapedrawable.setStroke(4, Color.parseColor(txtColor))
-////        shapedrawable.cornerRadius = 3f
-////        view.background = shapedrawable
-//
-//        view?.setTextColor(Color.parseColor(txtColor))
-//        view?.setLineColor(Color.parseColor(txtColor))
-//        view?.cursorColor = Color.parseColor(txtColor)
-//
-//    }
-
-//    @JvmStatic
-//    @BindingAdapter("progress_color")
-//    fun progress_color(view: ProgressBar, form: Form?) {
-//        val txtColor = getHexColor(form?.text_color) ?: convertRgbToHex("55", "55", "55")
-//
-//        val colorList = ColorStateList(
-//            arrayOf(
-//                intArrayOf(-R.attr.state_enabled),
-//                intArrayOf(R.attr.state_enabled)
-//            ), intArrayOf(
-//                Color.parseColor(txtColor) //disabled
-//                , Color.parseColor(txtColor) //enabled
-//            )
-//        )
-//
-//        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-//            view.progressTintList = colorList
-//        }
-//    }
 
     @JvmStatic
     @BindingAdapter("divider_background")
@@ -404,17 +443,25 @@ object Binding : KoinComponent {
         val shapedrawable = GradientDrawable()
         val errdrawable = GradientDrawable()
 
-        form?.text_color?.let {
-            val fieldColor = getHexColor(it) ?: convertRgbToHex("242", "242", "242")
-            shapedrawable.setColor(Color.parseColor(fieldColor))
+        val textColor = form?.text_color
+        val txtHX = convertRgbToHex("242", "242", "242")
+        val borderHX = convertRgbToHex("255", "255", "255")
+        val fieldColor: String?
+        val borderColor: String?
 
+        if (textColor != null) {
+            val s = getHexColor(textColor)
+            fieldColor = s
+            borderColor = s
+        } else {
+            fieldColor = txtHX
+            borderColor = borderHX
         }
-        form?.text_color?.let {
-            val borderColor = getHexColor(it) ?: convertRgbToHex("255", "255", "255")
-            shapedrawable.setStroke(4, Color.parseColor(borderColor))
 
-        }
+        shapedrawable.setColor(Color.parseColor(fieldColor))
 
+
+        shapedrawable.setStroke(4, Color.parseColor(borderColor))
 
         shapedrawable.cornerRadius = 3f
 

@@ -68,7 +68,9 @@
                 android:textSize="@dimen/font_xlarge"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="@dimen/padding_standard"
+                android:gravity="start" />
 
             <TextView
                 android:ellipsize="end"
@@ -79,9 +81,10 @@
                 android:autoLink="none"
                 android:textAlignment="textStart"
                 android:textSize="@dimen/font_standard"
-                app:htmlTxt="@{item.description}"
+                app:htmlSimpeTxt="@{item.description}"
                 app:layout_constraintStart_toStartOf="@+id/titleTv"
-                app:layout_constraintTop_toBottomOf="@+id/titleTv" />
+                app:layout_constraintTop_toBottomOf="@+id/titleTv"
+                android:gravity="start" />
 
             <RelativeLayout
                 android:id="@+id/relaviteLayout"
@@ -111,7 +114,9 @@
                     android:text="@{item.category.title!=null?item.category.title:@string/other}"
                     android:textColor="@color/gray2"
                     android:textSize="@dimen/font_standard"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_marginLeft="@dimen/padding_3xsmall"
+                    android:layout_toRightOf="@+id/categoryIv" />
 
                 <TextView
                     android:id="@+id/startTv"
@@ -124,7 +129,8 @@
                     android:textColor="@{done?@color/colorGreen: @color/learning,default= @color/learning}"
                     android:textSize="@dimen/font_standard"
                     android:textStyle="bold"
-                    android:visibility="@{progress>0 ? view.GONE : view.VISIBLE,default= visible}" />
+                    android:visibility="@{progress>0 ? view.GONE : view.VISIBLE,default= visible}"
+                    android:layout_alignParentRight="true" />
 
                 <com.google.android.material.progressindicator.LinearProgressIndicator
                     android:id="@+id/form_progress"

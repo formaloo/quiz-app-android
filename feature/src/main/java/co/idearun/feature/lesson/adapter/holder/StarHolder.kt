@@ -28,8 +28,6 @@ class StarHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.listener = listener
         binding.fieldUiHeader.field = item
         binding.fieldUiHeader.form = form
-        binding.fieldUiFooter.field = item
-        binding.fieldUiFooter.viewmodel = uiViewModel
 
 
         binding.starRating.setOnRatingBarChangeListener { ratingBar, fl, b ->

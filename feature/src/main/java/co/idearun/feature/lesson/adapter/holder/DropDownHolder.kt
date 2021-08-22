@@ -63,8 +63,6 @@ class DropDownHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.fieldUiHeader.field = item
         binding.fieldUiHeader.form = form
         binding.viewmodel = viewmodel
-        binding.fieldUiFooter.field = item
-        binding.fieldUiFooter.viewmodel = viewmodel
         binding.lifecycleOwner = binding.spinnerValueLay.context as LifecycleOwner
         binding.executePendingBindings()
 

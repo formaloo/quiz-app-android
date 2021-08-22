@@ -34,26 +34,23 @@
             android:id="@+id/field_ui_header"
             layout="@layout/layout_ui_field_header" />
 
+        <androidx.core.widget.NestedScrollView
+            android:layout_below="@+id/field_ui_header"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            
         <LinearLayout
             android:id="@+id/choices_list_lay"
             android:minHeight="@dimen/btn_h_l"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/padding_xsmall"
             android:layout_below="@+id/field_ui_header"
+            android:padding="@dimen/padding_xsmall"
             android:orientation="vertical">
 
         </LinearLayout>
-        <RelativeLayout
-            android:id="@+id/err_lay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/choices_list_lay"
-            android:visibility="@{viewmodel.errorField.slug.equals(field.slug)?View.VISIBLE:View.GONE,default=gone}">
-
-            <include
-                android:id="@+id/field_ui_footer"
-                layout="@layout/layout_ui_field_footer" />
-        </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
+    
+       
     </RelativeLayout>
 </layout>

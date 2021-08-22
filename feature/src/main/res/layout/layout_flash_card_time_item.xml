@@ -61,16 +61,6 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
-            android:id="@+id/err_lay"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/time_btn"
-            android:visibility="@{viewmodel.errorField.slug.equals(field.slug)?View.VISIBLE:View.GONE,default=gone}">
-
-            <include
-                android:id="@+id/field_ui_footer"
-                layout="@layout/layout_ui_field_footer" />
-        </RelativeLayout>
+      
     </RelativeLayout>
 </layout>

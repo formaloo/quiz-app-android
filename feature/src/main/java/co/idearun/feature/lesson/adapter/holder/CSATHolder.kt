@@ -38,8 +38,6 @@ class CSATHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         binding.viewmodel = viewmodel
         val context = binding.starlay.context
         binding.lifecycleOwner = context as LifecycleOwner
-        binding.fieldUiFooter.field = field
-        binding.fieldUiFooter.viewmodel = viewmodel
 
         var selectedItem: Int? = null
 

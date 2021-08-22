@@ -137,7 +137,7 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
 
     }
 
-    fun getLessonsList(force: Boolean) {
+    private fun getLessonsList(force: Boolean) {
         lifecycleScope.launch {
             viewModel.fetchLessonList(force).collectLatest { pagingData ->
                 formListAdapter.submitData(pagingData)

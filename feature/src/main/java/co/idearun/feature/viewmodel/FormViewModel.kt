@@ -33,7 +33,7 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         return repository.fetchForms(force).cachedIn(viewModelScope)
     }
 
-    fun retrieveDBLessonList() = launch {
+    fun retrieveDBLessonList() = viewModelScope.launch {
         val result = withContext(Dispatchers.IO) { repository.getFormListFromDB() }
         sortLessonList(result)
 
@@ -75,21 +75,22 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
     }
 
-    fun retrieveLessonFromDB() = launch {
+    fun retrieveLessonFromDB() = viewModelScope.launch {
         val result = withContext(Dispatchers.IO) { repository.getFormFromDB(formSlug ?: "") }
         _form.value = result
 
     }
-    fun getFormData() = launch {
+
+    fun getFormData() = viewModelScope.launch {
         val result = withContext(Dispatchers.IO) { repository.getFormData(formAddress ?: "") }
         result.either(::handleFailure, ::handleFormData)
 
 
     }
 
-    fun handleFormData(res: CreateFormRes) {
+    private fun handleFormData(res: CreateFormRes) {
         res?.data?.form?.let {
-            _form.value =it
+            _form.value = it
         }
     }
 
@@ -102,9 +103,9 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     }
 
 
-    fun getLessonsList(force: Boolean) =launch{
+    fun getLessonsList(force: Boolean) = viewModelScope.launch {
         fetchLessonList(force).collectLatest { pagingData ->
-            _pagingData.value=pagingData
+            _pagingData.value = pagingData
         }
 
     }

@@ -43,7 +43,7 @@ class LessonFieldsAdapter(
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    companion  object  {
+    companion object {
         private var lastPosition = RecyclerView.NO_POSITION
         private val TYPE_DROP_DOWN = 0
         private val TYPE_MULTI = 1
@@ -61,6 +61,7 @@ class LessonFieldsAdapter(
         private val TYPE_SIGNATURE = 13
         private val TYPE_CSAT = 14
     }
+
     internal var collection: ArrayList<Fields> by Delegates.observable(arrayListOf()) { _, _, _ ->
         notifyDataSetChanged()
 
@@ -83,159 +84,139 @@ class LessonFieldsAdapter(
                     btnItem,
                     position_,
                     listener,
-                    form, viewmodel,lessonListener
+                    form, viewmodel, lessonListener
                 )
 
             }
+
             TYPE_MATRIX -> {
                 (holder as MatrixHolder).bindItems(
                     btnItem,
                     position_,
                     listener,
                     form,
-                    
+
                     viewmodel
                 )
 
             }
+
             TYPE_MULTI -> {
                 (holder as MultiHolder).bindItems(
                     btnItem, position_,
-                    listener, form,  viewmodel
+                    listener, form, viewmodel
                 )
 
             }
+
             TYPE_SIGNLE -> {
                 (holder as SingleHolder).bindItems(
                     btnItem,
                     position_,
                     listener,
                     form,
-                    viewmodel,lessonListener
+                    viewmodel, lessonListener
                 )
 
             }
+
             TYPE_EDT -> {
                 (holder as TextHolder).bindItems(
                     btnItem,
                     position_,
                     listener,
                     form,
-                    
+
                     viewmodel
                 )
 
             }
+
             TYPE_LIKE_DISLIKE -> {
                 (holder as LikeDislikeHolder).bindItems(
                     btnItem,
                     position_,
                     listener,
                     form,
-                    viewmodel,lessonListener
+                    viewmodel, lessonListener
                 )
 
             }
+
             TYPE_STAR -> {
                 (holder as StarHolder).bindItems(
                     btnItem,
                     position_,
                     listener,
                     form,
-                    viewmodel,lessonListener
+                    viewmodel, lessonListener
                 )
 
             }
+
             TYPE_CSAT -> {
                 (holder as CSATHolder).bindItems(
                     btnItem,
                     position_,
                     listener,
                     form,
-                    viewmodel,lessonListener
+                    viewmodel, lessonListener
                 )
 
             }
+
             TYPE_NPS -> {
                 (holder as NPSHolder).bindItems(
                     btnItem,
                     position_,
                     listener,
                     form,
-                    viewmodel,lessonListener
+                    viewmodel, lessonListener
                 )
 
             }
-            TYPE_FILE -> {
-                (holder as FileHolder).bindItems(
-                    btnItem,
-                    position_,
-                    listener,
-                    form,
-                    viewmodel
-                )
 
-            }
             TYPE_SECTION -> {
                 (holder as SectionHolder).bindItems(
                     btnItem,
                     position_,
                     listener,
                     form,
-                    
+
                     viewmodel
                 )
 
             }
-            TYPE_TIME -> {
-                (holder as TimeHolder).bindItems(
-                    btnItem,
-                    position_,
-                    listener,
-                    form,
-                    
-                    viewmodel
-                )
 
-            }
-            TYPE_DATE -> {
-                (holder as DateHolder).bindItems(
-                    btnItem,
-                    position_,
-                    listener,
-                    form,
-                    
-                    viewmodel
-                )
-
-            }
             TYPE_PHONE_VERIFICATION -> {
                 (holder as TextHolder).bindItems(
                     btnItem,
                     position_,
                     listener,
                     form,
-                    
+
                     viewmodel
                 )
             }
+
             TYPE_SIGNATURE -> {
                 (holder as TextHolder).bindItems(
                     btnItem,
                     position_,
                     listener,
                     form,
-                    
+
                     viewmodel
                 )
             }
+
             else -> {
                 (holder as TextHolder).bindItems(
                     btnItem,
                     position_,
                     listener,
                     form,
-                    
+
                     viewmodel
                 )
 
@@ -269,59 +250,74 @@ class LessonFieldsAdapter(
             DROPDOWN -> {
                 TYPE_DROP_DOWN
             }
+
             YESNO -> {
                 TYPE_SIGNLE
             }
+
             MULTI_SELECT -> {
                 TYPE_MULTI
             }
+
             SINGLE_SELECT -> {
                 TYPE_SIGNLE
             }
+
             Like_Dislike -> {
                 TYPE_LIKE_DISLIKE
 
             }
+
             Constants.embeded -> {
                 TYPE_CSAT
 
             }
+
             star -> {
                 TYPE_STAR
 
             }
+
             nps -> {
                 TYPE_NPS
 
             }
+
             FILE -> {
                 TYPE_FILE
 
             }
+
             SECTION -> {
                 TYPE_SECTION
 
             }
+
             TIME -> {
                 TYPE_TIME
 
             }
+
             DATE -> {
                 TYPE_DATE
 
             }
+
             MATRIX -> {
                 TYPE_MATRIX
 
             }
+
             PHONE_VERIFICATION -> {
                 TYPE_PHONE_VERIFICATION
 
             }
+
             SIGNATURE -> {
                 TYPE_SIGNATURE
 
             }
+
             else -> {
                 TYPE_EDT
             }
@@ -346,61 +342,55 @@ class LessonFieldsAdapter(
                     .inflate(R.layout.layout_flash_card_dropdown_item, parent, false);
                 DropDownHolder(itemView)
             }
+
             TYPE_MULTI -> {
                 itemView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.layout_flash_card_multi_item, parent, false);
                 MultiHolder(itemView)
             }
+
             TYPE_SIGNLE -> {
                 itemView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.layout_flash_card_signle_item, parent, false);
                 SingleHolder(itemView)
             }
+
             TYPE_EDT -> {
                 itemView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.layout_flash_card_edt_item, parent, false);
                 TextHolder(itemView)
             }
+
             TYPE_LIKE_DISLIKE -> {
                 itemView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.layout_flash_card_like_dislike_item, parent, false);
                 LikeDislikeHolder(itemView)
             }
+
             TYPE_STAR -> {
                 itemView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.layout_flash_card_star_item, parent, false);
                 StarHolder(itemView)
             }
+
             TYPE_CSAT -> {
                 itemView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.layout_ui_csat_item, parent, false);
                 return CSATHolder(itemView)
             }
+
             TYPE_NPS -> {
                 itemView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.layout_flash_card_nps_item, parent, false);
                 NPSHolder(itemView)
             }
-            TYPE_FILE -> {
-                itemView = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.layout_flash_card_file_item, parent, false);
-                FileHolder(itemView)
-            }
+
             TYPE_SECTION -> {
                 itemView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.layout_flash_card_section_item, parent, false);
                 SectionHolder(itemView, swipeStackListener)
             }
-            TYPE_TIME -> {
-                itemView = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.layout_flash_card_time_item, parent, false);
-                TimeHolder(itemView)
-            }
-            TYPE_DATE -> {
-                itemView = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.layout_flash_card_date_item, parent, false);
-                DateHolder(itemView)
-            }
+
             TYPE_MATRIX -> {
                 itemView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.layout_flash_card_matrix_item, parent, false);
