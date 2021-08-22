@@ -56,8 +56,7 @@ class MultiHolder(view: View) : RecyclerView.ViewHolder(view) {
                     choice,
                     item,
                     binding.choicesListLay,
-                    form
-                ,uiViewModel
+                    form, uiViewModel
                 )
 
             }
@@ -86,7 +85,7 @@ class MultiHolder(view: View) : RecyclerView.ViewHolder(view) {
                 choice,
                 field,
                 choicesListLay,
-                form,uiViewModel
+                form, uiViewModel
             )
         (ll as ViewGroup).addView(boxLay)
 
@@ -112,7 +111,7 @@ class MultiHolder(view: View) : RecyclerView.ViewHolder(view) {
         checkBox.apply {
             layoutParams = lp
             setPadding(48, 48, 48, 48)
-            minLines=2
+            minLines = 2
             setButtonDrawable(R.color.transparent);
 
             choice.title?.let {
@@ -130,18 +129,19 @@ class MultiHolder(view: View) : RecyclerView.ViewHolder(view) {
             )
 
             Binding.fieldBackground(this, form)
-            Binding.setTextColor(this,form.text_color)
+            Binding.setTextColor(this, form.text_color)
 
             setOnCheckedChangeListener { compoundButton, b ->
-                if (b){
+                if (b) {
                     Binding.selectedFieldBackground(this, form)
-                    Binding.setSelectedTextColor(this,form)
+                    Binding.setSelectedTextColor(this, form)
 
-                }else{
+                } else {
                     Binding.fieldBackground(this, form)
-                    Binding.setTextColor(this,form.text_color)
+                    Binding.setTextColor(this, form.text_color)
 
                 }
+
                 choice.slug?.let { choiceSlug ->
                     if (b) {
                         valuesList.add(choiceSlug)
@@ -172,7 +172,8 @@ class MultiHolder(view: View) : RecyclerView.ViewHolder(view) {
                 bitmap?.let {
                     val padding =
                         box.resources.getDimensionPixelSize(co.idearun.feature.R.dimen.padding_2xsmall)
-                    val height = box.resources.getDimensionPixelSize(co.idearun.feature.R.dimen.btn_h)
+                    val height =
+                        box.resources.getDimensionPixelSize(co.idearun.feature.R.dimen.btn_h)
 
                     val drawable = BitmapDrawable(
                         box.resources,

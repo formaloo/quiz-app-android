@@ -164,22 +164,6 @@ object Binding : KoinComponent {
         }
 
     }
-//    @BindingAdapter("app:htmlTxt")
-//    @JvmStatic
-//    fun setHtmlTxt(txv: HtmlTextView, txt: String?) {
-//        txt?.let {
-//            txv.setHtml(txt, HtmlHttpImageGetter(txv))
-//            txv.setOnClickATagListener { widget, spannedText, href ->
-//                if (href?.isNotEmpty()==true) {
-//                    val intent = Intent(Intent.ACTION_VIEW)
-//                    intent.data = Uri.parse(href)
-//                    txv.context.startActivity(intent)
-//                }
-//                 true
-//            }
-//        }
-//
-//    }
 
     @JvmStatic
     @BindingAdapter("app:isVisisble", "app:form")
