@@ -3,6 +3,9 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 
+def apikeyPropertiesFile = rootProject.file("api.properties.txt")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
 
 android {
     compileSdkVersion 30
@@ -17,6 +20,12 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        //        // should correspond to key/value pairs inside the file
+        buildConfigField("String", "X_API_KEY", apikeyProperties['X_API_KEY'])
+        buildConfigField("String", "BASE_URL", apikeyProperties['BASE_URL'])
+        buildConfigField("String", "FORM_TAG", apikeyProperties['FORM_TAG'])
+
     }
     buildFeatures {
         dataBinding true
