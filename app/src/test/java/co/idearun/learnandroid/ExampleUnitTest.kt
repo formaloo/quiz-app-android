@@ -1,4 +1,4 @@
-package co.idearun.learningapp
+package co.idearun.learnandroid
 
 import org.junit.Test
 

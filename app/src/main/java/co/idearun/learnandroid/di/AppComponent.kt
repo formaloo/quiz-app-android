@@ -1,4 +1,4 @@
-package co.idearun.learningapp.di
+package co.idearun.learnandroid.di
 
 import co.idearun.data.local.di.formBuilderLocalModule
 import co.idearun.data.remote.di.createRemoteFormModule

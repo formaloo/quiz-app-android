@@ -1,9 +1,9 @@
-package co.idearun.learningapp
+package co.idearun.learnandroid
 
 import android.app.Application
 import android.util.Log
 import androidx.work.Configuration
-import co.idearun.learningapp.di.appComponent
+import co.idearun.learnandroid.di.appComponent
 import com.microsoft.appcenter.AppCenter
 import com.microsoft.appcenter.analytics.Analytics
 import com.microsoft.appcenter.crashes.Crashes

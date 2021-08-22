@@ -6,7 +6,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "co.idearun.learningapp"
+        applicationId "co.idearun.learnandroid"
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 1
