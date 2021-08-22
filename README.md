@@ -106,5 +106,51 @@ You can find the full documentation on [developers page](https://en.formaloo.com
 Create Field
 <br><br>
 <pre>
+
+```kotlin
+/**Create Field*/
+
+OkHttpClient client = new OkHttpClient().newBuilder()
+.build();
+MediaType mediaType = MediaType.parse("application/json");
+RequestBody body = RequestBody.create(mediaType, "{
+"description": "",
+"required": false,
+"sub_type": "section",
+"title": "New section Field",
+"type": "meta"
+}");
+Request request = new Request.Builder()
+.url("{{formz_server}}/v2/fields/field/")
+.method("POST", body)
+.addHeader("x-api-key", "{{formz-x-api-key}}")
+.addHeader("Authorization", "JWT {{authorization_token}}")
+.addHeader("Content-Type", "application/json")
+.build();
+Response response = client.newCall(request).execute();
+```
+
+</pre>
+</details>
+
+
+
+<details>
+<summary>Create Field?</summary>
+<br>
+Create Field
+<br><br>
+<pre>
+
+</pre>
+</details>
+
+<details>
+<summary>Create Field?</summary>
+<br>
+Create Field
+<br><br>
+<pre>
+
 </pre>
 </details>
