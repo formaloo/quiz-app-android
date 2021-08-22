@@ -101,15 +101,10 @@ Response response = client.newCall(request).execute();
 You can find the full documentation on [developers page](https://en.formaloo.com/developers/)
 
 <details>
-<summary>How do I dropdown?</summary>
+<summary>Create Field?</summary>
 <br>
-This is how you dropdown.
+Create Field
 <br><br>
 <pre>
-&lt;details&gt;
-&lt;summary&gt;How do I dropdown?&lt;&#47;summary&gt;
-&lt;br&gt;
-This is how you dropdown.
-&lt;&#47;details&gt;
 </pre>
 </details>
