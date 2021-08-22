@@ -13,10 +13,10 @@ The sample app contains a list of Android lessons, each lesson is a form.
 ![Screenshots](images/learn_android_home.png)![Screenshots](images/learn_android_image.png)![Screenshots](images/learn_android_section.png)![Screenshots](images/learn_android_q.png)
 
 To create your own forms you need an Formaloo account, [you can signup now](https://accounts.formaloo.net/profiles/signup/?) :)
-After login to your account go to [dashboard](https://dash.formaloo.net/u/) and create your desire form.
+After login to your account go to [dashboard](https://dash.formaloo.net/u/) and create your desire forms.
 
-If you prefer to create forms programmatically you can use these endpoints:
-
+## The Code 
+ You can find the detail of used endpoints below: 
 
 <details>
 <summary>Create Form</summary>
@@ -253,7 +253,8 @@ Response response = client.newCall(request).execute();
 
 </details>
 
+You can also find the full documentation on the [developers page](https://en.formaloo.com/developers/)
 
-You can find the full documentation on [developers page](https://en.formaloo.com/developers/)
+
 
 
