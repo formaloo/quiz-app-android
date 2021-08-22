@@ -21,87 +21,73 @@ After login to your account go to [dashboard](https://dash.formaloo.net/u/) and 
 If you prefer to create forms programmatically you can use these endpoints:
 
 
-```kotlin
-/**CREATE FORM*/
+<details>
+<summary>Create Form</summary>
+<br>
+Create Form
+<br><br>
 
+```kotlin
 OkHttpClient client = new OkHttpClient().newBuilder()
-  .build();
+    .build();
 MediaType mediaType = MediaType.parse("application/json");
 RequestBody body = RequestBody.create(mediaType, "{
-    "form_fields": [
-        "field_cua2HD7TRT"
-    ],
-    "theme_config": {
-        "background_type": "full_page",
-        "background_shadow": "rgba(0,0,0,0,0)",
-        "widget_settings": {
-            "position": "right",
-            "type": "side-widget",
-            "once_per_user": false
-        }
-    },
-    "logo": "",
-    "form_type": "simple",
-    "form_redirects_after_submit": "www.google.com",
-    "submit_email_notif": false,
-    "send_user_confirm": false,
-    "send_emails_to": "farokh.shahabi@gmail.com",
-    "button_text": "ارسال",
-    "show_title": true,
-    "shuffle_fields": false,
-    "active": true,
-    "submit_end_time": null,
-    "submit_start_time": null,
-    "max_submit_count": 20,
-    "success_message": "<p>This message is shown after filling your form.</p>",
-    "time_limit": "10:00",
-    "background_color": "{\"r\":67,\"g\":78,\"b\":82,\"a\":1}",
-    "border_color": "{\"r\":176,\"g\":161,\"b\":96,\"a\":0.63}",
-    "submit_text_color": "{\"r\":255,\"g\":255,\"b\":255,\"a\":1}",
-    "button_color": "{\"r\":210,\"g\":175,\"b\":64,\"a\":1}",
-    "text_color": "{\"r\":250,\"g\":234,\"b\":173,\"a\":1}",
-    "field_color": "{\"r\":67,\"g\":78,\"b\":82,\"a\":1}",
-    "description": "You can use a wysiwyg text.",
-    "category": "",
-    "address": "vxag2",
-    "title": "Learning Form"
+"form_fields": [
+    "field_cua2HD7TRT"
+],
+"theme_config": {
+    "background_type": "full_page",
+    "background_shadow": "rgba(0,0,0,0,0)",
+    "widget_settings": {
+    "position": "right",
+    "type": "side-widget",
+    "once_per_user": false
+}
+},
+"logo": "",
+"form_type": "simple",
+"form_redirects_after_submit": "www.google.com",
+"submit_email_notif": false,
+"send_user_confirm": false,
+"send_emails_to": "farokh.shahabi@gmail.com",
+"button_text": "ارسال",
+"show_title": true,
+"shuffle_fields": false,
+"active": true,
+"submit_end_time": null,
+"submit_start_time": null,
+"max_submit_count": 20,
+"success_message": "<p>This message is shown after filling your form.</p>",
+"time_limit": "10:00",
+"background_color": "{\"r\":67,\"g\":78,\"b\":82,\"a\":1}",
+"border_color": "{\"r\":176,\"g\":161,\"b\":96,\"a\":0.63}",
+"submit_text_color": "{\"r\":255,\"g\":255,\"b\":255,\"a\":1}",
+"button_color": "{\"r\":210,\"g\":175,\"b\":64,\"a\":1}",
+"text_color": "{\"r\":250,\"g\":234,\"b\":173,\"a\":1}",
+"field_color": "{\"r\":67,\"g\":78,\"b\":82,\"a\":1}",
+"description": "You can use a wysiwyg text.",
+"category": "",
+"address": "vxag2",
+"title": "Learning Form"
 }");
 Request request = new Request.Builder()
-  .url("{{formz_server}}/v3/forms/")
-  .method("POST", body)
-  .addHeader("x-api-key", "{{formz-x-api-key}}")
-  .addHeader("Authorization", "JWT {{authorization_token}}")
-  .addHeader("Content-Type", "application/json")
-  .build();
+.url("{{formz_server}}/v3/forms/")
+.method("POST", body)
+.addHeader("x-api-key", "{{formz-x-api-key}}")
+.addHeader("Authorization", "JWT {{authorization_token}}")
+.addHeader("Content-Type", "application/json")
+.build();
 Response response = client.newCall(request).execute();
 ```
 
-```kotlin
-/**Create Field*/
+</details>
 
-OkHttpClient client = new OkHttpClient().newBuilder()
-  .build();
-MediaType mediaType = MediaType.parse("application/json");
-RequestBody body = RequestBody.create(mediaType, "{
-    "description": "",
-    "required": false,
-    "sub_type": "section",
-    "title": "New section Field",
-    "type": "meta"
-}");
-Request request = new Request.Builder()
-  .url("{{formz_server}}/v2/fields/field/")
-  .method("POST", body)
-  .addHeader("x-api-key", "{{formz-x-api-key}}")
-  .addHeader("Authorization", "JWT {{authorization_token}}")
-  .addHeader("Content-Type", "application/json")
-  .build();
-Response response = client.newCall(request).execute();
-```
-You can find the full documentation on [developers page](https://en.formaloo.com/developers/)
+
+
+
 
 <details>
-<summary>Create Field?</summary>
+<summary>Create Field</summary>
 <br>
 Create Field
 <br><br>
@@ -132,6 +118,68 @@ Response response = client.newCall(request).execute();
 </details>
 
 
+<details>
+<summary>Submit form</summary>
+<br>
+Submit form
+<br><br>
+
+```kotlin
+OkHttpClient client = new OkHttpClient().newBuilder()
+  .build();
+MediaType mediaType = MediaType.parse("application/json");
+RequestBody body = RequestBody.create(mediaType, "{
+    "field_JgKgX2vVPh": "Elon Musk",
+    "field_5W20yy3DaK": "elun@gmail.com",
+    "field_nAJ37M4evJ": "0986532",
+    "field_1NmHHfA8Di": "Change your mind change your life :/",
+    "field_FUJbCETEnF": "Nothing else matter.",
+    "field_rclec28puk": 10,
+    "field_rDwobYWOM9": "https://www.google.com",
+    "field_7oMYWqr9ln": "2021-06-19",
+    "field_jYWIVBb9gS": 10,
+    "field_vMuD60oWKq": "yes",
+    "field_i7OXMLqRh0": "choice_SlLBeJ7uI5",
+    "field_JSy1XvUJfQ": [
+        "choice_44sguJcv3p",
+        "choice_Aanyeg6Zsj"
+    ],
+    "field_GFUOFRUTeg": "choice_hqcOEipwGU"
+}");
+Request request = new Request.Builder()
+  .url("{{formz_server}}/v2/forms/form/cv7kTWdv/submit/")
+  .method("POST", body)
+  .addHeader("x-api-key", "{{formz-x-api-key}}")
+  .addHeader("Authorization", "JWT {{authorization_token}}")
+  .addHeader("Content-Type", "application/json")
+  .build();
+Response response = client.newCall(request).execute();
+```
+
+</details>
+
+
+<details>
+<summary>Create Tag</summary>
+<br>
+Create Field
+<br><br>
+<pre>
+OkHttpClient client = new OkHttpClient().newBuilder()
+  .build();
+MediaType mediaType = MediaType.parse("application/json");
+RequestBody body = RequestBody.create(mediaType, "{\n    \"title\": \"Blue Tag\",\n    \"color\": \"#0000AA\",\n    \"address\": \"blue\"\n}");
+Request request = new Request.Builder()
+  .url("{{formz_server}}/v3/form-tags/")
+  .method("POST", body)
+  .addHeader("x-api-key", "{{formz-x-api-key}}")
+  .addHeader("Authorization", "JWT {{authorization_token}}")
+  .addHeader("Content-Type", "application/json")
+  .build();
+Response response = client.newCall(request).execute();
+</pre>
+</details>
+
 
 <details>
 <summary>Create Field?</summary>
@@ -143,6 +191,7 @@ Create Field
 </pre>
 </details>
 
+
 <details>
 <summary>Create Field?</summary>
 <br>
@@ -152,3 +201,8 @@ Create Field
 
 </pre>
 </details>
+
+
+You can find the full documentation on [developers page](https://en.formaloo.com/developers/)
+
+
