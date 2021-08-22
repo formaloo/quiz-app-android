@@ -105,7 +105,6 @@ You can find the full documentation on [developers page](https://en.formaloo.com
 <br>
 Create Field
 <br><br>
-<pre>
 
 ```kotlin
 /**Create Field*/
@@ -130,7 +129,6 @@ Request request = new Request.Builder()
 Response response = client.newCall(request).execute();
 ```
 
-</pre>
 </details>
 
 
