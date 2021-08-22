@@ -181,30 +181,76 @@ Request request = new Request.Builder()
 Response response = client.newCall(request).execute();
 ```
 
-
-</>
 </details>
 
 
 <details>
-<summary>Create Field</summary>
+<summary>Assign a tag to a form</summary>
 <br>
-Create Field
+Assign a tag to a form
 <br><br>
-<pre>
 
-</pre>
+```java
+OkHttpClient client = new OkHttpClient().newBuilder()
+  .build();
+MediaType mediaType = MediaType.parse("application/json");
+RequestBody body = RequestBody.create(mediaType, "{
+		"tags":["tpOuD6hR"]
+		}");
+Request request = new Request.Builder()
+  .url("{{formz_server}}/v2/forms/form/{form_slug}/")
+  .method("PATCH", body)
+  .addHeader("x-api-key", "{{formz-x-api-key}}")
+  .addHeader("Authorization", "JWT {{authorization_token}}")
+  .addHeader("Content-Type", "application/json")
+  .build();
+Response response = client.newCall(request).execute();
+```
+
 </details>
 
 
 <details>
-<summary>Create Field</summary>
+<summary>Retrieve form list by tag address</summary>
 <br>
-Create Field
+Retrieve form list by tag address
 <br><br>
-<pre>
 
-</pre>
+```java
+OkHttpClient client = new OkHttpClient().newBuilder()
+  .build();
+Request request = new Request.Builder()
+  .url("{{formz_server}}/v3/form-displays/tag/{tag_address}/")
+  .method("GET", null)
+  .addHeader("x-api-key", "{{formz-x-api-key}}")
+  .addHeader("Authorization", "JWT {{authorization_token}}")
+  .addHeader("Content-Type", "application/json")
+  .build();
+Response response = client.newCall(request).execute();
+```
+
+</details>
+
+
+<details>
+<summary>Retrieve form detail by form address</summary>
+<br>
+Retrieve form list by form address
+<br><br>
+
+```java
+OkHttpClient client = new OkHttpClient().newBuilder()
+  .build();
+Request request = new Request.Builder()
+  .url("{{formz_server}}/v3/form-displays/address/{form_address}/")
+  .method("GET", null)
+  .addHeader("x-api-key", "{{formz-x-api-key}}")
+  .addHeader("Authorization", "JWT {{authorization_token}}")
+  .addHeader("Content-Type", "application/json")
+  .build();
+Response response = client.newCall(request).execute();
+```
+
 </details>
 
 
