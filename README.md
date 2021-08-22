@@ -10,10 +10,10 @@ git clone https://github.com/formaloo/formaloo-android-learn-android-development
 The sample app contains a list of Android lessons, each lesson is a form.
 [The APK is available now in the Google Play Store](https://play.google.com/store/apps/details?id=co.idearun.learnandroid).
 
-![Screenshots](images/learn_android_home.jpg)
-![Screenshots](images/learn_android_image.jpg)
-![Screenshots](images/learn_android_section.jpg)
-![Screenshots](images/learn_android_q.jpg)
+![Screenshots](images/learn_android_home.png)
+![Screenshots](images/learn_android_image.png)
+![Screenshots](images/learn_android_section.png)
+![Screenshots](images/learn_android_q.png)
 
 To create your own forms you need an Formaloo account, [you can signup now](https://accounts.formaloo.net/profiles/signup/?) :)
 After login to your account go to [dashboard](https://dash.formaloo.net/u/) and create your desire form.
