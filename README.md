@@ -27,7 +27,7 @@ If you prefer to create forms programmatically you can use these endpoints:
 Create Form
 <br><br>
 
-```kotlin
+```java
 OkHttpClient client = new OkHttpClient().newBuilder()
     .build();
 MediaType mediaType = MediaType.parse("application/json");
@@ -92,7 +92,7 @@ Response response = client.newCall(request).execute();
 Create Field
 <br><br>
 
-```kotlin
+```java
 /**Create Field*/
 
 OkHttpClient client = new OkHttpClient().newBuilder()
@@ -124,7 +124,7 @@ Response response = client.newCall(request).execute();
 Submit form
 <br><br>
 
-```kotlin
+```java
 OkHttpClient client = new OkHttpClient().newBuilder()
   .build();
 MediaType mediaType = MediaType.parse("application/json");
@@ -162,14 +162,18 @@ Response response = client.newCall(request).execute();
 <details>
 <summary>Create Tag</summary>
 <br>
-Create Field
+Create Tag
 <br><br>
 
 ```java
 OkHttpClient client = new OkHttpClient().newBuilder()
   .build();
 MediaType mediaType = MediaType.parse("application/json");
-RequestBody body = RequestBody.create(mediaType, "{\n    \"title\": \"Blue Tag\",\n    \"color\": \"#0000AA\",\n    \"address\": \"blue\"\n}");
+RequestBody body = RequestBody.create(mediaType, "{
+		"title": "Blue Tag",
+		"color": "#0000AA",
+		"address": "blue-tag"
+		}");
 Request request = new Request.Builder()
   .url("{{formz_server}}/v3/form-tags/")
   .method("POST", body)
@@ -186,7 +190,7 @@ Response response = client.newCall(request).execute();
 
 
 <details>
-<summary>Create Field?</summary>
+<summary>Create Field</summary>
 <br>
 Create Field
 <br><br>
@@ -197,7 +201,7 @@ Create Field
 
 
 <details>
-<summary>Create Field?</summary>
+<summary>Create Field</summary>
 <br>
 Create Field
 <br><br>
