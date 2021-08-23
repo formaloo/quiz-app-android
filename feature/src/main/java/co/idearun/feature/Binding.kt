@@ -54,6 +54,7 @@ import android.view.MotionEvent
 import android.text.style.ClickableSpan
 
 import android.text.Spannable
+import android.text.util.Linkify
 
 import android.view.View.OnTouchListener
 
@@ -138,9 +139,6 @@ object Binding : KoinComponent {
     @BindingAdapter("app:htmlSimpeTxt")
     @JvmStatic
     fun setSimpleHtmlTxt(txv: TextView, txt: String?) {
-
-        txv.movementMethod = LinkMovementMethod.getInstance()
-
         txt?.let {
             txv.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Html.fromHtml(txt, Html.FROM_HTML_MODE_LEGACY)
@@ -148,6 +146,12 @@ object Binding : KoinComponent {
                 Html.fromHtml(txt)
             }
         }
+
+    }
+    @BindingAdapter("app:movementMethod")
+    @JvmStatic
+    fun setMovementMethod(txv: TextView,status: Boolean?) {
+        txv.movementMethod = LinkMovementMethod.getInstance()
 
     }
 

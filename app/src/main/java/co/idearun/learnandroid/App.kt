@@ -21,7 +21,8 @@ open class App : Application(), Configuration.Provider {
         } else {
         }
 
-        AppCenter.start(this, "657491c6-00b7-478b-985c-d1f6c86981e0",
+        AppCenter.start(
+            this, "657491c6-00b7-478b-985c-d1f6c86981e0",
             Analytics::class.java, Crashes::class.java
         )
     }

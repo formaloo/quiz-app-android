@@ -1,5 +1,6 @@
 package co.idearun.feature
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.GravityCompat
@@ -79,7 +80,7 @@ class MainActivity : BaseActivity(), KoinComponent, MainListener {
 
         binding.about.setOnClickListener {
             binding.drawerLayout.close()
-            navController.navigate(R.id.about)
+            startActivity(Intent(this, AboutActivity::class.java))
         }
 
     }
@@ -95,10 +96,10 @@ class MainActivity : BaseActivity(), KoinComponent, MainListener {
     }
 
     override fun onBackPressed() {
-        if (binding.drawerLayout.isDrawerVisible(GravityCompat.START)){
+        if (binding.drawerLayout.isDrawerVisible(GravityCompat.START)) {
             binding.drawerLayout.close()
 
-        }else{
+        } else {
             super.onBackPressed()
 
         }

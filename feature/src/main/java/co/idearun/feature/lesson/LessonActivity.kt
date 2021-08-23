@@ -6,12 +6,12 @@ import android.os.Looper
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import co.idearun.feature.R
 import co.idearun.common.Constants
 import co.idearun.common.extension.invisible
 import co.idearun.common.extension.visible
 import co.idearun.data.model.form.Fields
 import co.idearun.data.model.form.Form
+import co.idearun.feature.R
 import co.idearun.feature.databinding.ActivityLessonBinding
 import co.idearun.feature.lesson.adapter.LessonFieldsAdapter
 import co.idearun.feature.lesson.listener.LessonListener
@@ -39,14 +39,11 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
         binding.layoutFashCong.flashcardListener = this
         binding.layoutFashCong.listener = this
         binding.layoutFashCong.viewmodel = viewModel
-
         baseMethod.hideAB(supportActionBar)
 
         checkBundle()
         initData()
         initView()
-
-
     }
 
     private fun checkBundle() {
@@ -94,9 +91,6 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
                 }
 
         }
-
-
-
 
 
     }

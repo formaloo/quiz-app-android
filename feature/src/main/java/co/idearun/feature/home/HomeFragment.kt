@@ -116,10 +116,11 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
         val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
             requireActivity(),
             formItemLay,
-            ViewCompat.getTransitionName(formItemLay)!!
+            ViewCompat.getTransitionName(formItemLay) ?: ""
         )
         intent.putExtra("form", form)
         intent.putExtra("progress", progress)
+
         startActivity(intent, options.toBundle())
 
     }

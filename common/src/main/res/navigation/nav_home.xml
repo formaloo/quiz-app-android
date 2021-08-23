@@ -12,13 +12,4 @@
 
     </fragment>
 
-    <fragment
-        android:id="@+id/about"
-        android:name="co.idearun.feature.AboutFragment"
-        android:label="@string/about">
-
-
-    </fragment>
-
-
-</navigation>
+ </navigation>

@@ -35,10 +35,16 @@
   <string name="your_lessons">Your Lessons</string>
   <string name="lesson_list_desc">Take lessons based on the skills you chose.</string>
   <string name="made_by_desc">Made with passion by Formaloo</string>
+  <string name="made_by_desc3"><a href="https://formaloo.net/">Made with passion by Formaloo</a></string>
   <string name="made_by_desc2">Made with passion by</string>
   <string name="appAddress">https://play.google.com/store/apps/details?id=co.idearun.learnandroid</string>
   <string name="about">About</string>
   <string name="review">Review</string>
   <string name="start">Start</string>
+	<string name="app_desc"><![CDATA[<p>Learn Android App helps you review and practice android development basics.
+      \n\nThis app is also an open source project you can find the code on <a href="https://github.com/formaloo/formaloo-android-learn-android-development.git">github repository.</a>
+      \n\nDo not forget to star <a href="https://play.google.com/store/apps/details?id=co.idearun.learnandroid">Learn Android App</a> if you find it helpful.</p>]]>
+      
+</string>
 
 </resources>

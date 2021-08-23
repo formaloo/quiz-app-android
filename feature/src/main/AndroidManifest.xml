@@ -3,8 +3,9 @@
 	package="co.idearun.feature">
 	
 	<application>
-	
-	<activity android:name="co.idearun.feature.lesson.LessonActivity" />
+		
+		<activity android:name=".lesson.LessonActivity" />
+		<activity android:name=".AboutActivity"/>
 	</application>
 
 </manifest>

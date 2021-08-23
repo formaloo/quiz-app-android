@@ -72,7 +72,6 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         }
         _formMap.value = formsList
 
-
     }
 
     fun retrieveLessonFromDB() = viewModelScope.launch {
