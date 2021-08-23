@@ -37,11 +37,9 @@
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_below="@+id/txvTitle"
-			android:autoLink="web"
-			android:linksClickable="true"
-			android:justificationMode="inter_word"
+			app:movementMethod="@{true}"
 			android:lineSpacingExtra="@dimen/padding_small"
-			app:htmlSimpeTxt="@{@string/app_desc}"
+			android:text="@string/app_desc"
 			android:textColor="@color/gray2"
 			android:textSize="@dimen/font_xlarge"/>
 		
@@ -52,13 +50,12 @@
 			android:layout_alignParentBottom="true"
 			android:layout_gravity="center_horizontal|bottom"
 			android:background="@color/bg"
-			android:linksClickable="true"
 			android:layout_centerHorizontal="true"
 			android:paddingTop="@dimen/padding_2xsmall"
 			android:paddingBottom="@dimen/padding_small"
-			app:htmlSimpeTxt="@{@string/made_by_desc3}"
+			app:movementMethod="@{true}"
+			android:text="@string/made_by_desc3"
 			android:textAlignment="center"
-			android:autoLink="web"
 			android:textSize="@dimen/font_small" />
 	</RelativeLayout>
 </layout>
