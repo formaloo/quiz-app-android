@@ -7,7 +7,7 @@ Clone this repository and import into **Android Studio**
 git clone https://github.com/formaloo/formaloo-android-learn-android-development.git
 
 ## The App
-The sample app contains a list of Android lessons, each lesson is a form.
+The sample app contains a list of Android lessons.
 [The APK is available now in the Google Play Store](https://play.google.com/store/apps/details?id=co.idearun.learnandroid).
 
 ![Screenshots](images/learnandroid.png)
@@ -16,7 +16,12 @@ To create your own forms you need an Formaloo account, [you can signup now](http
 After login to your account go to [dashboard](https://dash.formaloo.net/u/) and create your desire forms.
 
 ## The Code 
- You can find the detail of used endpoints below: 
+Each lesson is a form and form fields create the lesson content. To create a form and fields programmatically you need API_KEY and API_SECRET:
+1.Go to your [CDP Dashboard](https://cdp.formaloo.net/) and create a Connection to get your API_KEY and API_SECRET.
+2.Use your keys to connect to the api. API Key must be included in all requests to the api. Also you need to authorize your app using one of Authorization Code or Client Credentials flow.
+
+After you are done with your forms you need a tag to assign to each form. Using the tag we can fetch forms list. To fetch form yo do not need above keys. 
+You can find the detail of used endpoints at this project below: 
 
 <details>
 <summary>Create Form</summary>
