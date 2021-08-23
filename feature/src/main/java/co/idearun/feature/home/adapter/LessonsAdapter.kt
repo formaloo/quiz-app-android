@@ -5,10 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.RecyclerView
-import co.idearun.feature.R
 import co.idearun.data.model.form.Form
+import co.idearun.feature.R
 import co.idearun.feature.databinding.LessonContentBinding
 import org.koin.core.KoinComponent
+import timber.log.Timber
 import java.io.Serializable
 
 
@@ -18,13 +19,18 @@ class LessonsAdapter(
 ) : PagingDataAdapter<Form, LessonsAdapter.ViewHolder>(DiffUtilCallBack()), Serializable {
 
     private var formsProgressMap: HashMap<String?, Int?>? = progressMap
+    private var lastOpenPos = 0
 
     fun resetProgress(formsProgressMap: HashMap<String?, Int?>?, openedForm: Form?) {
         this.formsProgressMap = formsProgressMap
-        openedForm?.let {
-            val index = this.snapshot().indexOf(openedForm)
+        val items = this.snapshot().items
+        items.find {
+            it.slug == openedForm?.slug
+        }?.let {
+            val index = items.indexOf(it)
             notifyItemChanged(index)
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): ViewHolder {
@@ -35,9 +41,8 @@ class LessonsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = getItem(position)
-        item?.let {
-            holder.bindItems(item, listener, (formsProgressMap?: hashMapOf())[item.slug])
-        }
+        holder.bindItems(item!!, listener, (formsProgressMap ?: hashMapOf())[item?.slug!!])
+
     }
 
     class ViewHolder(
@@ -48,12 +53,12 @@ class LessonsAdapter(
         fun bindItems(
             form: Form?,
             listener: LessonListListener,
-            progress:Int?
+            progress: Int?
         ) {
             binding.item = form
-            binding.progress = progress?:0
-            binding.done = progress?:0 == -1
-            binding.listener =listener
+            binding.progress = progress ?: 0
+            binding.done = progress ?: 0 == -1
+            binding.listener = listener
 
         }
     }

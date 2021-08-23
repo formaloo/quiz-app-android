@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LearningApp"
         android:usesCleartextTraffic="true">
-
+        
         <activity
             android:name="co.idearun.feature.MainActivity"
             android:theme="@style/SplashTheme">
