@@ -15,6 +15,7 @@ import com.bumptech.glide.request.Request;
 import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
+import com.squareup.picasso.Picasso;
 
 import java.lang.ref.WeakReference;
 
@@ -25,12 +26,10 @@ private HtmlImagesHandler       imagesHandler;
 private float                   density = 1.0f;
 
 public GlideImageGetter(TextView textView) {
-	
 	this(textView, false, false, null);
 }
 
 public GlideImageGetter(TextView textView, boolean matchParentWidth, HtmlImagesHandler imagesHandler) {
-	
 	this(textView, matchParentWidth, false, imagesHandler);
 }
 
@@ -69,21 +68,18 @@ private class BitmapDrawablePlaceholder extends BitmapDrawable implements Target
 	protected Drawable drawable;
 	
 	BitmapDrawablePlaceholder() {
-		
 		super(container.get().getResources(),
 		      Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888));
 	}
 	
 	@Override
 	public void draw(final Canvas canvas) {
-		
 		if (drawable != null) {
 			drawable.draw(canvas);
 		}
 	}
 	
 	private void setDrawable(Drawable drawable) {
-		
 		this.drawable = drawable;
 		int drawableWidth  = (int) (drawable.getIntrinsicWidth() * density);
 		int drawableHeight = (int) (drawable.getIntrinsicHeight() * density);
@@ -97,7 +93,6 @@ private class BitmapDrawablePlaceholder extends BitmapDrawable implements Target
 			drawable.setBounds(0, 0, drawableWidth, drawableHeight);
 			setBounds(0, 0, drawableWidth, drawableHeight);
 		}
-		
 		container.get().setText(container.get().getText());
 	}
 	

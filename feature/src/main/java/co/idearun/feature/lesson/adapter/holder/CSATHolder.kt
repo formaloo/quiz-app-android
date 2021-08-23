@@ -11,7 +11,7 @@ import co.idearun.common.extension.invisible
 import co.idearun.data.model.form.Fields
 import co.idearun.data.model.form.Form
 import co.idearun.feature.databinding.LayoutUiCsatItemBinding
-import co.idearun.feature.lesson.listener.FieldsListener
+
 import co.idearun.feature.lesson.adapter.*
 import co.idearun.feature.lesson.listener.CSATListener
 import co.idearun.feature.lesson.listener.LessonListener
@@ -25,7 +25,6 @@ class CSATHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bindItems(
         field: Fields,
         position_: Int,
-        listener: FieldsListener,
         form: Form,
         viewmodel: UIViewModel,
         lessonListener: LessonListener
@@ -34,7 +33,7 @@ class CSATHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         binding.form = form
         binding.fieldUiHeader.field = field
         binding.fieldUiHeader.form = form
-        binding.listener = listener
+
         binding.viewmodel = viewmodel
         val context = binding.starlay.context
         binding.lifecycleOwner = context as LifecycleOwner

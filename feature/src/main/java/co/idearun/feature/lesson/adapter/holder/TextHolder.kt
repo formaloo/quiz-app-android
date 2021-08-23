@@ -11,7 +11,7 @@ import co.idearun.common.Constants
 import co.idearun.data.model.form.Fields
 import co.idearun.data.model.form.Form
 import co.idearun.feature.databinding.LayoutFlashCardEdtItemBinding
-import co.idearun.feature.lesson.listener.FieldsListener
+
 import co.idearun.feature.viewmodel.UIViewModel
 import com.google.android.material.textfield.TextInputEditText
 
@@ -20,14 +20,14 @@ class TextHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun bindItems(
         item: Fields,
         position_: Int,
-        listener: FieldsListener,
+
         form: Form,
         uiViewModel: UIViewModel
     ) {
         binding.field = item
         binding.form = form
         binding.viewmodel = uiViewModel
-        binding.listener = listener
+
         binding.fieldUiHeader.field = item
         binding.fieldUiHeader.form = form
         binding.lifecycleOwner = itemView.context as LifecycleOwner

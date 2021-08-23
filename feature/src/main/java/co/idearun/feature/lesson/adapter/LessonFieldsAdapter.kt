@@ -24,7 +24,7 @@ import co.idearun.feature.R
 import co.idearun.common.Constants.DROPDOWN
 import co.idearun.data.model.form.Fields
 import co.idearun.data.model.form.Form
-import co.idearun.feature.lesson.listener.FieldsListener
+
 import co.idearun.feature.lesson.listener.SwipeStackListener
 import co.idearun.feature.lesson.adapter.holder.*
 import co.idearun.feature.lesson.listener.LessonListener
@@ -35,7 +35,6 @@ import kotlin.properties.Delegates
 
 
 class LessonFieldsAdapter(
-    private val listener: FieldsListener,
     private val lessonListener: LessonListener,
     private val swipeStackListener: SwipeStackListener,
     private val form: Form,
@@ -83,7 +82,6 @@ class LessonFieldsAdapter(
                 (holder as DropDownHolder).bindItems(
                     btnItem,
                     position_,
-                    listener,
                     form, viewmodel, lessonListener
                 )
 
@@ -93,7 +91,6 @@ class LessonFieldsAdapter(
                 (holder as MatrixHolder).bindItems(
                     btnItem,
                     position_,
-                    listener,
                     form,
 
                     viewmodel
@@ -104,7 +101,7 @@ class LessonFieldsAdapter(
             TYPE_MULTI -> {
                 (holder as MultiHolder).bindItems(
                     btnItem, position_,
-                    listener, form, viewmodel
+                     form, viewmodel
                 )
 
             }
@@ -113,7 +110,6 @@ class LessonFieldsAdapter(
                 (holder as SingleHolder).bindItems(
                     btnItem,
                     position_,
-                    listener,
                     form,
                     viewmodel, lessonListener
                 )
@@ -124,7 +120,6 @@ class LessonFieldsAdapter(
                 (holder as TextHolder).bindItems(
                     btnItem,
                     position_,
-                    listener,
                     form,
 
                     viewmodel
@@ -136,7 +131,6 @@ class LessonFieldsAdapter(
                 (holder as LikeDislikeHolder).bindItems(
                     btnItem,
                     position_,
-                    listener,
                     form,
                     viewmodel, lessonListener
                 )
@@ -147,7 +141,6 @@ class LessonFieldsAdapter(
                 (holder as StarHolder).bindItems(
                     btnItem,
                     position_,
-                    listener,
                     form,
                     viewmodel, lessonListener
                 )
@@ -158,7 +151,6 @@ class LessonFieldsAdapter(
                 (holder as CSATHolder).bindItems(
                     btnItem,
                     position_,
-                    listener,
                     form,
                     viewmodel, lessonListener
                 )
@@ -169,7 +161,6 @@ class LessonFieldsAdapter(
                 (holder as NPSHolder).bindItems(
                     btnItem,
                     position_,
-                    listener,
                     form,
                     viewmodel, lessonListener
                 )
@@ -180,7 +171,6 @@ class LessonFieldsAdapter(
                 (holder as SectionHolder).bindItems(
                     btnItem,
                     position_,
-                    listener,
                     form,
 
                     viewmodel
@@ -192,7 +182,6 @@ class LessonFieldsAdapter(
                 (holder as TextHolder).bindItems(
                     btnItem,
                     position_,
-                    listener,
                     form,
 
                     viewmodel
@@ -203,7 +192,6 @@ class LessonFieldsAdapter(
                 (holder as TextHolder).bindItems(
                     btnItem,
                     position_,
-                    listener,
                     form,
 
                     viewmodel
@@ -214,7 +202,6 @@ class LessonFieldsAdapter(
                 (holder as TextHolder).bindItems(
                     btnItem,
                     position_,
-                    listener,
                     form,
 
                     viewmodel

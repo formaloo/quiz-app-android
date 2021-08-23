@@ -9,10 +9,7 @@
             name="viewmodel"
             type="co.idearun.feature.viewmodel.UIViewModel" />
 
-        <variable
-            name="listener"
-            type="co.idearun.feature.lesson.listener.FieldsListener" />
-
+        
         <variable
             name="field"
             type="co.idearun.data.model.form.Fields" />
@@ -20,9 +17,7 @@
             name="form"
             type="co.idearun.data.model.form.Form" />
 
-        <variable
-            name="baseMethod"
-            type="co.idearun.common.BaseMethod" />
+        
     </data>
 
 

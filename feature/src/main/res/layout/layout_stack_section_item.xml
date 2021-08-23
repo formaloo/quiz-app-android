@@ -16,9 +16,7 @@
             name="form"
             type="co.idearun.data.model.form.Form" />
 
-        <variable
-            name="baseMethod"
-            type="co.idearun.common.BaseMethod" />
+        
     </data>
 
 

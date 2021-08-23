@@ -9,20 +9,7 @@ object Constants {
 
     val PERMISSIONS_EXTERNAL_STORAGE = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
     const val PERMISSION_ALL = 1
-    const val EXTERNAL_STORAGE = 2
-    const val PERMISSION_DUPLICATE = 1
-    const val REQUEST_CAPTURE_IMAGE = 100
-    const val REQUEST_GALLREY = 200
-    const val requeiredSize: Int = 500
-    const val PICKFILE_RESULT_CODE = 220
-
-    const val ERRORS = "errors"
-    const val GENERAL_ERRORS = "general_errors"
-    const val FORM_ERRORS = "form_errors"
-    const val SLUG = "slug"
     const val FORM = "form"
-    const val FIELD = "field"
-
     const val DROPDOWN = "dropdown"
     const val MATRIX = "matrix"
     const val RATING = "rating"
@@ -42,7 +29,6 @@ object Constants {
     const val META = "meta"
     const val NUMBER = "number"
     const val SECTION = "section"
-    const val PAGE_BREAK = "page_break"
     const val PHONE_VERIFICATION = "phone_verification"
     const val Like_Dislike = "like_dislike"
 

@@ -1,8 +1,11 @@
 package co.idearun.feature.lesson
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,30 +19,33 @@ import co.idearun.feature.databinding.ActivityLessonBinding
 import co.idearun.feature.lesson.adapter.LessonFieldsAdapter
 import co.idearun.feature.lesson.listener.LessonListener
 import co.idearun.feature.lesson.listener.SwipeStackListener
+import co.idearun.feature.viewmodel.FormViewModel
 import co.idearun.feature.viewmodel.SharedViewModel
+import co.idearun.feature.viewmodel.UIViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class LessonActivity : LessonBaseActivity(), LessonListener {
+class LessonActivity : AppCompatActivity(), LessonListener {
 
     private lateinit var binding: ActivityLessonBinding
     private val shardedVM: SharedViewModel by viewModel()
+    private val viewModel: UIViewModel by viewModel()
+    private val formVM: FormViewModel by viewModel()
     private var fieldsFlashAdapter: LessonFieldsAdapter? = null
     private var form: Form? = null
     private var lessonsProgressMap = hashMapOf<String?, Int?>()
     private var fields: ArrayList<Fields> = arrayListOf()
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = setContentView(this, R.layout.activity_lesson)
-        binding.listener = this
         binding.flashcardListener = this
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
         binding.layoutFashCong.flashcardListener = this
-        binding.layoutFashCong.listener = this
         binding.layoutFashCong.viewmodel = viewModel
-        baseMethod.hideAB(supportActionBar)
+        supportActionBar?.hide()
 
         checkBundle()
         initData()
@@ -48,7 +54,6 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
 
     private fun checkBundle() {
         intent.extras?.let {
-            val progress = it.getInt("progress") ?: 0
             it.getSerializable("form")?.let {
                 if (it is Form) {
 
@@ -67,7 +72,7 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
 
     private fun initView() {
         fieldsFlashAdapter = LessonFieldsAdapter(
-            this@LessonActivity, this,
+            this@LessonActivity,
             object : SwipeStackListener {
                 override fun onSwipeEnd(position: Int) {
                     next()
@@ -112,7 +117,6 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
                     this.fields = it
                 }
                 checkLessonProgress()
-                updateTheme(form)
 
                 binding.form = form
                 binding.layoutFashCong.form = form
@@ -202,10 +206,18 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
             "I'm learning ${form?.title ?: ""} in Learning App. Check it out on your phone: ${
                 getString(R.string.appAddress)
             }"
-        baseMethod.shareVia(shareTxt, getString(R.string.app_name), this)
+        shareVia(shareTxt, getString(R.string.app_name), this)
 
     }
-
+    fun shareVia(extraTxt: String, title: String, mContext: Context) {
+        val sendIntent = Intent()
+        sendIntent.type = "text/plain"
+        sendIntent.action = Intent.ACTION_SEND
+        sendIntent.putExtra(Intent.EXTRA_TEXT, extraTxt)
+        val createChooser = Intent.createChooser(sendIntent, title)
+        createChooser.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        mContext.startActivity(createChooser)
+    }
     private fun openCongView() {
         updateLessonProgress(-1)
         shardedVM.saveLastLesson("")
@@ -213,7 +225,6 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
             (binding.flashcardFieldsRec.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
         Timber.d("visibleItemPosition$visibleItemPosition")
         viewModel.saveEditSubmitToDB(true, visibleItemPosition)
-        callWorker()
         binding.flashCongView.visible()
 
     }
@@ -245,11 +256,6 @@ class LessonActivity : LessonBaseActivity(), LessonListener {
 
         binding.progress = (progress ?: 0)
         binding.executePendingBindings()
-
-    }
-
-    override fun onPause() {
-        super.onPause()
 
     }
 

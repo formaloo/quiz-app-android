@@ -25,17 +25,20 @@
             name="viewmodel"
             type="co.idearun.feature.viewmodel.UIViewModel" />
 
-        <variable
-            name="listener"
-            type="co.idearun.feature.lesson.listener.FieldsListener" />
-
+        
     </data>
 
     <RelativeLayout
         android:id="@+id/activity_flash_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+    
+        <ImageView
+            android:layout_width="match_parent"
+            android:scaleType="centerCrop"
+            app:formBack="@{viewmodel.formData.form}"
+            android:layout_height="match_parent"/>
+        
         <RelativeLayout
             android:id="@+id/flash_bar"
             android:layout_width="match_parent"

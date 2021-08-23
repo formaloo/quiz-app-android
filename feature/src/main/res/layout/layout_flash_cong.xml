@@ -16,10 +16,7 @@
             name="viewmodel"
             type="co.idearun.feature.viewmodel.UIViewModel" />
 
-        <variable
-            name="listener"
-            type="co.idearun.feature.lesson.listener.FieldsListener" />
-
+        
     </data>
 
     <LinearLayout

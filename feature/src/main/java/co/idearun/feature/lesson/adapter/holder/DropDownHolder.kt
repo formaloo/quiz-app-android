@@ -10,7 +10,7 @@ import co.idearun.common.Constants
 import co.idearun.data.model.form.Fields
 import co.idearun.data.model.form.Form
 import co.idearun.feature.databinding.LayoutFlashCardDropdownItemBinding
-import co.idearun.feature.lesson.listener.FieldsListener
+
 import co.idearun.feature.lesson.listener.LessonListener
 import co.idearun.feature.viewmodel.UIViewModel
 
@@ -19,14 +19,14 @@ class DropDownHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun bindItems(
         item: Fields,
         pos: Int,
-        listener: FieldsListener,
+
         form: Form, viewmodel: UIViewModel, lessonListener: LessonListener
     ) {
 
 
         val dropAdapter = DropDownItemsAdapter(form)
 
-        var userSelect=false
+        var userSelect = false
         binding.valueSpinner.apply {
             adapter = dropAdapter
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -40,16 +40,15 @@ class DropDownHolder(view: View) : RecyclerView.ViewHolder(view) {
                     position: Int,
                     id: Long
                 ) {
-
                     dropAdapter.getItem(position)?.slug?.let { slug ->
                         viewmodel.addKeyValueToReq(item.slug!!, slug)
-                        if (userSelect){
+                        if (userSelect) {
                             Handler(Looper.getMainLooper()).postDelayed({
                                 lessonListener.next()
                             }, Constants.AUTO_NEXT_DELAY)
 
-                        }else{
-                            userSelect=true
+                        } else {
+                            userSelect = true
                         }
                     }
                 }

@@ -9,7 +9,7 @@ import co.idearun.data.model.form.Form
 import co.idearun.feature.databinding.LayoutFlashCardSectionItemBinding
 import co.idearun.feature.lesson.adapter.SwipeStackAdapter
 import co.idearun.feature.lesson.listener.SwipeStackListener
-import co.idearun.feature.lesson.listener.FieldsListener
+
 import co.idearun.feature.viewmodel.UIViewModel
 import link.fls.swipestack.SwipeStack
 
@@ -19,13 +19,13 @@ class SectionHolder(view: View, private val swipeStackListener: SwipeStackListen
     fun bindItems(
         item: Fields,
         pos: Int,
-        listener: FieldsListener,
+
         form: Form,
         uiViewModel: UIViewModel
     ) {
         binding.field = item
         binding.form = form
-        binding.listener = listener
+
         binding.lifecycleOwner = binding.swipeStack.context as LifecycleOwner
 
         // Prepare the View for the animation

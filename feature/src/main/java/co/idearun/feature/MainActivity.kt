@@ -3,6 +3,7 @@ package co.idearun.feature
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.drawerlayout.widget.DrawerLayout
@@ -12,18 +13,17 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import co.idearun.common.BaseMethod
+import androidx.work.*
 import co.idearun.feature.databinding.ActivityMainBinding
 import co.idearun.feature.drawer.SortedLessonListAdapter
 import co.idearun.feature.viewmodel.FormViewModel
-import org.koin.android.ext.android.inject
+import co.idearun.feature.worker.SubmitWorker
 import org.koin.android.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
 
-class MainActivity : BaseActivity(), KoinComponent, MainListener {
+class MainActivity : AppCompatActivity(), KoinComponent, MainListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
-    val baseMethod: BaseMethod by inject()
     private val viewModel: FormViewModel by viewModel()
     private lateinit var sortedFormListAdapter: SortedLessonListAdapter
 
@@ -105,4 +105,21 @@ class MainActivity : BaseActivity(), KoinComponent, MainListener {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        callWorker()
+
+    }
+
+    fun callWorker() {
+        val constraint: Constraints =
+            Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
+
+        val submitWorkRequest: OneTimeWorkRequest = OneTimeWorkRequestBuilder<SubmitWorker>()
+            .setConstraints(constraint).build()
+
+        val manager = WorkManager.getInstance(this)
+        manager.enqueueUniqueWork("Submit", ExistingWorkPolicy.KEEP, submitWorkRequest);
+
+    }
 }

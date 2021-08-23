@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
+        
         <variable
             name="progress"
             type="Integer" />
@@ -27,9 +28,7 @@
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
         android:orientation="vertical"
-        app:form="@{item}"
-        android:visibility="visible"
-        app:isVisisble="@{progress}">
+        android:visibility="@{progress>0?View.VISIBLE:View.GONE,default=gone}">
 
         <TextView
             android:layout_marginStart="@dimen/padding_standard"

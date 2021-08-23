@@ -10,13 +10,12 @@ import android.graphics.drawable.GradientDrawable
 import android.os.Build
 import android.text.Html
 import android.text.Layout
+import android.text.Spannable
 import android.text.method.LinkMovementMethod
-import android.transition.Fade
-import android.transition.Transition
-import android.transition.TransitionManager
+import android.text.style.ClickableSpan
+import android.util.Log
+import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
-import android.webkit.WebView
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -28,7 +27,6 @@ import androidx.appcompat.widget.AppCompatSpinner
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import co.idearun.common.BaseMethod
 import co.idearun.common.Constants
 import co.idearun.common.GlideImageGetter
 import co.idearun.common.MyTagHandler
@@ -39,7 +37,6 @@ import co.idearun.feature.drawer.SortedLessonListAdapter
 import co.idearun.feature.lesson.adapter.LessonFieldsAdapter
 import co.idearun.feature.lesson.adapter.holder.DropDownItemsAdapter
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.google.android.material.progressindicator.LinearProgressIndicator
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
@@ -47,35 +44,12 @@ import org.koin.core.KoinComponent
 import org.koin.core.inject
 import timber.log.Timber
 import java.lang.reflect.Field
-import java.text.SimpleDateFormat
+import java.net.URI
+import java.net.URISyntaxException
 import java.util.*
-import android.view.MotionEvent
-
-import android.text.style.ClickableSpan
-
-import android.text.Spannable
-import android.text.util.Linkify
-
-import android.view.View.OnTouchListener
-
-
-
 
 
 object Binding : KoinComponent {
-    val baseMethod: BaseMethod by inject()
-
-    const val TAG = "Binding"
-
-    @BindingAdapter("app:imageUrlRounded")
-    @JvmStatic
-    fun loadImageRounded(view: ImageView, url: String?) {
-        url?.let {
-            Glide.with(view.context).load(url).apply(RequestOptions.circleCropTransform())
-                .into(view)
-        }
-
-    }
 
     @BindingAdapter("app:imageUrl")
     @JvmStatic
@@ -85,6 +59,35 @@ object Binding : KoinComponent {
             co.idearun.feature.R.drawable.ic_flashcard
         )
         Glide.with(view.context).load(source).into(view)
+    }
+
+    @BindingAdapter("app:formBack")
+    @JvmStatic
+    fun loadFormBack(view: ImageView, form: Form?) {
+        val backgroundImage = form?.background_image
+        val backgroundColor = form?.background_color
+
+        if (backgroundImage?.isNotEmpty() == true) {
+            Glide.with(view.context).load(getUrlWithoutParameters(backgroundImage)).into(view)
+
+        } else if (backgroundColor?.isNotEmpty() == true) {
+            getHexColor(backgroundColor)?.let { txtColor ->
+                view.setColorFilter(Color.parseColor(txtColor))
+            }
+        }
+
+    }
+
+    @Throws(URISyntaxException::class)
+    private fun getUrlWithoutParameters(url: String): String {
+        val uri = URI(url)
+        return URI(
+            uri.scheme,
+            uri.authority,
+            uri.path,
+            null,  // Ignore the query part of the input url
+            uri.fragment
+        ).toString()
     }
 
     @BindingAdapter("app:htmlTxt")
@@ -148,40 +151,14 @@ object Binding : KoinComponent {
         }
 
     }
+
     @BindingAdapter("app:movementMethod")
     @JvmStatic
-    fun setMovementMethod(txv: TextView,status: Boolean?) {
+    fun setMovementMethod(txv: TextView, status: Boolean?) {
         txv.movementMethod = LinkMovementMethod.getInstance()
 
     }
-
-    @BindingAdapter("app:loadData")
-    @JvmStatic
-    fun loadData(webView: WebView, txt: String?) {
-
-        txt?.let {
-            webView.settings.loadWithOverviewMode = true
-            webView.settings.useWideViewPort = false
-            webView.loadDataWithBaseURL(null, it, "text/html", "utf-8", null);
-
-
-        }
-
-    }
-
-    @JvmStatic
-    @BindingAdapter("app:isVisisble", "app:form")
-    fun isVisible(view: ViewGroup, progress: Int?, form: Form?) {
-        val show = progress ?: 0 > 0 && form?.slug?.isNotEmpty() == true
-
-        val transition: Transition = Fade()
-        transition.duration = 1000
-        transition.addTarget(view)
-        TransitionManager.beginDelayedTransition(view, transition)
-
-        view.visibility = if (show) View.VISIBLE else View.GONE
-    }
-
+    
     @JvmStatic
     @BindingAdapter("field_desc")
     fun field_desc(view: TextView, field: Fields) {
@@ -198,37 +175,6 @@ object Binding : KoinComponent {
         }
 
         val descPlus = when (type) {
-
-            Constants.FILE -> {
-                if (field.max_size != null) {
-                    context.getString(co.idearun.feature.R.string.max_file_size) + " : " + field.max_size
-
-                } else {
-                    ""
-                }
-            }
-
-            Constants.TIME -> {
-                "${context.getString(co.idearun.feature.R.string.from)} : ${field?.from_time ?: "-"}" +
-                        "  " +
-                        "${context.getString(co.idearun.feature.R.string.to)} : ${field?.to_time ?: "-"}"
-
-            }
-
-            Constants.DATE -> {
-                "${context.getString(co.idearun.feature.R.string.from_date)} : ${
-                    getDateOnLocale(
-                        field.from_date ?: ""
-                    ) ?: "-"
-                }" +
-                        "  " +
-                        "${context.getString(co.idearun.feature.R.string.to_date)} : ${
-                            getDateOnLocale(
-                                field.to_date ?: ""
-                            ) ?: "-"
-                        }"
-            }
-
             Constants.SHORT_TEXT -> {
                 if (field.max_length != null) {
                     context.getString(co.idearun.feature.R.string.max_char_lenght) + " : " + field.max_length
@@ -252,30 +198,7 @@ object Binding : KoinComponent {
         }
     }
 
-    fun getDateOnLocale(time: String): String? {
-        return convertStringToDate(time)
-
-    }
-
-    fun convertStringToDate(time: String): String? {
-        val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
-        val sdf2 = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        var date: Date? = null
-        var datestr: String? = null
-
-        if (time.isNotEmpty())
-            try {
-                date = sdf.parse(time)
-                datestr = sdf2.format(date)
-
-            } catch (e: Exception) {
-
-
-            }
-
-        return datestr
-
-    }
+ 
 
     @JvmStatic
     @BindingAdapter("text_color")
@@ -284,15 +207,6 @@ object Binding : KoinComponent {
         view.setTextColor(Color.parseColor(txtColor))
 
     }
-
-
-//    @JvmStatic
-//    @BindingAdapter("penColor")
-//    fun setPenColor(view: SignaturePad, color: String?) {
-//        val txtColor = getHexColor(color) ?: convertRgbToHex("55", "55", "55")
-//        view.setPenColor(Color.parseColor(txtColor))
-
-//    }
 
     @JvmStatic
     @BindingAdapter("nps_color", "nps_data")
@@ -317,15 +231,6 @@ object Binding : KoinComponent {
 
     }
 
-
-    @JvmStatic
-    @BindingAdapter("divider_background")
-    fun divider_background(view: View, color: String?) {
-        val txtColor = getHexColor(color) ?: convertRgbToHex("55", "55", "55")
-        view.setBackgroundColor(Color.parseColor(txtColor))
-
-    }
-
     @JvmStatic
     @BindingAdapter("text_color")
     fun setTextColor(view: AppCompatButton, color: String?) {
@@ -345,7 +250,7 @@ object Binding : KoinComponent {
     @BindingAdapter("app:imageTintList")
     fun imageTintList(view: ImageButton, color: String?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            view.imageTintList = baseMethod.getColorStateList(color)
+            view.imageTintList = getColorStateList(color)
         }
     }
 
@@ -353,7 +258,7 @@ object Binding : KoinComponent {
     @BindingAdapter("app:progressTint")
     fun progressTint(view: LinearProgressIndicator, color: String?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            view.progressTintList = baseMethod.getColorStateList(color)
+            view.progressTintList = getColorStateList(color)
         }
     }
 
@@ -361,7 +266,7 @@ object Binding : KoinComponent {
     @BindingAdapter("app:progressTint")
     fun progressTint(view: AppCompatRatingBar, color: String?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            view.progressTintList = baseMethod.getColorStateList(color)
+            view.progressTintList = getColorStateList(color)
         }
     }
 
@@ -369,7 +274,7 @@ object Binding : KoinComponent {
     @BindingAdapter("app:backgroundTintList")
     fun backgroundTintList(view: View, color: String?) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            view.backgroundTintList = baseMethod.getColorStateList(color)
+            view.backgroundTintList = getColorStateList(color)
         }
     }
 
@@ -379,24 +284,7 @@ object Binding : KoinComponent {
         val txtColor = getHexColor(color) ?: convertRgbToHex("242", "242", "242")
         setCursorColor(view, Color.parseColor(txtColor))
     }
-
-    @JvmStatic
-    @BindingAdapter("field_background")
-    fun fieldBackgroundShape(view: View?, form: Form?) {
-        val shapedrawable = GradientDrawable()
-
-        val fieldColor = getHexColor(form?.field_color) ?: convertRgbToHex("242", "242", "242")
-        shapedrawable.setColor(Color.parseColor(fieldColor))
-
-        val borderColor = getHexColor(form?.border_color) ?: convertRgbToHex("255", "255", "255")
-        shapedrawable.setStroke(4, Color.parseColor(borderColor))
-
-        shapedrawable.cornerRadius = 3f
-
-        view?.background = shapedrawable
-
-    }
-
+    
     @JvmStatic
     @BindingAdapter("field_background")
     fun fieldBackground(view: View, form: Form?) {
@@ -468,47 +356,7 @@ object Binding : KoinComponent {
         view.setTextColor(Color.parseColor(txtColor))
 
     }
-
-    @JvmStatic
-    @BindingAdapter("btn_background")
-    fun btnBackgroundShape(view: View, color: String?) {
-        val shapedrawable = GradientDrawable()
-
-        val fieldColor = getHexColor(color) ?: convertRgbToHex("242", "242", "242")
-        shapedrawable.setColor(Color.parseColor(fieldColor))
-
-        shapedrawable.cornerRadius = 3f
-
-        view.background = shapedrawable
-
-    }
-
-    @JvmStatic
-    @BindingAdapter("nps_background")
-    fun npsBackgroundShape(view: View, color: String?) {
-        val shapedrawable = GradientDrawable()
-
-        val fieldColor = getHexColor(color) ?: convertRgbToHex("242", "242", "242")
-        shapedrawable.setColor(Color.parseColor(fieldColor))
-
-        view.background = shapedrawable
-
-    }
-
-    @JvmStatic
-    @BindingAdapter("section_background")
-    fun sectionBackgroundShape(view: View, form: Form?) {
-        val shapedrawable = GradientDrawable()
-
-        val borderColor = getHexColor(form?.border_color) ?: convertRgbToHex("255", "255", "255")
-        shapedrawable.setStroke(4, Color.parseColor(borderColor))
-
-        shapedrawable.cornerRadius = 3f
-
-        view.background = shapedrawable
-
-    }
-
+    
     @JvmStatic
     @BindingAdapter("TextInputLayout_style")
     fun TextInputLayoutStyle(view: TextInputLayout, form: Form?) {
@@ -665,4 +513,87 @@ object Binding : KoinComponent {
             this[2] *= 0.8f
         })
     }
+
+
+
+    fun getHexHashtagColorFromRgbStr(color: String?): String? {
+        return try {
+            when {
+                color != null -> {
+                    val rgbToInt = getIntColorFromRgbStr(color)
+                    when {
+                        rgbToInt != null -> {
+                            return convertIntColorToHashtagHex(rgbToInt)
+                        }
+
+                        else -> {
+                            null
+                        }
+                    }
+                }
+
+                else -> {
+                    null
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("Binding.TAG", "getHexColor: $e")
+            null
+        }
+
+    }
+
+    fun getIntColorFromRgbStr(color_: String?): Int? {
+        return try {
+            var color = color_
+            if (color != null) {
+                color = color.replace("{\"", "")
+                color = color.replace("\"", "")
+
+                val a = color.substring(color.indexOf("a:") + 2, color.indexOf("}"))
+                val r = color.substring(color.indexOf("r:") + 2, color.indexOf(",g"))
+                val g = color.substring(color.indexOf("g:") + 2, color.indexOf(",b"))
+                val b = color.substring(color.indexOf("b:") + 2, color.indexOf(",a"))
+
+                return convertRgbToInt(r, g, b)
+
+
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            Log.e("Binding.TAG", "getHexColor: $e")
+            null
+        }
+
+    }
+
+    fun convertIntColorToHex(color: Int): String {
+        return Integer.toHexString(color)
+    }
+
+    fun convertIntColorToHashtagHex(color: Int): String {
+        return "#${convertIntColorToHex(color)}"
+    }
+
+    fun convertRgbToInt(r: String, g: String, b: String): Int {
+        return Color.rgb(Integer.parseInt(r), Integer.parseInt(g), Integer.parseInt(b))
+    }
+
+    fun getColorStateList(color: String?): ColorStateList? {
+        getHexHashtagColorFromRgbStr(color)?.let {
+            return ColorStateList(
+                arrayOf(
+                    intArrayOf(-android.R.attr.state_enabled),
+                    intArrayOf(android.R.attr.state_enabled)
+                ), intArrayOf(
+                    Color.parseColor(it) //disabled
+                    , Color.parseColor(it) //enabled
+                )
+            )
+
+        }
+        return null
+    }
+
 }

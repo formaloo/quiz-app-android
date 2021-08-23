@@ -17,7 +17,7 @@ import co.idearun.data.model.form.Fields
 import co.idearun.data.model.form.Form
 import co.idearun.feature.databinding.LayoutFlashCardMultiItemBinding
 import co.idearun.feature.Binding
-import co.idearun.feature.lesson.listener.FieldsListener
+
 import co.idearun.feature.viewmodel.UIViewModel
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.Target
@@ -30,13 +30,13 @@ class MultiHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun bindItems(
         item: Fields,
         pos: Int,
-        listener: FieldsListener,
+
         form: Form,
         uiViewModel: UIViewModel
     ) {
         binding.field = item
         binding.form = form
-        binding.listener = listener
+
         binding.fieldUiHeader.field = item
         binding.fieldUiHeader.form = form
         binding.viewmodel = uiViewModel

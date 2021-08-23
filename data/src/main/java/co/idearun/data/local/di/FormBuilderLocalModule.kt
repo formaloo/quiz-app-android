@@ -3,7 +3,6 @@ package co.idearun.data.local.di
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import co.idearun.common.BaseMethod
 import co.idearun.data.local.FormBuilderDB
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
@@ -15,7 +14,6 @@ val formBuilderLocalModule = module {
     factory { (get() as FormBuilderDB).formDao() }
     factory { (get() as FormBuilderDB).formKeysDao() }
     factory { (get() as FormBuilderDB).submitDao() }
-    single { BaseMethod() }
     single {
         provideSharePreferences(androidApplication())
     }

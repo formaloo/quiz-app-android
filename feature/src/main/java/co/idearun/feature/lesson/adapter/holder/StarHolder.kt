@@ -8,7 +8,7 @@ import co.idearun.common.Constants
 import co.idearun.data.model.form.Fields
 import co.idearun.data.model.form.Form
 import co.idearun.feature.databinding.LayoutFlashCardStarItemBinding
-import co.idearun.feature.lesson.listener.FieldsListener
+
 import co.idearun.feature.lesson.listener.LessonListener
 import co.idearun.feature.viewmodel.UIViewModel
 
@@ -17,7 +17,7 @@ class StarHolder(view: View) : RecyclerView.ViewHolder(view) {
     fun bindItems(
         item: Fields,
         pos: Int,
-        listener: FieldsListener,
+
         form: Form,
         uiViewModel: UIViewModel,
         lessonListener: LessonListener
@@ -25,7 +25,7 @@ class StarHolder(view: View) : RecyclerView.ViewHolder(view) {
         binding.field = item
         binding.form = form
         binding.viewmodel = uiViewModel
-        binding.listener = listener
+
         binding.fieldUiHeader.field = item
         binding.fieldUiHeader.form = form
 
