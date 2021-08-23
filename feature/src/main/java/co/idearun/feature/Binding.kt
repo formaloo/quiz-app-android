@@ -158,7 +158,7 @@ object Binding : KoinComponent {
         txv.movementMethod = LinkMovementMethod.getInstance()
 
     }
-    
+
     @JvmStatic
     @BindingAdapter("field_desc")
     fun field_desc(view: TextView, field: Fields) {
@@ -198,7 +198,6 @@ object Binding : KoinComponent {
         }
     }
 
- 
 
     @JvmStatic
     @BindingAdapter("text_color")
@@ -284,29 +283,37 @@ object Binding : KoinComponent {
         val txtColor = getHexColor(color) ?: convertRgbToHex("242", "242", "242")
         setCursorColor(view, Color.parseColor(txtColor))
     }
-    
+
     @JvmStatic
     @BindingAdapter("field_background")
     fun fieldBackground(view: View, form: Form?) {
         val shapedrawable = GradientDrawable()
-        val errdrawable = GradientDrawable()
 
-        form?.field_color?.let {
-            val fieldColor = getHexColor(it) ?: convertRgbToHex("242", "242", "242")
-            shapedrawable.setColor(Color.parseColor(fieldColor))
+        val fieldHex = convertRgbToHex("242", "242", "242")
+        val fieldColor = form?.field_color
 
+        val borderHex = convertRgbToHex("255", "255", "255")
+        val borderColor = form?.border_color
+
+        val fColor = if (fieldColor != null && fieldColor.isNotEmpty()) {
+            getHexColor(fieldColor) ?: fieldHex
+        } else {
+            fieldHex
         }
-        form?.border_color?.let {
-            val borderColor = getHexColor(it) ?: convertRgbToHex("255", "255", "255")
-            shapedrawable.setStroke(4, Color.parseColor(borderColor))
 
+        shapedrawable.setColor(Color.parseColor(fColor))
+
+
+        val borColor = if (borderColor != null && borderColor.isNotEmpty()) {
+            getHexColor(borderColor) ?: borderHex
+        } else {
+            borderHex
         }
+        shapedrawable.setStroke(4, Color.parseColor(borColor))
+
 
 
         shapedrawable.cornerRadius = 3f
-
-        errdrawable.setColor(Color.parseColor("#1BFB9B9B"))
-        errdrawable.setStroke(4, Color.parseColor("#F43A3B"))
 
         view.background = shapedrawable
 
@@ -317,7 +324,6 @@ object Binding : KoinComponent {
     @BindingAdapter("selectedFieldBackground")
     fun selectedFieldBackground(view: View, form: Form?) {
         val shapedrawable = GradientDrawable()
-        val errdrawable = GradientDrawable()
 
         val textColor = form?.text_color
         val txtHX = convertRgbToHex("242", "242", "242")
@@ -341,8 +347,6 @@ object Binding : KoinComponent {
 
         shapedrawable.cornerRadius = 3f
 
-        errdrawable.setColor(Color.parseColor("#1BFB9B9B"))
-        errdrawable.setStroke(4, Color.parseColor("#F43A3B"))
 
         view.background = shapedrawable
 
@@ -356,7 +360,7 @@ object Binding : KoinComponent {
         view.setTextColor(Color.parseColor(txtColor))
 
     }
-    
+
     @JvmStatic
     @BindingAdapter("TextInputLayout_style")
     fun TextInputLayoutStyle(view: TextInputLayout, form: Form?) {
@@ -513,7 +517,6 @@ object Binding : KoinComponent {
             this[2] *= 0.8f
         })
     }
-
 
 
     fun getHexHashtagColorFromRgbStr(color: String?): String? {
