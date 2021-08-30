@@ -7,6 +7,22 @@ Clone this repository and import into **Android Studio**
 git clone https://github.com/formaloo/formaloo-android-learn-android-development.git
 
 ## The App
+This app is proudly built by Formaloo App Builder without any code in 28 minutes!
+
+<br/>Formaloo enables you to create a full-fledged educational app like this for your organization, university, or even your classroom. 
+
+Here are some of the features that you can enjoy with Formaloo:
+* Auto-update feature: Add/edit/remove lessons without the need to update the app!
+* Unlimited Contents: Add unlimited lessons, flashcards & presentation
+* Interactive Quiz Maker: Create & Embed live quizzes for your audience
+* Categories & folders: Easily organize your contents in different ways
+* Access Management: Add your co-workers and manage their access
+
+
+<br/>Ready to get started?
+
+[Request a demo](https://en.formaloo.com/demo/)
+
 The sample app contains a list of Android lessons.
 [The APK is available now in the Google Play Store](https://play.google.com/store/apps/details?id=co.idearun.learnandroid).
 
