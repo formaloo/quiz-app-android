@@ -1,12 +1,13 @@
 package co.idearun.feature.lesson.adapter
 
 import androidx.annotation.DrawableRes
+import co.idearun.feature.R
 
 enum class CSATThumbnailType(@DrawableRes val drawable: Int) {
-    star(android.R.drawable.star_big_on),
-    heart(android.R.drawable.star_big_on),
-    monster(android.R.drawable.star_big_on),
-    funny_face(android.R.drawable.star_big_on),
-    flat_face(android.R.drawable.star_big_on),
-    outlined(android.R.drawable.star_big_on)
+    star(R.drawable.csat_star),
+    heart(R.drawable.csat_star),
+    monster(R.drawable.csat_star),
+    funny_face(R.drawable.csat_star),
+    flat_face(R.drawable.csat_star),
+    outlined(R.drawable.csat_star)
 }

@@ -25,6 +25,7 @@ data class Fields(
     var from_time: String? = null,
     var to_time: String? = null,
     var file_type: String? = null,
+    var video_link: String? = null,
     var currency: String? = null,
     var rating_type: String? = null,
     var phone_type: String? = null,

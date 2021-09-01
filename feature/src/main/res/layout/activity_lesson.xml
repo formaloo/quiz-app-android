@@ -29,10 +29,24 @@
     </data>
 
     <RelativeLayout
-        android:id="@+id/activity_flash_card"
+        
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    
+        
+        <ImageView
+            android:background="@color/white"
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="center"
+            android:visibility="@{form.fields_list.size()>0?view.GONE:view.VISIBLE,default=visible}"
+            android:id="@+id/lesson_loading_imv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        
+    <RelativeLayout
+        android:id="@+id/activity_flash_card"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="match_parent">
         <ImageView
             android:layout_width="match_parent"
             android:scaleType="centerCrop"
@@ -182,13 +196,32 @@
 
         </RelativeLayout>
         
-<!--        <ImageView-->
-<!--            android:background="@color/white"-->
-<!--            android:src="@mipmap/ic_launcher"-->
-<!--            android:scaleType="center"-->
-<!--	        android:visibility="@{form.fields_list.size()>0?view.GONE:view.VISIBLE,default=visible}"-->
-<!--            android:id="@+id/lesson_loading_imv"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"/>-->
+    </RelativeLayout>
+        
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/fullLay"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="match_parent"
+            android:background="@color/colorWhite"
+            android:layout_height="match_parent">
+    
+            <WebView
+                android:id="@+id/videoviewfull"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+    
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="@dimen/icon_size_large"
+                android:id="@+id/close_full_btn"
+                app:strokeColor="@color/gray2"
+                app:strokeWidth="2dp"
+                android:scaleType="centerInside"
+                android:layout_alignParentEnd="true"
+                app:shapeAppearanceOverlay="@style/circleImageView"
+                app:srcCompat="@drawable/ic_close"
+                android:layout_height="@dimen/icon_size_large" />
+        </RelativeLayout>
     </RelativeLayout>
 </layout>

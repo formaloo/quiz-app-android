@@ -61,20 +61,6 @@ class CSATAdapter(
         val binding = LayoutCsatItemBinding.bind(itemView)
 
         fun bindItems(item: Enum<*>) {
-            val context = binding.scatTxv.context
-            val colorStateList = ColorStateList(
-                arrayOf(
-                    intArrayOf(-android.R.attr.state_selected),
-                    intArrayOf(android.R.attr.state_selected)
-                ), intArrayOf(
-                    ContextCompat.getColor(context, R.color.colorGlass) //disabled
-                    , ContextCompat.getColor(context, R.color.colorButton) //enabled
-                )
-            )
-
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
-                itemView.backgroundTintList = colorStateList
-            }
 
             when (item) {
                 is CSATOutline -> {

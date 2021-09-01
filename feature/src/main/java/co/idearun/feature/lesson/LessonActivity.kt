@@ -2,15 +2,22 @@ package co.idearun.feature.lesson
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
+import android.webkit.WebChromeClient
+import android.webkit.WebSettings
+import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import co.idearun.common.Constants
 import co.idearun.common.extension.invisible
+import co.idearun.common.extension.isVisible
 import co.idearun.common.extension.visible
 import co.idearun.data.model.form.Fields
 import co.idearun.data.model.form.Form
@@ -36,6 +43,8 @@ class LessonActivity : AppCompatActivity(), LessonListener {
     private var lessonsProgressMap = hashMapOf<String?, Int?>()
     private var fields: ArrayList<Fields> = arrayListOf()
 
+    private var formAddress: String? = null
+    private var formSlug: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,23 +58,16 @@ class LessonActivity : AppCompatActivity(), LessonListener {
 
         checkBundle()
         initData()
-        initView()
+//        initView()
     }
 
     private fun checkBundle() {
         intent.extras?.let {
-            it.getSerializable("form")?.let {
-                if (it is Form) {
-
-                    it.fields_list?.let {
-                        this.fields = it
-                    }
-                    form = it
-
-
-                } else {
-
-                }
+            it.getString("form_address")?.let {
+                formAddress = it
+            }
+            it.getString("form_slug")?.let {
+                formSlug = it
             }
         }
     }
@@ -97,18 +99,14 @@ class LessonActivity : AppCompatActivity(), LessonListener {
 
         }
 
-
+        binding.activityFlashCard.visible()
     }
 
     private fun initData() {
-        formVM.initLessonSlug(form?.slug ?: "")
-        formVM.initLessonAddress(form?.address ?: "")
+        formVM.initLessonAddress(formAddress ?: "")
+        formVM.initLessonSlug(formSlug ?: "")
+
         formVM.getFormData()
-
-        shardedVM.saveLastLesson(form?.slug ?: "")
-
-        viewModel.initFormSlug(form?.slug ?: "")
-        viewModel.getSubmitEntity()
 
         formVM.form.observe(this, {
             it?.let {
@@ -116,6 +114,15 @@ class LessonActivity : AppCompatActivity(), LessonListener {
                 it.fields_list?.let {
                     this.fields = it
                 }
+                formSlug=form?.slug ?: ""
+                formVM.initLessonSlug(formSlug?: "")
+
+                shardedVM.saveLastLesson(formSlug ?: "")
+
+                viewModel.initFormSlug(formSlug ?: "")
+                viewModel.getSubmitEntity()
+
+                initView()
                 checkLessonProgress()
 
                 binding.form = form
@@ -126,6 +133,12 @@ class LessonActivity : AppCompatActivity(), LessonListener {
 
         })
 
+        formVM.failure.observe(this,{
+            it?.let {
+                formVM.retrieveLessonFromDB()
+
+            }
+        })
     }
 
 
@@ -196,19 +209,73 @@ class LessonActivity : AppCompatActivity(), LessonListener {
         }
     }
 
+    override fun openFullScreen(field: Fields, link: String) {
+
+        binding.closeFullBtn.setOnClickListener {
+            closeFulPage()
+        }
+
+
+        val webview = binding.videoviewfull
+
+        webview.settings.userAgentString = "Android"
+        webview.settings.loadWithOverviewMode = true
+        webview.settings.setJavaScriptEnabled(true)
+        webview.settings.useWideViewPort = true
+        webview.settings.databaseEnabled = true
+        webview.settings.allowContentAccess = true
+        webview.settings.allowFileAccessFromFileURLs = true
+        webview.settings.domStorageEnabled = true
+        webview.settings.allowFileAccess = true
+        webview.settings.setGeolocationEnabled(true)
+        webview.settings.setAppCacheEnabled(true)
+        webview.settings.setSupportMultipleWindows(true)
+        webview.settings.cacheMode = WebSettings.LOAD_DEFAULT
+        webview.setInitialScale(1)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            webview.webChromeClient = WebChromeClient()
+        }
+
+
+        webview.loadUrl(link)
+        webview.webViewClient = WebViewClient()
+
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+
+        binding.fullLay.visible()
+    }
+
     override fun closePage() {
         onBackPressed()
 
     }
 
+    override fun onBackPressed() {
+        if (binding.fullLay.isVisible()) {
+            closeFulPage()
+        } else {
+            super.onBackPressed()
+
+        }
+    }
+
+    private fun closeFulPage() {
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        binding.fullLay.invisible()
+
+    }
+
     override fun share() {
         val shareTxt =
-            "I'm learning ${form?.title ?: ""} in Learning App. Check it out on your phone: ${
+            "I'm learning ${form?.title ?: ""} in ${
+                getString(R.string.app_name)
+            }. Check it out on your phone: ${
                 getString(R.string.appAddress)
             }"
         shareVia(shareTxt, getString(R.string.app_name), this)
 
     }
+
     fun shareVia(extraTxt: String, title: String, mContext: Context) {
         val sendIntent = Intent()
         sendIntent.type = "text/plain"
@@ -218,6 +285,7 @@ class LessonActivity : AppCompatActivity(), LessonListener {
         createChooser.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         mContext.startActivity(createChooser)
     }
+
     private fun openCongView() {
         updateLessonProgress(-1)
         shardedVM.saveLastLesson("")

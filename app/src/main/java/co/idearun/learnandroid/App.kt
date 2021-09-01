@@ -1,5 +1,6 @@
 package co.idearun.learnandroid
 
+
 import android.app.Application
 import android.util.Log
 import androidx.work.Configuration
@@ -10,6 +11,10 @@ import com.microsoft.appcenter.crashes.Crashes
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
+import java.lang.Exception
+import android.database.CursorWindow;
+import co.idearun.learnandroid.BuildConfig
+import java.lang.reflect.Field;
 
 open class App : Application(), Configuration.Provider {
     override fun onCreate() {
@@ -25,6 +30,16 @@ open class App : Application(), Configuration.Provider {
             this, "657491c6-00b7-478b-985c-d1f6c86981e0",
             Analytics::class.java, Crashes::class.java
         )
+
+        try {
+            val field: Field = CursorWindow::class.java.getDeclaredField("sCursorWindowSize")
+            field.isAccessible = true
+            field.set(null, 100 * 1024 * 1024) //the 100MB is the new size
+        } catch (e: Exception) {
+//            if (DEBUG_MODE) {
+//                e.printStackTrace()
+//            }
+        }
     }
 
     //     CONFIGURATION ---

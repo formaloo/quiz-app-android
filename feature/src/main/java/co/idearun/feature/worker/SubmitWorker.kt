@@ -13,8 +13,7 @@ import timber.log.Timber
 class SubmitWorker(
     context: Context,
     workerParams: WorkerParameters
-) :
-    CoroutineWorker(context, workerParams), KoinComponent {
+) : CoroutineWorker(context, workerParams), KoinComponent {
 
     override suspend fun doWork(): Result = coroutineScope {
         try {

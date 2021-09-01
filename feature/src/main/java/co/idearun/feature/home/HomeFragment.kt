@@ -118,10 +118,11 @@ class HomeFragment : BaseFragment(), KoinComponent, LessonListListener, MainList
             formItemLay,
             ViewCompat.getTransitionName(formItemLay) ?: ""
         )
-        intent.putExtra("form", form)
+        intent.putExtra("form_address", form?.address)
+        intent.putExtra("form_slug", form?.slug)
         intent.putExtra("progress", progress)
 
-        startActivity(intent, options.toBundle())
+        startActivity(intent,options.toBundle())
 
     }
 

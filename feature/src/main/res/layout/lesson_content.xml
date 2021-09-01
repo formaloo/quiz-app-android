@@ -48,7 +48,7 @@
                 android:layout_marginTop="@dimen/padding_2xlarge"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_flashcard"
+                android:src="@drawable/startup"
                 app:imageUrl="@{item.logo}"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

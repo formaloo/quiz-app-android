@@ -5,7 +5,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:background="@drawable/back_border_gray"
         android:id="@+id/csat_lay"
         android:orientation="vertical">
 
@@ -14,7 +13,8 @@
             android:layout_width="@dimen/btn_h_l"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/padding_small"
-            android:scaleType="center" />
+            android:scaleType="center"
+            android:src="@drawable/selector_star"/>
 
         <TextView
             android:id="@+id/scat_txv"

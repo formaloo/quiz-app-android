@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        
+        <import type="android.view.View" />
+        
+        <variable
+            name="field"
+            type="co.idearun.data.model.form.Fields" />
+        
+        <variable
+            name="viewmodel"
+            type="co.idearun.feature.viewmodel.UIViewModel" />
+        
+        <variable
+            name="form"
+            type="co.idearun.data.model.form.Form" />
+    
+    </data>
+    
+	    <RelativeLayout
+		    android:padding="@dimen/padding_small"
+		    android:layout_width="match_parent"
+		    android:background="@color/colorWhite"
+		    android:layout_height="match_parent">
+		    <include
+			    android:id="@+id/field_ui_header"
+			    layout="@layout/layout_ui_field_header" />
+		    <WebView
+			    android:id="@+id/videoview"
+			    android:layout_below="@+id/field_ui_header"
+			    android:layout_width="match_parent"
+			    android:layout_height="@dimen/slider_size"
+			    android:padding="@dimen/padding_standard"
+			
+			    app:field_background="@{form}" />
+		    
+		    <Button
+			    android:layout_width="wrap_content"
+			    android:id="@+id/open_full_btn"
+			    android:layout_alignParentEnd="true"
+			    android:background="@null"
+			    android:text="Full screen"
+			    android:drawableEnd="@drawable/ic_coding"
+			    android:layout_height="wrap_content" />
+	    </RelativeLayout>
+
+</layout>

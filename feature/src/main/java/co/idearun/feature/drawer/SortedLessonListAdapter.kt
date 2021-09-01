@@ -102,7 +102,8 @@ class SortedLessonListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() 
 
     private fun openForm(item: Form?, context: Context) {
         val intent = Intent(context, LessonActivity::class.java)
-        intent.putExtra("form", item)
+        intent.putExtra("form_address", item?.address)
+        intent.putExtra("form_slug", item?.slug)
         context.startActivity(intent)
 
     }

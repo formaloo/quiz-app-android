@@ -15,18 +15,21 @@ import co.idearun.feature.lesson.listener.LessonListener
 import co.idearun.feature.viewmodel.UIViewModel
 
 class DropDownHolder(view: View) : RecyclerView.ViewHolder(view) {
+
     val binding = LayoutFlashCardDropdownItemBinding.bind(view)
+
     fun bindItems(
         item: Fields,
         pos: Int,
-
-        form: Form, viewmodel: UIViewModel, lessonListener: LessonListener
+        form: Form,
+        viewmodel: UIViewModel,
+        lessonListener: LessonListener
     ) {
-
 
         val dropAdapter = DropDownItemsAdapter(form)
 
         var userSelect = false
+
         binding.valueSpinner.apply {
             adapter = dropAdapter
             onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

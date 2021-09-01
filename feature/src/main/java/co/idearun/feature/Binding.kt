@@ -16,6 +16,7 @@ import android.text.style.ClickableSpan
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import android.webkit.WebView
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -56,7 +57,7 @@ object Binding : KoinComponent {
     fun loadImage(view: ImageView, url: String?) {
         val source = url ?: ContextCompat.getDrawable(
             view.context,
-            co.idearun.feature.R.drawable.ic_flashcard
+            co.idearun.feature.R.drawable.startup
         )
         Glide.with(view.context).load(source).into(view)
     }
@@ -148,6 +149,16 @@ object Binding : KoinComponent {
             } else {
                 Html.fromHtml(txt)
             }
+        }
+
+    }
+    @BindingAdapter("app:loadData")
+    @JvmStatic
+    fun loadData(webView: WebView, txt: String?) {
+        webView.setBackgroundColor(Color.TRANSPARENT)
+        txt?.let {
+            webView.loadData(txt, "text/html", "UTF-8");
+
         }
 
     }

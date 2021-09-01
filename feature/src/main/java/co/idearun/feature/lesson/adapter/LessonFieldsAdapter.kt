@@ -59,6 +59,8 @@ class LessonFieldsAdapter(
         private val TYPE_PHONE_VERIFICATION = 12
         private val TYPE_SIGNATURE = 13
         private val TYPE_CSAT = 14
+        private val TYPE_VIDEO = 16
+
     }
 
     internal var collection: ArrayList<Fields> by Delegates.observable(arrayListOf()) { _, _, _ ->
@@ -92,7 +94,6 @@ class LessonFieldsAdapter(
                     btnItem,
                     position_,
                     form,
-
                     viewmodel
                 )
 
@@ -101,7 +102,7 @@ class LessonFieldsAdapter(
             TYPE_MULTI -> {
                 (holder as MultiHolder).bindItems(
                     btnItem, position_,
-                     form, viewmodel
+                    form, viewmodel
                 )
 
             }
@@ -183,9 +184,19 @@ class LessonFieldsAdapter(
                     btnItem,
                     position_,
                     form,
-
                     viewmodel
                 )
+            }
+
+            TYPE_VIDEO -> {
+                (holder as VideoViewHolder).bindItems(
+                    btnItem,
+                    position_,
+                    form,
+                    viewmodel,
+                    lessonListener
+                )
+
             }
 
             TYPE_SIGNATURE -> {
@@ -257,6 +268,11 @@ class LessonFieldsAdapter(
 
             Constants.embeded -> {
                 TYPE_CSAT
+
+            }
+
+            Constants.VIDEO -> {
+                TYPE_VIDEO
 
             }
 
@@ -382,6 +398,12 @@ class LessonFieldsAdapter(
                 itemView = LayoutInflater.from(parent.context)
                     .inflate(R.layout.layout_flash_card_matrix_item, parent, false);
                 MatrixHolder(itemView)
+            }
+
+            TYPE_VIDEO -> {
+                itemView = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.layout_ui_video_item, parent, false);
+                return VideoViewHolder(itemView)
             }
 //            TYPE_PHONE_VERIFICATION -> {
 //                itemView = LayoutInflater.from(parent.context)

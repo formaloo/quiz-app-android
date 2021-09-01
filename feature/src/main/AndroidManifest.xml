@@ -4,8 +4,11 @@
 	
 	<application>
 		
-		<activity android:name=".lesson.LessonActivity" />
-		<activity android:name=".AboutActivity"/>
+		<activity android:name=".lesson.LessonActivity"
+			android:configChanges="orientation|screenSize"
+			android:screenOrientation="portrait"/>
+		<activity android:name=".AboutActivity"
+			android:screenOrientation="portrait"/>
 	</application>
 
 </manifest>

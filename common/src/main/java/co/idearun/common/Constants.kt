@@ -30,6 +30,8 @@ object Constants {
     const val Like_Dislike = "like_dislike"
     const val image = "image"
     const val embeded = "embeded"
+    const val VIDEO = "video"
+
     const val star = "star"
     const val nps = "nps"
     const val PREFERENCES_PROGRESS = "PREFERENCES_PROGRESS"

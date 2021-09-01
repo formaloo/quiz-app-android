@@ -37,14 +37,36 @@
   <string name="made_by_desc">Made with passion by Formaloo</string>
   <string name="made_by_desc3"><a href="https://formaloo.net/">Made with passion by Formaloo</a></string>
   <string name="made_by_desc2">Made with passion by</string>
-  <string name="appAddress">https://play.google.com/store/apps/details?id=co.idearun.learnandroid</string>
   <string name="about">About</string>
   <string name="review">Review</string>
   <string name="start">Start</string>
-	<string name="app_desc">Learn Android App helps you review and practice android development basics.
+
+    
+  <string name="app_desc">
+    Learn Android App helps you review and practice android development basics.
       \n\nThis app is also an open source project you can find the code on <a href="https://github.com/formaloo/formaloo-android-learn-android-development.git">github repository.</a>
       \n\nDo not forget to star <a href="https://play.google.com/store/apps/details?id=co.idearun.learnandroid">Learn Android App</a> if you find it helpful.
-      
-</string>
+    \n
+    <![CDATA[<p style="text-align: justify;">This app is proudly built by Formaloo App Builder without any code in 28 minutes!&nbsp;</p>
+<p style="text-align: justify;"><br></p>
+<p style="text-align: justify;">Formaloo enables you to create a full-fledged educational app like this for your organization, university, or even your classroom.&nbsp;</p>
+<p style="text-align: justify;">Here are some of the features that you can enjoy with Formaloo:</p>
+<p style="text-align: justify;">Auto-update feature: Add/edit/remove lessons without the need to update the app!</p>
+<ul style="list-style-type: disc;">
+    <li style="text-align: justify;">Unlimited Contents: Add unlimited lessons, flashcards &amp; presentation</li>
+    <li style="text-align: justify;">Interactive Quiz Maker: Create &amp; Embed live quizzes for your audience</li>
+    <li style="text-align: justify;">Categories &amp; folders: Easily organize your contents in different ways</li>
+    <li style="text-align: justify;">Access Management: Add your co-workers and manage their access</li>
+</ul>
+<p style="text-align: justify;"><br></p>
+<p style="text-align: justify;">Ready to get started?&nbsp;</p>
+<p style="text-align: justify;"><a href="https://en.formaloo.com/demo/"><span style="color: rgb(15, 165, 74);">Request a demo</span></a></p>
+<p><br></p>]]>
+    
+  </string>
+  
+  <string name="appAddress">https://play.google.com/store/apps/details?id=co.idearun.learnandroid</string>
+
+
 
 </resources>

@@ -72,7 +72,7 @@
                         android:layout_marginEnd="@dimen/padding_standard"
                         android:adjustViewBounds="true"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/ic_flashcard" />
+                        android:src="@drawable/startup" />
 
                     <TextView
                         android:id="@+id/titleTv"
