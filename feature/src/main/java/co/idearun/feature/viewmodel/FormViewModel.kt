@@ -8,6 +8,7 @@ import androidx.paging.cachedIn
 import co.idearun.common.base.BaseViewModel
 import co.idearun.data.model.form.Form
 import co.idearun.data.model.form.createForm.CreateFormRes
+import co.idearun.data.model.form.formList.FormListRes
 import co.idearun.data.repository.FormzRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -23,6 +24,9 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
     private val _form = MutableLiveData<Form>().apply { value = null }
     val form: LiveData<Form> = _form
+
+    private val _formTag = MutableLiveData<FormListRes>()
+    val formTag: LiveData<FormListRes> = _formTag
 
     private val _pagingData = MutableLiveData<PagingData<Form>>().apply { value = null }
     val pagingData: LiveData<PagingData<Form>> = _pagingData
@@ -91,6 +95,19 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     private fun handleFormData(res: CreateFormRes) {
         res?.data?.form?.let {
             _form.value = it
+        }
+    }
+
+    fun getFormTag(page:Int) = viewModelScope.launch {
+        val result = withContext(Dispatchers.IO) { repository.getFormTag(page) }
+        result.either(::handleFailure, ::handleFormTagData)
+
+
+    }
+
+    private fun handleFormTagData(res: FormListRes) {
+        res?.let {
+            _formTag.value = it
         }
     }
 

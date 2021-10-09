@@ -17,8 +17,9 @@ interface FormzDataSource {
     suspend fun getFormData(formAddress: String?): Either<Failure, CreateFormRes>
     suspend fun search(searchStr: String): Either<Failure, SearchRes>
     suspend fun searchForms(searchStr: String): Either<Failure, FormListRes>
-
     suspend fun getForm(formAddress: String?): CreateFormRes?
+
+    suspend fun getFormTag(page: Int): Either<Failure, FormListRes>
     suspend fun getFormFromDB(slug: String): Form?
     suspend fun getFormListFromDB(): List<Form>
     suspend fun saveSubmit(submitEntity: SubmitEntity)

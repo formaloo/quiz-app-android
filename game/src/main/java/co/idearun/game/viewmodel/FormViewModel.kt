@@ -1,21 +1,21 @@
 package co.idearun.game.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import co.idearun.common.base.BaseViewModel
-import co.idearun.data.model.cat.catList.CatListRes
 import co.idearun.data.model.form.Form
 import co.idearun.data.model.form.createForm.CreateFormRes
+import co.idearun.data.model.form.formList.FormListRes
 import co.idearun.data.repository.FormzRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
@@ -24,6 +24,9 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
     private val _form = MutableLiveData<Form>().apply { value = null }
     val form: LiveData<Form> = _form
+
+    private val _formTag = MutableLiveData<FormListRes>()
+    val formTag: LiveData<FormListRes> = _formTag
 
     private val _pagingData = MutableLiveData<PagingData<Form>>().apply { value = null }
     val pagingData: LiveData<PagingData<Form>> = _pagingData
@@ -85,11 +88,26 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     fun getFormData() = viewModelScope.launch {
         val result = withContext(Dispatchers.IO) { repository.getFormData(formAddress ?: "") }
         result.either(::handleFailure, ::handleFormData)
+
+
     }
 
     private fun handleFormData(res: CreateFormRes) {
         res?.data?.form?.let {
             _form.value = it
+        }
+    }
+
+    fun getFormTag(page:Int) = viewModelScope.launch {
+        val result = withContext(Dispatchers.IO) { repository.getFormTag(page) }
+        result.either(::handleFailure, ::handleFormTagData)
+
+
+    }
+
+    private fun handleFormTagData(res: FormListRes) {
+        res?.let {
+            _formTag.value = it
         }
     }
 
@@ -101,18 +119,6 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         this.formAddress = slug
     }
 
-
-    fun getCatList() = viewModelScope.launch {
-        val result = withContext(Dispatchers.IO) {
-            repository.getCatList()
-        }
-        result.either(::handleFailure, ::handleCatData)
-        Log.i("TAG", "getCatList: ${result.isRight} // left? ${result.isLeft}")
-    }
-
-    private fun handleCatData(res: CatListRes) {
-        Log.i("TAG", "handleCatData: ${res.data?.categorys?.size}")
-    }
 
     fun getLessonsList(force: Boolean) = viewModelScope.launch {
         fetchLessonList(force).collectLatest { pagingData ->

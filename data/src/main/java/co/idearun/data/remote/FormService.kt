@@ -34,6 +34,13 @@ interface FormService {
         @Query("page_size") page_size: Int
     ): Response<FormListRes>
 
+    @GET(FORMS)
+    fun getFormsWithTag(
+        @Path("tag") tag: String,
+        @Query("page") page: Int,
+        @Query("page_size") page_size: Int
+    ): Call<FormListRes>
+
 
     @GET(SEARCH)
     fun search(@Query("search") search: String?): Call<SearchRes>

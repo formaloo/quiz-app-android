@@ -10,6 +10,7 @@ import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,8 +26,11 @@ class MainActivity : AppCompatActivity() {
         Log.i("TAG", "getLessonsList: ${m.isCompleted}")
 
 
-        val test = vm.getCatList()
 
+        vm.getFormTag(1)
+        vm.formTag.observe(this,{
+            Timber.i("Tag list data ${it.data?.forms?.size}")
+        })
 
         vm.initLessonAddress("pl7sv")
         lifecycleScope.launch {
