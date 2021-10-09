@@ -43,7 +43,7 @@
             app:layout_constraintTop_toBottomOf="@+id/view">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/userEdt"
+                android:id="@+id/nameEdt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -73,13 +73,13 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="48dp"
             android:layout_marginTop="8dp"
-            android:hint="enter phone"
+            android:hint="enter email"
             app:layout_constraintEnd_toEndOf="@+id/filledTextField2"
             app:layout_constraintStart_toStartOf="@+id/filledTextField2"
             app:layout_constraintTop_toBottomOf="@+id/filledTextField2">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/phoneEdt"
+                android:id="@+id/emailEdt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -90,10 +90,27 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="48dp"
             android:layout_marginTop="8dp"
-            android:hint="your gender"
+            android:hint="your phone"
             app:layout_constraintEnd_toEndOf="@+id/filledTextField3"
             app:layout_constraintStart_toStartOf="@+id/filledTextField3"
             app:layout_constraintTop_toBottomOf="@+id/filledTextField3">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/phoneEdt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/filledTextField5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginHorizontal="48dp"
+            android:hint="your gender"
+            app:layout_constraintEnd_toEndOf="@+id/filledTextField3"
+            app:layout_constraintStart_toStartOf="@+id/filledTextField3"
+            app:layout_constraintTop_toBottomOf="@+id/filledTextField4">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/genderEdt"
@@ -103,15 +120,15 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/loginBtn"
+            android:id="@+id/registerBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="48dp"
-            android:layout_marginTop="32dp"
-            android:text="login"
+            android:layout_marginTop="24dp"
+            android:text="Register"
             android:textColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@+id/filledTextField4"
-            tools:layout_editor_absoluteX="48dp" />
+            android:paddingBottom="12dp"
+            app:layout_constraintTop_toBottomOf="@id/filledTextField5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

@@ -28,11 +28,11 @@ class MainActivity : AppCompatActivity() {
         Log.i("TAG", "getLessonsList: ${m.isCompleted}")
 
 
-
+/*
         vm.getFormTag(1)
         vm.formTag.observe(this,{
             Timber.i("Tag list data ${it.data?.forms?.size}")
-        })
+        })*/
 
         vm.initLessonAddress("pl7sv")
         lifecycleScope.launch {
