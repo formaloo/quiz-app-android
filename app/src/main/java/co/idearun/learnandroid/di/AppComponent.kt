@@ -1,5 +1,8 @@
 package co.idearun.learnandroid.di
 
+import co.idearun.auth.remote.di.createAuthRemoteModule
+import co.idearun.auth.repository.di.authRepositoryModule
+import co.idearun.auth.viewmodel.di.authModule
 import co.idearun.data.local.di.formBuilderLocalModule
 import co.idearun.data.remote.di.createRemoteFormModule
 import co.idearun.data.repository.di.formRepositoryModule
@@ -13,5 +16,8 @@ val appComponent = listOf(
     formBuilderLocalModule,
     formRepositoryModule,
     featureModule,
-    gameAppModule
+    gameAppModule,
+    createAuthRemoteModule("https://staging.icas.formaloo.com/","4638feb8378ac5799d6200889f97f2d3d88b9852"),
+    authRepositoryModule,
+    authModule
 )

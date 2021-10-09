@@ -49,5 +49,6 @@ dependencies {
     implementation project(":data")
     implementation project(":feature")
     implementation project(":game")
+    implementation project(":auth")
 
 }

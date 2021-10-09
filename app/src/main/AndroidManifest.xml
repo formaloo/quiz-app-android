@@ -19,7 +19,7 @@
         android:usesCleartextTraffic="true">
         
         <activity
-            android:name="co.idearun.game.MainActivity"
+            android:name="co.idearun.auth.MainActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
