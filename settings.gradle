@@ -3,3 +3,4 @@ rootProject.name = "LearningApp"
 include ':data'
 include ':common'
 include ':feature'
+include ':game'
