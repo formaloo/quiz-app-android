@@ -3,7 +3,6 @@ apply from: '../android_commons.gradle'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "29.0.3"
 
     defaultConfig {
         applicationId "co.idearun.learnandroid"
