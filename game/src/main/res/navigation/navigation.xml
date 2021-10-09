@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation"
+    app:startDestination="@id/authFragment">
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="co.idearun.game.RegisterFragment"
+        android:label="RegisterFragment" />
+    <fragment
+        android:id="@+id/authFragment"
+        android:name="co.idearun.game.AuthFragment"
+        android:label="AuthFragment" />
+</navigation>
