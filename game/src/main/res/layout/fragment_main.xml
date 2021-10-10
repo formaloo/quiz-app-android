@@ -41,7 +41,7 @@
 
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnHost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="80dp"
@@ -55,6 +55,7 @@
 
 
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnPlay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="80dp"
@@ -64,7 +65,7 @@
         android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/btnHost" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
