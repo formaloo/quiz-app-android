@@ -28,13 +28,25 @@ class MainActivity : AppCompatActivity() {
         Log.i("TAG", "getLessonsList: ${m.isCompleted}")
 
 
-/*
-        vm.getFormTag(1)
+        vm.getFormTag(0)
         vm.formTag.observe(this,{
-            Timber.i("Tag list data ${it.data?.forms?.size}")
-        })*/
 
-        vm.initLessonAddress("pl7sv")
+            Timber.i("Tag list data ${it.data?.forms?.size}")
+            Timber.i("Tag list data $it")
+
+            val address = it.data?.forms?.get(0)?.address
+            Timber.i("TAG $address")
+            vm.initLessonAddress(address!!)
+            vm.getFormData()
+
+        })
+
+        vm.form.observe(this,{
+            Timber.i("$it")
+        })
+
+
+
         lifecycleScope.launch {
             vm.fetchLessonList(false).collectLatest { pagingData ->
                 Log.i("TAG", "pagingData: ${pagingData}")

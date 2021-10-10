@@ -86,6 +86,7 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     }
 
     fun getFormData() = viewModelScope.launch {
+        Timber.i("TAG get form data log")
         val result = withContext(Dispatchers.IO) { repository.getFormData(formAddress ?: "") }
         result.either(::handleFailure, ::handleFormData)
 
@@ -116,6 +117,7 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     }
 
     fun initLessonAddress(slug: String) {
+        Timber.i("TAG init")
         this.formAddress = slug
     }
 

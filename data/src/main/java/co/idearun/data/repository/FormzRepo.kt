@@ -296,7 +296,7 @@ class FormzRepo(
     override suspend fun getFormTag(page: Int): Either<Failure, FormListRes> {
         val call = source.getFormsWithTag(page)
         return try {
-            request(call, { FormListRes() }, FormListRes.empty())
+            request(call, { it.toFormListRes() }, FormListRes.empty())
         } catch (e: Exception) {
             Either.Left(Failure.Exception)
         }
