@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigation"
-    app:startDestination="@id/selectGameFragment">
+    app:startDestination="@id/gamesFragment">
 
     <fragment
         android:id="@+id/registerFragment"
@@ -21,7 +21,15 @@
             app:destination="@id/authFragment" />
     </fragment>
     <fragment
-        android:id="@+id/selectGameFragment"
+        android:id="@+id/gamesFragment"
         android:name="co.idearun.game.GamesFragment"
-        android:label="SelectGameFragment" />
+        android:label="GamesFragment" >
+        <action
+            android:id="@+id/action_gamesFragment_to_formEditorFragment"
+            app:destination="@id/formEditorFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/formEditorFragment"
+        android:name="co.idearun.game.FormEditorFragment"
+        android:label="FormEditorFragment" />
 </navigation>

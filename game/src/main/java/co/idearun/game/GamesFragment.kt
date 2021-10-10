@@ -5,12 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import co.idearun.common.base.OnRvItemClickListener
+import co.idearun.data.model.form.Form
 import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_games.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class GamesFragment: Fragment() {
+class GamesFragment : Fragment() {
 
     lateinit var adapter: GamesAdapter
     override fun onCreateView(
@@ -18,7 +21,7 @@ class GamesFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_games, container,false)
+        val root = inflater.inflate(R.layout.fragment_games, container, false)
         return root
     }
 
@@ -28,14 +31,26 @@ class GamesFragment: Fragment() {
 
         adapter = GamesAdapter()
 
+        adapter.setOnRvItemClickListener(object : OnRvItemClickListener<Form> {
+            override fun onItemClick(item: Form, position: Int) {
+
+                val args = Bundle()
+                args.putString("formAddress", item.address)
+                findNavController().navigate(
+                    R.id.action_gamesFragment_to_formEditorFragment, args
+                )
+            }
+
+        })
         rvGameList.adapter = adapter
         val vm: FormViewModel by viewModel()
 
         vm.getFormTag(0)
-        vm.formTag.observe(this,{
+        vm.formTag.observe(this, {
 
             adapter.submitList(it.data?.forms?.toMutableList())
             Timber.i("Tag list data $it")
+
 
 /*
             val address = it.data?.forms?.get(0)?.address

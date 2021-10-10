@@ -8,9 +8,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import co.idearun.common.base.OnRvItemClickListener
 import co.idearun.data.model.form.Form
+import timber.log.Timber
 
 class GamesAdapter : ListAdapter<Form, GamesAdapter.NewsViewHolder>(NewsDiffCallback) {
+
+    private var onRvItemClickListener: OnRvItemClickListener<Form>? = null
 
     class NewsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -38,8 +42,19 @@ class GamesAdapter : ListAdapter<Form, GamesAdapter.NewsViewHolder>(NewsDiffCall
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         holder.bind(getItem(position))
+
+        if (onRvItemClickListener != null) {
+            holder.itemView.setOnClickListener {
+                onRvItemClickListener!!.onItemClick(getItem(position), position)
+            }
+        }
+
     }
 
+
+    fun setOnRvItemClickListener(onRvItemClickListener: OnRvItemClickListener<Form>) {
+        this.onRvItemClickListener = onRvItemClickListener
+    }
 
 }
 
