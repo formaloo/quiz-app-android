@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/navigation"
-    app:startDestination="@id/mainFragment">
+    app:startDestination="@id/selectGameFragment">
 
     <fragment
         android:id="@+id/registerFragment"
@@ -20,4 +20,8 @@
             android:id="@+id/action_mainFragment_to_authFragment"
             app:destination="@id/authFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/selectGameFragment"
+        android:name="co.idearun.game.GamesFragment"
+        android:label="SelectGameFragment" />
 </navigation>
