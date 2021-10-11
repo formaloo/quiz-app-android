@@ -1,36 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="160dp"
-    android:layout_height="220dp"
+    android:layout_width="140dp"
+    android:layout_height="200dp"
     android:layout_marginTop="20dp"
     android:layout_marginHorizontal="4dp"
     android:paddingTop="20dp">
 
     <ImageView
+        android:id="@+id/ivBgItemGame"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="30dp"
         android:src="@drawable/game_bg" />
 
 
     <ImageView
         android:id="@+id/ivItemGame"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/shape_category"
-        />
+        android:scaleType="fitCenter"
+        android:src="@drawable/shape_category" />
 
 
     <TextView
         android:id="@+id/tvItemGame"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_alignBottom="@id/ivBgItemGame"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
-        android:textAlignment="center"
+        android:layout_marginBottom="48dp"
+        android:gravity="center_horizontal"
         android:text="SCategories"
-        android:textSize="20sp" />
+        android:textAlignment="center"
+        android:textSize="18sp" />
 
 
 

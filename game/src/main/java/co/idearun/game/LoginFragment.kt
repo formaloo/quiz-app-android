@@ -5,8 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import co.idearun.auth.viewmodel.AuthViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -29,14 +31,24 @@ class LoginFragment: Fragment() {
 
         val vm: AuthViewModel by viewModel()
         loginBtn.setOnClickListener {
+            if (userEdt.text.toString() == "test"){
+                //findNavController().navigate()
+            }
+
             vm.loginUser(userEdt.text.toString(), passEdt.text.toString())
         }
         //vm.loginUser("test@gmail.com", "ma%@#23ka")
+
+        imageView3.startAnimation(AnimationUtils.loadAnimation(context,R.anim.fade_in))
+
+
 
         vm.loginData.observe(this,{
             Log.i("TAG", "onViewCreated: ${it.token}")
             Toast.makeText(context,"خب لاگین کار میکنه، الان توکن رو نشون میدم",Toast.LENGTH_LONG).show()
             Toast.makeText(context,it.token,Toast.LENGTH_LONG).show()
+
+
         })
     }
 

@@ -2,12 +2,12 @@
     <!-- Base application theme. -->
     <style name="Theme.LearningApp" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/learning</item>
-        <item name="colorPrimaryVariant">@color/learning</item>
+        <item name="colorPrimary">@color/game</item>
+        <item name="colorPrimaryVariant">@color/game</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/learning</item>
-        <item name="colorSecondaryVariant">@color/learning</item>
+        <item name="colorSecondary">@color/game</item>
+        <item name="colorSecondaryVariant">@color/game</item>
         <item name="colorOnSecondary">@color/black</item>
        
         <item name="android:statusBarColor" tools:targetApi="l">@color/bg</item>

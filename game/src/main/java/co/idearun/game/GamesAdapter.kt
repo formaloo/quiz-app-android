@@ -3,6 +3,8 @@ package co.idearun.game
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
@@ -42,6 +44,11 @@ class GamesAdapter : ListAdapter<Form, GamesAdapter.NewsViewHolder>(NewsDiffCall
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
         holder.bind(getItem(position))
+
+        val fadeIn: Animation = AlphaAnimation(0f, 1f)
+        fadeIn.setDuration(1000)
+
+        holder.itemView.animation = fadeIn
 
         if (onRvItemClickListener != null) {
             holder.itemView.setOnClickListener {

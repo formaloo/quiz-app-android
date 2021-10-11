@@ -5,10 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import co.idearun.auth.model.register.RegisterInfo
 import co.idearun.auth.viewmodel.AuthViewModel
+import kotlinx.android.synthetic.main.fragment_games.*
 import kotlinx.android.synthetic.main.fragment_register.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.zip.Inflater
@@ -27,6 +29,8 @@ class RegisterFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        imageView3.startAnimation(AnimationUtils.loadAnimation(context,R.anim.fade_in))
 
         val vm: AuthViewModel by viewModel()
         registerBtn.setOnClickListener {

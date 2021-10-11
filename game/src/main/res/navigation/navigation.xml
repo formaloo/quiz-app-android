@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
     app:startDestination="@id/gamesFragment">
 
     <fragment
         android:id="@+id/registerFragment"
+        tools:layout="@layout/fragment_register"
         android:name="co.idearun.game.RegisterFragment"
         android:label="RegisterFragment" />
     <fragment
         android:id="@+id/authFragment"
+        tools:layout="@layout/fragment_auth"
         android:name="co.idearun.game.AuthFragment"
         android:label="AuthFragment" />
     <fragment
         android:id="@+id/mainFragment"
+        tools:layout="@layout/fragment_main"
         android:name="co.idearun.game.MainFragment"
         android:label="MainFragment" >
         <action
@@ -21,6 +25,7 @@
             app:destination="@id/authFragment" />
     </fragment>
     <fragment
+        tools:layout="@layout/fragment_games"
         android:id="@+id/gamesFragment"
         android:name="co.idearun.game.GamesFragment"
         android:label="GamesFragment" >
