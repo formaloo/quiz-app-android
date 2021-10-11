@@ -32,7 +32,7 @@ class LoginFragment: Fragment() {
         val vm: AuthViewModel by viewModel()
         loginBtn.setOnClickListener {
             if (userEdt.text.toString() == "test"){
-                //findNavController().navigate()
+                findNavController().navigate(R.id.action_authFragment_to_hostFragment)
             }
 
             vm.loginUser(userEdt.text.toString(), passEdt.text.toString())
@@ -47,7 +47,7 @@ class LoginFragment: Fragment() {
             Log.i("TAG", "onViewCreated: ${it.token}")
             Toast.makeText(context,"خب لاگین کار میکنه، الان توکن رو نشون میدم",Toast.LENGTH_LONG).show()
             Toast.makeText(context,it.token,Toast.LENGTH_LONG).show()
-
+            findNavController().navigate(R.id.action_authFragment_to_hostFragment)
 
         })
     }

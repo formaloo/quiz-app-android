@@ -17,7 +17,7 @@ class FormEditorFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_games, container,false)
+        val root = inflater.inflate(R.layout.fragment_formeditor, container,false)
         return root
     }
 

@@ -3,18 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/gamesFragment">
+    app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/registerFragment"
         tools:layout="@layout/fragment_register"
         android:name="co.idearun.game.RegisterFragment"
-        android:label="RegisterFragment" />
+        android:label="RegisterFragment" >
+        <action
+            android:id="@+id/action_registerFragment_to_hostFragment"
+            app:destination="@id/hostFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/authFragment"
         tools:layout="@layout/fragment_auth"
         android:name="co.idearun.game.AuthFragment"
-        android:label="AuthFragment" />
+        android:label="AuthFragment" >
+        <action
+            android:id="@+id/action_authFragment_to_hostFragment"
+            app:destination="@id/hostFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/mainFragment"
         tools:layout="@layout/fragment_main"
@@ -24,6 +34,7 @@
             android:id="@+id/action_mainFragment_to_authFragment"
             app:destination="@id/authFragment" />
     </fragment>
+
     <fragment
         tools:layout="@layout/fragment_games"
         android:id="@+id/gamesFragment"
@@ -33,8 +44,30 @@
             android:id="@+id/action_gamesFragment_to_formEditorFragment"
             app:destination="@id/formEditorFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/formEditorFragment"
+        tools:layout="@layout/fragment_formeditor"
         android:name="co.idearun.game.FormEditorFragment"
         android:label="FormEditorFragment" />
+
+    <fragment
+        android:id="@+id/hostFragment"
+        tools:layout="@layout/fragment_host"
+        android:name="co.idearun.game.HostFragment"
+        android:label="HostFragment" >
+        <action
+            android:id="@+id/action_hostFragment_to_gamesFragment"
+            app:destination="@id/gamesFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        tools:layout="@layout/fragment_login"
+        android:name="co.idearun.game.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_hostFragment"
+            app:destination="@id/hostFragment" />
+    </fragment>
 </navigation>
