@@ -25,8 +25,8 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     private val _form = MutableLiveData<Form>()
     val form: LiveData<Form> = _form
 
- /*   private val _form = MutableLiveData<Form>().apply { value = null }
-    val form: LiveData<Form> = _form*/
+    private val _liveForm = MutableLiveData<Form>()
+    val liveForm: LiveData<Form> = _liveForm
 
     private val _formTag = MutableLiveData<FormListRes>()
     val formTag: LiveData<FormListRes> = _formTag
@@ -99,6 +99,16 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         result.either(::handleFailure, ::handleFormData)
     }
 
+    fun createLive(slug: String, token: String) = viewModelScope.launch {
+        val result = withContext(Dispatchers.IO) { repository.createLive(slug, token) }
+        result.either(::handleFailure, ::handleLiveFormData)
+    }
+
+    private fun handleLiveFormData(res: CreateFormRes) {
+        res?.data?.form?.let {
+            _liveForm.value = it
+        }
+    }
     private fun handleFormData(res: CreateFormRes) {
         res?.data?.form?.let {
             _form.value = it

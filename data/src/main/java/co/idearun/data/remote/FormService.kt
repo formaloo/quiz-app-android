@@ -15,6 +15,7 @@ interface FormService {
 
     companion object {
         private const val VERSION1 = "v1/"
+        private const val VERSION10 = "v1.0/"
         private const val VERSION2 = "v2/"
         private const val VERSION3 = "v3/"
 
@@ -64,5 +65,9 @@ interface FormService {
         @Part files: List<MultipartBody.Part>?
     ): Call<SubmitFormRes>
 
-
+    @POST(CREATE_LIVE)
+    fun createLive(
+        @Path("slug") slug: String,
+        @Header("Authorization") token: String
+    ): Call<CreateFormRes>
 }

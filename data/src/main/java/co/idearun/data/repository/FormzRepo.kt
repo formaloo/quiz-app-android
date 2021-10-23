@@ -311,6 +311,14 @@ class FormzRepo(
         }
     }
 
+    override suspend fun createLive(slug: String, token: String): Either<Failure, CreateFormRes> {
+        val call = source.createLive(slug,token)
+        return try {
+            request(call, { it.toCreateFormRes() }, CreateFormRes.empty())
+        } catch (e: Exception) {
+            Either.Left(Failure.Exception)
+        }}
+
     override suspend fun getCatList(): Either<Failure, CatListRes> {
 
         val call = source.getCatList()

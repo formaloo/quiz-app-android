@@ -59,6 +59,7 @@ class LoginFragment: Fragment() {
         vm.authorizeData.observe(this,{
             Toast.makeText(context,"توکن دوم" + it.token,Toast.LENGTH_LONG).show()
             vm1.copyForm("bTOdLEfK", "JWT ${it.token}")
+            vm1.createLive("bTOdLEfK", it.token!!)
 
         })
 
@@ -66,6 +67,10 @@ class LoginFragment: Fragment() {
             if (!it.title.isNullOrEmpty()){
                 Toast.makeText(context,"فرم کپی شده $it",Toast.LENGTH_LONG).show()
             }
+        })
+
+        vm1.liveForm.observe(this,{
+            Toast.makeText(context,"کد فرمالو لایو شما ${it.live_dashboard_address}",Toast.LENGTH_LONG).show()
         })
 
 

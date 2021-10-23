@@ -54,6 +54,7 @@ data class Form(
  var show_calculations_score_result: Boolean? = null,
  var category: Category? = null,
  var theme_config: ThemeConfig? = null,
- var fields_list: ArrayList<Fields>? = null
+ var fields_list: ArrayList<Fields>? = null,
+ var live_dashboard_address: String? = null
 
 ) : Serializable
