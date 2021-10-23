@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import co.idearun.auth.viewmodel.AuthViewModel
+import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.zip.Inflater
@@ -47,9 +48,28 @@ class LoginFragment: Fragment() {
             Log.i("TAG", "onViewCreated: ${it.token}")
             Toast.makeText(context,"خب لاگین کار میکنه، الان توکن رو نشون میدم",Toast.LENGTH_LONG).show()
             Toast.makeText(context,it.token,Toast.LENGTH_LONG).show()
-            findNavController().navigate(R.id.action_authFragment_to_hostFragment)
+          //  findNavController().navigate(R.id.action_authFragment_to_hostFragment)
+
+            vm.authorizeUser(it.token!!)
 
         })
+
+        val vm1: FormViewModel by viewModel()
+
+        vm.authorizeData.observe(this,{
+            Toast.makeText(context,"توکن دوم" + it.token,Toast.LENGTH_LONG).show()
+            vm1.copyForm("bTOdLEfK", "JWT ${it.token}")
+
+        })
+
+        vm1.form.observe(this,{
+            if (!it.title.isNullOrEmpty()){
+                Toast.makeText(context,"فرم کپی شده $it",Toast.LENGTH_LONG).show()
+            }
+        })
+
+
+
     }
 
 }

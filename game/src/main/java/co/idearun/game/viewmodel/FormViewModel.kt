@@ -22,8 +22,11 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     private var formSlug: String = ""
     private var formAddress: String = ""
 
-    private val _form = MutableLiveData<Form>().apply { value = null }
+    private val _form = MutableLiveData<Form>()
     val form: LiveData<Form> = _form
+
+ /*   private val _form = MutableLiveData<Form>().apply { value = null }
+    val form: LiveData<Form> = _form*/
 
     private val _formTag = MutableLiveData<FormListRes>()
     val formTag: LiveData<FormListRes> = _formTag
@@ -89,8 +92,11 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         Timber.i("TAG get form data log")
         val result = withContext(Dispatchers.IO) { repository.getFormData(formAddress ?: "") }
         result.either(::handleFailure, ::handleFormData)
+    }
 
-
+    fun copyForm(slug: String, token: String) = viewModelScope.launch {
+        val result = withContext(Dispatchers.IO) { repository.copyForm(slug, token) }
+        result.either(::handleFailure, ::handleFormData)
     }
 
     private fun handleFormData(res: CreateFormRes) {

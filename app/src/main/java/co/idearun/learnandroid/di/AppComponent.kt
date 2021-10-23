@@ -12,7 +12,7 @@ import co.idearun.learnandroid.BuildConfig.BASE_URL
 import co.idearun.learnandroid.BuildConfig.X_API_KEY
 
 val appComponent = listOf(
-    createRemoteFormModule(BASE_URL, X_API_KEY),
+    createRemoteFormModule("https://api.staging.formaloo.com", "4638feb8378ac5799d6200889f97f2d3d88b9852"),
     formBuilderLocalModule,
     formRepositoryModule,
    // featureModule,
