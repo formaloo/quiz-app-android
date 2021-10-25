@@ -11,6 +11,7 @@ import co.idearun.data.model.search.SearchRes
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.util.HashMap
+import javax.sql.StatementEvent
 
 interface FormzDataSource {
     suspend fun getCatList(): Either<Failure, CatListRes>
@@ -20,15 +21,17 @@ interface FormzDataSource {
     suspend fun getForm(formAddress: String?): CreateFormRes?
 
     suspend fun getFormTag(page: Int): Either<Failure, FormListRes>
-    suspend fun copyForm(slug: String, token:String): Either<Failure, CreateFormRes>
-    suspend fun createLive(slug: String, token:String): Either<Failure, CreateFormRes>
+    suspend fun copyForm(slug: String, token: String): Either<Failure, CreateFormRes>
+    suspend fun createLive(slug: String, token: String): Either<Failure, CreateFormRes>
+    suspend fun editForm(slug: String,token: String, body: RequestBody): Either<Failure, CreateFormRes>
+
 
     suspend fun getFormFromDB(slug: String): Form?
     suspend fun getFormListFromDB(): List<Form>
     suspend fun saveSubmit(submitEntity: SubmitEntity)
     suspend fun getSubmitEntity(slug: String): SubmitEntity
     suspend fun sendSavedSubmitToServer()
-     suspend fun submitForm(
+    suspend fun submitForm(
         submitEntity: SubmitEntity,
         slug: String,
         req: HashMap<String, RequestBody>,

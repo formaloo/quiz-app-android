@@ -319,6 +319,14 @@ class FormzRepo(
             Either.Left(Failure.Exception)
         }}
 
+    override suspend fun editForm(slug: String, token: String, body: RequestBody): Either<Failure, CreateFormRes> {
+        val call = source.editForm(slug,token,body)
+        return try {
+            request(call, { it.toCreateFormRes() }, CreateFormRes.empty())
+        } catch (e: Exception) {
+            Either.Left(Failure.Exception)
+        }}
+
     override suspend fun getCatList(): Either<Failure, CatListRes> {
 
         val call = source.getCatList()

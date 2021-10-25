@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.RequestBody
 import timber.log.Timber
 
 class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
@@ -28,6 +29,9 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
     private val _liveForm = MutableLiveData<Form>()
     val liveForm: LiveData<Form> = _liveForm
+
+    private val _editForm = MutableLiveData<Form>()
+    val editForm: LiveData<Form> = _editForm
 
     private val _formTag = MutableLiveData<FormListRes>()
     val formTag: LiveData<FormListRes> = _formTag
@@ -104,11 +108,23 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         result.either(::handleFailure, ::handleLiveFormData)
     }
 
+    fun editForm(slug: String,token: String, body: RequestBody) = viewModelScope.launch {
+        val result = withContext(Dispatchers.IO) { repository.editForm(slug,token, body) }
+        result.either(::handleFailure, ::handleEditFormData)
+    }
+
     private fun handleLiveFormData(res: CreateFormRes) {
         res?.data?.form?.let {
             _liveForm.value = it
         }
     }
+
+    private fun handleEditFormData(res: CreateFormRes) {
+        res?.data?.form?.let {
+            _editForm.value = it
+        }
+    }
+
     private fun handleFormData(res: CreateFormRes) {
         res?.data?.form?.let {
             _form.value = it

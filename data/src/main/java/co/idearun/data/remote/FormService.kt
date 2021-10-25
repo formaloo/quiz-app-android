@@ -28,6 +28,7 @@ interface FormService {
         private const val SEARCH = "${VERSION2}forms/search/?"
         private const val COPY_FORM = "${VERSION31}forms/{slug}/copy/"
         private const val CREATE_LIVE = "${VERSION10}forms/{slug}/live-dashboard-code/"
+        private const val EDIT_FORM = "${VERSION3}forms/{slug}/"
 
     }
 
@@ -78,5 +79,12 @@ interface FormService {
     fun createLive(
         @Path("slug") slug: String,
         @Header("Authorization") token: String
+    ): Call<CreateFormRes>
+
+    @PATCH(EDIT_FORM)
+    fun editForm(
+        @Path("slug") slug: String,
+        @Header("Authorization") token: String,
+        @Body body: RequestBody?
     ): Call<CreateFormRes>
 }
