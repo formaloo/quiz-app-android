@@ -52,7 +52,11 @@
         android:id="@+id/formEditorFragment"
         tools:layout="@layout/fragment_formeditor"
         android:name="co.idearun.game.FormEditorFragment"
-        android:label="FormEditorFragment" />
+        android:label="FormEditorFragment" >
+        <action
+            android:id="@+id/action_formEditorFragment_to_shareFragment"
+            app:destination="@id/shareFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/hostFragment"
@@ -72,5 +76,14 @@
         <action
             android:id="@+id/action_loginFragment_to_hostFragment"
             app:destination="@id/hostFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/shareFragment"
+        android:name="co.idearun.game.ShareFragment"
+        android:label="ShareFragment"
+        tools:layout="@layout/fragment_share">
+        <action
+            android:id="@+id/action_shareFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
 </navigation>

@@ -23,6 +23,6 @@ class FormDatasource(private val service: FormService) {
     ) = service.submitForm(slug, req, files)
 
     fun copyForm(slug: String,token: String) = service.copyForm(slug,token)
-    fun createLive(slug: String,token: String) = service.createLive(slug, "JWT ${token}")
+    fun createLive(slug: String,token: String) = service.createLive(slug, token)
     fun editForm(slug: String,token: String,body: RequestBody) = service.editForm(slug,token, body)
 }
