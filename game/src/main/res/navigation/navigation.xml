@@ -36,6 +36,9 @@
         <action
             android:id="@+id/action_mainFragment_to_hostFragment"
             app:destination="@id/hostFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_playerCodeFragment"
+            app:destination="@id/playerCodeFragment" />
     </fragment>
 
     <fragment
@@ -86,4 +89,18 @@
             android:id="@+id/action_shareFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/playerCodeFragment"
+        android:name="co.idearun.game.play.PlayerCodeFragment"
+        android:label="PlayerCodeFragment"
+        tools:layout="@layout/fragment_player_code">
+        <action
+            android:id="@+id/action_playerCodeFragment_to_playerNameFragment"
+            app:destination="@id/playerNameFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playerNameFragment"
+        android:name="co.idearun.game.play.PlayerNameFragment"
+        android:label="PlayerNameFragment"
+        tools:layout="@layout/fragment_player_name"/>
 </navigation>

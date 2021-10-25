@@ -57,7 +57,7 @@ class MainFragment : Fragment() {
         }
 
         btnPlay.setOnClickListener {
-            Toast.makeText(context, "فعلن رو بخش هاست فقط کار شده", Toast.LENGTH_LONG).show()
+            findNavController().navigate(R.id.action_mainFragment_to_playerCodeFragment)
         }
 
     }
