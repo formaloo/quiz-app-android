@@ -18,6 +18,7 @@ interface FormService {
         private const val VERSION10 = "v1.0/"
         private const val VERSION2 = "v2/"
         private const val VERSION3 = "v3/"
+        private const val VERSION31 = "v3.1/"
 
         private const val FORMS = "${VERSION3}form-displays/tag/{tag}/?pagination=0"
         private const val FORM_DETAIL = "${VERSION3}form-displays/address/{address}/"
@@ -25,6 +26,8 @@ interface FormService {
         private const val CAT_LIST = "${VERSION2}forms/category/list/"
         private const val SEARCH_FORMS = "${VERSION2}forms/list/?"
         private const val SEARCH = "${VERSION2}forms/search/?"
+        private const val COPY_FORM = "${VERSION31}forms/{slug}/copy/"
+        private const val CREATE_LIVE = "${VERSION10}forms/{slug}/live-dashboard-code/"
 
     }
 
@@ -56,6 +59,12 @@ interface FormService {
 
     @GET(FORM_DETAIL)
     fun getFormDetail(@Path("address") address: String?): Call<CreateFormRes>
+
+    @POST(COPY_FORM)
+    fun copyForm(
+        @Path("slug") slug: String,
+        @Header("Authorization") token: String
+    ): Call<CreateFormRes>
 
     @Multipart
     @POST(submitForm)

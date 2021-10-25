@@ -9,6 +9,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import co.idearun.common.UserInfoManager
 import co.idearun.common.base.OnRvItemClickListener
 import co.idearun.data.model.form.Form
 import co.idearun.game.viewmodel.FormViewModel
@@ -50,6 +51,7 @@ class GamesFragment : Fragment() {
 
                 val args = Bundle()
                 args.putString("formAddress", item.address)
+                args.putString("formSlug", item.slug)
                 findNavController().navigate(
                     R.id.action_gamesFragment_to_formEditorFragment, args
                 )

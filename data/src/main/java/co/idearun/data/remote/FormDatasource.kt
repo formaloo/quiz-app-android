@@ -22,4 +22,6 @@ class FormDatasource(private val service: FormService) {
         files: List<MultipartBody.Part>?
     ) = service.submitForm(slug, req, files)
 
+    fun copyForm(slug: String,token: String) = service.copyForm(slug,token)
+    fun createLive(slug: String,token: String) = service.createLive(slug, "JWT ${token}")
 }

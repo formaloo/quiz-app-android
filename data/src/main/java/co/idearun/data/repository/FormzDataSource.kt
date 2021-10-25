@@ -20,6 +20,9 @@ interface FormzDataSource {
     suspend fun getForm(formAddress: String?): CreateFormRes?
 
     suspend fun getFormTag(page: Int): Either<Failure, FormListRes>
+    suspend fun copyForm(slug: String, token:String): Either<Failure, CreateFormRes>
+    suspend fun createLive(slug: String, token:String): Either<Failure, CreateFormRes>
+
     suspend fun getFormFromDB(slug: String): Form?
     suspend fun getFormListFromDB(): List<Form>
     suspend fun saveSubmit(submitEntity: SubmitEntity)

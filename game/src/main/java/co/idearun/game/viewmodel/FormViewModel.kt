@@ -1,5 +1,6 @@
 package co.idearun.game.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -89,7 +90,6 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     }
 
     fun getFormData() = viewModelScope.launch {
-        Timber.i("TAG get form data log")
         val result = withContext(Dispatchers.IO) { repository.getFormData(formAddress ?: "") }
         result.either(::handleFailure, ::handleFormData)
     }
