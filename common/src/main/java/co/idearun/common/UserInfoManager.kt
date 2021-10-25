@@ -12,15 +12,17 @@ class UserInfoManager(context: Context) {
         sharedPreferences = context.getSharedPreferences("user_info", Context.MODE_PRIVATE)
     }
 
-    fun saveSessionToken(token: String) {
+    fun saveSessionToken(token: String?) {
         val editor = sharedPreferences.edit()
         editor.putString(SESSION_TOKEN, token)
+        TokenContainer.updateSessionToken(token)
         editor.apply()
     }
 
-    fun saveAuthorizationToken(token: String) {
+    fun saveAuthorizationToken(token: String?) {
         val editor = sharedPreferences.edit()
         editor.putString(AUTHORIZATION_TOKEN, token)
+        TokenContainer.updateAuthorizationToken(token)
         editor.apply()
     }
 

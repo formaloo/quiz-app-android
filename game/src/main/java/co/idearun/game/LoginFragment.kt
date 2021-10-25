@@ -10,13 +10,13 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import co.idearun.auth.viewmodel.AuthViewModel
+import co.idearun.common.UserInfoManager
 import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.zip.Inflater
 
 class LoginFragment: Fragment() {
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,6 +30,9 @@ class LoginFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        val userInfoManager = UserInfoManager(context!!)
+
         val vm: AuthViewModel by viewModel()
         loginBtn.setOnClickListener {
             if (userEdt.text.toString() == "test"){
@@ -38,7 +41,6 @@ class LoginFragment: Fragment() {
 
             vm.loginUser(userEdt.text.toString(), passEdt.text.toString())
         }
-        //vm.loginUser("test@gmail.com", "ma%@#23ka")
 
         imageView3.startAnimation(AnimationUtils.loadAnimation(context,R.anim.fade_in))
 
@@ -48,8 +50,9 @@ class LoginFragment: Fragment() {
             Log.i("TAG", "onViewCreated: ${it.token}")
             Toast.makeText(context,"خب لاگین کار میکنه، الان توکن رو نشون میدم",Toast.LENGTH_LONG).show()
             Toast.makeText(context,it.token,Toast.LENGTH_LONG).show()
-          //  findNavController().navigate(R.id.action_authFragment_to_hostFragment)
+            findNavController().navigate(R.id.action_authFragment_to_hostFragment)
 
+            userInfoManager.saveSessionToken(it.token)
             vm.authorizeUser(it.token!!)
 
         })
@@ -58,8 +61,7 @@ class LoginFragment: Fragment() {
 
         vm.authorizeData.observe(this,{
             Toast.makeText(context,"توکن دوم" + it.token,Toast.LENGTH_LONG).show()
-            vm1.copyForm("bTOdLEfK", "JWT ${it.token}")
-            vm1.createLive("bTOdLEfK", it.token!!)
+            userInfoManager.saveAuthorizationToken(it.token)
 
         })
 

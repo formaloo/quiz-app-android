@@ -1,8 +1,8 @@
 package co.idearun.common
 
 object TokenContainer {
-    var sessionToken: String = ""
-    var authorizationToken: String = ""
+    var sessionToken: String? = ""
+    var authorizationToken: String? = ""
 
 
     fun updateTokens(sessionToken: String, authorizationToken: String) {
@@ -10,11 +10,11 @@ object TokenContainer {
         TokenContainer.authorizationToken = authorizationToken
     }
 
-    fun updateSessionToken(sessionToken: String){
+    fun updateSessionToken(sessionToken: String?){
         TokenContainer.sessionToken = sessionToken
     }
 
-    fun updateAuthorizationToken(authorizationToken: String){
+    fun updateAuthorizationToken(authorizationToken: String?){
         TokenContainer.authorizationToken = authorizationToken
     }
 }

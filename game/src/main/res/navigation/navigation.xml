@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/hostFragment">
+    app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/registerFragment"
@@ -33,6 +33,9 @@
         <action
             android:id="@+id/action_mainFragment_to_authFragment"
             app:destination="@id/authFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_hostFragment"
+            app:destination="@id/hostFragment" />
     </fragment>
 
     <fragment
