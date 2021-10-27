@@ -41,7 +41,7 @@ class PlayerCodeFragment : Fragment() {
 
         nextBtn.setOnClickListener {
             val args = Bundle()
-            args.putString("liveCode", codeEdt.text.toString())
+         //   args.putString("liveCode", codeEdt.text.toString())
             findNavController().navigate(R.id.action_playerCodeFragment_to_playerNameFragment, args)
 
         }

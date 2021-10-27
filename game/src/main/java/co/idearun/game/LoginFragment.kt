@@ -72,7 +72,7 @@ class LoginFragment: Fragment() {
         })
 
         vm1.liveForm.observe(this,{
-            Toast.makeText(context,"کد فرمالو لایو شما ${it.live_dashboard_address}",Toast.LENGTH_LONG).show()
+            Toast.makeText(context,"کد فرمالو لایو شما ${it.code}",Toast.LENGTH_LONG).show()
         })
 
 

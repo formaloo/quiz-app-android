@@ -40,8 +40,8 @@ class PlayerNameFragment : Fragment() {
         val vm: FormViewModel by viewModel()
 
         val args = Bundle()
-        args.putString("liveCode", codeEdt.text.toString())
-        findNavController().navigate(R.id.action_formEditorFragment_to_shareFragment, args)
+//        args.putString("liveCode", codeEdt.text.toString())
+      //  findNavController().navigate(R.id.action_formEditorFragment_to_shareFragment, args)
 
         playBtn.setOnClickListener {
             //findNavController().navigate()

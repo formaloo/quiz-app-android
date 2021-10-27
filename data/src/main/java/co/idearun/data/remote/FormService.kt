@@ -3,6 +3,7 @@ package co.idearun.data.remote
 import co.idearun.data.model.cat.catList.CatListRes
 import co.idearun.data.model.form.createForm.CreateFormRes
 import co.idearun.data.model.form.formList.FormListRes
+import co.idearun.data.model.live.LiveDashboardRes
 import co.idearun.data.model.search.SearchRes
 import co.idearun.data.model.submitForm.SubmitFormRes
 import okhttp3.MultipartBody
@@ -27,7 +28,7 @@ interface FormService {
         private const val SEARCH_FORMS = "${VERSION2}forms/list/?"
         private const val SEARCH = "${VERSION2}forms/search/?"
         private const val COPY_FORM = "${VERSION31}forms/{slug}/copy/"
-        private const val CREATE_LIVE = "${VERSION10}forms/{slug}/live-dashboard-code/"
+        private const val CREATE_LIVE = "${VERSION3}forms/{slug}/live-dashboard-code/"
         private const val EDIT_FORM = "${VERSION3}forms/{slug}/"
 
     }
@@ -79,7 +80,7 @@ interface FormService {
     fun createLive(
         @Path("slug") slug: String,
         @Header("Authorization") token: String
-    ): Call<CreateFormRes>
+    ): Call<LiveDashboardRes>
 
     @PATCH(EDIT_FORM)
     fun editForm(

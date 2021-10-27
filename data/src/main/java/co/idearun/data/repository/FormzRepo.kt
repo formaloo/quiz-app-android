@@ -18,6 +18,7 @@ import co.idearun.data.model.form.Form
 import co.idearun.data.model.form.SubmitEntity
 import co.idearun.data.model.form.createForm.CreateFormRes
 import co.idearun.data.model.form.formList.FormListRes
+import co.idearun.data.model.live.LiveDashboardRes
 import co.idearun.data.model.search.SearchRes
 import co.idearun.data.model.submitForm.SubmitFormRes
 import co.idearun.data.remote.FormDatasource
@@ -311,10 +312,10 @@ class FormzRepo(
         }
     }
 
-    override suspend fun createLive(slug: String, token: String): Either<Failure, CreateFormRes> {
+    override suspend fun createLive(slug: String, token: String): Either<Failure, LiveDashboardRes> {
         val call = source.createLive(slug,token)
         return try {
-            request(call, { it.toCreateFormRes() }, CreateFormRes.empty())
+            request(call, { it.toLiveDashboardRes() }, LiveDashboardRes.empty())
         } catch (e: Exception) {
             Either.Left(Failure.Exception)
         }}

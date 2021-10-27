@@ -66,8 +66,6 @@ class FormEditorFragment : Fragment() {
         })
 
 
-        val token =
-            "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6Im15YXBwLTAwMSJ9.eyJ0b2tlbiI6ImF1dGgiLCJzaWQiOiJjOTcxZmNkZC1iMTgwLTQ2MWYtOWZjOS1iN2ExMzliNjExNDkiLCJ1aWQiOjEwMTAyLCJlbWFpbCI6InRlc3Q1QGdtYWlsLmNvbSIsImZpcnN0X25hbWUiOiJ0ZXN0NSIsImxhc3RfbmFtZSI6IiIsInBob25lX251bWJlciI6IjA5MTEzMjEyMjExIiwidXNlcm5hbWUiOiI1NTFiNzc4Y2MwMzk0OGFjOWIwYzgwNTBhNGU4MDIiLCJ2ZXJpZmllZF9lbWFpbCI6ZmFsc2UsInZlcmlmaWVkX3Bob25lIjpmYWxzZSwibGFzdF91cGRhdGUiOiIyMDIxLTEwLTA5VDIwOjQ2OjU3LjczNloiLCJncm91cHMiOiIiLCJpc3MiOiJpY2FzIiwiYXVkIjpbImljYXMiLCJjcm0iLCJmb3JteiIsImludm9pY2UiLCJwcm9qZWN0YW50IiwiYWN0aW9ucyJdLCJleHAiOjE2MzUyMTQ1ODIsImlhdCI6MTYzNTE4NDU4Mn0.xtZZAXN2FDtYRDP1yf19zJiKRDyn-NR-p8NO6ulrukBpCiWhN9DyqBRmLUorCoUR0fI4U25bmzX2ld2SVmwvby2hu60dBu9Dn8WjCR52xlOHXJt1khCur0x_ztNA6ov7fxbKoKtr6kln6t0pst-Jia_FSMpv9RRcMbRKnqxvAB9wkT1K5OEMz2cJ6cIPQiNfWJzcN6k3LVmLkLdAfwr8btikxCWeDRZjUQ13U1z8mf8ap63hYCpfiIhqOACsnqcHwVoOZ9QYGP7BX5WHbUg1ci26KvnVi7KLptGrkwU138JuvQ_jcataBo2-BMnyLItu7uUSL75DUWp01Ii5XKZfgQ"
         setBtn.setOnClickListener {
             Timber.i(TokenContainer.authorizationToken)
             Timber.i(TokenContainer.sessionToken)
@@ -80,17 +78,17 @@ class FormEditorFragment : Fragment() {
             val body = RequestBody.create(
                 "application/json; charset=utf-8".toMediaTypeOrNull(), JSONObject(req).toString()
             )
-            vm.editForm(formSlug!!, "JWT $token", body)
+            vm.editForm(formSlug!!, "JWT ${TokenContainer.authorizationToken}", body)
         }
 
         vm.editForm.observe(this, {
-            vm.createLive(it.slug, "JWT $token")
+            vm.createLive(it.slug, "JWT ${TokenContainer.authorizationToken}")
         })
 
         vm.liveForm.observe(this, {
             val args = Bundle()
-            Timber.i(it.live_dashboard_address)
-            args.putString("liveCode", it.live_dashboard_address)
+            Timber.i(it.code)
+            args.putString("liveCode", it.code)
             findNavController().navigate(R.id.action_formEditorFragment_to_shareFragment, args)
 
         })

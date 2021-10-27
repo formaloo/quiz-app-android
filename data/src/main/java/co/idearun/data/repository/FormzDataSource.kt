@@ -7,6 +7,7 @@ import co.idearun.data.model.form.Form
 import co.idearun.data.model.form.SubmitEntity
 import co.idearun.data.model.form.createForm.CreateFormRes
 import co.idearun.data.model.form.formList.FormListRes
+import co.idearun.data.model.live.LiveDashboardRes
 import co.idearun.data.model.search.SearchRes
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -22,7 +23,7 @@ interface FormzDataSource {
 
     suspend fun getFormTag(page: Int): Either<Failure, FormListRes>
     suspend fun copyForm(slug: String, token: String): Either<Failure, CreateFormRes>
-    suspend fun createLive(slug: String, token: String): Either<Failure, CreateFormRes>
+    suspend fun createLive(slug: String, token: String): Either<Failure, LiveDashboardRes>
     suspend fun editForm(slug: String,token: String, body: RequestBody): Either<Failure, CreateFormRes>
 
 

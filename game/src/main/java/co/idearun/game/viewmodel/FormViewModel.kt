@@ -10,6 +10,8 @@ import co.idearun.common.base.BaseViewModel
 import co.idearun.data.model.form.Form
 import co.idearun.data.model.form.createForm.CreateFormRes
 import co.idearun.data.model.form.formList.FormListRes
+import co.idearun.data.model.live.LiveDashboardCode
+import co.idearun.data.model.live.LiveDashboardRes
 import co.idearun.data.repository.FormzRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -27,8 +29,8 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     private val _form = MutableLiveData<Form>()
     val form: LiveData<Form> = _form
 
-    private val _liveForm = MutableLiveData<Form>()
-    val liveForm: LiveData<Form> = _liveForm
+    private val _liveForm = MutableLiveData<LiveDashboardCode>()
+    val liveForm: LiveData<LiveDashboardCode> = _liveForm
 
     private val _editForm = MutableLiveData<Form>()
     val editForm: LiveData<Form> = _editForm
@@ -113,8 +115,8 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         result.either(::handleFailure, ::handleEditFormData)
     }
 
-    private fun handleLiveFormData(res: CreateFormRes) {
-        res?.data?.form?.let {
+    private fun handleLiveFormData(res: LiveDashboardRes) {
+        res?.data?.liveDashboardCode?.let {
             _liveForm.value = it
         }
     }

@@ -32,9 +32,12 @@ fun createRemoteFormModule(
 
 
     single(named("formClient")) {
+
+       // val tokenAuthenticator by inject<TokenAuthenticator>()
         OkHttpClient.Builder().addInterceptor(get(named("formInterceptor")) as Interceptor)
             .connectTimeout(3, TimeUnit.MINUTES)
             .readTimeout(3, TimeUnit.MINUTES)
+           // .authenticator(tokenAuthenticator)
             .build()
     }
 
