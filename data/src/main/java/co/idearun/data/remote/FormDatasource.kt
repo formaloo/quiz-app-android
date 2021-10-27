@@ -1,8 +1,10 @@
 package co.idearun.data.remote
 
 import co.idearun.common.BuildConfig.FORM_TAG
+import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONObject
 
 
 /**
@@ -22,7 +24,11 @@ class FormDatasource(private val service: FormService) {
         files: List<MultipartBody.Part>?
     ) = service.submitForm(slug, req, files)
 
-    fun copyForm(slug: String,token: String) = service.copyForm(slug,token)
-    fun createLive(slug: String,token: String) = service.createLive(slug, token)
-    fun editForm(slug: String,token: String,body: RequestBody) = service.editForm(slug,token, body)
+    fun copyForm(slug: String, token: String) = service.copyForm(slug, token)
+    fun createLive(slug: String, token: String) = service.createLive(slug, token)
+    fun getFormDataWithLiveCode(token: String, body: RequestBody) =
+        service.getFormDataWithLiveCode(token, body)
+
+    fun editForm(slug: String, token: String, body: RequestBody) =
+        service.editForm(slug, token, body)
 }

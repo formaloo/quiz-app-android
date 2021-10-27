@@ -1,6 +1,7 @@
 package co.idearun.data.repository
 
 import android.net.Uri
+import android.util.ArrayMap
 import android.util.Log
 import android.webkit.MimeTypeMap
 import androidx.paging.*
@@ -22,6 +23,7 @@ import co.idearun.data.model.live.LiveDashboardRes
 import co.idearun.data.model.search.SearchRes
 import co.idearun.data.model.submitForm.SubmitFormRes
 import co.idearun.data.remote.FormDatasource
+import com.google.gson.JsonObject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
@@ -42,6 +44,7 @@ import java.net.SocketTimeoutException
 import java.net.URLEncoder
 import java.net.UnknownHostException
 import java.util.*
+import kotlin.collections.HashMap
 
 const val TAG = "FormzRepo"
 
@@ -314,6 +317,24 @@ class FormzRepo(
 
     override suspend fun createLive(slug: String, token: String): Either<Failure, LiveDashboardRes> {
         val call = source.createLive(slug,token)
+        return try {
+            request(call, { it.toLiveDashboardRes() }, LiveDashboardRes.empty())
+        } catch (e: Exception) {
+            Either.Left(Failure.Exception)
+        }}
+
+    override suspend fun getFormDataWithLiveCode(
+        token: String,
+        body: String
+    ): Either<Failure, LiveDashboardRes> {
+        val jsonBody = HashMap<String,Any>()
+        jsonBody.put("code",body)
+
+        val bodyM = RequestBody.create(
+            "application/json; charset=utf-8".toMediaTypeOrNull(), JSONObject(jsonBody as Map<*, *>).toString()
+        )
+
+        val call = source.getFormDataWithLiveCode(token, bodyM)
         return try {
             request(call, { it.toLiveDashboardRes() }, LiveDashboardRes.empty())
         } catch (e: Exception) {

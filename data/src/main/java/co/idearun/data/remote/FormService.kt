@@ -6,8 +6,10 @@ import co.idearun.data.model.form.formList.FormListRes
 import co.idearun.data.model.live.LiveDashboardRes
 import co.idearun.data.model.search.SearchRes
 import co.idearun.data.model.submitForm.SubmitFormRes
+import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
@@ -23,12 +25,13 @@ interface FormService {
 
         private const val FORMS = "${VERSION3}form-displays/tag/{tag}/?pagination=0"
         private const val FORM_DETAIL = "${VERSION3}form-displays/address/{address}/"
-        private const val submitForm = "${VERSION3}form-displays/slug/{slug}/submit/"
+        private const val SUBMIT_FORM = "${VERSION3}form-displays/slug/{slug}/submit/"
         private const val CAT_LIST = "${VERSION2}forms/category/list/"
         private const val SEARCH_FORMS = "${VERSION2}forms/list/?"
         private const val SEARCH = "${VERSION2}forms/search/?"
         private const val COPY_FORM = "${VERSION31}forms/{slug}/copy/"
         private const val CREATE_LIVE = "${VERSION3}forms/{slug}/live-dashboard-code/"
+        private const val GET_FORMDATA_WITH_LIVECODE = "${VERSION10}live-dashboards/"
         private const val EDIT_FORM = "${VERSION3}forms/{slug}/"
 
     }
@@ -69,7 +72,7 @@ interface FormService {
     ): Call<CreateFormRes>
 
     @Multipart
-    @POST(submitForm)
+    @POST(SUBMIT_FORM)
     fun submitForm(
         @Path("slug") slug: String,
         @PartMap req: HashMap<String, RequestBody>,
@@ -88,4 +91,10 @@ interface FormService {
         @Header("Authorization") token: String,
         @Body body: RequestBody?
     ): Call<CreateFormRes>
+
+    @POST(GET_FORMDATA_WITH_LIVECODE)
+    fun getFormDataWithLiveCode(
+        @Header("Authorization") token: String,
+        @Body body: RequestBody?
+    ): Call<LiveDashboardRes>
 }

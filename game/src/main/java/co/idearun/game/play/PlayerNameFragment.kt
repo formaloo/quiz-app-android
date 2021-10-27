@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.collection.ArrayMap
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import co.idearun.auth.viewmodel.AuthViewModel
 import co.idearun.common.TokenContainer
@@ -37,14 +38,13 @@ class PlayerNameFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val vm: FormViewModel by viewModel()
+        val vm: FormViewModel by activityViewModels()
 
-        val args = Bundle()
-//        args.putString("liveCode", codeEdt.text.toString())
-      //  findNavController().navigate(R.id.action_formEditorFragment_to_shareFragment, args)
 
         playBtn.setOnClickListener {
-            //findNavController().navigate()
+            vm.userName.value = nameEdt.text.toString()
+           // findNavController().navigate()
+
         }
 }
 }
