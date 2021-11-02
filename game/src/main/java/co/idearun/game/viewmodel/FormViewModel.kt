@@ -26,7 +26,7 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     private var formSlug: String = ""
     private var formAddress: String = ""
 
-    var userForm = MutableLiveData<Form>()
+    var userForm = MutableLiveData<LiveDashboardCode>()
     var userName = MutableLiveData<String>()
 
     private val _form = MutableLiveData<Form>()

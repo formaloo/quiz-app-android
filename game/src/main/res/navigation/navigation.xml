@@ -102,5 +102,14 @@
         android:id="@+id/playerNameFragment"
         android:name="co.idearun.game.play.PlayerNameFragment"
         android:label="PlayerNameFragment"
-        tools:layout="@layout/fragment_player_name"/>
+        tools:layout="@layout/fragment_player_name">
+        <action
+            android:id="@+id/action_playerNameFragment_to_playerFormFragment"
+            app:destination="@id/playerFormFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/playerFormFragment"
+        tools:layout="@layout/fragment_form"
+        android:name="co.idearun.game.play.PlayerFormFragment"
+        android:label="PlayerFormFragment" />
 </navigation>

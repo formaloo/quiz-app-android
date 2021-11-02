@@ -43,7 +43,7 @@ class PlayerNameFragment : Fragment() {
 
         playBtn.setOnClickListener {
             vm.userName.value = nameEdt.text.toString()
-           // findNavController().navigate()
+           findNavController().navigate(R.id.action_playerNameFragment_to_playerFormFragment)
 
         }
 }

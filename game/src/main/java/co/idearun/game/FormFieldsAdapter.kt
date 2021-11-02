@@ -21,9 +21,13 @@ import timber.log.Timber
 class FormFieldsAdapter :
     ListAdapter<Fields, FormFieldsAdapter.FormFieldsViewHolder>(FieldsDiffCallback) {
 
+    public var disableField = false
+    public var fieldSlugList = arrayListOf<Fields>()
+    public var fieldTextList = arrayListOf<String>()
+
     private var onRvItemClickListener: OnRvItemClickListener<Fields>? = null
 
-    class FormFieldsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class FormFieldsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         lateinit var fieldsEdt: TextInputEditText
 
@@ -35,7 +39,9 @@ class FormFieldsAdapter :
         fun bind(field: Fields) {
             //fieldsEdt.text = form.title,
             fieldsEdt.hint = field.title
-            disableEditText(fieldsEdt)
+            fieldSlugList.add(field)
+            if (disableField)
+                disableEditText(fieldsEdt)
 
             /*val url = Uri.parse(form.logo)
             avatarGameIv.setImageURI(url)
@@ -66,6 +72,10 @@ class FormFieldsAdapter :
     }
 
 
+    fun getFieldsValue(){
+
+    }
+
     fun setOnRvItemClickListener(onRvItemClickListener: OnRvItemClickListener<Fields>) {
         this.onRvItemClickListener = onRvItemClickListener
     }
@@ -90,3 +100,4 @@ private fun disableEditText(editText: TextInputEditText) {
     editText.keyListener = null
     //editText.setBackgroundColor(Color.TRANSPARENT)
 }
+

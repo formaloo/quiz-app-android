@@ -38,6 +38,8 @@ class FormEditorFragment : Fragment() {
 
         val vm: FormViewModel by viewModel()
         adapter = FormFieldsAdapter()
+        adapter.disableField = true
+
         rvFields.adapter = adapter
         val formAddress = arguments?.getString("formAddress")
         val formSlug = arguments?.getString("formSlug")
