@@ -97,4 +97,13 @@ interface FormService {
         @Header("Authorization") token: String,
         @Body body: RequestBody?
     ): Call<LiveDashboardRes>
+
+
+    @POST(SUBMIT_FORM)
+    fun submitFormData(
+        @Path("slug") slug: String,
+        @Body body: RequestBody
+    ): Call<SubmitFormRes>
+
+
 }

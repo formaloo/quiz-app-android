@@ -9,6 +9,7 @@ import co.idearun.data.model.form.createForm.CreateFormRes
 import co.idearun.data.model.form.formList.FormListRes
 import co.idearun.data.model.live.LiveDashboardRes
 import co.idearun.data.model.search.SearchRes
+import co.idearun.data.model.submitForm.SubmitFormRes
 import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -28,7 +29,7 @@ interface FormzDataSource {
     suspend fun createLive(slug: String, token: String): Either<Failure, LiveDashboardRes>
     suspend fun getFormDataWithLiveCode(token: String, body: String): Either<Failure, LiveDashboardRes>
     suspend fun editForm(slug: String,token: String, body: RequestBody): Either<Failure, CreateFormRes>
-
+    suspend fun submitFormData(slug: String, body: RequestBody): Either<Failure, SubmitFormRes>
 
     suspend fun getFormFromDB(slug: String): Form?
     suspend fun getFormListFromDB(): List<Form>

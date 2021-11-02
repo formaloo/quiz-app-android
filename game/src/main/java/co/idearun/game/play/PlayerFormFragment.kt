@@ -16,6 +16,8 @@ import co.idearun.game.FormFieldsAdapter
 import co.idearun.game.R
 import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_form.*
+import kotlinx.android.synthetic.main.fragment_form.rvFields
+import kotlinx.android.synthetic.main.fragment_formeditor.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -49,18 +51,18 @@ class PlayerFormFragment : Fragment() {
         vm.getFormData()
 
 
-        vm.form.observe(this, {
+        vm.form1.observe(this, {
             Timber.i("TAG get form $it")
             Timber.i("TAG get form ${it.fields_list?.size}")
             val fields = it.fields_list
             adapter.submitList(it.fields_list)
 
             fields?.forEach {
-                Timber.i("TAG field title ${it.title}")
+                Timber.i("TAG field title ${it.title} = ${it.slug}")
             }
         })
 
-        val jsonBody = HashMap<String, Any>()
+        val body = ArrayMap<String, Any>()
         submitFormBtn.setOnClickListener {
 
             adapter.fieldSlugList.forEachIndexed { index, fields ->
@@ -70,11 +72,16 @@ class PlayerFormFragment : Fragment() {
                 val value = viewHolder.fieldsEdt.text.toString()
                 val slug = fields.slug!!
 
-                jsonBody.put(slug, value)
+                body[slug] = value
 
-                Timber.i("players " + viewHolder.fieldsEdt.text.toString())
+                Timber.i(fields.title + " = " + slug + " = " + value)
             }.also {
-                // submit form
+                val bodyM = RequestBody.create(
+                    "application/json; charset=utf-8".toMediaTypeOrNull(),
+                    JSONObject(body).toString()
+                )
+
+                vm.submitFormData(vm.userForm.value?.form?.slug!!, bodyM)
             }
 
 

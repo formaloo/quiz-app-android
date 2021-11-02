@@ -39,6 +39,7 @@ class FormFieldsAdapter :
         fun bind(field: Fields) {
             //fieldsEdt.text = form.title,
             fieldsEdt.hint = field.title
+            Timber.i("slug in adapter ${field.slug}")
             fieldSlugList.add(field)
             if (disableField)
                 disableEditText(fieldsEdt)

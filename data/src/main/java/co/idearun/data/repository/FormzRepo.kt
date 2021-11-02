@@ -242,7 +242,7 @@ class FormzRepo(
                                     )
                                     formsDao.save(formList)
 
-                                    val list= arrayListOf<Form>()
+                                    val list = arrayListOf<Form>()
                                     formList.map {
                                         withContext(Dispatchers.Default) { getForm(it.address) }?.apply {
                                             data?.form?.let {
@@ -306,8 +306,8 @@ class FormzRepo(
         }
     }
 
-    override suspend fun copyForm(slug: String, token:String): Either<Failure, CreateFormRes> {
-        val call = source.copyForm(slug,token)
+    override suspend fun copyForm(slug: String, token: String): Either<Failure, CreateFormRes> {
+        val call = source.copyForm(slug, token)
         return try {
             request(call, { it.toCreateFormRes() }, CreateFormRes.empty())
         } catch (e: Exception) {
@@ -315,23 +315,28 @@ class FormzRepo(
         }
     }
 
-    override suspend fun createLive(slug: String, token: String): Either<Failure, LiveDashboardRes> {
-        val call = source.createLive(slug,token)
+    override suspend fun createLive(
+        slug: String,
+        token: String
+    ): Either<Failure, LiveDashboardRes> {
+        val call = source.createLive(slug, token)
         return try {
             request(call, { it.toLiveDashboardRes() }, LiveDashboardRes.empty())
         } catch (e: Exception) {
             Either.Left(Failure.Exception)
-        }}
+        }
+    }
 
     override suspend fun getFormDataWithLiveCode(
         token: String,
         body: String
     ): Either<Failure, LiveDashboardRes> {
-        val jsonBody = HashMap<String,Any>()
-        jsonBody.put("code",body)
+        val jsonBody = HashMap<String, Any>()
+        jsonBody.put("code", body)
 
         val bodyM = RequestBody.create(
-            "application/json; charset=utf-8".toMediaTypeOrNull(), JSONObject(jsonBody as Map<*, *>).toString()
+            "application/json; charset=utf-8".toMediaTypeOrNull(),
+            JSONObject(jsonBody as Map<*, *>).toString()
         )
 
         val call = source.getFormDataWithLiveCode(token, bodyM)
@@ -339,15 +344,33 @@ class FormzRepo(
             request(call, { it.toLiveDashboardRes() }, LiveDashboardRes.empty())
         } catch (e: Exception) {
             Either.Left(Failure.Exception)
-        }}
+        }
+    }
 
-    override suspend fun editForm(slug: String, token: String, body: RequestBody): Either<Failure, CreateFormRes> {
-        val call = source.editForm(slug,token,body)
+    override suspend fun editForm(
+        slug: String,
+        token: String,
+        body: RequestBody
+    ): Either<Failure, CreateFormRes> {
+        val call = source.editForm(slug, token, body)
         return try {
             request(call, { it.toCreateFormRes() }, CreateFormRes.empty())
         } catch (e: Exception) {
             Either.Left(Failure.Exception)
-        }}
+        }
+    }
+
+    override suspend fun submitFormData(
+        slug: String,
+        body: RequestBody
+    ): Either<Failure, SubmitFormRes> {
+        val call = source.submitFormData(slug, body)
+        return try {
+            request(call, { it.toSubmitFormRes() }, SubmitFormRes.empty())
+        } catch (e: Exception) {
+            Either.Left(Failure.Exception)
+        }
+    }
 
     override suspend fun getCatList(): Either<Failure, CatListRes> {
 

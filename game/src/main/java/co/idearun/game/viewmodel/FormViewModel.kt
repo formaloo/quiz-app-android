@@ -12,6 +12,7 @@ import co.idearun.data.model.form.createForm.CreateFormRes
 import co.idearun.data.model.form.formList.FormListRes
 import co.idearun.data.model.live.LiveDashboardCode
 import co.idearun.data.model.live.LiveDashboardRes
+import co.idearun.data.model.submitForm.SubmitFormRes
 import co.idearun.data.repository.FormzRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -19,6 +20,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.RequestBody
+import org.json.JSONObject
 import timber.log.Timber
 
 class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
@@ -31,6 +33,9 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
     private val _form = MutableLiveData<Form>()
     val form: LiveData<Form> = _form
+
+    private val _form1 = MutableLiveData<Form>()
+    val form1: LiveData<Form> = _form1
 
     private val _liveForm = MutableLiveData<LiveDashboardCode>()
     val liveForm: LiveData<LiveDashboardCode> = _liveForm
@@ -100,7 +105,7 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
     fun getFormData() = viewModelScope.launch {
         val result = withContext(Dispatchers.IO) { repository.getFormData(formAddress ?: "") }
-        result.either(::handleFailure, ::handleFormData)
+        result.either(::handleFailure, ::handleFormData1)
     }
 
     fun copyForm(slug: String, token: String) = viewModelScope.launch {
@@ -123,6 +128,18 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         result.either(::handleFailure, ::handleEditFormData)
     }
 
+    fun submitFormData(slug: String, body: RequestBody) = viewModelScope.launch {
+        val result = withContext(Dispatchers.IO) { repository.submitFormData(slug, body) }
+        result.either(::handleFailure, ::handleLiveFormData)
+    }
+
+    private fun handleLiveFormData(res: SubmitFormRes) {
+        Timber.i("players ${res.status}")
+     /*   res?.data?.liveDashboardCode?.let {
+            _liveForm.value = it
+        }*/
+    }
+
     private fun handleLiveFormData(res: LiveDashboardRes) {
         res?.data?.liveDashboardCode?.let {
             _liveForm.value = it
@@ -138,6 +155,12 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     private fun handleFormData(res: CreateFormRes) {
         res?.data?.form?.let {
             _form.value = it
+        }
+    }
+
+    private fun handleFormData1(res: CreateFormRes) {
+        res?.data?.form?.let {
+            _form1.value = it
         }
     }
 
