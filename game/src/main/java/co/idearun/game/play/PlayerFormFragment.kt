@@ -60,8 +60,23 @@ class PlayerFormFragment : Fragment() {
             }
         })
 
+        val jsonBody = HashMap<String, Any>()
         submitFormBtn.setOnClickListener {
-            //vm.
+
+            adapter.fieldSlugList.forEachIndexed { index, fields ->
+                val view = rvFields.getChildAt(index)
+                val viewHolder = adapter.FormFieldsViewHolder(view)
+
+                val value = viewHolder.fieldsEdt.text.toString()
+                val slug = fields.slug!!
+
+                jsonBody.put(slug, value)
+
+                Timber.i("players " + viewHolder.fieldsEdt.text.toString())
+            }.also {
+                // submit form
+            }
+
 
         }
 
