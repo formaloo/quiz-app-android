@@ -58,6 +58,7 @@ class GamesFragment : Fragment() {
             TokenContainer.authorizationToken = it.token
         })*/
 
+        Timber.i("Token ${TokenContainer.authorizationToken}")
         adapter.setOnRvItemClickListener(object : OnRvItemClickListener<Form> {
             override fun onItemClick(item: Form, position: Int) {
                 vm.copyForm(item.slug, "JWT ${TokenContainer.authorizationToken}")

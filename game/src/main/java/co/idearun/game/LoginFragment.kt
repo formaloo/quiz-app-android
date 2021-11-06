@@ -50,7 +50,6 @@ class LoginFragment: Fragment() {
             Log.i("TAG", "onViewCreated: ${it.token}")
             Toast.makeText(context,"خب لاگین کار میکنه، الان توکن رو نشون میدم",Toast.LENGTH_LONG).show()
             Toast.makeText(context,it.token,Toast.LENGTH_LONG).show()
-            findNavController().navigate(R.id.action_authFragment_to_hostFragment)
 
             userInfoManager.saveSessionToken(it.token)
             vm.authorizeUser(it.token!!)
@@ -62,6 +61,8 @@ class LoginFragment: Fragment() {
         vm.authorizeData.observe(this,{
             Toast.makeText(context,"توکن دوم" + it.token,Toast.LENGTH_LONG).show()
             userInfoManager.saveAuthorizationToken(it.token)
+
+            findNavController().navigate(R.id.action_authFragment_to_hostFragment)
 
         })
 
