@@ -6,10 +6,8 @@ import co.idearun.data.model.form.formList.FormListRes
 import co.idearun.data.model.live.LiveDashboardRes
 import co.idearun.data.model.search.SearchRes
 import co.idearun.data.model.submitForm.SubmitFormRes
-import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.http.*
@@ -33,6 +31,7 @@ interface FormService {
         private const val CREATE_LIVE = "${VERSION3}forms/{slug}/live-dashboard-code/"
         private const val GET_FORMDATA_WITH_LIVECODE = "${VERSION10}live-dashboards/"
         private const val EDIT_FORM = "${VERSION3}forms/{slug}/"
+        private const val FORM_SUBMITS = "${VERSION1}forms/form/{slug}/submits/"
 
     }
 
@@ -104,6 +103,13 @@ interface FormService {
         @Path("slug") slug: String,
         @Body body: RequestBody
     ): Call<SubmitFormRes>
+
+
+    @GET(FORM_SUBMITS)
+    fun getFormSubmits(
+        @Path("slug") slug: String,
+        @Header("Authorization") token: String
+    ): Call<co.idearun.data.model.SubmitsResponse>
 
 
 }

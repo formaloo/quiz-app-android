@@ -50,12 +50,11 @@ class FormEditorFragment : Fragment() {
         vm.getFormData()
 
 
-        val vm1: AuthViewModel by viewModel()
-
-        vm.form.observe(this, {
+        vm.form1.observe(this, {
             Timber.i("TAG get form $it")
             Timber.i("TAG get form ${it.fields_list?.size}")
             val fields = it.fields_list
+            Timber.i("field size "+ fields?.size)
             adapter.submitList(it.fields_list)
 
             formTitleEdt.setText(it.title)
@@ -77,10 +76,7 @@ class FormEditorFragment : Fragment() {
             req["title"] = formTitleEdt.text.toString()
             req["description"] = formDescriptionEdt.text.toString()
 
-            val body = RequestBody.create(
-                "application/json; charset=utf-8".toMediaTypeOrNull(), JSONObject(req).toString()
-            )
-            vm.editForm(formSlug!!, "JWT ${TokenContainer.authorizationToken}", body)
+            vm.editForm(formSlug!!, "JWT ${TokenContainer.authorizationToken}", req)
         }
 
         vm.editForm.observe(this, {

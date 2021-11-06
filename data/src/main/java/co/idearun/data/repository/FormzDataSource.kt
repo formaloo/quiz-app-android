@@ -2,6 +2,7 @@ package co.idearun.data.repository
 
 import co.idearun.common.exception.Failure
 import co.idearun.common.functional.Either
+import co.idearun.data.model.SubmitsResponse
 import co.idearun.data.model.cat.catList.CatListRes
 import co.idearun.data.model.form.Form
 import co.idearun.data.model.form.SubmitEntity
@@ -10,12 +11,9 @@ import co.idearun.data.model.form.formList.FormListRes
 import co.idearun.data.model.live.LiveDashboardRes
 import co.idearun.data.model.search.SearchRes
 import co.idearun.data.model.submitForm.SubmitFormRes
-import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.json.JSONObject
 import java.util.HashMap
-import javax.sql.StatementEvent
 
 interface FormzDataSource {
     suspend fun getCatList(): Either<Failure, CatListRes>
@@ -30,6 +28,7 @@ interface FormzDataSource {
     suspend fun getFormDataWithLiveCode(token: String, body: String): Either<Failure, LiveDashboardRes>
     suspend fun editForm(slug: String,token: String, body: RequestBody): Either<Failure, CreateFormRes>
     suspend fun submitFormData(slug: String, body: RequestBody): Either<Failure, SubmitFormRes>
+    suspend fun getFormSubmits(slug: String, token: String ): Either<Failure, SubmitsResponse>
 
     suspend fun getFormFromDB(slug: String): Form?
     suspend fun getFormListFromDB(): List<Form>

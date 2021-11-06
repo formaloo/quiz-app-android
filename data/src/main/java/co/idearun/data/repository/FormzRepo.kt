@@ -1,7 +1,6 @@
 package co.idearun.data.repository
 
 import android.net.Uri
-import android.util.ArrayMap
 import android.util.Log
 import android.webkit.MimeTypeMap
 import androidx.paging.*
@@ -13,6 +12,7 @@ import co.idearun.data.local.FormsKeys
 import co.idearun.data.local.dao.FormDao
 import co.idearun.data.local.dao.FormKeysDao
 import co.idearun.data.local.dao.SubmitDao
+import co.idearun.data.model.SubmitsResponse
 import co.idearun.data.model.cat.catList.CatListRes
 import co.idearun.data.model.form.Fields
 import co.idearun.data.model.form.Form
@@ -23,7 +23,6 @@ import co.idearun.data.model.live.LiveDashboardRes
 import co.idearun.data.model.search.SearchRes
 import co.idearun.data.model.submitForm.SubmitFormRes
 import co.idearun.data.remote.FormDatasource
-import com.google.gson.JsonObject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
@@ -367,6 +366,18 @@ class FormzRepo(
         val call = source.submitFormData(slug, body)
         return try {
             request(call, { it.toSubmitFormRes() }, SubmitFormRes.empty())
+        } catch (e: Exception) {
+            Either.Left(Failure.Exception)
+        }
+    }
+
+    override suspend fun getFormSubmits(
+        slug: String,
+        token: String
+    ): Either<Failure, SubmitsResponse> {  
+        val call = source.getFormSubmits(slug, token)
+        return try {
+            request(call, { it.toSubmitsResponse() }, SubmitsResponse.empty())
         } catch (e: Exception) {
             Either.Left(Failure.Exception)
         }

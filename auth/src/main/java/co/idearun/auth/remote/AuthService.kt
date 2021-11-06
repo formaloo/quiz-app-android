@@ -3,8 +3,10 @@ package co.idearun.auth.remote
 import co.idearun.auth.model.LoginRes
 import co.idearun.auth.model.register.RegisterRes
 import co.idearun.auth.model.Token
+import okhttp3.Request
 import okhttp3.RequestBody
 import retrofit2.Call
+import retrofit2.Callback
 import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -37,6 +39,8 @@ interface AuthService {
     fun authorizeUser(@Header("Authorization") token: String
     ): Call<Token>
 
-
+    @POST(AUTHORIZE)
+    fun authorizeUserReq(@Header("Authorization") token: String
+    ): Call<Token>
 
 }

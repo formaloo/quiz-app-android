@@ -2,6 +2,8 @@ package co.idearun.auth.remote.di
 
 import co.idearun.auth.remote.AuthDataSource
 import co.idearun.auth.remote.AuthService
+import co.idearun.auth.TokenAuthenticator
+import co.idearun.common.TokenContainer
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.Interceptor
 import org.koin.dsl.module
@@ -34,9 +36,11 @@ fun createAuthRemoteModule(
     }
 
     single(named("authClient")) {
+      //  val tokenAuthenticator by inject<TokenAuthenticator>()
         val interceptor = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
         OkHttpClient.Builder().addInterceptor(get(named("authInterceptor")) as Interceptor)
             //.addNetworkInterceptor()
+          //  .authenticator(tokenAuthenticator)
             .connectTimeout(3, TimeUnit.MINUTES)
             .readTimeout(3, TimeUnit.MINUTES)
             .build()
@@ -59,4 +63,8 @@ fun createAuthRemoteModule(
     factory(named("AuthDataSource")) {
         AuthDataSource(get(named("authService")))
     }
+
+/*    factory (named("TokenAuthenticator")){
+        TokenAuthenticator(TokenContainer.sessionToken!!,get(named("AuthDataSource")))
+    }*/
 }
