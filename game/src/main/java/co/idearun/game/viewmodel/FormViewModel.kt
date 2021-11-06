@@ -1,12 +1,14 @@
 package co.idearun.game.viewmodel
 
 import android.util.Log
+import androidx.collection.ArrayMap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import co.idearun.common.base.BaseViewModel
+import co.idearun.data.model.SubmitsResponse
 import co.idearun.data.model.form.Form
 import co.idearun.data.model.form.createForm.CreateFormRes
 import co.idearun.data.model.form.formList.FormListRes
@@ -14,11 +16,13 @@ import co.idearun.data.model.live.LiveDashboardCode
 import co.idearun.data.model.live.LiveDashboardRes
 import co.idearun.data.model.submitForm.SubmitFormRes
 import co.idearun.data.repository.FormzRepo
+import kotlinx.android.synthetic.main.fragment_formeditor.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import org.json.JSONObject
 import timber.log.Timber
@@ -37,11 +41,17 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     private val _form1 = MutableLiveData<Form>()
     val form1: LiveData<Form> = _form1
 
+    private val _submits = MutableLiveData<SubmitsResponse>()
+    val submits: LiveData<SubmitsResponse> = _submits
+
     private val _liveForm = MutableLiveData<LiveDashboardCode>()
     val liveForm: LiveData<LiveDashboardCode> = _liveForm
 
     private val _editForm = MutableLiveData<Form>()
     val editForm: LiveData<Form> = _editForm
+
+    private val _disableForm = MutableLiveData<Form>()
+    val disableForm: LiveData<Form> = _disableForm
 
     private val _formTag = MutableLiveData<FormListRes>()
     val formTag: LiveData<FormListRes> = _formTag
@@ -123,9 +133,23 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         result.either(::handleFailure, ::handleLiveFormData)
     }
 
-    fun editForm(slug: String,token: String, body: RequestBody) = viewModelScope.launch {
-        val result = withContext(Dispatchers.IO) { repository.editForm(slug,token, body) }
+    fun editForm(slug: String, token: String, body: ArrayMap<String, Any>) = viewModelScope.launch {
+        val requestBody = RequestBody.create(
+            "application/json; charset=utf-8".toMediaTypeOrNull(), JSONObject(body).toString()
+        )
+        val result = withContext(Dispatchers.IO) { repository.editForm(slug, token, requestBody) }
         result.either(::handleFailure, ::handleEditFormData)
+    }
+
+    fun disableForm(slug: String, token: String, activation: Boolean) = viewModelScope.launch {
+        val req = ArrayMap<String, Any>()
+        req["active"] = activation
+
+        val requestBody = RequestBody.create(
+            "application/json; charset=utf-8".toMediaTypeOrNull(), JSONObject(req).toString()
+        )
+        val result = withContext(Dispatchers.IO) { repository.editForm(slug, token, requestBody) }
+        result.either(::handleFailure, ::handleDisableForm)
     }
 
     fun submitFormData(slug: String, body: RequestBody) = viewModelScope.launch {
@@ -133,11 +157,23 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         result.either(::handleFailure, ::handleLiveFormData)
     }
 
+    fun getFormSubmits(slug: String, token: String) = viewModelScope.launch {
+        val result = withContext(Dispatchers.IO) { repository.getFormSubmits(slug, token) }
+        result.either(::handleFailure, ::handleFormSubmitsData)
+    }
+
+    private fun handleFormSubmitsData(res: SubmitsResponse) {
+        Timber.i("players ${res.status}")
+        res?.let {
+            _submits.value = res
+        }
+    }
+
     private fun handleLiveFormData(res: SubmitFormRes) {
         Timber.i("players ${res.status}")
-     /*   res?.data?.liveDashboardCode?.let {
-            _liveForm.value = it
-        }*/
+        /*   res?.data?.liveDashboardCode?.let {
+               _liveForm.value = it
+           }*/
     }
 
     private fun handleLiveFormData(res: LiveDashboardRes) {
@@ -147,6 +183,12 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     }
 
     private fun handleEditFormData(res: CreateFormRes) {
+        res?.data?.form?.let {
+            _editForm.value = it
+        }
+    }
+
+    private fun handleDisableForm(res: CreateFormRes) {
         res?.data?.form?.let {
             _editForm.value = it
         }
@@ -164,7 +206,7 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         }
     }
 
-    fun getFormTag(page:Int) = viewModelScope.launch {
+    fun getFormTag(page: Int) = viewModelScope.launch {
         val result = withContext(Dispatchers.IO) { repository.getFormTag(page) }
         result.either(::handleFailure, ::handleFormTagData)
 
