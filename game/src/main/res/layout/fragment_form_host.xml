@@ -20,7 +20,15 @@
         android:id="@+id/submitFormBtn"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:text="End Game"
+        android:text="Submit Form"
         android:background="#27B6FA"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/endGameBtn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="End Game"
+        android:background="#FF6BB7"
         android:textColor="@color/white" />
 </LinearLayout>

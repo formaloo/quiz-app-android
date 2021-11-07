@@ -23,7 +23,7 @@ import splitties.alertdialog.appcompat.*
 import timber.log.Timber
 import java.util.zip.Inflater
 
-class RegisterFragment : Fragment() {
+class RegisterFragment : BaseFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -79,44 +79,5 @@ class RegisterFragment : Fragment() {
         })
 
 
-    }
-
-    private fun renderFailure(message: String?) {
-        Timber.e("renderFailure $message")
-        message?.let {
-            try {
-
-                val jObjError = JSONObject(message)
-                setErrorsToViews(jObjError)
-
-
-            } catch (e: Exception) {
-                Toast.makeText(
-                    context,
-                    e.localizedMessage,
-                    Toast.LENGTH_LONG
-                ).show()
-
-                Timber.e("${e.localizedMessage}")
-
-            }
-        }
-    }
-
-    private fun setErrorsToViews(jObjError: JSONObject) {
-        if (jObjError.has("errors")) {
-            val jsonArray = jObjError.getJSONArray("errors")
-            jsonArray?.let {
-                if (jsonArray.length() > 0 && jsonArray[0] is JSONObject) {
-                    Toast.makeText(
-                        context,
-                        (jsonArray[0] as JSONObject)["message"].toString(),
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-            }
-
-
-        }
     }
 }

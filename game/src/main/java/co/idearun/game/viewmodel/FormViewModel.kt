@@ -191,7 +191,7 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
     private fun handleDisableForm(res: CreateFormRes) {
         res?.data?.form?.let {
-            _editForm.value = it
+            _disableForm.value = it
         }
     }
 

@@ -86,13 +86,14 @@ class HostFormFragment : Fragment() {
                     JSONObject(body).toString()
                 )
 
-                vm.submitFormData(slug!!, bodyM).also {
-                    vm.disableForm(slug!!,"JWT ${TokenContainer.authorizationToken}", false)
-                }
+                vm.submitFormData(slug!!, bodyM)
             }
 
         }
 
+        endGameBtn.setOnClickListener {
+            vm.disableForm(slug!!,"JWT ${TokenContainer.authorizationToken}", false)
+        }
 
         vm.disableForm.observe(this,{
             val args = Bundle()

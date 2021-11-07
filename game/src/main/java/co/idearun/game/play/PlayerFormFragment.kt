@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import co.idearun.auth.viewmodel.AuthViewModel
 import co.idearun.common.TokenContainer
+import co.idearun.game.BaseFragment
 import co.idearun.game.FormFieldsAdapter
 import co.idearun.game.R
 import co.idearun.game.viewmodel.FormViewModel
@@ -24,7 +25,7 @@ import org.json.JSONObject
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class PlayerFormFragment : Fragment() {
+class PlayerFormFragment : BaseFragment() {
 
     lateinit var adapter: FormFieldsAdapter
 
@@ -89,6 +90,10 @@ class PlayerFormFragment : Fragment() {
 
         vm.submitForm.observe(this,{
             Toast.makeText(context,"your form submited!, in next days result will be complete", Toast.LENGTH_LONG).show()
+        })
+
+        vm.failure.observe(this, {
+            checkFailureStatus(it)
         })
 
 
