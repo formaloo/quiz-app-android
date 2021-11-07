@@ -1,6 +1,5 @@
 package co.idearun.game.viewmodel
 
-import android.util.Log
 import androidx.collection.ArrayMap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -16,7 +15,6 @@ import co.idearun.data.model.live.LiveDashboardCode
 import co.idearun.data.model.live.LiveDashboardRes
 import co.idearun.data.model.submitForm.SubmitFormRes
 import co.idearun.data.repository.FormzRepo
-import kotlinx.android.synthetic.main.fragment_formeditor.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
@@ -43,6 +41,9 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
     private val _submits = MutableLiveData<SubmitsResponse>()
     val submits: LiveData<SubmitsResponse> = _submits
+
+    private val _submitForm = MutableLiveData<SubmitFormRes>()
+    val submitForm: LiveData<SubmitFormRes> = _submitForm
 
     private val _liveForm = MutableLiveData<LiveDashboardCode>()
     val liveForm: LiveData<LiveDashboardCode> = _liveForm
@@ -128,8 +129,8 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         result.either(::handleFailure, ::handleLiveFormData)
     }
 
-    fun getFormDataWithLiveCode(token: String, body: String) = viewModelScope.launch {
-        val result = withContext(Dispatchers.IO) { repository.getFormDataWithLiveCode(token, body) }
+    fun getFormDataWithLiveCode(token: String, liveCode: String) = viewModelScope.launch {
+        val result = withContext(Dispatchers.IO) { repository.getFormDataWithLiveCode(token, liveCode) }
         result.either(::handleFailure, ::handleLiveFormData)
     }
 
@@ -154,26 +155,26 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
     fun submitFormData(slug: String, body: RequestBody) = viewModelScope.launch {
         val result = withContext(Dispatchers.IO) { repository.submitFormData(slug, body) }
-        result.either(::handleFailure, ::handleLiveFormData)
+        result.either(::handleFailure, ::handleSubmitFormData)
     }
 
     fun getFormSubmits(slug: String, token: String) = viewModelScope.launch {
         val result = withContext(Dispatchers.IO) { repository.getFormSubmits(slug, token) }
-        result.either(::handleFailure, ::handleFormSubmitsData)
+        result.either(::handleFailure, ::handleSubmitsData)
     }
 
-    private fun handleFormSubmitsData(res: SubmitsResponse) {
+    private fun handleSubmitsData(res: SubmitsResponse) {
         Timber.i("players ${res.status}")
         res?.let {
             _submits.value = res
         }
     }
 
-    private fun handleLiveFormData(res: SubmitFormRes) {
+    private fun handleSubmitFormData(res: SubmitFormRes) {
         Timber.i("players ${res.status}")
-        /*   res?.data?.liveDashboardCode?.let {
-               _liveForm.value = it
-           }*/
+           res?.let {
+               _submitForm.value = it
+           }
     }
 
     private fun handleLiveFormData(res: LiveDashboardRes) {

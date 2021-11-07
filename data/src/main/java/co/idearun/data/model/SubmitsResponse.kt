@@ -1,7 +1,5 @@
 package co.idearun.data.model
 
-import android.content.SyncRequest
-import android.util.ArrayMap
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 

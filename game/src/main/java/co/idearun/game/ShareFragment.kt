@@ -29,6 +29,7 @@ import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
 
 import androidx.core.content.ContextCompat.getSystemService
+import timber.log.Timber
 
 
 class ShareFragment : Fragment() {
@@ -54,10 +55,14 @@ class ShareFragment : Fragment() {
             shareAction(liveCode!!)
         }
 
-        copyAndPlayBtn.setOnClickListener {
+        playBtn.setOnClickListener {
+            val args = Bundle()
+            args.putString("liveCode", liveCode)
+            findNavController().navigate(R.id.action_shareFragment_to_hostFormFragment, args)
+
+
             (requireActivity().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager).apply {
                 setPrimaryClip(ClipData.newPlainText("simple text", liveCode))
-                findNavController().navigate(R.id.action_shareFragment_to_mainFragment)
             }
         }
 

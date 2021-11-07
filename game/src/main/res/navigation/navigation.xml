@@ -88,6 +88,9 @@
         <action
             android:id="@+id/action_shareFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_shareFragment_to_hostFormFragment"
+            app:destination="@id/hostFormFragment" />
     </fragment>
     <fragment
         android:id="@+id/playerCodeFragment"
@@ -112,4 +115,16 @@
         tools:layout="@layout/fragment_form"
         android:name="co.idearun.game.play.PlayerFormFragment"
         android:label="PlayerFormFragment" />
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="co.idearun.game.ResultFragment"
+        android:label="ResultFragment" />
+    <fragment
+        android:id="@+id/hostFormFragment"
+        android:name="co.idearun.game.HostFormFragment"
+        android:label="HostFormFragment" >
+        <action
+            android:id="@+id/action_hostFormFragment_to_resultFragment"
+            app:destination="@id/resultFragment" />
+    </fragment>
 </navigation>
