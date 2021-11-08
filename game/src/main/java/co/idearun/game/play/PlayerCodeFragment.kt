@@ -61,8 +61,9 @@ class PlayerCodeFragment : BaseFragment() {
         vm.failure.observe(this, {
             if (it?.msgRes?.contains("404")!!){
                 openAlert("invalid live code")
+            } else {
+                checkFailureStatus(it)
             }
-            checkFailureStatus(it)
         })
     }
 
