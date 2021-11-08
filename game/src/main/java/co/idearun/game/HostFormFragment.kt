@@ -39,7 +39,7 @@ class HostFormFragment : BaseFragment() {
         val liveCode = arguments?.getString("liveCode")
         var slug: String? = null
 
-        formVm.getFormDataWithLiveCode("JWT ${TokenContainer.authorizationToken}", liveCode!!)
+        formVm.getFormDataWithLiveCode(liveCode!!)
 
         formVm.liveForm.observe(this, {
             val address = it?.form?.address!!

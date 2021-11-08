@@ -26,8 +26,8 @@ class FormDatasource(private val service: FormService) {
 
     fun copyForm(slug: String, token: String) = service.copyForm(slug, token)
     fun createLive(slug: String, token: String) = service.createLive(slug, token)
-    fun getFormDataWithLiveCode(token: String, body: RequestBody) =
-        service.getFormDataWithLiveCode(token, body)
+    fun getFormDataWithLiveCode(body: RequestBody) =
+        service.getFormDataWithLiveCode(body)
 
     fun editForm(slug: String, token: String, body: RequestBody) =
         service.editForm(slug, token, body)

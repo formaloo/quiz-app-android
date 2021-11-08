@@ -25,7 +25,7 @@ interface FormzDataSource {
     suspend fun getFormTag(page: Int): Either<Failure, FormListRes>
     suspend fun copyForm(slug: String, token: String): Either<Failure, CreateFormRes>
     suspend fun createLive(slug: String, token: String): Either<Failure, LiveDashboardRes>
-    suspend fun getFormDataWithLiveCode(token: String, body: String): Either<Failure, LiveDashboardRes>
+    suspend fun getFormDataWithLiveCode(body: String): Either<Failure, LiveDashboardRes>
     suspend fun editForm(slug: String,token: String, body: RequestBody): Either<Failure, CreateFormRes>
     suspend fun submitFormData(slug: String, body: RequestBody): Either<Failure, SubmitFormRes>
     suspend fun getFormSubmits(slug: String, token: String ): Either<Failure, SubmitsResponse>

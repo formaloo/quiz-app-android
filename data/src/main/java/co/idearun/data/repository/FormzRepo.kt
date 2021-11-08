@@ -327,7 +327,6 @@ class FormzRepo(
     }
 
     override suspend fun getFormDataWithLiveCode(
-        token: String,
         body: String
     ): Either<Failure, LiveDashboardRes> {
         val jsonBody = HashMap<String, Any>()
@@ -338,7 +337,7 @@ class FormzRepo(
             JSONObject(jsonBody as Map<*, *>).toString()
         )
 
-        val call = source.getFormDataWithLiveCode(token, bodyM)
+        val call = source.getFormDataWithLiveCode(bodyM)
         return try {
             request(call, { it.toLiveDashboardRes() }, LiveDashboardRes.empty())
         } catch (e: Exception) {

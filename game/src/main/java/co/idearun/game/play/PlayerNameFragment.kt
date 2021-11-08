@@ -41,18 +41,6 @@ class PlayerNameFragment : BaseFragment() {
 
         val vm: FormViewModel by activityViewModels()
 
-
-        vm.getFormSubmits("GIqc0SPM", "JWT "+TokenContainer.authorizationToken!!)
-
-        vm.submits.observe(this,{
-            Timber.i("submits ${it.data}")
-            val rows = it.data?.rows
-            rows?.forEach {
-                val data = it?.data
-            }
-
-        })
-
         playBtn.setOnClickListener {
             vm.userName.value = nameEdt.text.toString()
             findNavController().navigate(R.id.action_playerNameFragment_to_playerFormFragment)

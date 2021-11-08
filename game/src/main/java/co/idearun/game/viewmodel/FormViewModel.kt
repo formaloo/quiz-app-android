@@ -81,9 +81,9 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         result.either(::handleFailure, ::handleLiveFormData)
     }
 
-    fun getFormDataWithLiveCode(token: String, liveCode: String) = viewModelScope.launch {
+    fun getFormDataWithLiveCode(liveCode: String) = viewModelScope.launch {
         showLoading()
-        val result = withContext(Dispatchers.IO) { repository.getFormDataWithLiveCode(token, liveCode) }
+        val result = withContext(Dispatchers.IO) { repository.getFormDataWithLiveCode(liveCode) }
         result.either(::handleFailure, ::handleLiveFormData)
     }
 

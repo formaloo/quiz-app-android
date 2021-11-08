@@ -4,25 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.collection.ArrayMap
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import co.idearun.auth.viewmodel.AuthViewModel
-import co.idearun.common.TokenContainer
-import co.idearun.data.model.live.LiveDashboardRes
 import co.idearun.game.BaseFragment
 import co.idearun.game.R
 import co.idearun.game.viewmodel.FormViewModel
-import kotlinx.android.synthetic.main.fragment_formeditor.*
-import kotlinx.android.synthetic.main.fragment_games.*
 import kotlinx.android.synthetic.main.fragment_player_code.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
-import org.json.JSONObject
-import org.koin.android.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class PlayerCodeFragment : BaseFragment() {
 
@@ -45,10 +32,7 @@ class PlayerCodeFragment : BaseFragment() {
         nextBtn.setOnClickListener {
             val liveCode = codeEdt.text.toString()
             if (checkCodeLength(liveCode)) {
-                vm.getFormDataWithLiveCode(
-                    "JWT ${TokenContainer.authorizationToken}",
-                    liveCode
-                )
+                vm.getFormDataWithLiveCode(liveCode)
             }
 
         }
@@ -60,11 +44,15 @@ class PlayerCodeFragment : BaseFragment() {
 
         vm.failure.observe(this, {
             vm.hideLoading()
-            if (it?.msgRes?.contains("404")!!){
+            if (it?.msgRes?.contains("404")!!) {
                 openAlert("invalid live code")
             } else {
                 checkFailureStatus(it)
             }
+        })
+
+        vm.isLoading.observe(this,{
+            if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
         })
     }
 

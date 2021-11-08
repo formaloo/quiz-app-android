@@ -93,7 +93,6 @@ interface FormService {
 
     @POST(GET_FORMDATA_WITH_LIVECODE)
     fun getFormDataWithLiveCode(
-        @Header("Authorization") token: String,
         @Body body: RequestBody?
     ): Call<LiveDashboardRes>
 
