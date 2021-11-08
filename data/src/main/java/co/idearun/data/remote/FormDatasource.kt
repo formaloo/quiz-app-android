@@ -37,4 +37,7 @@ class FormDatasource(private val service: FormService) {
 
     fun getFormSubmits(slug: String, token: String) =
         service.getFormSubmits(slug, token)
+
+    fun getSubmitsRow(slug: String) =
+        service.getSubmitsRow(slug)
 }

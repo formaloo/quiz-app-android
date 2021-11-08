@@ -5,8 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
 import co.idearun.common.base.BaseViewModel
 import co.idearun.data.model.SubmitsResponse
 import co.idearun.data.model.form.Form
@@ -17,8 +15,6 @@ import co.idearun.data.model.live.LiveDashboardRes
 import co.idearun.data.model.submitForm.SubmitFormRes
 import co.idearun.data.repository.FormzRepo
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -122,7 +118,20 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         result.either(::handleFailure, ::handleSubmitsData)
     }
 
+    fun getSubmitsRow(liveDashboardAddress: String) = viewModelScope.launch {
+        showLoading()
+        val result = withContext(Dispatchers.IO) { repository.getSubmitsRow(liveDashboardAddress) }
+        result.either(::handleFailure, ::handleSubmitsRowData)
+    }
+
     private fun handleSubmitsData(res: SubmitsResponse) {
+        hideLoading()
+        res.let {
+            _submits.value = res
+        }
+    }
+
+    private fun handleSubmitsRowData(res: SubmitsResponse) {
         hideLoading()
         res.let {
             _submits.value = res

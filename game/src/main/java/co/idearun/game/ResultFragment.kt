@@ -33,7 +33,7 @@ class ResultFragment : BaseFragment() {
         adapter = ResultAdapter()
         rvFields.adapter = adapter
 
-        formVm.getFormSubmits(slug!!, "JWT ${TokenContainer.authorizationToken}")
+        formVm.getSubmitsRow(slug!!)
 
 
         formVm.submits.observe(this, {

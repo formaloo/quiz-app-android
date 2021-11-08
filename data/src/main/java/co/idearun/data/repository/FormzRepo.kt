@@ -382,6 +382,15 @@ class FormzRepo(
         }
     }
 
+    override suspend fun getSubmitsRow(slug: String): Either<Failure, SubmitsResponse> {
+        val call = source.getSubmitsRow(slug)
+        return try {
+            request(call, { it.toSubmitsResponse() }, SubmitsResponse.empty())
+        } catch (e: Exception) {
+            Either.Left(Failure.Exception)
+        }
+    }
+
     override suspend fun getCatList(): Either<Failure, CatListRes> {
 
         val call = source.getCatList()

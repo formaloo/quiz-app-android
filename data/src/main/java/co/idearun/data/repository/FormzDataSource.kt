@@ -29,6 +29,7 @@ interface FormzDataSource {
     suspend fun editForm(slug: String,token: String, body: RequestBody): Either<Failure, CreateFormRes>
     suspend fun submitFormData(slug: String, body: RequestBody): Either<Failure, SubmitFormRes>
     suspend fun getFormSubmits(slug: String, token: String ): Either<Failure, SubmitsResponse>
+    suspend fun getSubmitsRow(slug: String): Either<Failure, SubmitsResponse>
 
     suspend fun getFormFromDB(slug: String): Form?
     suspend fun getFormListFromDB(): List<Form>
