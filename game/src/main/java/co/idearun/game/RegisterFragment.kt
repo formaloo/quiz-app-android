@@ -40,9 +40,9 @@ class RegisterFragment : BaseFragment(), AdapterView.OnItemSelectedListener,
         imageView3.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
 
         genderSpinner.onItemSelectedListener = this
-        val vm: AuthViewModel by viewModel()
+        val authVm: AuthViewModel by viewModel()
         registerBtn.setOnClickListener {
-            vm.registerUser(
+            authVm.registerUser(
                 RegisterInfo(
                     nameEdt.text.toString(),
                     passEdt.text.toString(),
@@ -53,23 +53,29 @@ class RegisterFragment : BaseFragment(), AdapterView.OnItemSelectedListener,
             )
         }
 
-        vm.registerData.observe(this, {
+        authVm.registerData.observe(this, {
             val token = it?.data?.profile?.sessionToken
             userInfoManager.saveSessionToken(token)
-            vm.authorizeUser(token!!)
+            authVm.authorizeUser(token!!)
 
             Log.i("TAG", "onViewCreated: ${it.data?.profile}")
             Toast.makeText(context, "${it.data?.profile?.sessionToken}", Toast.LENGTH_LONG).show()
         })
 
-        vm.authorizeData.observe(this, {
+        authVm.authorizeData.observe(this, {
             userInfoManager.saveAuthorizationToken(it.token)
             findNavController().navigate(R.id.action_authFragment_to_hostFragment)
 
         })
 
-        vm.failure.observe(this, {
+        authVm.failure.observe(this, {
+            authVm.hideLoading()
             checkFailureStatus(it)
+        })
+
+
+        authVm.isLoading.observe(this,{
+            if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
         })
 
 

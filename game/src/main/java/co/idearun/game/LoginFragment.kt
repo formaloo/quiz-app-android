@@ -1,5 +1,6 @@
 package co.idearun.game
 
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -48,8 +49,12 @@ class LoginFragment : BaseFragment() {
         })
 
         authVm.failure.observe(this, {
+            authVm.hideLoading()
             checkFailureStatus(it)
-            openAlert(it?.msgRes!!)
+        })
+
+        authVm.isLoading.observe(this,{
+            if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
         })
 
     }

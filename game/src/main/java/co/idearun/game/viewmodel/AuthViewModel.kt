@@ -2,6 +2,7 @@ package co.idearun.game.viewmodel
 
 import androidx.collection.ArrayMap
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import co.idearun.auth.model.LoginRes
@@ -28,6 +29,8 @@ class AuthViewModel(private val repository: AuthRepositoryImpl) : BaseViewModel(
     private val _authorizeData = MutableLiveData<Token>()
     val authorizeData: LiveData<Token> = _authorizeData
 
+    private val _isLoading = MediatorLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
 
     fun registerUser(registerInfo: RegisterInfo) = viewModelScope.launch {
 

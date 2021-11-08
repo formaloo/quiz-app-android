@@ -2,6 +2,7 @@ package co.idearun.game.viewmodel
 
 import androidx.collection.ArrayMap
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -29,6 +30,10 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
     private var formSlug: String = ""
     private var formAddress: String = ""
+
+
+    private val _isLoading = MediatorLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
 
     var userForm = MutableLiveData<LiveDashboardCode>()
     var userName = MutableLiveData<String>()
@@ -130,6 +135,7 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     }
 
     fun getFormDataWithLiveCode(token: String, liveCode: String) = viewModelScope.launch {
+        _isLoading.value = true
         val result = withContext(Dispatchers.IO) { repository.getFormDataWithLiveCode(token, liveCode) }
         result.either(::handleFailure, ::handleLiveFormData)
     }
@@ -178,6 +184,7 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     }
 
     private fun handleLiveFormData(res: LiveDashboardRes) {
+        hideLoading()
         res?.data?.liveDashboardCode?.let {
             _liveForm.value = it
         }
@@ -235,6 +242,11 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
             _pagingData.value = pagingData
         }
 
+    }
+
+
+    fun hideLoading() {
+        _isLoading.value = false
     }
 
 }

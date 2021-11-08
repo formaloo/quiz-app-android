@@ -4,6 +4,7 @@
     <string name="auth_err">UnAuthorized</string>
     <string name="server_err">Server Error</string>
     <string name="message_dialog">hello</string>
+    <string name="loading">loading…</string>
 
     <string-array name="gender">
         <item>male</item>

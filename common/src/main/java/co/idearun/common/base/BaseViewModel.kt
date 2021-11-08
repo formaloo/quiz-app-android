@@ -71,11 +71,9 @@ abstract class BaseViewModel : ViewModel(), Observable, CoroutineScope {
     }
 
 
-
     protected fun handleFailure(failure: Failure) {
         this.failure.value = failure
 
     }
-
 
 }

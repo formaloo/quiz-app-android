@@ -2,6 +2,7 @@ package co.idearun.auth.viewmodel
 
 import androidx.collection.ArrayMap
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import co.idearun.auth.model.LoginRes
@@ -28,9 +29,11 @@ class AuthViewModel(private val repository: AuthRepositoryImpl) : BaseViewModel(
     private val _authorizeData = MutableLiveData<Token>()
     val authorizeData: LiveData<Token> = _authorizeData
 
+    private val _isLoading = MediatorLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
 
     fun registerUser(registerInfo: RegisterInfo) = viewModelScope.launch {
-
+        _isLoading.value = true
         val req = ArrayMap<String, Any>()
 
         with(registerInfo) {
@@ -50,6 +53,7 @@ class AuthViewModel(private val repository: AuthRepositoryImpl) : BaseViewModel(
     }
 
     fun loginUser(userName: String, password: String) = viewModelScope.launch {
+        _isLoading.value = true
         val req = ArrayMap<String, Any>()
         req["password"] = password
         req["username"] = userName
@@ -68,12 +72,14 @@ class AuthViewModel(private val repository: AuthRepositoryImpl) : BaseViewModel(
     }
 
     private fun handleRegisterData(res: RegisterRes) {
+        hideLoading()
         res.let {
             _registerData.value = it
         }
     }
 
     private fun handleLoginData(res: LoginRes) {
+        hideLoading()
         res.let {
             _loginData.value = it
         }
@@ -85,5 +91,8 @@ class AuthViewModel(private val repository: AuthRepositoryImpl) : BaseViewModel(
         }
     }
 
+    fun hideLoading() {
+        _isLoading.value = false
+    }
 
 }
