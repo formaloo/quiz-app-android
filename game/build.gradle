@@ -12,8 +12,8 @@ android {
 }
 
 dependencies {
-    implementation "com.louiscad.splitties:splitties-alertdialog-appcompat:2.1.1"
     implementation project(":common")
     implementation project(":data")
     implementation project(":auth")
+    implementation "com.louiscad.splitties:splitties-alertdialog-appcompat:2.1.1"
 }

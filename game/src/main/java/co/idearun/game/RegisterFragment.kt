@@ -7,21 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import co.idearun.auth.model.register.RegisterInfo
 import co.idearun.auth.viewmodel.AuthViewModel
 import co.idearun.common.UserInfoManager
-import kotlinx.android.synthetic.main.fragment_games.*
-import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_register.imageView3
 import kotlinx.android.synthetic.main.fragment_register.passEdt
-import org.json.JSONObject
 import org.koin.android.viewmodel.ext.android.viewModel
-import splitties.alertdialog.appcompat.*
-import timber.log.Timber
-import java.util.zip.Inflater
 
 class RegisterFragment : BaseFragment() {
 
@@ -75,7 +68,7 @@ class RegisterFragment : BaseFragment() {
         })
 
         vm.failure.observe(this, {
-            renderFailure(it.msgRes)
+            checkFailureStatus(it)
         })
 
 

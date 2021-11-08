@@ -17,7 +17,7 @@ import okhttp3.RequestBody
 import org.json.JSONObject
 import timber.log.Timber
 
-class HostFormFragment : Fragment() {
+class HostFormFragment : BaseFragment() {
 
     lateinit var adapter: FormFieldsAdapter
 
@@ -101,6 +101,9 @@ class HostFormFragment : Fragment() {
             findNavController().navigate(R.id.action_hostFormFragment_to_resultFragment, args)
         })
 
+        vm.failure.observe(this, {
+            checkFailureStatus(it)
+        })
 
     }
 }

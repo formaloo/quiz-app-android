@@ -19,7 +19,7 @@ import org.json.JSONObject
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class FormEditorFragment : Fragment() {
+class FormEditorFragment : BaseFragment() {
 
     lateinit var adapter: FormFieldsAdapter
 
@@ -89,6 +89,10 @@ class FormEditorFragment : Fragment() {
             args.putString("liveCode", it.code)
             findNavController().navigate(R.id.action_formEditorFragment_to_shareFragment, args)
 
+        })
+
+        vm.failure.observe(this, {
+            checkFailureStatus(it)
         })
     }
 }

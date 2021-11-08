@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import co.idearun.auth.viewmodel.AuthViewModel
 import co.idearun.common.TokenContainer
+import co.idearun.game.BaseFragment
 import co.idearun.game.R
 import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_formeditor.*
@@ -23,7 +24,7 @@ import org.json.JSONObject
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class PlayerNameFragment : Fragment() {
+class PlayerNameFragment : BaseFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,5 +58,9 @@ class PlayerNameFragment : Fragment() {
             findNavController().navigate(R.id.action_playerNameFragment_to_playerFormFragment)
 
         }
+
+        vm.failure.observe(this, {
+            checkFailureStatus(it)
+        })
     }
 }

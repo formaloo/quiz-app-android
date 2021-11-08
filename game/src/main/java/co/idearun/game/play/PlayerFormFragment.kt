@@ -71,7 +71,6 @@ class PlayerFormFragment : BaseFragment() {
                 val viewHolder = adapter.FormFieldsViewHolder(view)
 
                 if (!viewHolder.fieldsEdt.text.toString().isBlank()) {
-                    Timber.i("test nulla")
                     val value = viewHolder.fieldsEdt.text.toString()
                     val slugField = fields.slug!!
                     body[slugField] = value
@@ -89,11 +88,15 @@ class PlayerFormFragment : BaseFragment() {
         }
 
         vm.submitForm.observe(this,{
-            Toast.makeText(context,"your form submited!, in next days result will be complete", Toast.LENGTH_LONG).show()
+            Toast.makeText(context,"your form submit!, in next days result will be complete", Toast.LENGTH_LONG).show()
         })
 
         vm.failure.observe(this, {
-            checkFailureStatus(it)
+            if(it.msgRes?.contains("404")!!){
+                Toast.makeText(context,"you late, Game is over", Toast.LENGTH_LONG).show()
+            } else {
+                checkFailureStatus(it)
+            }
         })
 
 
