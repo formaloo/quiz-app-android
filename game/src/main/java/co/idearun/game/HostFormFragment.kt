@@ -5,13 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.collection.ArrayMap
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import co.idearun.common.TokenContainer
 import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_form_host.*
-import kotlinx.android.synthetic.main.fragment_form.rvFields
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -43,7 +41,7 @@ class HostFormFragment : BaseFragment() {
 
         vm.getFormDataWithLiveCode("JWT ${TokenContainer.authorizationToken}", liveCode!!)
 
-        vm.liveForm.observe(this,{
+        vm.liveForm.observe(this, {
             val address = it?.form?.address!!
             slug = it.form?.slug!!
             vm.initLessonAddress(address)
@@ -79,7 +77,7 @@ class HostFormFragment : BaseFragment() {
                     body[slugField] = value
                 }
 
-               // Timber.i(fields.title + " = " + slug + " = " + value)
+                // Timber.i(fields.title + " = " + slug + " = " + value)
             }.also {
                 val bodyM = RequestBody.create(
                     "application/json; charset=utf-8".toMediaTypeOrNull(),
@@ -92,10 +90,13 @@ class HostFormFragment : BaseFragment() {
         }
 
         endGameBtn.setOnClickListener {
-            vm.disableForm(slug!!,"JWT ${TokenContainer.authorizationToken}", false)
+            {
+
+            }
+            vm.disableForm(slug!!, "JWT ${TokenContainer.authorizationToken}", false)
         }
 
-        vm.disableForm.observe(this,{
+        vm.disableForm.observe(this, {
             val args = Bundle()
             args.putString("slug", slug)
             findNavController().navigate(R.id.action_hostFormFragment_to_resultFragment, args)

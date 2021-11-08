@@ -19,7 +19,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.util.zip.Inflater
 
-class MainFragment : Fragment() {
+class MainFragment : BaseFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,6 +40,7 @@ class MainFragment : Fragment() {
         imageView2.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
 
 
+        openAlert("test tset")
         btnHost.setOnClickListener {
             if (userInfoManager.sessionToken().isNullOrBlank()) {
                 findNavController().navigate(R.id.action_mainFragment_to_authFragment)

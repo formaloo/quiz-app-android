@@ -3,5 +3,6 @@
     <string name="no_internet">Check Internet Connection</string>
     <string name="auth_err">UnAuthorized</string>
     <string name="server_err">Server Error</string>
+    <string name="message_dialog">hello</string>
 
 </resources>

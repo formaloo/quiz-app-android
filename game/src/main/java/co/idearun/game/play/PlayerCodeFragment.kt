@@ -43,25 +43,33 @@ class PlayerCodeFragment : BaseFragment() {
 
 
         nextBtn.setOnClickListener {
-
-            Timber.i("mio JWT ${TokenContainer.authorizationToken}")
-            Timber.i("mio" + codeEdt.text.toString())
-
-            vm.getFormDataWithLiveCode(
-                "JWT ${TokenContainer.authorizationToken}",
-                codeEdt.text.toString()
-            )
+            val liveCode = codeEdt.text.toString()
+            if (checkCodeLength(liveCode)) {
+                vm.getFormDataWithLiveCode(
+                    "JWT ${TokenContainer.authorizationToken}",
+                    liveCode
+                )
+            }
 
         }
 
         vm.liveForm.observe(this, {
-            Timber.i(it.form?.address)
             vm.userForm.value = it
             findNavController().navigate(R.id.action_playerCodeFragment_to_playerNameFragment)
         })
 
         vm.failure.observe(this, {
+            if (it?.msgRes?.contains("404")!!){
+                openAlert("invalid live code")
+            }
             checkFailureStatus(it)
         })
+    }
+
+    fun checkCodeLength(code: String): Boolean {
+        if (code.length == 6)
+            return true
+        openAlert("you code length must be 6 digit number")
+        return false
     }
 }

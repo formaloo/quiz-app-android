@@ -31,7 +31,6 @@ class LoginFragment : BaseFragment() {
         val userInfoManager = UserInfoManager(context!!)
         imageView3.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
 
-        val formVm: FormViewModel by viewModel()
         val authVm: AuthViewModel by viewModel()
 
         loginBtn.setOnClickListener {
@@ -43,14 +42,9 @@ class LoginFragment : BaseFragment() {
             authVm.authorizeUser(it.token!!)
         })
 
-
         authVm.authorizeData.observe(this, {
             userInfoManager.saveAuthorizationToken(it.token)
             findNavController().navigate(R.id.action_authFragment_to_hostFragment)
-        })
-
-        formVm.liveForm.observe(this, {
-            Toast.makeText(context, "کد فرمالو لایو شما ${it.code}", Toast.LENGTH_LONG).show()
         })
 
         authVm.failure.observe(this, {

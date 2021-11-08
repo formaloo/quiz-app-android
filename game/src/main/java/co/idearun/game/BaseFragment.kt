@@ -4,44 +4,35 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import co.idearun.common.exception.Failure
 import org.json.JSONObject
+import splitties.alertdialog.appcompat.*
 import timber.log.Timber
 
-open class BaseFragment: Fragment() {
+open class BaseFragment : Fragment() {
 
+
+    fun openAlert(msg: String) {
+        requireContext().alertDialog {
+            message = msg
+            okButton()
+        }.onShow {
+            positiveButton.setTextColor(resources.getColor(android.R.color.holo_blue_dark))
+        }.show()
+    }
 
     fun checkFailureStatus(it: Failure) {
         when (it) {
             is Failure.FeatureFailure -> renderFailure(it.msgRes)
             is Failure.UNAUTHORIZED_Error -> {
-                Toast.makeText(
-                    context,
-                    getString(R.string.auth_err),
-                    Toast.LENGTH_LONG
-                ).show()
-
+                openAlert(getString(R.string.auth_err))
             }
             is Failure.ServerError -> {
-                Toast.makeText(
-                    context,
-                    getString(R.string.server_err),
-                    Toast.LENGTH_LONG
-                ).show()
-
+                openAlert(getString(R.string.server_err))
             }
             is Failure.NetworkConnection -> {
-                Toast.makeText(
-                    context,
-                    getString(R.string.no_internet),
-                    Toast.LENGTH_LONG
-                ).show()
-
+                openAlert(getString(R.string.no_internet))
             }
             else -> {
-                Toast.makeText(
-                    context,
-                    getString(R.string.no_internet),
-                    Toast.LENGTH_LONG
-                ).show()
+                openAlert(getString(R.string.no_internet))
             }
         }
 
@@ -52,19 +43,10 @@ open class BaseFragment: Fragment() {
         Timber.e("renderFailure $message")
         message?.let {
             try {
-
                 val jObjError = JSONObject(message)
                 setErrorsToViews(jObjError)
-
-
             } catch (e: Exception) {
-                Toast.makeText(
-                    context,
-                    e.localizedMessage,
-                    Toast.LENGTH_LONG
-                ).show()
-
-                Timber.e("${e.localizedMessage}")
+                Timber.e(e.localizedMessage)
 
             }
         }
@@ -75,11 +57,7 @@ open class BaseFragment: Fragment() {
             val jsonArray = jObjError.getJSONArray("errors")
             jsonArray?.let {
                 if (jsonArray.length() > 0 && jsonArray[0] is JSONObject) {
-                    Toast.makeText(
-                        context,
-                        (jsonArray[0] as JSONObject)["message"].toString(),
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    openAlert((jsonArray[0] as JSONObject)["message"].toString())
                 }
             }
 
