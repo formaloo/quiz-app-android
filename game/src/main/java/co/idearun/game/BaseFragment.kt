@@ -46,8 +46,8 @@ open class BaseFragment : Fragment() {
                 val jObjError = JSONObject(message)
                 setErrorsToViews(jObjError)
             } catch (e: Exception) {
+                openAlert(e?.message!!)
                 Timber.e(e.localizedMessage)
-
             }
         }
     }

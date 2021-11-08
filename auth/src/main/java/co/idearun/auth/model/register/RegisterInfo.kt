@@ -10,6 +10,8 @@ data class RegisterInfo(
     var gender: String?
 ) : Serializable {
     companion object {
+        const val GENDER_MALE = "male"
+        const val GENDER_FEMALE = "female"
         fun empty() = RegisterInfo(null, null, null, null, null)
     }
 }

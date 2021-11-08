@@ -49,6 +49,7 @@ class LoginFragment : BaseFragment() {
 
         authVm.failure.observe(this, {
             checkFailureStatus(it)
+            openAlert(it?.msgRes!!)
         })
 
     }

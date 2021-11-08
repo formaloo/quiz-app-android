@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.AdapterView
 import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import co.idearun.auth.model.register.RegisterInfo
@@ -16,8 +17,10 @@ import kotlinx.android.synthetic.main.fragment_register.imageView3
 import kotlinx.android.synthetic.main.fragment_register.passEdt
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class RegisterFragment : BaseFragment() {
+class RegisterFragment : BaseFragment(), AdapterView.OnItemSelectedListener,
+    AdapterView.OnItemClickListener {
 
+    var gender = RegisterInfo.GENDER_MALE
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,18 +39,16 @@ class RegisterFragment : BaseFragment() {
         val userInfoManager = UserInfoManager(context!!)
         imageView3.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
 
+        genderSpinner.onItemSelectedListener = this
         val vm: AuthViewModel by viewModel()
         registerBtn.setOnClickListener {
-            if (nameEdt.text.toString() == "test") {
-                findNavController().navigate(R.id.action_authFragment_to_hostFragment)
-            }
             vm.registerUser(
                 RegisterInfo(
                     nameEdt.text.toString(),
                     passEdt.text.toString(),
                     emailEdt.text.toString(),
                     phoneEdt.text.toString(),
-                    genderEdt.text.toString()
+                    gender
                 )
             )
         }
@@ -73,4 +74,24 @@ class RegisterFragment : BaseFragment() {
 
 
     }
+
+    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+        if (p2==0) gender = RegisterInfo.GENDER_MALE else gender = RegisterInfo.GENDER_FEMALE
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+    }
+
+    override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+    }
+
+    fun checkEmail(email: String): Boolean{
+        if(email.contains("@"))
+            return true
+
+        openAlert("your email is invalid")
+        return false
+    }
+
+
 }

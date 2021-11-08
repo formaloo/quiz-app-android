@@ -5,4 +5,9 @@
     <string name="server_err">Server Error</string>
     <string name="message_dialog">hello</string>
 
+    <string-array name="gender">
+        <item>male</item>
+        <item>female</item>
+    </string-array>
+
 </resources>

@@ -40,7 +40,6 @@ class MainFragment : BaseFragment() {
         imageView2.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
 
 
-        openAlert("test tset")
         btnHost.setOnClickListener {
             if (userInfoManager.sessionToken().isNullOrBlank()) {
                 findNavController().navigate(R.id.action_mainFragment_to_authFragment)
