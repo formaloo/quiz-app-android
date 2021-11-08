@@ -32,27 +32,27 @@ class HostFormFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val vm: FormViewModel by activityViewModels()
+        val formVm: FormViewModel by activityViewModels()
         adapter = FormFieldsAdapter()
         rvFields.adapter = adapter
 
         val liveCode = arguments?.getString("liveCode")
         var slug: String? = null
 
-        vm.getFormDataWithLiveCode("JWT ${TokenContainer.authorizationToken}", liveCode!!)
+        formVm.getFormDataWithLiveCode("JWT ${TokenContainer.authorizationToken}", liveCode!!)
 
-        vm.liveForm.observe(this, {
+        formVm.liveForm.observe(this, {
             val address = it?.form?.address!!
             slug = it.form?.slug!!
-            vm.initLessonAddress(address)
-            vm.getFormData()
+            formVm.initLessonAddress(address)
+            formVm.getFormData()
         })
 
 
 
 
 
-        vm.form1.observe(this, {
+        formVm.form1.observe(this, {
             Timber.i("TAG get form $it")
             Timber.i("TAG get form ${it.fields_list?.size}")
             val fields = it.fields_list
@@ -84,7 +84,7 @@ class HostFormFragment : BaseFragment() {
                     JSONObject(body).toString()
                 )
 
-                vm.submitFormData(slug!!, bodyM)
+                formVm.submitFormData(slug!!, bodyM)
             }
 
         }
@@ -93,18 +93,24 @@ class HostFormFragment : BaseFragment() {
             {
 
             }
-            vm.disableForm(slug!!, "JWT ${TokenContainer.authorizationToken}", false)
+            formVm.disableForm(slug!!, "JWT ${TokenContainer.authorizationToken}", false)
         }
 
-        vm.disableForm.observe(this, {
+        formVm.disableForm.observe(this, {
             val args = Bundle()
             args.putString("slug", slug)
             findNavController().navigate(R.id.action_hostFormFragment_to_resultFragment, args)
         })
 
-        vm.failure.observe(this, {
+        formVm.failure.observe(this, {
+            formVm.hideLoading()
             checkFailureStatus(it)
         })
+
+        formVm.isLoading.observe(this,{
+            if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
+        })
+
 
     }
 }

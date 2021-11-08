@@ -4,18 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.collection.ArrayMap
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import co.idearun.auth.viewmodel.AuthViewModel
 import co.idearun.common.TokenContainer
 import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_formeditor.*
-import kotlinx.android.synthetic.main.fragment_games.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
-import org.json.JSONObject
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -36,7 +29,7 @@ class FormEditorFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val vm: FormViewModel by viewModel()
+        val formVm: FormViewModel by viewModel()
         adapter = FormFieldsAdapter()
         adapter.disableField = true
 
@@ -46,11 +39,11 @@ class FormEditorFragment : BaseFragment() {
 
         Timber.i("TAG Address $formAddress")
         Timber.i("TAG Slug $formSlug")
-        vm.initLessonAddress(formAddress!!)
-        vm.getFormData()
+        formVm.initLessonAddress(formAddress!!)
+        formVm.getFormData()
 
 
-        vm.form1.observe(this, {
+        formVm.form1.observe(this, {
             Timber.i("TAG get form $it")
             Timber.i("TAG get form ${it.fields_list?.size}")
             val fields = it.fields_list
@@ -76,14 +69,14 @@ class FormEditorFragment : BaseFragment() {
             req["title"] = formTitleEdt.text.toString()
             req["description"] = formDescriptionEdt.text.toString()
 
-            vm.editForm(formSlug!!, "JWT ${TokenContainer.authorizationToken}", req)
+            formVm.editForm(formSlug!!, "JWT ${TokenContainer.authorizationToken}", req)
         }
 
-        vm.editForm.observe(this, {
-            vm.createLive(it.slug, "JWT ${TokenContainer.authorizationToken}")
+        formVm.editForm.observe(this, {
+            formVm.createLive(it.slug, "JWT ${TokenContainer.authorizationToken}")
         })
 
-        vm.liveForm.observe(this, {
+        formVm.liveForm.observe(this, {
             val args = Bundle()
             Timber.i(it.code)
             args.putString("liveCode", it.code)
@@ -91,8 +84,14 @@ class FormEditorFragment : BaseFragment() {
 
         })
 
-        vm.failure.observe(this, {
+        formVm.failure.observe(this, {
+            formVm.hideLoading()
             checkFailureStatus(it)
         })
+
+        formVm.isLoading.observe(this,{
+            if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
+        })
+
     }
 }

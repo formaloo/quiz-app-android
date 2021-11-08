@@ -1,72 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:orientation="vertical">
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/filledTextField"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="48dp"
-        app:boxBackgroundColor="#70D1FF"
-        app:hintTextColor="@color/white"
-        android:textColorHint="@color/white"
-        android:layout_marginTop="@dimen/padding_xlarge"
-        android:hint="enter title">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/formTitleEdt"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/filledTextField"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="48dp"
+            android:layout_marginTop="@dimen/padding_xlarge"
+            android:hint="enter title"
+            android:textColorHint="@color/white"
+            app:boxBackgroundColor="#70D1FF"
+            app:hintTextColor="@color/white">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/formTitleEdt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
 
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/filledTextField1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="48dp"
-        android:layout_marginTop="@dimen/padding_large"
-        app:boxBackgroundColor="#70D1FF"
-        app:hintTextColor="@color/white"
-        android:textColorHint="@color/white"
-        android:layout_marginVertical="@dimen/padding_2xsmall"
-        android:hint="enter description">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/formDescriptionEdt"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/filledTextField1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="48dp"
+            android:layout_marginVertical="@dimen/padding_2xsmall"
+            android:layout_marginTop="@dimen/padding_large"
+            android:hint="enter description"
+            android:textColorHint="@color/white"
+            app:boxBackgroundColor="#70D1FF"
+            app:hintTextColor="@color/white">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/formDescriptionEdt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
-    <TextView
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="48dp"
+            android:layout_marginTop="@dimen/padding_large"
+            android:text="Items: " />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFields"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_3xsmall"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_field_text" />
+
+        <Button
+            android:id="@+id/setBtn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#27B6FA"
+            android:text="Set config"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+    <include
+        android:id="@+id/loading"
+        layout="@layout/layout_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Items: "
-        android:layout_marginHorizontal="48dp"
-        android:layout_marginTop="@dimen/padding_large"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="@dimen/padding_3xsmall"
-        android:id="@+id/rvFields"
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:listitem="@layout/item_field_text"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:orientation="vertical"/>
-
-    <Button
-        android:id="@+id/setBtn"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="Set config"
-        android:background="#27B6FA"
-        android:textColor="@color/white" />
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,23 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AlphaAnimation
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import co.idearun.common.TokenContainer
-import co.idearun.common.UserInfoManager
 import co.idearun.common.base.OnRvItemClickListener
 import co.idearun.data.model.form.Form
-import co.idearun.game.viewmodel.AuthViewModel
 import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_games.*
-import kotlinx.android.synthetic.main.fragment_login.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class GamesFragment : Fragment() {
+class GamesFragment : BaseFragment() {
 
     lateinit var adapter: GamesAdapter
     override fun onCreateView(
@@ -49,7 +43,7 @@ class GamesFragment : Fragment() {
         adapter = GamesAdapter()
 
 
-       val vm: FormViewModel by viewModel()
+       val formVm: FormViewModel by viewModel()
 //        val vmAuth: AuthViewModel by viewModel()
         val args = Bundle()
 
@@ -61,12 +55,12 @@ class GamesFragment : Fragment() {
         Timber.i("Token ${TokenContainer.authorizationToken}")
         adapter.setOnRvItemClickListener(object : OnRvItemClickListener<Form> {
             override fun onItemClick(item: Form, position: Int) {
-                vm.copyForm(item.slug, "JWT ${TokenContainer.authorizationToken}")
+                formVm.copyForm(item.slug, "JWT ${TokenContainer.authorizationToken}")
             }
         })
 
 
-        vm.form.observe(this,{
+        formVm.form.observe(this,{
 
             with(it){
                 args.putString("formAddress", address)
@@ -81,8 +75,8 @@ class GamesFragment : Fragment() {
 
         rvGameList.adapter = adapter
 
-        vm.getFormTag(0)
-        vm.formTag.observe(this, {
+        formVm.getFormTag(0)
+        formVm.formTag.observe(this, {
 
             adapter.submitList(it.data?.forms?.toMutableList())
             Timber.i("Tag list data $it")
@@ -96,6 +90,14 @@ class GamesFragment : Fragment() {
 
         })
 
+        formVm.failure.observe(this, {
+            formVm.hideLoading()
+            checkFailureStatus(it)
+        })
+
+        formVm.isLoading.observe(this,{
+            if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
+        })
 
     }
 

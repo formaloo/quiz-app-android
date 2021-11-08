@@ -6,23 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.collection.ArrayMap
-import androidx.core.view.get
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
-import co.idearun.auth.viewmodel.AuthViewModel
-import co.idearun.common.TokenContainer
 import co.idearun.game.BaseFragment
 import co.idearun.game.FormFieldsAdapter
 import co.idearun.game.R
 import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_form.*
-import kotlinx.android.synthetic.main.fragment_form.rvFields
-import kotlinx.android.synthetic.main.fragment_formeditor.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import org.json.JSONObject
-import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class PlayerFormFragment : BaseFragment() {
@@ -42,17 +34,17 @@ class PlayerFormFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val vm: FormViewModel by activityViewModels()
+        val formVm: FormViewModel by activityViewModels()
         adapter = FormFieldsAdapter()
         rvFields.adapter = adapter
 
 
 
-        vm.initLessonAddress(vm.userForm.value?.form?.address!!)
-        vm.getFormData()
+        formVm.initLessonAddress(formVm.userForm.value?.form?.address!!)
+        formVm.getFormData()
 
 
-        vm.form1.observe(this, {
+        formVm.form1.observe(this, {
             Timber.i("TAG get form $it")
             Timber.i("TAG get form ${it.fields_list?.size}")
             val fields = it.fields_list
@@ -83,20 +75,26 @@ class PlayerFormFragment : BaseFragment() {
                     JSONObject(body).toString()
                 )
 
-                vm.submitFormData(vm.userForm.value?.form?.slug!!, bodyM)
+                formVm.submitFormData(formVm.userForm.value?.form?.slug!!, bodyM)
             }
         }
 
-        vm.submitForm.observe(this,{
-            Toast.makeText(context,"your form submit!, in next days result will be complete", Toast.LENGTH_LONG).show()
+        formVm.submitForm.observe(this,{
+            openAlert("yyour form submit!, in next days result will be complete")
         })
 
-        vm.failure.observe(this, {
+        formVm.failure.observe(this, {
+            formVm.hideLoading()
             if(it.msgRes?.contains("404")!!){
-                Toast.makeText(context,"you late, Game is over", Toast.LENGTH_LONG).show()
+                openAlert("you late, Game is over")
             } else {
                 checkFailureStatus(it)
             }
+        })
+
+
+        formVm.isLoading.observe(this,{
+            if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
         })
 
 

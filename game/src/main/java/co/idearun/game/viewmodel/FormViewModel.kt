@@ -62,85 +62,34 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     private val _formTag = MutableLiveData<FormListRes>()
     val formTag: LiveData<FormListRes> = _formTag
 
-    private val _pagingData = MutableLiveData<PagingData<Form>>().apply { value = null }
-    val pagingData: LiveData<PagingData<Form>> = _pagingData
-
-    private val _formMap = MutableLiveData<ArrayList<HashMap<Int, Form>>>().apply { value = null }
-    val formMap: LiveData<ArrayList<HashMap<Int, Form>>> = _formMap
-
-    fun fetchLessonList(force: Boolean): Flow<PagingData<Form>> {
-        return repository.fetchForms(force).cachedIn(viewModelScope)
-    }
-
-    fun retrieveDBLessonList() = viewModelScope.launch {
-        val result = withContext(Dispatchers.IO) { repository.getFormListFromDB() }
-        sortLessonList(result)
-
-    }
-
-    private fun sortLessonList(result: List<Form>) {
-        val TYPE_HEADER = 0
-        val TYPE_ITEM = 1
-        val OTHER = "other"
-        val forms = ArrayList(result)
-        val formsList = ArrayList<HashMap<Int, Form>>()
-        var lastCatSlug = OTHER
-
-        forms.sortByDescending {
-            it.category?.slug
-        }
-        for (i in 0 until forms.size) {
-            val form = forms[i]
-            val formcatSlug = form.category?.slug ?: OTHER
-
-            val formsMap = HashMap<Int, Form>()
-
-
-            if (i == 0) {
-                formsMap[TYPE_HEADER] = form
-            } else {
-                if (lastCatSlug == formcatSlug) {
-                    formsMap[TYPE_ITEM] = form
-                } else {
-                    formsMap[TYPE_HEADER] = form
-                }
-            }
-            lastCatSlug = formcatSlug
-
-            formsList.add(formsMap)
-        }
-        _formMap.value = formsList
-
-    }
-
-    fun retrieveLessonFromDB() = viewModelScope.launch {
-        val result = withContext(Dispatchers.IO) { repository.getFormFromDB(formSlug ?: "") }
-        _form.value = result
-
-    }
 
     fun getFormData() = viewModelScope.launch {
+        showLoading()
         val result = withContext(Dispatchers.IO) { repository.getFormData(formAddress ?: "") }
         result.either(::handleFailure, ::handleFormData1)
     }
 
     fun copyForm(slug: String, token: String) = viewModelScope.launch {
+        showLoading()
         val result = withContext(Dispatchers.IO) { repository.copyForm(slug, token) }
         result.either(::handleFailure, ::handleFormData)
     }
 
     fun createLive(slug: String, token: String) = viewModelScope.launch {
+        showLoading()
         val result = withContext(Dispatchers.IO) { repository.createLive(slug, token) }
         result.either(::handleFailure, ::handleLiveFormData)
     }
 
     fun getFormDataWithLiveCode(token: String, liveCode: String) = viewModelScope.launch {
-        _isLoading.value = true
+        showLoading()
         val result = withContext(Dispatchers.IO) { repository.getFormDataWithLiveCode(token, liveCode) }
         result.either(::handleFailure, ::handleLiveFormData)
     }
 
     fun editForm(slug: String, token: String, body: ArrayMap<String, Any>) = viewModelScope.launch {
+        showLoading()
+
         val requestBody = RequestBody.create(
             "application/json; charset=utf-8".toMediaTypeOrNull(), JSONObject(body).toString()
         )
@@ -149,12 +98,15 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     }
 
     fun disableForm(slug: String, token: String, activation: Boolean) = viewModelScope.launch {
+        showLoading()
+
         val req = ArrayMap<String, Any>()
         req["active"] = activation
 
         val requestBody = RequestBody.create(
             "application/json; charset=utf-8".toMediaTypeOrNull(), JSONObject(req).toString()
         )
+
         val result = withContext(Dispatchers.IO) { repository.editForm(slug, token, requestBody) }
         result.either(::handleFailure, ::handleDisableForm)
     }
@@ -165,64 +117,69 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     }
 
     fun getFormSubmits(slug: String, token: String) = viewModelScope.launch {
+        showLoading()
         val result = withContext(Dispatchers.IO) { repository.getFormSubmits(slug, token) }
         result.either(::handleFailure, ::handleSubmitsData)
     }
 
     private fun handleSubmitsData(res: SubmitsResponse) {
-        Timber.i("players ${res.status}")
-        res?.let {
+        hideLoading()
+        res.let {
             _submits.value = res
         }
     }
 
     private fun handleSubmitFormData(res: SubmitFormRes) {
-        Timber.i("players ${res.status}")
-           res?.let {
+        hideLoading()
+           res.let {
                _submitForm.value = it
            }
     }
 
     private fun handleLiveFormData(res: LiveDashboardRes) {
         hideLoading()
-        res?.data?.liveDashboardCode?.let {
+        res.data?.liveDashboardCode?.let {
             _liveForm.value = it
         }
     }
 
     private fun handleEditFormData(res: CreateFormRes) {
-        res?.data?.form?.let {
+        hideLoading()
+        res.data?.form?.let {
             _editForm.value = it
         }
     }
 
     private fun handleDisableForm(res: CreateFormRes) {
-        res?.data?.form?.let {
+        hideLoading()
+        res.data?.form?.let {
             _disableForm.value = it
         }
     }
 
     private fun handleFormData(res: CreateFormRes) {
-        res?.data?.form?.let {
+        hideLoading()
+        res.data?.form?.let {
             _form.value = it
         }
     }
 
     private fun handleFormData1(res: CreateFormRes) {
-        res?.data?.form?.let {
+        hideLoading()
+        res.data?.form?.let {
             _form1.value = it
         }
     }
 
     fun getFormTag(page: Int) = viewModelScope.launch {
+        showLoading()
         val result = withContext(Dispatchers.IO) { repository.getFormTag(page) }
         result.either(::handleFailure, ::handleFormTagData)
-
-
     }
 
     private fun handleFormTagData(res: FormListRes) {
-        res?.let {
+        hideLoading()
+        res.let {
             _formTag.value = it
         }
     }
@@ -237,16 +194,12 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     }
 
 
-    fun getLessonsList(force: Boolean) = viewModelScope.launch {
-        fetchLessonList(force).collectLatest { pagingData ->
-            _pagingData.value = pagingData
-        }
-
-    }
-
-
     fun hideLoading() {
         _isLoading.value = false
+    }
+
+    fun showLoading() {
+        _isLoading.value = true
     }
 
 }
