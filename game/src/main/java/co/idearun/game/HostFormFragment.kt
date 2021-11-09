@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.fragment_form_host.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import org.json.JSONObject
+import splitties.alertdialog.appcompat.*
 import timber.log.Timber
 
 class HostFormFragment : BaseFragment() {
@@ -90,11 +91,26 @@ class HostFormFragment : BaseFragment() {
 
         }
 
-        endGameBtn.setOnClickListener {
-            {
+        formVm.submitForm.observe(this, {
+            openAlert("your form submit!")
+        })
 
-            }
-            formVm.disableForm(slug!!, "JWT ${TokenContainer.authorizationToken}", false)
+        endGameBtn.setOnClickListener {
+            requireContext().alertDialog {
+                message =
+                    "Tell your friends to submit their answers NOW! Once you hit this, anyone who didn't submit their answers will lose! Are you sure?"
+                okButton {
+                    formVm.disableForm(
+                        slug!!,
+                        "JWT ${TokenContainer.authorizationToken}",
+                        false
+                    )
+                }
+                cancelButton()
+            }.onShow {
+                positiveButton.setTextColor(resources.getColor(android.R.color.holo_blue_dark))
+            }.show()
+
         }
 
         formVm.disableForm.observe(this, {
@@ -109,7 +125,7 @@ class HostFormFragment : BaseFragment() {
             checkFailureStatus(it)
         })
 
-        formVm.isLoading.observe(this,{
+        formVm.isLoading.observe(this, {
             if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
         })
 

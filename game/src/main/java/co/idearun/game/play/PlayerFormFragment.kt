@@ -80,7 +80,7 @@ class PlayerFormFragment : BaseFragment() {
         }
 
         formVm.submitForm.observe(this,{
-            openAlert("yyour form submit!, in next days result will be complete")
+            openAlert("your form submit!")
         })
 
         formVm.failure.observe(this, {
