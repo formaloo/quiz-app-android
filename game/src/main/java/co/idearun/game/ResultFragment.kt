@@ -29,11 +29,12 @@ class ResultFragment : BaseFragment() {
 
         val formVm: FormViewModel by viewModel()
         val slug = arguments?.getString("slug")
+        val liveDashboardAddress = arguments?.getString("liveDashboardAddress")
 
         adapter = ResultAdapter()
         rvFields.adapter = adapter
 
-        formVm.getSubmitsRow(slug!!)
+        formVm.getSubmitsRow(liveDashboardAddress!!)
 
 
         formVm.submits.observe(this, {

@@ -49,6 +49,7 @@ class ShareFragment : Fragment() {
 
 
         val liveCode = arguments?.getString("liveCode")
+        val liveDashboardAddress = arguments?.getString("liveDashboardAddress")
         liveCodeEdt.setText(liveCode, TextView.BufferType.EDITABLE)
 
         shareLiveCodeBtn.setOnClickListener {
@@ -58,6 +59,7 @@ class ShareFragment : Fragment() {
         playBtn.setOnClickListener {
             val args = Bundle()
             args.putString("liveCode", liveCode)
+            args.putString("liveDashboardAddress", liveDashboardAddress)
             findNavController().navigate(R.id.action_shareFragment_to_hostFormFragment, args)
 
 

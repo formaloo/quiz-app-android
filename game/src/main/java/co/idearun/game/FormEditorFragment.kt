@@ -68,6 +68,7 @@ class FormEditorFragment : BaseFragment() {
             val req = ArrayMap<String, Any>()
             req["title"] = formTitleEdt.text.toString()
             req["description"] = formDescriptionEdt.text.toString()
+            req["public_rows"] = true
 
             formVm.editForm(formSlug!!, "JWT ${TokenContainer.authorizationToken}", req)
         }
@@ -80,6 +81,7 @@ class FormEditorFragment : BaseFragment() {
             val args = Bundle()
             Timber.i(it.code)
             args.putString("liveCode", it.code)
+            args.putString("liveDashboardAddress", it.form?.liveDashboardAddress)
             findNavController().navigate(R.id.action_formEditorFragment_to_shareFragment, args)
 
         })

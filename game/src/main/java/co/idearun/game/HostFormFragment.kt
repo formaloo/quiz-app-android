@@ -37,6 +37,7 @@ class HostFormFragment : BaseFragment() {
         rvFields.adapter = adapter
 
         val liveCode = arguments?.getString("liveCode")
+        val liveDashboardAddress = arguments?.getString("liveDashboardAddress")
         var slug: String? = null
 
         formVm.getFormDataWithLiveCode(liveCode!!)
@@ -99,6 +100,7 @@ class HostFormFragment : BaseFragment() {
         formVm.disableForm.observe(this, {
             val args = Bundle()
             args.putString("slug", slug)
+            args.putString("liveDashboardAddress", liveDashboardAddress)
             findNavController().navigate(R.id.action_hostFormFragment_to_resultFragment, args)
         })
 
