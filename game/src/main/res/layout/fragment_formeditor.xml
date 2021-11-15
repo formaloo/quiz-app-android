@@ -58,7 +58,7 @@
             android:text="Items: " />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvFields"
+            android:id="@+id/parentRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding_3xsmall"

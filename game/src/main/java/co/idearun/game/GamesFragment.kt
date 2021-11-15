@@ -91,10 +91,6 @@ class GamesFragment : BaseFragment() {
         })
 
 
-        formVm.getSubmitsRow("kCF8jgM13VWAprX")
-        formVm.submits.observe(this,{
-            Timber.i("test live"+it.status)
-        })
         formVm.failure.observe(this, {
             formVm.hideLoading()
             checkFailureStatus(it)

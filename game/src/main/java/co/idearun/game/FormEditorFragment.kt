@@ -33,7 +33,7 @@ class FormEditorFragment : BaseFragment() {
         adapter = FormFieldsAdapter()
         adapter.disableField = true
 
-        rvFields.adapter = adapter
+        parentRecyclerView.adapter = adapter
         val formAddress = arguments?.getString("formAddress")
         val formSlug = arguments?.getString("formSlug")
 

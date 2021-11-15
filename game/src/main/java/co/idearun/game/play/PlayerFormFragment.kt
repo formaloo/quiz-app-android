@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.collection.ArrayMap
 import androidx.fragment.app.activityViewModels
 import co.idearun.game.BaseFragment
@@ -36,7 +35,7 @@ class PlayerFormFragment : BaseFragment() {
 
         val formVm: FormViewModel by activityViewModels()
         adapter = FormFieldsAdapter()
-        rvFields.adapter = adapter
+        parentRecyclerView.adapter = adapter
 
 
 
@@ -59,7 +58,7 @@ class PlayerFormFragment : BaseFragment() {
         submitFormBtn.setOnClickListener {
 
             adapter.fieldSlugList.forEachIndexed { index, fields ->
-                val view = rvFields.getChildAt(index)
+                val view = parentRecyclerView.getChildAt(index)
                 val viewHolder = adapter.FormFieldsViewHolder(view)
 
                 if (!viewHolder.fieldsEdt.text.toString().isBlank()) {

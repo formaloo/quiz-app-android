@@ -19,13 +19,13 @@
             android:textSize="@dimen/padding_xlarge" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvFields"
+            android:id="@+id/parentRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/padding_large"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_field_text" />
+            tools:listitem="@layout/item_parent" />
     </LinearLayout>
 
     <include

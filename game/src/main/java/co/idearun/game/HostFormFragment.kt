@@ -35,7 +35,7 @@ class HostFormFragment : BaseFragment() {
 
         val formVm: FormViewModel by activityViewModels()
         adapter = FormFieldsAdapter()
-        rvFields.adapter = adapter
+        parentRecyclerView.adapter = adapter
 
         val liveCode = arguments?.getString("liveCode")
         val liveDashboardAddress = arguments?.getString("liveDashboardAddress")
@@ -69,7 +69,7 @@ class HostFormFragment : BaseFragment() {
         submitFormBtn.setOnClickListener {
 
             adapter.fieldSlugList.forEachIndexed { index, fields ->
-                val view = rvFields.getChildAt(index)
+                val view = parentRecyclerView.getChildAt(index)
                 val viewHolder = adapter.FormFieldsViewHolder(view)
 
                 if (!viewHolder.fieldsEdt.text.toString().isBlank()) {

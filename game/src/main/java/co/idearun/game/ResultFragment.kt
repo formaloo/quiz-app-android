@@ -4,7 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.collection.ArrayMap
 import co.idearun.common.TokenContainer
+import co.idearun.data.model.FieldData
+import co.idearun.data.model.TopFieldsItem
 import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_result.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -12,7 +15,8 @@ import timber.log.Timber
 
 class ResultFragment : BaseFragment() {
 
-    lateinit var adapter: ResultAdapter
+    lateinit var adapterChild: ChildItemAdapter
+    lateinit var adapterParent: ParentItemAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,22 +35,34 @@ class ResultFragment : BaseFragment() {
         val slug = arguments?.getString("slug")
         val liveDashboardAddress = arguments?.getString("liveDashboardAddress")
 
-        adapter = ResultAdapter()
-        rvFields.adapter = adapter
+        //adapterChild = ChildItemAdapter()
+        adapterParent = ParentItemAdapter()
+        parentRecyclerView.adapter = adapterParent
 
-        formVm.getSubmitsRow(liveDashboardAddress!!)
 
+        //formVm.getSubmitsRow(liveDashboardAddress!!)
+        formVm.getFormSubmits("2ijiobKN", "JWT ${TokenContainer.authorizationToken}")
+
+        var fieldDataMapList = arrayListOf<ArrayMap<String, FieldData>>()
+        var topFieldsItem = arrayListOf<List<TopFieldsItem>>()
+        var parentItem = arrayListOf<ParentItem>()
 
         formVm.submits.observe(this, {
             Timber.i("field size " + it?.data?.rows?.size)
-            adapter.submitList(it?.data?.topFields)
 
-            it.data?.rows?.get(0)?.renderedData?.entries?.forEach {
-                Timber.i("rendred ${it.key} vs ${it.value.rawValue}")
-                adapter.fieldDataMap.put(it.key, it.value)
+            val topFieldData = it?.data?.topFields
 
+            it.data?.rows?.forEach {
+                var fieldDataMap = ArrayMap<String, FieldData>()
+                it?.renderedData?.entries?.forEach {
+                    Timber.i("rendred ${it.key} vs ${it.value.rawValue}")
+                    fieldDataMap.put(it.key, it.value)
+                }
+                fieldDataMapList.add(fieldDataMap)
+                topFieldsItem.add(topFieldData as List<TopFieldsItem>)
+                parentItem.add(ParentItem("asd", topFieldsItem, fieldDataMapList))
             }
-
+            adapterParent.setItemList(parentItem)
         })
 
         formVm.failure.observe(this, {

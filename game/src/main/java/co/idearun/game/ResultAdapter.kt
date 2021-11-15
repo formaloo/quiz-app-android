@@ -15,8 +15,6 @@ import co.idearun.common.base.OnRvItemClickListener
 import co.idearun.data.model.FieldData
 import co.idearun.data.model.TopFieldsItem
 import com.google.android.material.textfield.TextInputEditText
-import timber.log.Timber
-import androidx.annotation.NonNull
 
 
 class ResultAdapter :
