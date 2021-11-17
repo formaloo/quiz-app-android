@@ -1,5 +1,6 @@
 package co.idearun.game
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,7 @@ import co.idearun.data.model.TopFieldsItem
 import timber.log.Timber
 
 
-class ParentItemAdapter () :
+class ParentItemAdapter (var context: Context) :
     RecyclerView.Adapter<ParentItemAdapter.ParentViewHolder>() {
     // An object of RecyclerView.RecycledViewPool
     // is created to share the Views
@@ -83,7 +84,7 @@ class ParentItemAdapter () :
         // Create an instance of the child
         // item view adapter and set its
         // adapter, layout manager and RecyclerViewPool
-        val childItemAdapter = ChildItemAdapter()
+        val childItemAdapter = ChildItemAdapter(context)
         childItemAdapter.setChildItemValue(fieldValue?.get(position)!!)
         childItemAdapter.setChildItemList(fieldList?.get(position)!! as ArrayList<TopFieldsItem?>)
 

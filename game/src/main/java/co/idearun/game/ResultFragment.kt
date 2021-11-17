@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.collection.ArrayMap
 import co.idearun.common.TokenContainer
+import co.idearun.common.base.OnRvItemClickListener
 import co.idearun.data.model.FieldData
 import co.idearun.data.model.TopFieldsItem
+import co.idearun.data.model.form.Form
 import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_result.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -36,9 +38,16 @@ class ResultFragment : BaseFragment() {
         val liveDashboardAddress = arguments?.getString("liveDashboardAddress")
 
         //adapterChild = ChildItemAdapter()
-        adapterParent = ParentItemAdapter()
+        adapterParent = ParentItemAdapter(requireContext())
         parentRecyclerView.adapter = adapterParent
 
+        adapterChild = ChildItemAdapter(requireContext())
+        adapterChild.setOnRvItemClickListener(object : OnRvItemClickListener<ChildItemAdapter.callBackData>{
+            override fun onItemClick(item: ChildItemAdapter.callBackData, position: Int) {
+                Timber.i("test test test ${item.point}   ${item.status}")
+            }
+
+        })
 
         //formVm.getSubmitsRow(liveDashboardAddress!!)
         formVm.getFormSubmits("2ijiobKN", "JWT ${TokenContainer.authorizationToken}")

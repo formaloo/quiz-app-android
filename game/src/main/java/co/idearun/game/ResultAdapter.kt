@@ -33,16 +33,16 @@ class ResultAdapter :
 
     internal class LayoutOneViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
-        private val btn: Button
+       // private val btn: Button
 
         // method to set the views that will
         // be used further in onBindViewHolder method.
         private fun setView(text: String) {
-            btn.text = text
+          //  btn.text = text
         }
 
         init {
-            btn = itemView.findViewById(R.id.button)
+          //  btn = itemView.findViewById(R.id.button)
         }
     }
 

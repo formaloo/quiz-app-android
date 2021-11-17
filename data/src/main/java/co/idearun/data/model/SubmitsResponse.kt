@@ -61,6 +61,7 @@ data class ChoiceItemsItem(
 )
 
 data class TopFieldsItem(
+    @SerializedName("choice_items")
     val choiceItems: List<ChoiceItemsItem?>? = null,
     val position: Int? = null,
     val type: String? = null,
