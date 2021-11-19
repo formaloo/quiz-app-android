@@ -1,11 +1,10 @@
-package co.idearun.game
+package co.idearun.game.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import android.widget.Button
 import android.widget.TextView
 import androidx.collection.ArrayMap
 import androidx.recyclerview.widget.DiffUtil
@@ -14,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import co.idearun.common.base.OnRvItemClickListener
 import co.idearun.data.model.FieldData
 import co.idearun.data.model.TopFieldsItem
+import co.idearun.game.R
 import com.google.android.material.textfield.TextInputEditText
 
 

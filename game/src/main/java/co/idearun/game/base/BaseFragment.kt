@@ -1,8 +1,8 @@
-package co.idearun.game
+package co.idearun.game.base
 
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import co.idearun.common.exception.Failure
+import co.idearun.game.R
 import org.json.JSONObject
 import splitties.alertdialog.appcompat.*
 import timber.log.Timber

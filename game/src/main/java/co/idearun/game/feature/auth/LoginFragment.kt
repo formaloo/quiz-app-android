@@ -1,16 +1,15 @@
-package co.idearun.game
+package co.idearun.game.feature.auth
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import co.idearun.auth.viewmodel.AuthViewModel
 import co.idearun.common.UserInfoManager
-import co.idearun.game.viewmodel.FormViewModel
+import co.idearun.game.base.BaseFragment
+import co.idearun.game.R
 import kotlinx.android.synthetic.main.fragment_login.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -20,8 +19,7 @@ class LoginFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_login, container, false)
-        return root
+        return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
 

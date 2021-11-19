@@ -1,4 +1,4 @@
-package co.idearun.game
+package co.idearun.game.feature.host
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,11 @@ import co.idearun.common.TokenContainer
 import co.idearun.common.base.OnRvItemClickListener
 import co.idearun.data.model.FieldData
 import co.idearun.data.model.TopFieldsItem
-import co.idearun.data.model.form.Form
+import co.idearun.game.R
+import co.idearun.game.adapter.ChildItemAdapter
+import co.idearun.game.adapter.ParentItemAdapter
+import co.idearun.game.base.BaseFragment
+import co.idearun.game.model.ParentItem
 import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_result.*
 import org.koin.android.viewmodel.ext.android.viewModel

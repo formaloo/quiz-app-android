@@ -1,4 +1,4 @@
-package co.idearun.game
+package co.idearun.game.feature.auth
 
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +12,8 @@ import androidx.navigation.fragment.findNavController
 import co.idearun.auth.model.register.RegisterInfo
 import co.idearun.auth.viewmodel.AuthViewModel
 import co.idearun.common.UserInfoManager
+import co.idearun.game.base.BaseFragment
+import co.idearun.game.R
 import kotlinx.android.synthetic.main.fragment_register.*
 import kotlinx.android.synthetic.main.fragment_register.imageView3
 import kotlinx.android.synthetic.main.fragment_register.passEdt

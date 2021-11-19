@@ -1,4 +1,4 @@
-package co.idearun.game
+package co.idearun.game.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,15 +11,11 @@ import co.idearun.data.model.FieldData
 import co.idearun.data.model.TopFieldsItem
 import com.google.android.material.textfield.TextInputEditText
 import timber.log.Timber
-import android.R.attr.country
 import android.content.Context
-import android.content.DialogInterface
-import android.view.ContentInfo
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import co.idearun.common.base.OnRvItemClickListener
-import co.idearun.data.model.form.Form
-import splitties.alertdialog.appcompat.*
+import co.idearun.game.R
 
 
 class ChildItemAdapter(

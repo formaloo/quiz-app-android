@@ -1,20 +1,16 @@
-package co.idearun.game
+package co.idearun.game.adapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import co.idearun.common.base.OnRvItemClickListener
 import co.idearun.data.model.form.Fields
-import co.idearun.data.model.form.Form
+import co.idearun.game.R
 import com.google.android.material.textfield.TextInputEditText
 import timber.log.Timber
 

@@ -1,4 +1,4 @@
-package co.idearun.game
+package co.idearun.game.feature.auth
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import co.idearun.common.CustomTabView
-import java.util.zip.Inflater
+import co.idearun.game.R
 
 class AuthFragment: Fragment() {
     lateinit var tabView: CustomTabView
@@ -16,8 +16,7 @@ class AuthFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_auth, container,false)
-        return root
+        return inflater.inflate(R.layout.fragment_auth, container,false)
     }
 
 
@@ -32,8 +31,6 @@ class AuthFragment: Fragment() {
         )
         tabView.add(RegisterFragment().javaClass, "Register")
         tabView.add(LoginFragment().javaClass, "Login")
-
-        //tabView.add(LoginFragment().javaClass, getString(R.string.chats_tab))
 
     }
 

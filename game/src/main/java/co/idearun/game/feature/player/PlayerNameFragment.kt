@@ -1,28 +1,15 @@
-package co.idearun.game.play
+package co.idearun.game.feature.player
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.collection.ArrayMap
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import co.idearun.auth.viewmodel.AuthViewModel
-import co.idearun.common.TokenContainer
-import co.idearun.game.BaseFragment
+import co.idearun.game.base.BaseFragment
 import co.idearun.game.R
 import co.idearun.game.viewmodel.FormViewModel
-import kotlinx.android.synthetic.main.fragment_formeditor.*
-import kotlinx.android.synthetic.main.fragment_games.*
-import kotlinx.android.synthetic.main.fragment_player_code.*
 import kotlinx.android.synthetic.main.fragment_player_name.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
-import org.json.JSONObject
-import org.koin.android.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class PlayerNameFragment : BaseFragment() {
 

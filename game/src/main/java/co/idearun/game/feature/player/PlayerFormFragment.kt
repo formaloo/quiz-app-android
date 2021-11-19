@@ -1,4 +1,4 @@
-package co.idearun.game
+package co.idearun.game.feature.player
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,16 +7,17 @@ import android.view.ViewGroup
 import androidx.collection.ArrayMap
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import co.idearun.common.TokenContainer
+import co.idearun.game.base.BaseFragment
+import co.idearun.game.adapter.FormFieldsAdapter
+import co.idearun.game.R
 import co.idearun.game.viewmodel.FormViewModel
-import kotlinx.android.synthetic.main.fragment_form_host.*
+import kotlinx.android.synthetic.main.fragment_form.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import org.json.JSONObject
-import splitties.alertdialog.appcompat.*
 import timber.log.Timber
 
-class HostFormFragment : BaseFragment() {
+class PlayerFormFragment : BaseFragment() {
 
     lateinit var adapter: FormFieldsAdapter
 
@@ -25,7 +26,7 @@ class HostFormFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_form_host, container, false)
+        val root = inflater.inflate(R.layout.fragment_form, container, false)
         return root
     }
 
@@ -37,21 +38,10 @@ class HostFormFragment : BaseFragment() {
         adapter = FormFieldsAdapter()
         parentRecyclerView.adapter = adapter
 
-        val liveCode = arguments?.getString("liveCode")
-        val liveDashboardAddress = arguments?.getString("liveDashboardAddress")
-        var slug: String? = null
-
-        formVm.getFormDataWithLiveCode(liveCode!!)
-
-        formVm.liveForm.observe(this, {
-            val address = it?.form?.address!!
-            slug = it.form?.slug!!
-            formVm.initLessonAddress(address)
-            formVm.getFormData()
-        })
 
 
-
+        formVm.initLessonAddress(formVm.userForm.value?.form?.address!!)
+        formVm.getFormData()
 
 
         formVm.form1.observe(this, {
@@ -73,59 +63,38 @@ class HostFormFragment : BaseFragment() {
                 val viewHolder = adapter.FormFieldsViewHolder(view)
 
                 if (!viewHolder.fieldsEdt.text.toString().isBlank()) {
-                    Timber.i("test nulla")
                     val value = viewHolder.fieldsEdt.text.toString()
                     val slugField = fields.slug!!
                     body[slugField] = value
-                }
 
-                // Timber.i(fields.title + " = " + slug + " = " + value)
+                    Timber.i(fields.title + " = " + slugField + " = " + value)
+                }
             }.also {
                 val bodyM = RequestBody.create(
                     "application/json; charset=utf-8".toMediaTypeOrNull(),
                     JSONObject(body).toString()
                 )
 
-                formVm.submitFormData(slug!!, bodyM)
+                formVm.submitFormData(formVm.userForm.value?.form?.slug!!, bodyM)
             }
-
         }
 
-        formVm.submitForm.observe(this, {
+        formVm.submitForm.observe(this,{
             openAlert("your form submit!")
-        })
-
-        endGameBtn.setOnClickListener {
-            requireContext().alertDialog {
-                message =
-                    "Tell your friends to submit their answers NOW! Once you hit this, anyone who didn't submit their answers will lose! Are you sure?"
-                okButton {
-                    formVm.disableForm(
-                        slug!!,
-                        "JWT ${TokenContainer.authorizationToken}",
-                        false
-                    )
-                }
-                cancelButton()
-            }.onShow {
-                positiveButton.setTextColor(resources.getColor(android.R.color.holo_blue_dark))
-            }.show()
-
-        }
-
-        formVm.disableForm.observe(this, {
-            val args = Bundle()
-            args.putString("slug", slug)
-            args.putString("liveDashboardAddress", liveDashboardAddress)
-            findNavController().navigate(R.id.action_hostFormFragment_to_resultFragment, args)
+            findNavController().navigate(R.id.action_playerFormFragment_to_playerResultFragment)
         })
 
         formVm.failure.observe(this, {
             formVm.hideLoading()
-            checkFailureStatus(it)
+            if(it.msgRes?.contains("404")!!){
+                openAlert("you late, Game is over")
+            } else {
+                checkFailureStatus(it)
+            }
         })
 
-        formVm.isLoading.observe(this, {
+
+        formVm.isLoading.observe(this,{
             if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
         })
 

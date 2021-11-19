@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/resultFragment">
+    app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/registerFragment"
         tools:layout="@layout/fragment_register"
-        android:name="co.idearun.game.RegisterFragment"
+        android:name="co.idearun.game.feature.auth.RegisterFragment"
         android:label="RegisterFragment" >
         <action
             android:id="@+id/action_registerFragment_to_hostFragment"
@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/authFragment"
         tools:layout="@layout/fragment_auth"
-        android:name="co.idearun.game.AuthFragment"
+        android:name="co.idearun.game.feature.auth.AuthFragment"
         android:label="AuthFragment" >
         <action
             app:enterAnim="@anim/slide_left"
@@ -48,7 +48,7 @@
     <fragment
         tools:layout="@layout/fragment_games"
         android:id="@+id/gamesFragment"
-        android:name="co.idearun.game.GamesFragment"
+        android:name="co.idearun.game.feature.host.GamesFragment"
         android:label="GamesFragment" >
         <action
             app:enterAnim="@anim/slide_left"
@@ -59,7 +59,7 @@
     <fragment
         android:id="@+id/formEditorFragment"
         tools:layout="@layout/fragment_formeditor"
-        android:name="co.idearun.game.FormEditorFragment"
+        android:name="co.idearun.game.feature.host.FormEditorFragment"
         android:label="FormEditorFragment" >
         <action
             app:enterAnim="@anim/slide_left"
@@ -70,7 +70,7 @@
     <fragment
         android:id="@+id/hostFragment"
         tools:layout="@layout/fragment_host"
-        android:name="co.idearun.game.HostFragment"
+        android:name="co.idearun.game.feature.host.HostFragment"
         android:label="HostFragment" >
         <action
             app:enterAnim="@anim/slide_in_bottom"
@@ -81,7 +81,7 @@
     <fragment
         android:id="@+id/loginFragment"
         tools:layout="@layout/fragment_login"
-        android:name="co.idearun.game.LoginFragment"
+        android:name="co.idearun.game.feature.auth.LoginFragment"
         android:label="LoginFragment" >
         <action
             app:enterAnim="@anim/slide_left"
@@ -91,7 +91,7 @@
 
     <fragment
         android:id="@+id/shareFragment"
-        android:name="co.idearun.game.ShareFragment"
+        android:name="co.idearun.game.feature.host.ShareFragment"
         android:label="ShareFragment"
         tools:layout="@layout/fragment_share">
         <action
@@ -106,7 +106,7 @@
 
     <fragment
         android:id="@+id/playerCodeFragment"
-        android:name="co.idearun.game.play.PlayerCodeFragment"
+        android:name="co.idearun.game.feature.player.PlayerCodeFragment"
         android:label="PlayerCodeFragment"
         tools:layout="@layout/fragment_player_code">
         <action
@@ -117,7 +117,7 @@
 
     <fragment
         android:id="@+id/playerNameFragment"
-        android:name="co.idearun.game.play.PlayerNameFragment"
+        android:name="co.idearun.game.feature.player.PlayerNameFragment"
         android:label="PlayerNameFragment"
         tools:layout="@layout/fragment_player_name">
         <action
@@ -129,21 +129,29 @@
     <fragment
         android:id="@+id/playerFormFragment"
         tools:layout="@layout/fragment_form"
-        android:name="co.idearun.game.play.PlayerFormFragment"
-        android:label="PlayerFormFragment" />
+        android:name="co.idearun.game.feature.player.PlayerFormFragment"
+        android:label="PlayerFormFragment" >
+        <action
+            android:id="@+id/action_playerFormFragment_to_playerResultFragment"
+            app:destination="@id/playerResultFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/resultFragment"
-        android:name="co.idearun.game.ResultFragment"
+        android:name="co.idearun.game.feature.host.ResultFragment"
         android:label="ResultFragment" />
 
     <fragment
         android:id="@+id/hostFormFragment"
-        android:name="co.idearun.game.HostFormFragment"
+        android:name="co.idearun.game.feature.host.HostFormFragment"
         android:label="HostFormFragment" >
         <action
             app:enterAnim="@anim/slide_left"
             android:id="@+id/action_hostFormFragment_to_resultFragment"
             app:destination="@id/resultFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/playerResultFragment"
+        android:name="co.idearun.game.feature.player.PlayerResultFragment"
+        android:label="PlayerResultFragment" />
 </navigation>

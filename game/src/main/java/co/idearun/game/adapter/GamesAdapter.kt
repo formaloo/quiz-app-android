@@ -1,4 +1,4 @@
-package co.idearun.game
+package co.idearun.game.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import co.idearun.common.base.OnRvItemClickListener
 import co.idearun.data.model.form.Form
-import timber.log.Timber
+import co.idearun.game.R
 
 class GamesAdapter : ListAdapter<Form, GamesAdapter.NewsViewHolder>(NewsDiffCallback) {
 

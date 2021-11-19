@@ -1,4 +1,4 @@
-package co.idearun.game
+package co.idearun.game.feature.host
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import androidx.collection.ArrayMap
 import androidx.navigation.fragment.findNavController
 import co.idearun.common.TokenContainer
+import co.idearun.game.R
+import co.idearun.game.adapter.FormFieldsAdapter
+import co.idearun.game.base.BaseFragment
 import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_formeditor.*
 import org.koin.android.viewmodel.ext.android.viewModel

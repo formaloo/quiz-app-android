@@ -1,4 +1,4 @@
-package co.idearun.game
+package co.idearun.game.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
 import co.idearun.data.model.TopFieldsItem
+import co.idearun.game.R
+import co.idearun.game.model.ParentItem
 import timber.log.Timber
 
 

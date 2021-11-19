@@ -1,4 +1,4 @@
-package co.idearun.game
+package co.idearun.game.model
 
 import androidx.collection.ArrayMap
 import co.idearun.data.model.FieldData
