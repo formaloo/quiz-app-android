@@ -40,8 +40,6 @@ class AuthViewModel(private val repository: AuthRepositoryImpl) : BaseViewModel(
             req["first_name"] = name
             req["password"] = pass
             req["email"] = email
-            req["phone_number"] = phone
-            req["gender"] = gender
         }
 
         val body = RequestBody.create(

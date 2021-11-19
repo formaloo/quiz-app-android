@@ -82,51 +82,23 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/emailEdt"
-                android:inputType="textEmailAddress"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/filledTextField4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="48dp"
-            android:layout_marginTop="8dp"
-            android:hint="your phone"
-            app:layout_constraintEnd_toEndOf="@+id/filledTextField3"
-            app:layout_constraintStart_toStartOf="@+id/filledTextField3"
-            app:layout_constraintTop_toBottomOf="@+id/filledTextField3">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/phoneEdt"
-                android:layout_width="match_parent"
-                android:inputType="phone"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Spinner
-            android:id="@+id/genderSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginHorizontal="48dp"
-            android:layout_marginTop="8dp"
-            android:entries="@array/gender"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/filledTextField4" />
 
         <Button
             android:id="@+id/registerBtn"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginHorizontal="48dp"
-            android:layout_marginTop="12dp"
             android:background="@drawable/button_bg"
             android:paddingBottom="12dp"
+            android:layout_marginTop="@dimen/padding_xlarge"
             android:text="Register"
             android:textColor="@color/white"
-            app:layout_constraintTop_toBottomOf="@+id/genderSpinner" />
+            app:layout_constraintTop_toBottomOf="@+id/filledTextField3" />
 
         <include
             android:id="@+id/loading"

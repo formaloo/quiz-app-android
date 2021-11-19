@@ -18,10 +18,8 @@ import co.idearun.game.R
 import kotlinx.android.synthetic.main.fragment_register.*
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class RegisterFragment : BaseFragment(), AdapterView.OnItemSelectedListener,
-    AdapterView.OnItemClickListener {
+class RegisterFragment : BaseFragment(){
 
-    var gender = RegisterInfo.GENDER_MALE
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,16 +38,12 @@ class RegisterFragment : BaseFragment(), AdapterView.OnItemSelectedListener,
         Animation.fadeInAnim(imageView,context)
         val authVm: AuthViewModel by viewModel()
 
-        genderSpinner.onItemSelectedListener = this
-
         registerBtn.setOnClickListener {
             authVm.registerUser(
                 RegisterInfo(
                     nameEdt.text.toString(),
                     passEdt.text.toString(),
-                    emailEdt.text.toString(),
-                    phoneEdt.text.toString(),
-                    gender
+                    emailEdt.text.toString()
                 )
             )
         }
@@ -77,16 +71,6 @@ class RegisterFragment : BaseFragment(), AdapterView.OnItemSelectedListener,
         })
 
 
-    }
-
-    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-        if (p2==0) gender = RegisterInfo.GENDER_MALE else gender = RegisterInfo.GENDER_FEMALE
-    }
-
-    override fun onNothingSelected(p0: AdapterView<*>?) {
-    }
-
-    override fun onItemClick(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
     }
 
     fun checkEmail(email: String): Boolean{

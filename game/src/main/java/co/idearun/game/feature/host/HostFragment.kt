@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import co.idearun.game.R
 import kotlinx.android.synthetic.main.fragment_host.*
-import kotlinx.android.synthetic.main.fragment_login.imageView3
 
 class HostFragment: Fragment() {
 
