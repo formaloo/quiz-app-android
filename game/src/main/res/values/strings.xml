@@ -5,6 +5,31 @@
     <string name="server_err">Server Error</string>
     <string name="message_dialog">hello</string>
     <string name="loading">loading…</string>
+    <string name="start">Start</string>
+    <string name="items">Items:</string>
+    <string name="enter_description">enter description</string>
+    <string name="enter_title">enter title</string>
+    <string name="end_game">End Game</string>
+    <string name="submit_form">Submit Form</string>
+    <string name="be_host">are you want to be host?</string>
+    <string name="host_new_game">Host a new game</string>
+    <string name="enter_user">enter user</string>
+    <string name="login">login</string>
+    <string name="host">Host</string>
+    <string name="play">Play</string>
+    <string name="enter_code">enter code</string>
+    <string name="next">Next</string>
+    <string name="your_name">what\'s your name?</string>
+    <string name="register">Register</string>
+    <string name="enter_email">enter email</string>
+    <string name="enter_pass">enter pass</string>
+    <string name="enter_name">enter name</string>
+    <string name="result_page">Result Page</string>
+    <string name="lets_play">Let\'s Play</string>
+    <string name="share_code">Share code</string>
+    <string name="scategories">SCategories</string>
+    <string name="title">title</string>
+    <string name="complete">Complete</string>
 
     <string-array name="gender">
         <item>male</item>

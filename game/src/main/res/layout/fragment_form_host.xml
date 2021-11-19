@@ -11,10 +11,18 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <Button
+            android:id="@+id/endGameBtn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#FF6BB7"
+            android:text="@string/end_game"
+            android:textColor="@color/white" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/parentRecyclerView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="vertical"
             android:paddingTop="22dp"
@@ -26,15 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="#27B6FA"
-            android:text="Submit Form"
-            android:textColor="@color/white" />
-
-        <Button
-            android:id="@+id/endGameBtn"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:background="#FF6BB7"
-            android:text="End Game"
+            android:text="@string/submit_form"
             android:textColor="@color/white" />
 
     </LinearLayout>

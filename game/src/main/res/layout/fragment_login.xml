@@ -7,7 +7,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <View
             android:id="@+id/view"
@@ -37,13 +37,14 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="48dp"
             android:layout_marginTop="20dp"
-            android:hint="enter user"
+            android:hint="@string/enter_user"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/userEdt"
+                android:inputType="textEmailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -55,13 +56,14 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="48dp"
             android:layout_marginTop="8dp"
-            android:hint="enter pass"
+            android:hint="@string/enter_pass"
             app:layout_constraintEnd_toEndOf="@+id/filledTextField"
             app:layout_constraintStart_toStartOf="@+id/filledTextField"
             app:layout_constraintTop_toBottomOf="@+id/filledTextField">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passEdt"
+                android:inputType="textPassword"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
@@ -73,7 +75,7 @@
             android:layout_height="60dp"
             android:layout_marginHorizontal="48dp"
             android:layout_marginTop="20dp"
-            android:text="login"
+            android:text="@string/login"
             android:background="@drawable/button_bg"
             android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@+id/filledTextField2" />

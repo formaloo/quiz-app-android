@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="48dp"
             android:layout_marginTop="20dp"
-            android:hint="enter code"
+            android:hint="@string/enter_code"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/view">
@@ -59,7 +59,7 @@
             android:layout_marginHorizontal="48dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/button_bg"
-            android:text="Next"
+            android:text="@string/next"
             android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@+id/filledTextField" />
 

@@ -15,7 +15,7 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Result Page"
+            android:text="@string/result_page"
             android:textSize="@dimen/padding_xlarge" />
 
         <androidx.recyclerview.widget.RecyclerView

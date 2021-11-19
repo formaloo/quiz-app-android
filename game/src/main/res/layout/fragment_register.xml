@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="48dp"
             android:layout_marginTop="20dp"
-            android:hint="enter name"
+            android:hint="@string/enter_name"
             app:layout_constraintTop_toBottomOf="@+id/view">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="48dp"
             android:layout_marginTop="8dp"
-            android:hint="enter pass"
+            android:hint="@string/enter_pass"
             app:layout_constraintEnd_toEndOf="@+id/filledTextField"
             app:layout_constraintStart_toStartOf="@+id/filledTextField"
             app:layout_constraintTop_toBottomOf="@+id/filledTextField">
@@ -75,7 +75,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="48dp"
             android:layout_marginTop="8dp"
-            android:hint="enter email"
+            android:hint="@string/enter_email"
             app:layout_constraintEnd_toEndOf="@+id/filledTextField2"
             app:layout_constraintStart_toStartOf="@+id/filledTextField2"
             app:layout_constraintTop_toBottomOf="@+id/filledTextField2">
@@ -96,7 +96,7 @@
             android:background="@drawable/button_bg"
             android:paddingBottom="12dp"
             android:layout_marginTop="@dimen/padding_xlarge"
-            android:text="Register"
+            android:text="@string/register"
             android:textColor="@color/white"
             app:layout_constraintTop_toBottomOf="@+id/filledTextField3" />
 

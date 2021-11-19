@@ -22,7 +22,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="are you want to be host?"
+        android:text="@string/be_host"
         android:layout_marginTop="@dimen/padding_3xlarge"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
         android:layout_marginTop="@dimen/padding_xlarge"
         android:layout_marginHorizontal="48dp"
         android:background="@drawable/button_bg"
-        android:text="Host a new game"
+        android:text="@string/host_new_game"
         android:textColor="@color/white"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         tools:layout_editor_absoluteX="48dp" />

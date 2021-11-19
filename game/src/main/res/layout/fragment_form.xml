@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="#27B6FA"
-            android:text="Complete"
+            android:text="@string/complete"
             android:textColor="@color/white" />
     </LinearLayout>
 

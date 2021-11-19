@@ -31,7 +31,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="48dp"
         android:gravity="center_horizontal"
-        android:text="SCategories"
+        android:hint="@string/scategories"
         android:textAlignment="center"
         android:textSize="18sp" />
 

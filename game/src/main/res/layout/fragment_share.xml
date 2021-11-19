@@ -63,7 +63,7 @@
             android:layout_marginHorizontal="48dp"
             android:layout_marginTop="@dimen/padding_large"
             android:background="@drawable/button_bg"
-            android:text="Share"
+            android:text="@string/share_code"
             android:textColor="@color/white"/>
 
         <Button
@@ -73,7 +73,7 @@
             android:layout_marginHorizontal="48dp"
             android:layout_marginTop="@dimen/padding_large"
             android:background="@drawable/button_bg"
-            android:text="Let's Play"
+            android:text="@string/lets_play"
             android:textColor="@color/white"/>
 
     </LinearLayout>
