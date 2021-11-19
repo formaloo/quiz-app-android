@@ -12,6 +12,7 @@ import co.idearun.data.local.FormsKeys
 import co.idearun.data.local.dao.FormDao
 import co.idearun.data.local.dao.FormKeysDao
 import co.idearun.data.local.dao.SubmitDao
+import co.idearun.data.model.LiveSubmits
 import co.idearun.data.model.SubmitsResponse
 import co.idearun.data.model.cat.catList.CatListRes
 import co.idearun.data.model.form.Fields
@@ -382,10 +383,19 @@ class FormzRepo(
         }
     }
 
-    override suspend fun getSubmitsRow(slug: String): Either<Failure, SubmitsResponse> {
-        val call = source.getSubmitsRow(slug)
+    override suspend fun getSubmitsRow(liveDashboardAddress: String): Either<Failure, SubmitsResponse> {
+        val call = source.getSubmitsRow(liveDashboardAddress)
         return try {
             request(call, { it.toSubmitsResponse() }, SubmitsResponse.empty())
+        } catch (e: Exception) {
+            Either.Left(Failure.Exception)
+        }
+    }
+
+    override suspend fun getLiveSubmits(liveDashboardAddress: String): Either<Failure, LiveSubmits> {
+        val call = source.getLiveSubmits(liveDashboardAddress)
+        return try {
+            request(call, { it.toLiveSubmits() }, LiveSubmits.empty())
         } catch (e: Exception) {
             Either.Left(Failure.Exception)
         }

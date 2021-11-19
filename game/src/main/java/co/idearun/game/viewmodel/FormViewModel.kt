@@ -6,6 +6,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import co.idearun.common.base.BaseViewModel
+import co.idearun.data.model.LiveSubmits
 import co.idearun.data.model.SubmitsResponse
 import co.idearun.data.model.form.Form
 import co.idearun.data.model.form.createForm.CreateFormRes
@@ -42,6 +43,10 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
     private val _submits = MutableLiveData<SubmitsResponse>()
     val submits: LiveData<SubmitsResponse> = _submits
+
+
+    private val _liveSubmits = MutableLiveData<LiveSubmits>()
+    val liveSubmits: LiveData<LiveSubmits> = _liveSubmits
 
     private val _submitForm = MutableLiveData<SubmitFormRes>()
     val submitForm: LiveData<SubmitFormRes> = _submitForm
@@ -122,6 +127,19 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         showLoading()
         val result = withContext(Dispatchers.IO) { repository.getSubmitsRow(liveDashboardAddress) }
         result.either(::handleFailure, ::handleSubmitsRowData)
+    }
+
+    fun getLiveSubmits(liveDashboardAddress: String) = viewModelScope.launch {
+        showLoading()
+        val result = withContext(Dispatchers.IO) { repository.getLiveSubmits(liveDashboardAddress) }
+        result.either(::handleFailure, ::handleLiveSubmitsData)
+    }
+
+    private fun handleLiveSubmitsData(res: LiveSubmits) {
+        hideLoading()
+        res.let {
+            _liveSubmits.value = res
+        }
     }
 
     private fun handleSubmitsData(res: SubmitsResponse) {

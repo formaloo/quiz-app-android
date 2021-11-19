@@ -1,10 +1,8 @@
 package co.idearun.data.remote
 
 import co.idearun.common.BuildConfig.FORM_TAG
-import com.google.gson.JsonObject
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import org.json.JSONObject
 
 
 /**
@@ -38,6 +36,9 @@ class FormDatasource(private val service: FormService) {
     fun getFormSubmits(slug: String, token: String) =
         service.getFormSubmits(slug, token)
 
-    fun getSubmitsRow(slug: String) =
-        service.getSubmitsRow(slug)
+    fun getSubmitsRow(liveDashboardAddress: String) =
+        service.getSubmitsRow(liveDashboardAddress)
+
+    fun getLiveSubmits(liveDashboardAddress: String) =
+        service.getLiveSubmits(liveDashboardAddress)
 }

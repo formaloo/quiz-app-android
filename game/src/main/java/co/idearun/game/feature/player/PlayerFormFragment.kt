@@ -43,6 +43,17 @@ class PlayerFormFragment : BaseFragment() {
         formVm.initLessonAddress(formVm.userForm.value?.form?.address!!)
         formVm.getFormData()
 
+        formVm.getLiveSubmits(formVm.userForm.value?.form?.liveDashboardAddress!!)
+        formVm.getSubmitsRow(formVm.userForm.value?.form?.liveDashboardAddress!!)
+
+
+        formVm.liveSubmits.observe(this,{
+            Timber.i("get live submits ${it.data?.liveDashboard?.totalSubmits}")
+        })
+
+        formVm.submits.observe(this, {
+            Timber.i("get live submits row ${it.data?.rows?.get(0)?.data}")
+        })
 
         formVm.form1.observe(this, {
             Timber.i("TAG get form $it")
@@ -79,14 +90,14 @@ class PlayerFormFragment : BaseFragment() {
             }
         }
 
-        formVm.submitForm.observe(this,{
+        formVm.submitForm.observe(this, {
             openAlert("your form submit!")
             findNavController().navigate(R.id.action_playerFormFragment_to_playerResultFragment)
         })
 
         formVm.failure.observe(this, {
             formVm.hideLoading()
-            if(it.msgRes?.contains("404")!!){
+            if (it.msgRes?.contains("404")!!) {
                 openAlert("you late, Game is over")
             } else {
                 checkFailureStatus(it)
@@ -94,7 +105,7 @@ class PlayerFormFragment : BaseFragment() {
         })
 
 
-        formVm.isLoading.observe(this,{
+        formVm.isLoading.observe(this, {
             if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
         })
 

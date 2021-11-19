@@ -48,6 +48,7 @@ class PlayerResultFragment : BaseFragment() {
         formVm.getFormData()
 
         formVm.getSubmitsRow(liveDashboardAddress!!)
+        formVm.getSubmitsRow(liveDashboardAddress!!)
 
 
         formVm.form1.observe(this, {

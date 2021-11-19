@@ -36,4 +36,9 @@
         <item>female</item>
     </string-array>
 
+
+    <string name="code_length_error">you code length must be 6 digit number</string>
+    <string name="invalid_live_code">invalid live code</string>
+
+
 </resources>

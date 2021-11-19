@@ -1,10 +1,10 @@
 package co.idearun.data.remote
 
+import co.idearun.data.model.LiveSubmits
 import co.idearun.data.model.SubmitsResponse
 import co.idearun.data.model.cat.catList.CatListRes
 import co.idearun.data.model.form.createForm.CreateFormRes
 import co.idearun.data.model.form.formList.FormListRes
-import co.idearun.data.model.live.LiveDashboardCode
 import co.idearun.data.model.live.LiveDashboardRes
 import co.idearun.data.model.search.SearchRes
 import co.idearun.data.model.submitForm.SubmitFormRes
@@ -34,7 +34,8 @@ interface FormService {
         private const val GET_FORMDATA_WITH_LIVECODE = "${VERSION10}live-dashboards/"
         private const val EDIT_FORM = "${VERSION3}forms/{slug}/"
         private const val FORM_SUBMITS = "${VERSION1}forms/form/{slug}/submits/"
-        private const val SUBMITS_ROW = "${VERSION3}live-dashboards/{slug}/rows/"
+        private const val LIVE_SUBMITS_ROW = "${VERSION3}live-dashboards/{liveDashboardAddress}/rows/"
+        private const val LIVE_SUBMITS = "${VERSION3}live-dashboards/{liveDashboardAddress}/"
 
     }
 
@@ -114,10 +115,16 @@ interface FormService {
     ): Call<SubmitsResponse>
 
 
-    @GET(SUBMITS_ROW)
+    @GET(LIVE_SUBMITS_ROW)
     fun getSubmitsRow(
-        @Path("slug") liveDashboardCode : String,
+        @Path("liveDashboardAddress") liveDashboardCode : String,
     ): Call<SubmitsResponse>
+
+
+    @GET(LIVE_SUBMITS)
+    fun getLiveSubmits(
+        @Path("liveDashboardAddress") liveDashboardAddress : String,
+    ): Call<LiveSubmits>
 
 
 }

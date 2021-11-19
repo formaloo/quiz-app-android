@@ -18,40 +18,39 @@ class PlayerCodeFragment : BaseFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_player_code, container, false)
-        return root
+        return inflater.inflate(R.layout.fragment_player_code, container, false)
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val vm: FormViewModel by activityViewModels()
+        val formVm: FormViewModel by activityViewModels()
 
 
         nextBtn.setOnClickListener {
             val liveCode = codeEdt.text.toString()
             if (checkCodeLength(liveCode)) {
-                vm.getFormDataWithLiveCode(liveCode)
+                formVm.getFormDataWithLiveCode(liveCode)
             }
 
         }
 
-        vm.liveForm.observe(this, {
-            vm.userForm.value = it
+        formVm.liveForm.observe(this, {
+            formVm.userForm.value = it
             findNavController().navigate(R.id.action_playerCodeFragment_to_playerNameFragment)
         })
 
-        vm.failure.observe(this, {
-            vm.hideLoading()
+        formVm.failure.observe(this, {
+            formVm.hideLoading()
             if (it?.msgRes?.contains("404")!!) {
-                openAlert("invalid live code")
+                openAlert(getString(R.string.invalid_live_code))
             } else {
                 checkFailureStatus(it)
             }
         })
 
-        vm.isLoading.observe(this,{
+        formVm.isLoading.observe(this,{
             if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
         })
     }
@@ -59,7 +58,7 @@ class PlayerCodeFragment : BaseFragment() {
     fun checkCodeLength(code: String): Boolean {
         if (code.length == 6)
             return true
-        openAlert("you code length must be 6 digit number")
+        openAlert(getString(R.string.code_length_error))
         return false
     }
 }
