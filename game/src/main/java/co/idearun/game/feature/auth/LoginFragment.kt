@@ -8,6 +8,7 @@ import android.view.animation.AnimationUtils
 import androidx.navigation.fragment.findNavController
 import co.idearun.auth.viewmodel.AuthViewModel
 import co.idearun.common.UserInfoManager
+import co.idearun.game.Animation
 import co.idearun.game.base.BaseFragment
 import co.idearun.game.R
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -27,10 +28,10 @@ class LoginFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        val userInfoManager = UserInfoManager(context!!)
-        imageView3.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
-
         val authVm: AuthViewModel by viewModel()
+        val userInfoManager = UserInfoManager(context!!)
+        Animation.fadeInAnim(imageView,context)
+
 
         loginBtn.setOnClickListener {
             authVm.loginUser(userEdt.text.toString(), passEdt.text.toString())
@@ -46,11 +47,14 @@ class LoginFragment : BaseFragment() {
             findNavController().navigate(R.id.action_authFragment_to_hostFragment)
         })
 
+
+        // request error handling
         authVm.failure.observe(this, {
             authVm.hideLoading()
             checkFailureStatus(it)
         })
 
+        // handle loading
         authVm.isLoading.observe(this,{
             if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
         })

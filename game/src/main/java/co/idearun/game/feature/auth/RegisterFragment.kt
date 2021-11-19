@@ -12,11 +12,10 @@ import androidx.navigation.fragment.findNavController
 import co.idearun.auth.model.register.RegisterInfo
 import co.idearun.auth.viewmodel.AuthViewModel
 import co.idearun.common.UserInfoManager
+import co.idearun.game.Animation
 import co.idearun.game.base.BaseFragment
 import co.idearun.game.R
 import kotlinx.android.synthetic.main.fragment_register.*
-import kotlinx.android.synthetic.main.fragment_register.imageView3
-import kotlinx.android.synthetic.main.fragment_register.passEdt
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class RegisterFragment : BaseFragment(), AdapterView.OnItemSelectedListener,
@@ -28,8 +27,7 @@ class RegisterFragment : BaseFragment(), AdapterView.OnItemSelectedListener,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val root = inflater.inflate(R.layout.fragment_register, container, false)
-        return root
+        return inflater.inflate(R.layout.fragment_register, container, false)
     }
 
 
@@ -39,10 +37,11 @@ class RegisterFragment : BaseFragment(), AdapterView.OnItemSelectedListener,
 
 
         val userInfoManager = UserInfoManager(context!!)
-        imageView3.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
+        Animation.fadeInAnim(imageView,context)
+        val authVm: AuthViewModel by viewModel()
 
         genderSpinner.onItemSelectedListener = this
-        val authVm: AuthViewModel by viewModel()
+
         registerBtn.setOnClickListener {
             authVm.registerUser(
                 RegisterInfo(
@@ -59,9 +58,6 @@ class RegisterFragment : BaseFragment(), AdapterView.OnItemSelectedListener,
             val token = it?.data?.profile?.sessionToken
             userInfoManager.saveSessionToken(token)
             authVm.authorizeUser(token!!)
-
-            Log.i("TAG", "onViewCreated: ${it.data?.profile}")
-            Toast.makeText(context, "${it.data?.profile?.sessionToken}", Toast.LENGTH_LONG).show()
         })
 
         authVm.authorizeData.observe(this, {
