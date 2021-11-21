@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.collection.ArrayMap
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import co.idearun.data.model.FieldData
 import co.idearun.game.base.BaseFragment
 import co.idearun.game.adapter.FormFieldsAdapter
 import co.idearun.game.R
@@ -43,17 +44,6 @@ class PlayerFormFragment : BaseFragment() {
         formVm.initLessonAddress(formVm.userForm.value?.form?.address!!)
         formVm.getFormData()
 
-        formVm.getLiveSubmits(formVm.userForm.value?.form?.liveDashboardAddress!!)
-        formVm.getSubmitsRow(formVm.userForm.value?.form?.liveDashboardAddress!!)
-
-
-        formVm.liveSubmits.observe(this,{
-            Timber.i("get live submits ${it.data?.liveDashboard?.totalSubmits}")
-        })
-
-        formVm.submits.observe(this, {
-            Timber.i("get live submits row ${it.data?.rows?.get(0)?.data}")
-        })
 
         formVm.form1.observe(this, {
             Timber.i("TAG get form $it")
