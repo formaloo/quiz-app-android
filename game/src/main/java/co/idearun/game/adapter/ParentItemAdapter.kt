@@ -4,10 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
+import androidx.recyclerview.widget.RecyclerView.VISIBLE
+import co.idearun.common.base.OnRvItemClickListener
 import co.idearun.data.model.TopFieldsItem
 import co.idearun.game.R
 import co.idearun.game.model.ParentItem
@@ -96,6 +99,15 @@ class ParentItemAdapter (var context: Context) :
         }
 
 
+        childItemAdapter.setOnRvItemClickListener(object:
+            OnRvItemClickListener<ChildItemAdapter.callBackData> {
+            override fun onItemClick(item: ChildItemAdapter.callBackData, position: Int) {
+                Timber.i("on click is worked ${item.point}")
+            }
+
+        })
+
+
         parentViewHolder.ChildRecyclerView.layoutManager = layoutManager
         parentViewHolder.ChildRecyclerView.adapter = childItemAdapter
         parentViewHolder.ChildRecyclerView
@@ -118,6 +130,7 @@ class ParentItemAdapter (var context: Context) :
         RecyclerView.ViewHolder(itemView) {
         val ParentItemTitle: TextView
         val ChildRecyclerView: RecyclerView
+        val actionButton: Button
 
         init {
             ParentItemTitle = itemView
@@ -128,6 +141,12 @@ class ParentItemAdapter (var context: Context) :
                 .findViewById(
                     R.id.childRecyclerView
                 )
+            actionButton = itemView
+                .findViewById(
+                    R.id.actionBtn
+                )
+
+            actionButton.visibility = View.VISIBLE
         }
     }
 }

@@ -4,10 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
+import androidx.recyclerview.widget.RecyclerView.VISIBLE
+import co.idearun.common.base.OnRvItemClickListener
 import co.idearun.data.model.TopFieldsItem
 import co.idearun.game.R
 import co.idearun.game.model.ParentItem
@@ -22,12 +25,13 @@ class ParentItemPlayerAdapter (var context: Context) :
     // between the child and
     // the parent RecyclerViews
 
-    var itemList = arrayListOf<ParentItemPlayer>()
+    var itemList = arrayListOf<ParentItem>()
 
-    fun setItemList(ChildItemList : List<ParentItemPlayer?>){
-        this.itemList = ChildItemList as ArrayList<ParentItemPlayer>
+    fun setItemList(ChildItemList : List<ParentItem?>){
+        this.itemList = ChildItemList as ArrayList<ParentItem>
         notifyDataSetChanged()
     }
+
 
     private val viewPool = RecycledViewPool()
     override fun onCreateViewHolder(
@@ -101,7 +105,15 @@ class ParentItemPlayerAdapter (var context: Context) :
         // adapter, layout manager and RecyclerViewPool
         val childItemAdapter = ChildItemPlayerAdapter(context)
         childItemAdapter.setChildItemValue(fieldValue?.get(position)!!)
-        childItemAdapter.setChildItemList(fieldList.get(position))
+        childItemAdapter.setChildItemList(fieldList?.get(position)!! as ArrayList<TopFieldsItem?>)
+
+
+        childItemAdapter.setOnRvItemClickListener(object: OnRvItemClickListener<ChildItemPlayerAdapter.callBackData>{
+            override fun onItemClick(item: ChildItemPlayerAdapter.callBackData, position: Int) {
+               Timber.i("on click is worked ${item.point}")
+            }
+
+        })
 
 
         parentViewHolder.ChildRecyclerView.layoutManager = layoutManager
@@ -136,6 +148,7 @@ class ParentItemPlayerAdapter (var context: Context) :
                 .findViewById(
                     R.id.childRecyclerView
                 )
+
         }
     }
 }

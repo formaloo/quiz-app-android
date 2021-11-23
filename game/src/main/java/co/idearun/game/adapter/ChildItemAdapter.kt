@@ -72,7 +72,7 @@ class ChildItemAdapter(
 
     override fun getItemViewType(position: Int): Int {
         val fieldType = itemList[position]?.type
-        if (fieldType.equals("dropdown")) {
+        if (fieldType.equals("short_text")) {
             myItemViewType = VIEW_TYPE_DROP_DOWN
             return VIEW_TYPE_DROP_DOWN
         }

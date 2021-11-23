@@ -22,10 +22,20 @@
             android:id="@+id/parentRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:layout_marginTop="@dimen/padding_large"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_parent" />
+
+        <Button
+            android:id="@+id/resultAction"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#27B6FA"
+            android:text="update submits"
+            android:textColor="@color/white" />
+
     </LinearLayout>
 
     <include

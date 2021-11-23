@@ -51,10 +51,6 @@ class PlayerResultFragment : BaseFragment() {
 
 
 
-        var fieldDataMapList = arrayListOf<ArrayMap<String, String>>()
-        var topFieldsItem = arrayListOf<List<fieldList>>()
-        var parentItem = arrayListOf<ParentItemPlayer>()
-        var data = arrayListOf<fieldList>()
 
         formVm.getLiveSubmits(formVm.userForm.value?.form?.liveDashboardAddress!!)
         formVm.getSubmitsRow(formVm.userForm.value?.form?.liveDashboardAddress!!)
@@ -65,24 +61,28 @@ class PlayerResultFragment : BaseFragment() {
         adapterChield = ChildItemPlayerAdapter(requireContext())
 
         formVm.liveSubmits.observe(this, {
-            Timber.i("get live submits ${it.data?.liveDashboard?.totalSubmits}")
-            data = it?.data?.liveDashboard?.fieldsList as ArrayList<fieldList>
-        })
 
-        formVm.submits.observe(this, {
-            Timber.i("get live submits row ${it.data?.rows?.get(0)?.data}")
+            var fieldDataMapList = arrayListOf<ArrayMap<String, FieldData>>()
+            var topFieldsItem = arrayListOf<List<TopFieldsItem>>()
+            var parentItem = arrayListOf<ParentItem>()
 
-            it?.data?.rows?.forEach {
-                var fieldDataMap = ArrayMap<String, String>()
-                it?.data?.entries?.forEach {
-                    fieldDataMap.put(it.key,it.value)
+            formVm.submits.observe(this, {
+                Timber.i("field size " + it?.data?.rows?.size)
+
+                val topFieldData = it?.data?.topFields
+
+                it.data?.rows?.forEach {
+                    var fieldDataMap = ArrayMap<String, FieldData>()
+                    it?.renderedData?.entries?.forEach {
+                        Timber.i("rendred ${it.key} vs ${it.value.rawValue}")
+                        fieldDataMap.put(it.key, it.value)
+                    }
+                    fieldDataMapList.add(fieldDataMap)
+                    topFieldsItem.add(topFieldData as List<TopFieldsItem>)
+                    parentItem.add(ParentItem("asd", topFieldsItem, fieldDataMapList))
                 }
-                fieldDataMapList.add(fieldDataMap)
-                topFieldsItem.add(data!!)
-                parentItem.add(ParentItemPlayer("asd", topFieldsItem, fieldDataMapList))
-                Timber.i(" items  parent " + parentItem)
-            }
-            adapterParent.setItemList(parentItem)
+                adapterParent.setItemList(parentItem)
+            })
         })
 
 

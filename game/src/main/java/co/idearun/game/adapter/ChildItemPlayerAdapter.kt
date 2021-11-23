@@ -12,11 +12,13 @@ import co.idearun.data.model.TopFieldsItem
 import com.google.android.material.textfield.TextInputEditText
 import timber.log.Timber
 import android.content.Context
+import android.os.Build
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import co.idearun.common.base.OnRvItemClickListener
 import co.idearun.data.model.fieldList
 import co.idearun.game.R
+import com.google.android.material.textfield.TextInputLayout
 
 
 class ChildItemPlayerAdapter(
@@ -34,20 +36,20 @@ class ChildItemPlayerAdapter(
 
     var status = ""
     var point = ""
-    var itemList = arrayListOf<fieldList?>()
-    var ItemValue = ArrayMap<String, String>()
-    var myItemViewType = VIEW_TYPE_TEXT_FIELD
+    var contexta: Context? = null
+    var itemList = arrayListOf<TopFieldsItem?>()
+    var ItemValue = ArrayMap<String, FieldData>()
+    var myItemViewType = ChildItemPlayerAdapter.VIEW_TYPE_TEXT_FIELD
 
-    fun setChildItemList(ChildItemList: List<fieldList?>) {
-        this.itemList = ChildItemList as ArrayList<fieldList?>
+    fun setChildItemList(ChildItemList: List<TopFieldsItem?>) {
+        this.itemList = ChildItemList as ArrayList<TopFieldsItem?>
         notifyDataSetChanged()
     }
 
-    fun setChildItemValue(ChildItemValue: ArrayMap<String, String>) {
+    fun setChildItemValue(ChildItemValue: ArrayMap<String, FieldData>) {
         this.ItemValue = ChildItemValue
         notifyDataSetChanged()
     }
-
 
     override fun onCreateViewHolder(
         viewGroup: ViewGroup,
@@ -57,10 +59,11 @@ class ChildItemPlayerAdapter(
         var layoutId = R.layout.item_field_text
         when (i) {
             VIEW_TYPE_TEXT_FIELD -> layoutId = R.layout.item_field_text
-            VIEW_TYPE_DROP_DOWN -> layoutId = R.layout.item_field_dropdown
+            VIEW_TYPE_DROP_DOWN -> layoutId = R.layout.item_field_text
         }
         // Here we inflate the corresponding
         // layout of the child item
+        contexta = viewGroup.context
         val view: View = LayoutInflater
             .from(viewGroup.context)
             .inflate(
@@ -93,60 +96,54 @@ class ChildItemPlayerAdapter(
         val field = itemList[position]
         Timber.i("field size list ${itemList.size}")
 
+
         when (myItemViewType) {
-            VIEW_TYPE_TEXT_FIELD -> {
+            ChildItemAdapter.VIEW_TYPE_TEXT_FIELD -> {
                 Timber.i("test test moo")
                 childViewHolder.fieldsEdt?.hint = field?.title
 
-
                 childViewHolder.fieldsEdt?.setText(
-                    ItemValue.get(field?.slug),
+                    ItemValue.get(field?.slug)?.value,
                     TextView.BufferType.EDITABLE
                 )
-
-
             }
-          /*  VIEW_TYPE_DROP_DOWN -> {
+            ChildItemAdapter.VIEW_TYPE_DROP_DOWN -> {
 
                 val field1 = itemList[position]
                 Timber.i("bib $position")
                 Timber.i("bib ${itemList[position]?.choiceItems?.size}")
 
-                field1?.choiceItems?.forEachIndexed { index, choiceItemsItem ->
-                    list.set(index, choiceItemsItem?.title!!)
+                Timber.i("in child player hint: ${field?.title} and value: ${ItemValue.get(field?.slug)?.value}")
+                childViewHolder.fieldsEdt?.hint = field?.title
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    childViewHolder.fieldsEdt?.setBackgroundColor(contexta?.getColor(R.color.colorBlue)!!)
+                    childViewHolder.fieldsEdt?.setTextColor(contexta?.getColor(R.color.white)!!)
+
                 }
 
-            }*/
+                childViewHolder.fieldsEdt?.setText(
+                    ItemValue.get(field?.slug)?.value,
+                    TextView.BufferType.EDITABLE
+                )
+
+            }
 
         }
+
 
 
         childViewHolder.fieldsEdt?.setOnClickListener {
             Timber.i("mio ${field?.title}")
         }
 
-        childViewHolder.fieldSpinner?.setOnClickListener {
-            Timber.i("bib $position")
-
-
-            AlertDialog.Builder(context)
-                .setSingleChoiceItems(list, -1, null)
-                .setPositiveButton("ok", { dialog, whichButton ->
-                    dialog.dismiss()
-                    val selectedPosition: Int =
-                        (dialog as AlertDialog).getListView().getCheckedItemPosition()
-                    status = list[selectedPosition]
-                    // Do something useful withe the position of the selected radio button
-                })
-                .show()
-        }
 
 
 
         if (onRvItemClickListener != null) {
             childViewHolder.itemView.setOnClickListener {
                 var data: callBackData?
-                data = callBackData(status, "")
+                //data = callBackData(status, "")
+                data = callBackData("mio", "12")
                 if (childViewHolder.fieldsEdt?.hint == "point") {
                     data = callBackData(status, childViewHolder.fieldsEdt?.text.toString())
                     Timber.i("data " + data)
@@ -180,14 +177,12 @@ class ChildItemPlayerAdapter(
     inner class ChildViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         var fieldsEdt: TextInputEditText? = null
+        var actionBtn: Button? = null
         var fieldSpinner: TextView? = null
 
         init {
 
-            if (myItemViewType == VIEW_TYPE_TEXT_FIELD)
                 fieldsEdt = itemView.findViewById(R.id.fieldEdt)
-            if (myItemViewType == VIEW_TYPE_DROP_DOWN)
-                fieldSpinner = itemView.findViewById(R.id.dropdownSpinner)
 
         }
 
