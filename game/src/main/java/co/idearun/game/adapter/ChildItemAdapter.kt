@@ -39,7 +39,7 @@ class ChildItemAdapter(
     var point = ""
     var itemList = arrayListOf<TopFieldsItem?>()
     var ItemValue = ArrayMap<String, FieldData>()
-    var editTextValue = ArrayMap<String, String>()
+    var editTextValue = ArrayMap<String, Any>()
     var myItemViewType = VIEW_TYPE_TEXT_FIELD
 
     fun setChildItemList(ChildItemList: List<TopFieldsItem?>) {

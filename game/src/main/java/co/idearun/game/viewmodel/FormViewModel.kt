@@ -6,7 +6,9 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import co.idearun.common.base.BaseViewModel
+import co.idearun.data.model.EditRomRes
 import co.idearun.data.model.LiveSubmits
+import co.idearun.data.model.Row
 import co.idearun.data.model.SubmitsResponse
 import co.idearun.data.model.form.Form
 import co.idearun.data.model.form.createForm.CreateFormRes
@@ -56,6 +58,9 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
     private val _editForm = MutableLiveData<Form>()
     val editForm: LiveData<Form> = _editForm
+
+    private val _editRow = MutableLiveData<Row>()
+    val editRow: LiveData<Row> = _editRow
 
     private val _disableForm = MutableLiveData<Form>()
     val disableForm: LiveData<Form> = _disableForm
@@ -135,6 +140,16 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         result.either(::handleFailure, ::handleLiveSubmitsData)
     }
 
+    fun editRow(slug: String, token: String, body: ArrayMap<String, Any>) = viewModelScope.launch {
+        showLoading()
+
+        val requestBody = RequestBody.create(
+            "application/json; charset=utf-8".toMediaTypeOrNull(), JSONObject(body as Map<*, *>).toString()
+        )
+        val result = withContext(Dispatchers.IO) { repository.editRow(slug,"JWT $token", requestBody) }
+        result.either(::handleFailure, ::handleEditRowData)
+    }
+
     private fun handleLiveSubmitsData(res: LiveSubmits) {
         hideLoading()
         res.let {
@@ -174,6 +189,14 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         hideLoading()
         res.data?.form?.let {
             _editForm.value = it
+        }
+    }
+
+    private fun handleEditRowData(res: EditRomRes) {
+        hideLoading()
+        res.data?.row?.let {
+            _editRow.value = it
+            Timber.i("done $it")
         }
     }
 

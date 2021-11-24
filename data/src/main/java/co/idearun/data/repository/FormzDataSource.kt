@@ -2,6 +2,7 @@ package co.idearun.data.repository
 
 import co.idearun.common.exception.Failure
 import co.idearun.common.functional.Either
+import co.idearun.data.model.EditRomRes
 import co.idearun.data.model.LiveSubmits
 import co.idearun.data.model.SubmitsResponse
 import co.idearun.data.model.cat.catList.CatListRes
@@ -33,6 +34,7 @@ interface FormzDataSource {
     suspend fun getFormSubmits(slug: String, token: String ): Either<Failure, SubmitsResponse>
     suspend fun getSubmitsRow(liveDashboardAddress: String): Either<Failure, SubmitsResponse>
     suspend fun getLiveSubmits(liveDashboardAddress: String): Either<Failure, LiveSubmits>
+    suspend fun editRow(slug: String,token: String, body: RequestBody): Either<Failure, EditRomRes>
 
     suspend fun getFormFromDB(slug: String): Form?
     suspend fun getFormListFromDB(): List<Form>

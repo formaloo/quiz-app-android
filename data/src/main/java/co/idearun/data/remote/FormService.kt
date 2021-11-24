@@ -1,5 +1,6 @@
 package co.idearun.data.remote
 
+import co.idearun.data.model.EditRomRes
 import co.idearun.data.model.LiveSubmits
 import co.idearun.data.model.SubmitsResponse
 import co.idearun.data.model.cat.catList.CatListRes
@@ -33,6 +34,7 @@ interface FormService {
         private const val CREATE_LIVE = "${VERSION3}forms/{slug}/live-dashboard-code/"
         private const val GET_FORMDATA_WITH_LIVECODE = "${VERSION10}live-dashboards/"
         private const val EDIT_FORM = "${VERSION3}forms/{slug}/"
+        private const val EDIT_ROW = "${VERSION3}rows/{slug}/"
         private const val FORM_SUBMITS = "${VERSION1}forms/form/{slug}/submits/"
         private const val LIVE_SUBMITS_ROW = "${VERSION3}live-dashboards/{liveDashboardAddress}/rows/"
         private const val LIVE_SUBMITS = "${VERSION3}live-dashboards/{liveDashboardAddress}/"
@@ -125,6 +127,14 @@ interface FormService {
     fun getLiveSubmits(
         @Path("liveDashboardAddress") liveDashboardAddress : String,
     ): Call<LiveSubmits>
+
+
+    @PATCH(EDIT_ROW)
+    fun editRow(
+        @Path("slug") slug: String,
+        @Header("Authorization") token: String,
+        @Body body: RequestBody?
+    ): Call<EditRomRes>
 
 
 }

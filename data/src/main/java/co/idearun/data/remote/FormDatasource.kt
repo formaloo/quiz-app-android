@@ -41,4 +41,8 @@ class FormDatasource(private val service: FormService) {
 
     fun getLiveSubmits(liveDashboardAddress: String) =
         service.getLiveSubmits(liveDashboardAddress)
+
+    fun editRow(slug: String, token: String, body: RequestBody) =
+        service.editRow(slug, token, body)
+
 }

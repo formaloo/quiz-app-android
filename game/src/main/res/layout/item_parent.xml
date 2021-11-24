@@ -41,7 +41,7 @@
         android:layout_marginTop="@dimen/padding_xlarge"
         android:layout_marginHorizontal="48dp"
         android:background="@drawable/button_bg"
-        android:text="@string/login"
+        android:text="@string/update_point"
         android:textColor="@color/white"
         android:visibility="gone"/>
 

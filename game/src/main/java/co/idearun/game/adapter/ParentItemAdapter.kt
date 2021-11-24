@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
 import androidx.recyclerview.widget.RecyclerView.VISIBLE
+import co.idearun.common.TokenContainer
 import co.idearun.common.base.OnRvItemClickListener
 import co.idearun.data.model.TopFieldsItem
 import co.idearun.game.R
@@ -118,7 +119,7 @@ class ParentItemAdapter(var context: Context, var vm: FormViewModel) :
             childItemAdapter.editTextValue.entries.forEach {
                 Timber.i("action ${it.key} ${it.value} ")
             }
-            //vm.editForm
+            vm.editRow(slug!!,TokenContainer.authorizationToken!!,childItemAdapter.editTextValue)
         }
 
     }

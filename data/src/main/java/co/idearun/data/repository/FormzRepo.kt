@@ -12,6 +12,7 @@ import co.idearun.data.local.FormsKeys
 import co.idearun.data.local.dao.FormDao
 import co.idearun.data.local.dao.FormKeysDao
 import co.idearun.data.local.dao.SubmitDao
+import co.idearun.data.model.EditRomRes
 import co.idearun.data.model.LiveSubmits
 import co.idearun.data.model.SubmitsResponse
 import co.idearun.data.model.cat.catList.CatListRes
@@ -396,6 +397,19 @@ class FormzRepo(
         val call = source.getLiveSubmits(liveDashboardAddress)
         return try {
             request(call, { it.toLiveSubmits() }, LiveSubmits.empty())
+        } catch (e: Exception) {
+            Either.Left(Failure.Exception)
+        }
+    }
+
+    override suspend fun editRow(
+        slug: String,
+        token: String,
+        body: RequestBody
+    ): Either<Failure, EditRomRes> {
+        val call = source.editRow(slug, token, body)
+        return try {
+            request(call, { it.toEditRomRes() }, EditRomRes.empty())
         } catch (e: Exception) {
             Either.Left(Failure.Exception)
         }
