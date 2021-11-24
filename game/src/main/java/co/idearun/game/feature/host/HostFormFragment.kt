@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.collection.ArrayMap
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import co.idearun.common.TokenContainer
 import co.idearun.game.R
@@ -13,9 +11,7 @@ import co.idearun.game.adapter.FormFieldsAdapter
 import co.idearun.game.base.BaseFragment
 import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_form_host.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
-import org.json.JSONObject
+import org.koin.android.viewmodel.ext.android.viewModel
 import splitties.alertdialog.appcompat.*
 import timber.log.Timber
 
@@ -36,7 +32,7 @@ class HostFormFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val formVm: FormViewModel by activityViewModels()
+        val formVm: FormViewModel by viewModel()
         adapter = FormFieldsAdapter(formVm)
         parentRecyclerView.adapter = adapter
 
@@ -58,6 +54,8 @@ class HostFormFragment : BaseFragment() {
 
 
         formVm.form1.observe(this, {
+            formName.text = it.title
+            formDesc.text = it.description
             Timber.i("TAG get form $it")
             Timber.i("TAG get form ${it.fields_list?.size}")
             val fields = it.fields_list
@@ -68,12 +66,6 @@ class HostFormFragment : BaseFragment() {
             }
         })
 
-        formVm.body.observe(this, {
-            Timber.i("so so ${it.size}")
-            it.entries.forEach {
-                Timber.i("so so ${it.key} vs ${it.value}")
-            }
-        })
 
 /*        val body = ArrayMap<String, Any>()
         submitFormBtn.setOnClickListener {

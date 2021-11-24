@@ -54,6 +54,7 @@ class FormEditorFragment : BaseFragment() {
             adapter.submitList(it.fields_list)
 
             formTitleEdt.setText(it.title)
+            formDescriptionEdt.setText(it.description)
 
             fields?.forEach {
                 Timber.i("TAG field title ${it.title}")

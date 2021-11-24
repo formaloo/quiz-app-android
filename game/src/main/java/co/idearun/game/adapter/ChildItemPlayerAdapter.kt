@@ -102,6 +102,7 @@ class ChildItemPlayerAdapter(
                 Timber.i("test test moo")
                 childViewHolder.fieldsEdt?.hint = field?.title
 
+                disableEditText(childViewHolder?.fieldsEdt!!)
                 childViewHolder.fieldsEdt?.setText(
                     ItemValue.get(field?.slug)?.value,
                     TextView.BufferType.EDITABLE
@@ -201,5 +202,12 @@ class ChildItemPlayerAdapter(
         var status: String,
         var point: String
     )
+    private fun disableEditText(editText: TextInputEditText) {
+        editText.isFocusable = false
+        editText.isEnabled = false
+        editText.isCursorVisible = false
+        editText.keyListener = null
+        //editText.setBackgroundColor(Color.TRANSPARENT)
+    }
 
 }

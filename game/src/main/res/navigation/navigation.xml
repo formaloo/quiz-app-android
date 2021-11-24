@@ -159,7 +159,8 @@
     <fragment
         android:id="@+id/playerResultFragment"
         android:name="co.idearun.game.feature.player.PlayerResultFragment"
-        android:label="PlayerResultFragment" >
+        android:label="PlayerResultFragment"
+        tools:layout="@layout/fragment_result">
         <action
             android:id="@+id/action_playerResultFragment_to_mainFragment"
             app:destination="@id/mainFragment" />

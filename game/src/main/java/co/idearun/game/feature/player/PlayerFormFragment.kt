@@ -13,7 +13,10 @@ import co.idearun.game.adapter.FormFieldsAdapter
 import co.idearun.game.R
 import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_form.*
+import kotlinx.android.synthetic.main.fragment_form.loading
+import kotlinx.android.synthetic.main.fragment_form.parentRecyclerView
 import kotlinx.android.synthetic.main.fragment_player_name.*
+import kotlinx.android.synthetic.main.fragment_result.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import org.json.JSONObject
@@ -45,13 +48,17 @@ class PlayerFormFragment : BaseFragment() {
 
         formVm.initLessonAddress(formVm.userForm.value?.form?.address!!)
         formVm.getFormData()
-
-
+        
 
         formVm.form1.observe(this, {
+            formName.text = it.title
+            formDesc.text = it.description
             Timber.i("TAG get form $it")
             Timber.i("TAG get form ${it.fields_list?.size}")
             val fields = it.fields_list
+            it.fields_list?.removeIf {
+                it.type.equals("hidden")
+            }
             adapter.submitList(it.fields_list)
 
             fields?.forEach {
@@ -60,9 +67,9 @@ class PlayerFormFragment : BaseFragment() {
         })
 
         submitFormBtn.setOnClickListener {
-            if (!formVm.body.value.isNullOrEmpty())
+            if (!formVm.body.value.isNullOrEmpty()) {
                 formVm.submitFormData(formVm.userForm.value?.form?.slug!!)
-            else openAlert("your form is empty! Please Fill")
+            } else openAlert("your form is empty! Please Fill")
         }
 
         /*

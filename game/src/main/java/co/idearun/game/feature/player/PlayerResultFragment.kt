@@ -1,5 +1,6 @@
 package co.idearun.game.feature.player
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,10 @@ import co.idearun.game.model.ParentItemPlayer
 import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_result.*
 import timber.log.Timber
+import android.content.Intent.getIntent
+
+
+
 
 class PlayerResultFragment : BaseFragment() {
 
@@ -41,8 +46,6 @@ class PlayerResultFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
-
         val formVm: FormViewModel by activityViewModels()
         val slug = arguments?.getString("slug")
         val liveDashboardAddress = formVm.userForm.value?.form?.liveDashboardAddress
@@ -50,9 +53,18 @@ class PlayerResultFragment : BaseFragment() {
         Timber.i("Live Dashboard $liveDashboardAddress")
 
 
+        formVm.initLessonSlug(formVm.userForm.value?.form?.slug!!)
+        formVm.getFormData()
+
+        formVm.form1.observe(this,{
+            resultFormName.text = it.title
+            resultFormDesc.text = it.description
+        })
+
         startAction.visibility = View.VISIBLE
+        startAction.text = "Play Again"
         startAction.setOnClickListener {
-          //  findNavController().navigate(R.id.action_playerResultFragment_to_mainFragment)
+            findNavController().navigate(R.id.action_playerResultFragment_to_mainFragment)
         }
 
         resultAction.setOnClickListener {
@@ -60,7 +72,7 @@ class PlayerResultFragment : BaseFragment() {
         }
 
 
-       // formVm.getLiveSubmits(formVm.userForm.value?.form?.liveDashboardAddress!!)
+        // formVm.getLiveSubmits(formVm.userForm.value?.form?.liveDashboardAddress!!)
         formVm.getSubmitsRow(formVm.userForm.value?.form?.liveDashboardAddress!!)
 
 
@@ -85,7 +97,7 @@ class PlayerResultFragment : BaseFragment() {
                 }
                 fieldDataMapList.add(fieldDataMap)
                 topFieldsItem.add(topFieldData as List<TopFieldsItem>)
-                parentItem.add(ParentItem(it?.slug!!,"asd", topFieldsItem, fieldDataMapList))
+                parentItem.add(ParentItem(it?.slug!!, "asd", topFieldsItem, fieldDataMapList))
             }
             adapterParent.setItemList(parentItem)
         })
@@ -103,4 +115,5 @@ class PlayerResultFragment : BaseFragment() {
 
 
     }
+
 }

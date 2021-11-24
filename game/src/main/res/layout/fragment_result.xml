@@ -12,11 +12,21 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/resultFormName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_small"
+            android:gravity="center_horizontal"
             android:text="@string/result_page"
-            android:textSize="@dimen/padding_xlarge" />
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/resultFormDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/result_page"
+            android:textSize="18sp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/parentRecyclerView"

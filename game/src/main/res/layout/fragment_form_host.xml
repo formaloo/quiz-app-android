@@ -19,6 +19,24 @@
             android:text="@string/end_game"
             android:textColor="@color/white" />
 
+        <TextView
+            android:id="@+id/formName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_small"
+            android:gravity="center_horizontal"
+            android:text="@string/result_page"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/formDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="@string/result_page"
+            android:textSize="18sp" />
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/parentRecyclerView"
             android:layout_width="match_parent"

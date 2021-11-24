@@ -42,6 +42,16 @@ class ResultFragment : BaseFragment() {
         val slug = arguments?.getString("slug")
         val liveDashboardAddress = arguments?.getString("liveDashboardAddress")
 
+
+        formVm.initLessonSlug(slug!!)
+        formVm.getFormData()
+
+        formVm.form1.observe(this,{
+            resultFormName.text = it.title
+            resultFormDesc.text = it.description
+        })
+
+
         formVm.editRow.observe(this,{
             openAlert("point/status updated")
         })

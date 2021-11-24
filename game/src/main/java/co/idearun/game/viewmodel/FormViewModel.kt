@@ -131,6 +131,10 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     }
 
     fun createBody(): RequestBody {
+        body.value?.put("name_field",userName.value.toString())
+        body.value?.entries?.forEach {
+            Timber.i("body content ${it.key} vs ${it.value}")
+        }
         return RequestBody.create(
             "application/json; charset=utf-8".toMediaTypeOrNull(),
             JSONObject(body.value as Map<*, *>).toString()
