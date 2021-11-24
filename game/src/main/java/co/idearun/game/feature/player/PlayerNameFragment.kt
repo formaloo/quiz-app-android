@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import co.idearun.game.PlayerInfo
 import co.idearun.game.base.BaseFragment
 import co.idearun.game.R
 import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_player_name.*
+import org.koin.android.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class PlayerNameFragment : BaseFragment() {
 
@@ -26,10 +29,10 @@ class PlayerNameFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val vm: FormViewModel by activityViewModels()
+        val vm: FormViewModel by viewModel()
 
         playBtn.setOnClickListener {
-            vm.userName.value = nameEdt.text.toString()
+            PlayerInfo.updatePlayerName(nameEdt.text.toString())
             findNavController().navigate(R.id.action_playerNameFragment_to_playerFormFragment)
 
         }

@@ -23,8 +23,8 @@ import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_result.*
 import timber.log.Timber
 import android.content.Intent.getIntent
-
-
+import co.idearun.game.PlayerInfo
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class PlayerResultFragment : BaseFragment() {
@@ -46,14 +46,14 @@ class PlayerResultFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        val formVm: FormViewModel by activityViewModels()
+        val formVm: FormViewModel by viewModel()
         val slug = arguments?.getString("slug")
-        val liveDashboardAddress = formVm.userForm.value?.form?.liveDashboardAddress
+        val liveDashboardAddress = PlayerInfo.playerFormInfo?.form?.liveDashboardAddress
 
         Timber.i("Live Dashboard $liveDashboardAddress")
 
 
-        formVm.initLessonSlug(formVm.userForm.value?.form?.slug!!)
+        formVm.initLessonAddress(PlayerInfo.playerFormInfo?.form?.address!!)
         formVm.getFormData()
 
         formVm.form1.observe(this,{
@@ -68,12 +68,12 @@ class PlayerResultFragment : BaseFragment() {
         }
 
         resultAction.setOnClickListener {
-            formVm.getSubmitsRow(formVm.userForm.value?.form?.liveDashboardAddress!!)
+            formVm.getSubmitsRow(liveDashboardAddress!!)
         }
 
 
         // formVm.getLiveSubmits(formVm.userForm.value?.form?.liveDashboardAddress!!)
-        formVm.getSubmitsRow(formVm.userForm.value?.form?.liveDashboardAddress!!)
+        formVm.getSubmitsRow(liveDashboardAddress!!)
 
 
         adapterParent = ParentItemPlayerAdapter(requireContext())

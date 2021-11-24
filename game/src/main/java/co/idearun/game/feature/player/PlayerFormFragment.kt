@@ -8,6 +8,7 @@ import androidx.collection.ArrayMap
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import co.idearun.data.model.FieldData
+import co.idearun.game.PlayerInfo
 import co.idearun.game.base.BaseFragment
 import co.idearun.game.adapter.FormFieldsAdapter
 import co.idearun.game.R
@@ -20,6 +21,7 @@ import kotlinx.android.synthetic.main.fragment_result.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import org.json.JSONObject
+import org.koin.android.viewmodel.ext.android.viewModel
 import splitties.alertdialog.appcompat.*
 import timber.log.Timber
 
@@ -40,21 +42,20 @@ class PlayerFormFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val formVm: FormViewModel by activityViewModels()
+        val formVm: FormViewModel by viewModel()
         adapter = FormFieldsAdapter(formVm)
         parentRecyclerView.adapter = adapter
 
 
 
-        formVm.initLessonAddress(formVm.userForm.value?.form?.address!!)
+        formVm.initLessonAddress(PlayerInfo.playerFormInfo?.form?.address!!)
         formVm.getFormData()
         
 
         formVm.form1.observe(this, {
             formName.text = it.title
             formDesc.text = it.description
-            Timber.i("TAG get form $it")
-            Timber.i("TAG get form ${it.fields_list?.size}")
+
             val fields = it.fields_list
             it.fields_list?.removeIf {
                 it.type.equals("hidden")
@@ -68,7 +69,7 @@ class PlayerFormFragment : BaseFragment() {
 
         submitFormBtn.setOnClickListener {
             if (!formVm.body.value.isNullOrEmpty()) {
-                formVm.submitFormData(formVm.userForm.value?.form?.slug!!)
+                formVm.submitFormData(PlayerInfo.playerFormInfo?.form?.slug!!)
             } else openAlert("your form is empty! Please Fill")
         }
 
@@ -121,6 +122,7 @@ class PlayerFormFragment : BaseFragment() {
     fun openAlertWithNavigation(msg: String) {
         requireContext().alertDialog {
             message = msg
+            setCancelable(false)
             okButton { findNavController().navigate(R.id.action_playerFormFragment_to_playerResultFragment) }
         }.onShow {
             positiveButton.setTextColor(resources.getColor(android.R.color.holo_blue_dark))

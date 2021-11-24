@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import co.idearun.game.PlayerInfo
 import co.idearun.game.base.BaseFragment
 import co.idearun.game.R
 import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_player_code.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class PlayerCodeFragment : BaseFragment() {
 
@@ -25,7 +27,7 @@ class PlayerCodeFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val formVm: FormViewModel by activityViewModels()
+        val formVm: FormViewModel by viewModel()
 
 
         nextBtn.setOnClickListener {
@@ -37,7 +39,7 @@ class PlayerCodeFragment : BaseFragment() {
         }
 
         formVm.liveForm.observe(this, {
-            formVm.userForm.value = it
+            PlayerInfo.updatePlayerFormInfo(it)
             findNavController().navigate(R.id.action_playerCodeFragment_to_playerNameFragment)
         })
 
