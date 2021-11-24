@@ -54,9 +54,6 @@ class FormFieldsAdapter(var vm: FormViewModel) :
                 override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                     body.put(field.slug, p0.toString())
                     vm._body.postValue(body)
-                    body.entries.forEach {
-                        Timber.i("body size ${it.value}")
-                    }
                 }
 
                 override fun afterTextChanged(p0: Editable?) {

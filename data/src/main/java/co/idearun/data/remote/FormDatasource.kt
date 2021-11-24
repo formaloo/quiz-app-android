@@ -30,7 +30,7 @@ class FormDatasource(private val service: FormService) {
     fun editForm(slug: String, token: String, body: RequestBody) =
         service.editForm(slug, token, body)
 
-    fun submitFormData(slug: String, body: RequestBody) =
+    fun submitFormData(slug: String, body: RequestBody?) =
         service.submitFormData(slug, body)
 
     fun getFormSubmits(slug: String, token: String) =

@@ -133,7 +133,7 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     fun createBody(): RequestBody {
         return RequestBody.create(
             "application/json; charset=utf-8".toMediaTypeOrNull(),
-            JSONObject(body.value as Map<*,*>).toString()
+            JSONObject(body.value as Map<*, *>).toString()
         )
     }
 

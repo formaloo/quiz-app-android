@@ -30,7 +30,7 @@ interface FormzDataSource {
     suspend fun createLive(slug: String, token: String): Either<Failure, LiveDashboardRes>
     suspend fun getFormDataWithLiveCode(body: String): Either<Failure, LiveDashboardRes>
     suspend fun editForm(slug: String,token: String, body: RequestBody): Either<Failure, CreateFormRes>
-    suspend fun submitFormData(slug: String, body: RequestBody): Either<Failure, SubmitFormRes>
+    suspend fun submitFormData(slug: String, body: RequestBody?): Either<Failure, SubmitFormRes>
     suspend fun getFormSubmits(slug: String, token: String ): Either<Failure, SubmitsResponse>
     suspend fun getSubmitsRow(liveDashboardAddress: String): Either<Failure, SubmitsResponse>
     suspend fun getLiveSubmits(liveDashboardAddress: String): Either<Failure, LiveSubmits>

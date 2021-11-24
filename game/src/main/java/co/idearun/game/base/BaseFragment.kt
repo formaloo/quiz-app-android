@@ -13,6 +13,7 @@ open class BaseFragment : Fragment() {
     fun openAlert(msg: String) {
         requireContext().alertDialog {
             message = msg
+            setCancelable(false)
             okButton()
         }.onShow {
             positiveButton.setTextColor(resources.getColor(android.R.color.holo_blue_dark))

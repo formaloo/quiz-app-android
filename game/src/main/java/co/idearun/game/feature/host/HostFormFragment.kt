@@ -68,9 +68,9 @@ class HostFormFragment : BaseFragment() {
             }
         })
 
-        formVm.body.observe(this,{
+        formVm.body.observe(this, {
             Timber.i("so so ${it.size}")
-            it.entries.forEach{
+            it.entries.forEach {
                 Timber.i("so so ${it.key} vs ${it.value}")
             }
         })
@@ -102,7 +102,9 @@ class HostFormFragment : BaseFragment() {
         }*/
 
         submitFormBtn.setOnClickListener {
-            formVm.submitFormData(slug!!)
+            if (!formVm.body.value.isNullOrEmpty())
+                formVm.submitFormData(slug!!)
+            else openAlert("your form is empty! Please Fill")
         }
 
         formVm.submitForm.observe(this, {

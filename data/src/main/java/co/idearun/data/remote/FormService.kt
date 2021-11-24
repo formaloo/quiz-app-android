@@ -106,7 +106,7 @@ interface FormService {
     @POST(SUBMIT_FORM)
     fun submitFormData(
         @Path("slug") slug: String,
-        @Body body: RequestBody
+        @Body body: RequestBody?
     ): Call<SubmitFormRes>
 
 

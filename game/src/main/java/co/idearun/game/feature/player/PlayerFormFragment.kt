@@ -60,35 +60,37 @@ class PlayerFormFragment : BaseFragment() {
         })
 
         submitFormBtn.setOnClickListener {
-            formVm.submitFormData(formVm.userForm.value?.form?.slug!!)
+            if (!formVm.body.value.isNullOrEmpty())
+                formVm.submitFormData(formVm.userForm.value?.form?.slug!!)
+            else openAlert("your form is empty! Please Fill")
         }
 
-       /*
-        val body = ArrayMap<String, Any>()
-        submitFormBtn.setOnClickListener {
+        /*
+         val body = ArrayMap<String, Any>()
+         submitFormBtn.setOnClickListener {
 
-            adapter.fieldSlugList.forEachIndexed { index, fields ->
-                val view = parentRecyclerView.getChildAt(index)
-                val viewHolder = adapter.FormFieldsViewHolder(view)
+             adapter.fieldSlugList.forEachIndexed { index, fields ->
+                 val view = parentRecyclerView.getChildAt(index)
+                 val viewHolder = adapter.FormFieldsViewHolder(view)
 
-                if (!viewHolder.fieldsEdt.text.toString().isBlank()) {
-                    val value = viewHolder.fieldsEdt.text.toString()
-                    val slugField = fields.slug!!
-                    body[slugField] = value
+                 if (!viewHolder.fieldsEdt.text.toString().isBlank()) {
+                     val value = viewHolder.fieldsEdt.text.toString()
+                     val slugField = fields.slug!!
+                     body[slugField] = value
 
-                    Timber.i(fields.title + " = " + slugField + " = " + value)
-                }
-                body["name_field"] = formVm.userName.value
-            }.also {
-                val bodyM = RequestBody.create(
-                    "application/json; charset=utf-8".toMediaTypeOrNull(),
-                    JSONObject(body).toString()
-                )
+                     Timber.i(fields.title + " = " + slugField + " = " + value)
+                 }
+                 body["name_field"] = formVm.userName.value
+             }.also {
+                 val bodyM = RequestBody.create(
+                     "application/json; charset=utf-8".toMediaTypeOrNull(),
+                     JSONObject(body).toString()
+                 )
 
-                formVm.submitFormData(formVm.userForm.value?.form?.slug!!, bodyM)
-            }
-        }
-*/
+                 formVm.submitFormData(formVm.userForm.value?.form?.slug!!, bodyM)
+             }
+         }
+ */
         formVm.submitForm.observe(this, {
             openAlertWithNavigation("your form submit!")
         })
@@ -112,7 +114,7 @@ class PlayerFormFragment : BaseFragment() {
     fun openAlertWithNavigation(msg: String) {
         requireContext().alertDialog {
             message = msg
-            okButton { findNavController().navigate(R.id.action_playerFormFragment_to_playerResultFragment)}
+            okButton { findNavController().navigate(R.id.action_playerFormFragment_to_playerResultFragment) }
         }.onShow {
             positiveButton.setTextColor(resources.getColor(android.R.color.holo_blue_dark))
         }.show()

@@ -362,7 +362,7 @@ class FormzRepo(
 
     override suspend fun submitFormData(
         slug: String,
-        body: RequestBody
+        body: RequestBody?
     ): Either<Failure, SubmitFormRes> {
         val call = source.submitFormData(slug, body)
         return try {
