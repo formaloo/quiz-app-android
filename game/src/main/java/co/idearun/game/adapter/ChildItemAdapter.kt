@@ -12,8 +12,12 @@ import co.idearun.data.model.TopFieldsItem
 import com.google.android.material.textfield.TextInputEditText
 import timber.log.Timber
 import android.content.Context
+import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.core.widget.addTextChangedListener
 import co.idearun.common.base.OnRvItemClickListener
 import co.idearun.game.R
 
@@ -35,6 +39,7 @@ class ChildItemAdapter(
     var point = ""
     var itemList = arrayListOf<TopFieldsItem?>()
     var ItemValue = ArrayMap<String, FieldData>()
+    var editTextValue = ArrayMap<String, String>()
     var myItemViewType = VIEW_TYPE_TEXT_FIELD
 
     fun setChildItemList(ChildItemList: List<TopFieldsItem?>) {
@@ -72,7 +77,7 @@ class ChildItemAdapter(
 
     override fun getItemViewType(position: Int): Int {
         val fieldType = itemList[position]?.type
-        if (fieldType.equals("short_text")) {
+        if (fieldType.equals("dropdown")) {
             myItemViewType = VIEW_TYPE_DROP_DOWN
             return VIEW_TYPE_DROP_DOWN
         }
@@ -95,6 +100,8 @@ class ChildItemAdapter(
 
         when (myItemViewType) {
             VIEW_TYPE_TEXT_FIELD -> {
+                if (!field?.title.equals("امتیاز"))
+                    disableEditText(childViewHolder?.fieldsEdt!!)
                 Timber.i("test test moo")
                 childViewHolder.fieldsEdt?.hint = field?.title
 
@@ -119,6 +126,35 @@ class ChildItemAdapter(
         }
 
 
+/*        onChange(childViewHolder.fieldsEdt!!, object: Runnable{
+            override fun run() {
+                Timber.i("text changed listener ${childViewHolder.fieldsEdt!!.text.toString()}")
+            }
+
+        })   */
+
+
+
+        childViewHolder.fieldsEdt?.addTextChangedListener {
+            onChange(childViewHolder.fieldsEdt!!, {
+                Timber.i("text changed listener  ${itemList[position]?.title} is -> ${childViewHolder.fieldsEdt!!.text.toString()} ")
+            })
+        }
+
+        childViewHolder.fieldsEdt?.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                Timber.i(p0.toString())
+                editTextValue.put(field?.slug, p0.toString())
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+        })
+
         childViewHolder.fieldsEdt?.setOnClickListener {
             Timber.i("mio ${field?.title}")
         }
@@ -134,6 +170,14 @@ class ChildItemAdapter(
                     val selectedPosition: Int =
                         (dialog as AlertDialog).getListView().getCheckedItemPosition()
                     status = list[selectedPosition]
+                    Timber.i("status $status" + itemList.get(position)?.choiceItems?.get(selectedPosition)?.slug)
+                    var choiceItemSlug = itemList.get(position)?.choiceItems?.get(selectedPosition)?.slug
+                    var fieldSlug = itemList.get(position)?.slug
+                    editTextValue.put(fieldSlug,choiceItemSlug)
+                    editTextValue.forEach {
+                        Timber.i("${it.key} data is -> ${it.value}")
+                    }
+                    childViewHolder.fieldSpinner?.text = status
                     // Do something useful withe the position of the selected radio button
                 })
                 .show()
@@ -147,9 +191,9 @@ class ChildItemAdapter(
                 data = callBackData(status, "")
                 if (childViewHolder.fieldsEdt?.hint == "point") {
                     data = callBackData(status, childViewHolder.fieldsEdt?.text.toString())
-                    Timber.i("data " + data)
+                    Timber.i("data " + data + "status $status")
                 }
-                onRvItemClickListener!!.onItemClick(data,2)
+                onRvItemClickListener!!.onItemClick(data, 2)
             }
         }
 
@@ -203,5 +247,41 @@ class ChildItemAdapter(
         var status: String,
         var point: String
     )
+
+    fun comS(s1: String, s2: String): Boolean {
+        if (s1.length == s2.length) {
+            val l = s1.length
+            for (i in 0 until l) {
+                if (s1[i] != s2[i]) return false
+            }
+            return true
+        }
+        return false
+    }
+
+    fun onChange(EdTe: EditText, FRun: Runnable?) {
+        class finalS {
+            var s = ""
+        }
+
+        val dat = finalS()
+        EdTe.setOnFocusChangeListener(object : View.OnFocusChangeListener {
+            override fun onFocusChange(v: View?, hasFocus: Boolean) {
+                if (hasFocus) {
+                    dat.s = "" + EdTe.text
+                } else if (!comS(dat.s, "" + EdTe.text)) {
+                    Handler().post(FRun!!)
+                }
+            }
+        })
+    }
+
+    private fun disableEditText(editText: TextInputEditText) {
+        editText.isFocusable = false
+        editText.isEnabled = false
+        editText.isCursorVisible = false
+        editText.keyListener = null
+        //editText.setBackgroundColor(Color.TRANSPARENT)
+    }
 
 }

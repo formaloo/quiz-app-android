@@ -7,6 +7,7 @@ import co.idearun.data.model.fieldList
 
 data class ParentItem(
     val title:String? = null,
+    val rowSlug:String? = null,
     var fieldList: List<List<TopFieldsItem?>>? = null,
     var fieldValue: List<ArrayMap<String, FieldData>>? = null
 )

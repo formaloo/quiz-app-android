@@ -13,9 +13,11 @@ import co.idearun.game.adapter.FormFieldsAdapter
 import co.idearun.game.R
 import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_form.*
+import kotlinx.android.synthetic.main.fragment_player_name.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody
 import org.json.JSONObject
+import splitties.alertdialog.appcompat.*
 import timber.log.Timber
 
 class PlayerFormFragment : BaseFragment() {
@@ -45,6 +47,7 @@ class PlayerFormFragment : BaseFragment() {
         formVm.getFormData()
 
 
+
         formVm.form1.observe(this, {
             Timber.i("TAG get form $it")
             Timber.i("TAG get form ${it.fields_list?.size}")
@@ -70,6 +73,7 @@ class PlayerFormFragment : BaseFragment() {
 
                     Timber.i(fields.title + " = " + slugField + " = " + value)
                 }
+                body["name_field"] = formVm.userName.value
             }.also {
                 val bodyM = RequestBody.create(
                     "application/json; charset=utf-8".toMediaTypeOrNull(),
@@ -81,8 +85,7 @@ class PlayerFormFragment : BaseFragment() {
         }
 
         formVm.submitForm.observe(this, {
-            openAlert("your form submit!")
-            findNavController().navigate(R.id.action_playerFormFragment_to_playerResultFragment)
+            openAlertWithNavigation("your form submit!")
         })
 
         formVm.failure.observe(this, {
@@ -99,6 +102,14 @@ class PlayerFormFragment : BaseFragment() {
             if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
         })
 
+    }
 
+    fun openAlertWithNavigation(msg: String) {
+        requireContext().alertDialog {
+            message = msg
+            okButton { findNavController().navigate(R.id.action_playerFormFragment_to_playerResultFragment)}
+        }.onShow {
+            positiveButton.setTextColor(resources.getColor(android.R.color.holo_blue_dark))
+        }.show()
     }
 }

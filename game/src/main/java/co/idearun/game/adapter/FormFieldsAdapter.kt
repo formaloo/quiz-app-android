@@ -34,6 +34,8 @@ class FormFieldsAdapter :
 
         fun bind(field: Fields) {
             //fieldsEdt.text = form.title,
+
+           // if (field.type.equals("short_text"))
             fieldsEdt.hint = field.title
             Timber.i("slug in adapter ${field.slug}")
             fieldSlugList.add(field)

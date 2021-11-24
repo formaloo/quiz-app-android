@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.collection.ArrayMap
+import androidx.navigation.fragment.findNavController
 import co.idearun.common.TokenContainer
 import co.idearun.common.base.OnRvItemClickListener
 import co.idearun.data.model.FieldData
@@ -41,8 +42,12 @@ class ResultFragment : BaseFragment() {
         val slug = arguments?.getString("slug")
         val liveDashboardAddress = arguments?.getString("liveDashboardAddress")
 
+        resultAction.text = "Start new game"
+        resultAction.setOnClickListener {
+            findNavController().navigate(R.id.action_resultFragment_to_gamesFragment)
+        }
         //adapterChild = ChildItemAdapter()
-        adapterParent = ParentItemAdapter(requireContext())
+        adapterParent = ParentItemAdapter(requireContext(), formVm)
         parentRecyclerView.adapter = adapterParent
 
         adapterChild = ChildItemAdapter(requireContext())
@@ -54,7 +59,7 @@ class ResultFragment : BaseFragment() {
         })
 
         //formVm.getSubmitsRow(liveDashboardAddress!!)
-        formVm.getFormSubmits("2ijiobKN", "JWT ${TokenContainer.authorizationToken}")
+        formVm.getFormSubmits(slug!!, "JWT ${TokenContainer.authorizationToken}")
 
         var fieldDataMapList = arrayListOf<ArrayMap<String, FieldData>>()
         var topFieldsItem = arrayListOf<List<TopFieldsItem>>()
@@ -73,7 +78,7 @@ class ResultFragment : BaseFragment() {
                 }
                 fieldDataMapList.add(fieldDataMap)
                 topFieldsItem.add(topFieldData as List<TopFieldsItem>)
-                parentItem.add(ParentItem("asd", topFieldsItem, fieldDataMapList))
+                parentItem.add(ParentItem(it?.slug!!,"asd", topFieldsItem, fieldDataMapList))
             }
             adapterParent.setItemList(parentItem)
         })

@@ -14,10 +14,11 @@ import co.idearun.common.base.OnRvItemClickListener
 import co.idearun.data.model.TopFieldsItem
 import co.idearun.game.R
 import co.idearun.game.model.ParentItem
+import co.idearun.game.viewmodel.FormViewModel
 import timber.log.Timber
 
 
-class ParentItemAdapter (var context: Context) :
+class ParentItemAdapter(var context: Context, var vm: FormViewModel) :
     RecyclerView.Adapter<ParentItemAdapter.ParentViewHolder>() {
     // An object of RecyclerView.RecycledViewPool
     // is created to share the Views
@@ -26,7 +27,7 @@ class ParentItemAdapter (var context: Context) :
 
     var itemList = arrayListOf<ParentItem>()
 
-    fun setItemList(ChildItemList : List<ParentItem?>){
+    fun setItemList(ChildItemList: List<ParentItem?>) {
         this.itemList = ChildItemList as ArrayList<ParentItem>
         notifyDataSetChanged()
     }
@@ -55,8 +56,7 @@ class ParentItemAdapter (var context: Context) :
 
         // Create an instance of the ParentItem
         // class for the given position
-        val (ParentItemTitle, fieldList, fieldValue) = itemList[position]
-
+        val (slug,ParentItemTitle, fieldList, fieldValue) = itemList[position]
 
 
         // For the created instance,
@@ -99,7 +99,7 @@ class ParentItemAdapter (var context: Context) :
         }
 
 
-        childItemAdapter.setOnRvItemClickListener(object:
+        childItemAdapter.setOnRvItemClickListener(object :
             OnRvItemClickListener<ChildItemAdapter.callBackData> {
             override fun onItemClick(item: ChildItemAdapter.callBackData, position: Int) {
                 Timber.i("on click is worked ${item.point}")
@@ -112,6 +112,15 @@ class ParentItemAdapter (var context: Context) :
         parentViewHolder.ChildRecyclerView.adapter = childItemAdapter
         parentViewHolder.ChildRecyclerView
             .setRecycledViewPool(viewPool)
+
+        parentViewHolder.actionButton.setOnClickListener {
+            Timber.i("action clicked " + slug)
+            childItemAdapter.editTextValue.entries.forEach {
+                Timber.i("action ${it.key} ${it.value} ")
+            }
+            //vm.editForm
+        }
+
     }
 
     // This method returns the number

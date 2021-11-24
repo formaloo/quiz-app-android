@@ -15,6 +15,7 @@ import co.idearun.data.model.TopFieldsItem
 import co.idearun.game.R
 import co.idearun.game.model.ParentItem
 import co.idearun.game.model.ParentItemPlayer
+import co.idearun.game.viewmodel.FormViewModel
 import timber.log.Timber
 
 
@@ -57,7 +58,7 @@ class ParentItemPlayerAdapter (var context: Context) :
 
         // Create an instance of the ParentItem
         // class for the given position
-        val (ParentItemTitle, fieldList, fieldValue) = itemList[position]
+        val (slug,ParentItemTitle, fieldList, fieldValue) = itemList[position]
 
 
 

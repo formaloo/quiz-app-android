@@ -132,6 +132,7 @@
         android:name="co.idearun.game.feature.player.PlayerFormFragment"
         android:label="PlayerFormFragment" >
         <action
+            app:popUpToInclusive="false"
             android:id="@+id/action_playerFormFragment_to_playerResultFragment"
             app:destination="@id/playerResultFragment" />
     </fragment>
@@ -139,13 +140,18 @@
     <fragment
         android:id="@+id/resultFragment"
         android:name="co.idearun.game.feature.host.ResultFragment"
-        android:label="ResultFragment" />
+        android:label="ResultFragment" >
+        <action
+            android:id="@+id/action_resultFragment_to_gamesFragment"
+            app:destination="@id/gamesFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/hostFormFragment"
         android:name="co.idearun.game.feature.host.HostFormFragment"
         android:label="HostFormFragment" >
         <action
+            app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_left"
             android:id="@+id/action_hostFormFragment_to_resultFragment"
             app:destination="@id/resultFragment" />
@@ -153,5 +159,9 @@
     <fragment
         android:id="@+id/playerResultFragment"
         android:name="co.idearun.game.feature.player.PlayerResultFragment"
-        android:label="PlayerResultFragment" />
+        android:label="PlayerResultFragment" >
+        <action
+            android:id="@+id/action_playerResultFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
+    </fragment>
 </navigation>

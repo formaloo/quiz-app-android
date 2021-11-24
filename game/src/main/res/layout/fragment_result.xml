@@ -36,6 +36,15 @@
             android:text="update submits"
             android:textColor="@color/white" />
 
+        <Button
+            android:id="@+id/startAction"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="#27B6FA"
+            android:text="start new game"
+            android:textColor="@color/white"
+            android:visibility="gone"/>
+
     </LinearLayout>
 
     <include

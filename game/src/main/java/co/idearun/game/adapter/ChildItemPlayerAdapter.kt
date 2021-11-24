@@ -115,9 +115,10 @@ class ChildItemPlayerAdapter(
 
                 Timber.i("in child player hint: ${field?.title} and value: ${ItemValue.get(field?.slug)?.value}")
                 childViewHolder.fieldsEdt?.hint = field?.title
+
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    childViewHolder.fieldsEdt?.setBackgroundColor(contexta?.getColor(R.color.colorBlue)!!)
-                    childViewHolder.fieldsEdt?.setTextColor(contexta?.getColor(R.color.white)!!)
+                    childViewHolder.fieldsEdt?.setBackgroundColor(context.getColor(R.color.colorBlue))
+                    childViewHolder.fieldsEdt?.setTextColor(context.getColor(R.color.white))
 
                 }
 

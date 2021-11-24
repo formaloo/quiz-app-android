@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.collection.ArrayMap
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import co.idearun.data.model.FieldData
 import co.idearun.data.model.TopFieldsItem
 import co.idearun.data.model.fieldList
@@ -49,10 +50,17 @@ class PlayerResultFragment : BaseFragment() {
         Timber.i("Live Dashboard $liveDashboardAddress")
 
 
+        startAction.visibility = View.VISIBLE
+        startAction.setOnClickListener {
+          //  findNavController().navigate(R.id.action_playerResultFragment_to_mainFragment)
+        }
+
+        resultAction.setOnClickListener {
+            formVm.getSubmitsRow(formVm.userForm.value?.form?.liveDashboardAddress!!)
+        }
 
 
-
-        formVm.getLiveSubmits(formVm.userForm.value?.form?.liveDashboardAddress!!)
+       // formVm.getLiveSubmits(formVm.userForm.value?.form?.liveDashboardAddress!!)
         formVm.getSubmitsRow(formVm.userForm.value?.form?.liveDashboardAddress!!)
 
 
@@ -60,29 +68,26 @@ class PlayerResultFragment : BaseFragment() {
         parentRecyclerView.adapter = adapterParent
         adapterChield = ChildItemPlayerAdapter(requireContext())
 
-        formVm.liveSubmits.observe(this, {
-
+        formVm.submits.observe(this, {
             var fieldDataMapList = arrayListOf<ArrayMap<String, FieldData>>()
             var topFieldsItem = arrayListOf<List<TopFieldsItem>>()
             var parentItem = arrayListOf<ParentItem>()
 
-            formVm.submits.observe(this, {
-                Timber.i("field size " + it?.data?.rows?.size)
+            Timber.i("field size " + it?.data?.rows?.size)
 
-                val topFieldData = it?.data?.topFields
+            val topFieldData = it?.data?.topFields
 
-                it.data?.rows?.forEach {
-                    var fieldDataMap = ArrayMap<String, FieldData>()
-                    it?.renderedData?.entries?.forEach {
-                        Timber.i("rendred ${it.key} vs ${it.value.rawValue}")
-                        fieldDataMap.put(it.key, it.value)
-                    }
-                    fieldDataMapList.add(fieldDataMap)
-                    topFieldsItem.add(topFieldData as List<TopFieldsItem>)
-                    parentItem.add(ParentItem("asd", topFieldsItem, fieldDataMapList))
+            it.data?.rows?.forEach {
+                var fieldDataMap = ArrayMap<String, FieldData>()
+                it?.renderedData?.entries?.forEach {
+                    Timber.i("rendred ${it.key} vs ${it.value.rawValue}")
+                    fieldDataMap.put(it.key, it.value)
                 }
-                adapterParent.setItemList(parentItem)
-            })
+                fieldDataMapList.add(fieldDataMap)
+                topFieldsItem.add(topFieldData as List<TopFieldsItem>)
+                parentItem.add(ParentItem(it?.slug!!,"asd", topFieldsItem, fieldDataMapList))
+            }
+            adapterParent.setItemList(parentItem)
         })
 
 
