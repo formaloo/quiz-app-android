@@ -37,6 +37,9 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     var userForm = MutableLiveData<LiveDashboardCode>()
     var userName = MutableLiveData<String>()
 
+    var _body = MutableLiveData<ArrayMap<String, String>>()
+    var body: LiveData<ArrayMap<String, String>> = _body
+
     private val _form = MutableLiveData<Form>()
     val form: LiveData<Form> = _form
 
@@ -122,6 +125,18 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         result.either(::handleFailure, ::handleSubmitFormData)
     }
 
+    fun submitFormData(slug: String) = viewModelScope.launch {
+        val result = withContext(Dispatchers.IO) { repository.submitFormData(slug, createBody()) }
+        result.either(::handleFailure, ::handleSubmitFormData)
+    }
+
+    fun createBody(): RequestBody {
+        return RequestBody.create(
+            "application/json; charset=utf-8".toMediaTypeOrNull(),
+            JSONObject(body.value as Map<*,*>).toString()
+        )
+    }
+
     fun getFormSubmits(slug: String, token: String) = viewModelScope.launch {
         showLoading()
         val result = withContext(Dispatchers.IO) { repository.getFormSubmits(slug, token) }
@@ -144,9 +159,11 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         showLoading()
 
         val requestBody = RequestBody.create(
-            "application/json; charset=utf-8".toMediaTypeOrNull(), JSONObject(body as Map<*, *>).toString()
+            "application/json; charset=utf-8".toMediaTypeOrNull(),
+            JSONObject(body as Map<*, *>).toString()
         )
-        val result = withContext(Dispatchers.IO) { repository.editRow(slug,"JWT $token", requestBody) }
+        val result =
+            withContext(Dispatchers.IO) { repository.editRow(slug, "JWT $token", requestBody) }
         result.either(::handleFailure, ::handleEditRowData)
     }
 
@@ -173,9 +190,9 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
     private fun handleSubmitFormData(res: SubmitFormRes) {
         hideLoading()
-           res.let {
-               _submitForm.value = it
-           }
+        res.let {
+            _submitForm.value = it
+        }
     }
 
     private fun handleLiveFormData(res: LiveDashboardRes) {

@@ -37,7 +37,7 @@ class HostFormFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val formVm: FormViewModel by activityViewModels()
-        adapter = FormFieldsAdapter()
+        adapter = FormFieldsAdapter(formVm)
         parentRecyclerView.adapter = adapter
 
         val liveCode = arguments?.getString("liveCode")
@@ -68,7 +68,14 @@ class HostFormFragment : BaseFragment() {
             }
         })
 
-        val body = ArrayMap<String, Any>()
+        formVm.body.observe(this,{
+            Timber.i("so so ${it.size}")
+            it.entries.forEach{
+                Timber.i("so so ${it.key} vs ${it.value}")
+            }
+        })
+
+/*        val body = ArrayMap<String, Any>()
         submitFormBtn.setOnClickListener {
 
             adapter.fieldSlugList.forEachIndexed { index, fields ->
@@ -92,6 +99,10 @@ class HostFormFragment : BaseFragment() {
                 formVm.submitFormData(slug!!, bodyM)
             }
 
+        }*/
+
+        submitFormBtn.setOnClickListener {
+            formVm.submitFormData(slug!!)
         }
 
         formVm.submitForm.observe(this, {

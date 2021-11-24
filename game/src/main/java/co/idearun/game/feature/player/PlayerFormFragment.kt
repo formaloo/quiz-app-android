@@ -38,7 +38,7 @@ class PlayerFormFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val formVm: FormViewModel by activityViewModels()
-        adapter = FormFieldsAdapter()
+        adapter = FormFieldsAdapter(formVm)
         parentRecyclerView.adapter = adapter
 
 
@@ -59,6 +59,11 @@ class PlayerFormFragment : BaseFragment() {
             }
         })
 
+        submitFormBtn.setOnClickListener {
+            formVm.submitFormData(formVm.userForm.value?.form?.slug!!)
+        }
+
+       /*
         val body = ArrayMap<String, Any>()
         submitFormBtn.setOnClickListener {
 
@@ -83,7 +88,7 @@ class PlayerFormFragment : BaseFragment() {
                 formVm.submitFormData(formVm.userForm.value?.form?.slug!!, bodyM)
             }
         }
-
+*/
         formVm.submitForm.observe(this, {
             openAlertWithNavigation("your form submit!")
         })

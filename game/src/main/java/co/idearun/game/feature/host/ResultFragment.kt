@@ -42,6 +42,10 @@ class ResultFragment : BaseFragment() {
         val slug = arguments?.getString("slug")
         val liveDashboardAddress = arguments?.getString("liveDashboardAddress")
 
+        formVm.editRow.observe(this,{
+            openAlert("point/status updated")
+        })
+
         resultAction.text = "Start new game"
         resultAction.setOnClickListener {
             findNavController().navigate(R.id.action_resultFragment_to_gamesFragment)

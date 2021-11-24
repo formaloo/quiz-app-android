@@ -33,7 +33,7 @@ class FormEditorFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val formVm: FormViewModel by viewModel()
-        adapter = FormFieldsAdapter()
+        adapter = FormFieldsAdapter(formVm)
         adapter.disableField = true
 
         parentRecyclerView.adapter = adapter

@@ -1,25 +1,30 @@
 package co.idearun.game.adapter
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
+import androidx.collection.ArrayMap
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import co.idearun.common.base.OnRvItemClickListener
 import co.idearun.data.model.form.Fields
 import co.idearun.game.R
+import co.idearun.game.viewmodel.FormViewModel
 import com.google.android.material.textfield.TextInputEditText
 import timber.log.Timber
 
-class FormFieldsAdapter :
+class FormFieldsAdapter(var vm: FormViewModel) :
     ListAdapter<Fields, FormFieldsAdapter.FormFieldsViewHolder>(FieldsDiffCallback) {
 
     public var disableField = false
     public var fieldSlugList = arrayListOf<Fields>()
     public var fieldTextList = arrayListOf<String>()
+    var body = ArrayMap<String, String>()
 
     private var onRvItemClickListener: OnRvItemClickListener<Fields>? = null
 
@@ -35,16 +40,29 @@ class FormFieldsAdapter :
         fun bind(field: Fields) {
             //fieldsEdt.text = form.title,
 
-           // if (field.type.equals("short_text"))
+            // if (field.type.equals("short_text"))
             fieldsEdt.hint = field.title
             Timber.i("slug in adapter ${field.slug}")
             fieldSlugList.add(field)
             if (disableField)
                 disableEditText(fieldsEdt)
 
-            /*val url = Uri.parse(form.logo)
-            avatarGameIv.setImageURI(url)
-*/
+            fieldsEdt.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    body.put(field.slug, p0.toString())
+                    vm._body.postValue(body)
+                    body.entries.forEach {
+                        Timber.i("body size ${it.value}")
+                    }
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                }
+
+            })
         }
     }
 
@@ -71,7 +89,7 @@ class FormFieldsAdapter :
     }
 
 
-    fun getFieldsValue(){
+    fun getFieldsValue() {
 
     }
 
