@@ -1,4 +1,4 @@
-package co.idearun.game
+package co.idearun.game.feature
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.navigation.fragment.findNavController
 import co.idearun.common.UserInfoManager
+import co.idearun.game.R
 import co.idearun.game.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_main.*
 

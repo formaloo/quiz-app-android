@@ -10,9 +10,9 @@ import co.idearun.common.TokenContainer
 import co.idearun.common.base.OnRvItemClickListener
 import co.idearun.data.model.form.Form
 import co.idearun.game.R
-import co.idearun.game.adapter.GamesAdapter
+import co.idearun.game.feature.adapter.GamesAdapter
 import co.idearun.game.base.BaseFragment
-import co.idearun.game.viewmodel.FormViewModel
+import co.idearun.game.feature.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_games.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber

@@ -1,4 +1,4 @@
-package co.idearun.game.adapter
+package co.idearun.game.feature.adapter
 
 import android.view.LayoutInflater
 import android.view.View

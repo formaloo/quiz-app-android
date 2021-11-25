@@ -6,17 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import co.idearun.game.PlayerInfo
+import co.idearun.game.feature.PlayerInfo
 import co.idearun.game.base.BaseFragment
-import co.idearun.game.adapter.FormFieldsAdapter
+import co.idearun.game.feature.adapter.FormFieldsAdapter
 import co.idearun.game.R
-import co.idearun.game.viewmodel.FormViewModel
+import co.idearun.game.feature.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_form.*
 import kotlinx.android.synthetic.main.fragment_form.loading
 import kotlinx.android.synthetic.main.fragment_form.parentRecyclerView
 import org.koin.android.viewmodel.ext.android.viewModel
 import splitties.alertdialog.appcompat.*
-import timber.log.Timber
 
 class PlayerFormFragment : BaseFragment() {
 

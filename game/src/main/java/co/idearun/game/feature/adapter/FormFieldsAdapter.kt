@@ -1,4 +1,4 @@
-package co.idearun.game.adapter
+package co.idearun.game.feature.adapter
 
 import android.text.Editable
 import android.text.TextWatcher
@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import co.idearun.common.base.OnRvItemClickListener
 import co.idearun.data.model.form.Fields
 import co.idearun.game.R
-import co.idearun.game.viewmodel.FormViewModel
+import co.idearun.game.feature.viewmodel.FormViewModel
 import com.google.android.material.textfield.TextInputEditText
 import timber.log.Timber
 

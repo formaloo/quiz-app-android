@@ -1,4 +1,4 @@
-package co.idearun.game.viewmodel
+package co.idearun.game.feature.viewmodel
 
 import androidx.collection.ArrayMap
 import androidx.lifecycle.LiveData
@@ -17,7 +17,7 @@ import co.idearun.data.model.live.LiveDashboardCode
 import co.idearun.data.model.live.LiveDashboardRes
 import co.idearun.data.model.submitForm.SubmitFormRes
 import co.idearun.data.repository.FormzRepo
-import co.idearun.game.PlayerInfo
+import co.idearun.game.feature.PlayerInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

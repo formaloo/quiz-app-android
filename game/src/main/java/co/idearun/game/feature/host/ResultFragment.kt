@@ -8,15 +8,13 @@ import androidx.activity.OnBackPressedCallback
 import androidx.collection.ArrayMap
 import androidx.navigation.fragment.findNavController
 import co.idearun.common.TokenContainer
-import co.idearun.common.base.OnRvItemClickListener
 import co.idearun.data.model.FieldData
 import co.idearun.data.model.TopFieldsItem
 import co.idearun.game.R
-import co.idearun.game.adapter.ChildItemAdapter
-import co.idearun.game.adapter.ParentItemAdapter
+import co.idearun.game.feature.adapter.ParentItemAdapter
 import co.idearun.game.base.BaseFragment
 import co.idearun.game.model.ParentItem
-import co.idearun.game.viewmodel.FormViewModel
+import co.idearun.game.feature.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_result.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber

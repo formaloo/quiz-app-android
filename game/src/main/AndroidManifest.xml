@@ -5,7 +5,7 @@
 
     <application>
         <activity
-            android:name=".MainActivity"
+            android:name=".feature.MainActivity"
             android:windowSoftInputMode="stateHidden"/>
     </application>
 

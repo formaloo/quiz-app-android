@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/mainFragment"
         tools:layout="@layout/fragment_main"
-        android:name="co.idearun.game.MainFragment"
+        android:name="co.idearun.game.feature.MainFragment"
         android:label="MainFragment" >
         <action
             app:enterAnim="@anim/slide_in_bottom"

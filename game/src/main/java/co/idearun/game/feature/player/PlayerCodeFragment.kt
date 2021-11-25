@@ -4,12 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import co.idearun.game.PlayerInfo
+import co.idearun.game.feature.PlayerInfo
 import co.idearun.game.base.BaseFragment
 import co.idearun.game.R
-import co.idearun.game.viewmodel.FormViewModel
+import co.idearun.game.feature.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_player_code.*
 import org.koin.android.viewmodel.ext.android.viewModel
 

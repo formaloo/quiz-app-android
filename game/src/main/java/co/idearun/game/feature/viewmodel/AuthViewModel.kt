@@ -1,4 +1,4 @@
-package co.idearun.game.viewmodel
+package co.idearun.game.feature.viewmodel
 
 import androidx.collection.ArrayMap
 import androidx.lifecycle.LiveData

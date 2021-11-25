@@ -1,18 +1,13 @@
-package co.idearun.game
+package co.idearun.game.feature
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.FragmentContainerView
-import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import co.idearun.auth.viewmodel.AuthViewModel
 import co.idearun.common.TokenContainer
 import co.idearun.common.UserInfoManager
-import co.idearun.data.model.form.Form
-import co.idearun.game.viewmodel.FormViewModel
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
+import co.idearun.game.R
+import co.idearun.game.feature.viewmodel.FormViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber
 

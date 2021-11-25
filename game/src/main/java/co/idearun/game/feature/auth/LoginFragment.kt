@@ -4,11 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import androidx.navigation.fragment.findNavController
 import co.idearun.auth.viewmodel.AuthViewModel
 import co.idearun.common.UserInfoManager
-import co.idearun.game.Animation
+import co.idearun.game.feature.Animation
 import co.idearun.game.base.BaseFragment
 import co.idearun.game.R
 import kotlinx.android.synthetic.main.fragment_login.*

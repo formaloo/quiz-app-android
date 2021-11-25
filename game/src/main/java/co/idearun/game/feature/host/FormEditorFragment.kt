@@ -9,11 +9,11 @@ import androidx.activity.OnBackPressedCallback
 import androidx.collection.ArrayMap
 import androidx.navigation.fragment.findNavController
 import co.idearun.common.TokenContainer
-import co.idearun.game.PlayerInfo
+import co.idearun.game.feature.PlayerInfo
 import co.idearun.game.R
-import co.idearun.game.adapter.FormFieldsAdapter
+import co.idearun.game.feature.adapter.FormFieldsAdapter
 import co.idearun.game.base.BaseFragment
-import co.idearun.game.viewmodel.FormViewModel
+import co.idearun.game.feature.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_formeditor.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import timber.log.Timber

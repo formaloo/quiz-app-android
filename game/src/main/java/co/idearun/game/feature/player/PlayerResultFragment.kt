@@ -1,6 +1,5 @@
 package co.idearun.game.feature.player
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,21 +8,15 @@ import androidx.collection.ArrayMap
 import androidx.navigation.fragment.findNavController
 import co.idearun.data.model.FieldData
 import co.idearun.data.model.TopFieldsItem
-import co.idearun.data.model.fieldList
 import co.idearun.game.base.BaseFragment
 import co.idearun.game.model.ParentItem
-import co.idearun.game.adapter.ParentItemAdapter
 import co.idearun.game.R
-import co.idearun.game.adapter.ChildItemAdapter
-import co.idearun.game.adapter.ChildItemPlayerAdapter
-import co.idearun.game.adapter.ParentItemPlayerAdapter
-import co.idearun.game.viewmodel.FormViewModel
+import co.idearun.game.feature.adapter.ParentItemPlayerAdapter
+import co.idearun.game.feature.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_result.*
 import timber.log.Timber
-import android.content.Intent.getIntent
-import android.text.Html
 import androidx.activity.OnBackPressedCallback
-import co.idearun.game.PlayerInfo
+import co.idearun.game.feature.PlayerInfo
 import org.koin.android.viewmodel.ext.android.viewModel
 
 

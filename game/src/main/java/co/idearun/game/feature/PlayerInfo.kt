@@ -1,4 +1,4 @@
-package co.idearun.game
+package co.idearun.game.feature
 
 import co.idearun.data.model.live.LiveDashboardCode
 

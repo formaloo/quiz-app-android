@@ -1,4 +1,4 @@
-package co.idearun.game.adapter
+package co.idearun.game.feature.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,12 +11,8 @@ import co.idearun.data.model.FieldData
 import co.idearun.data.model.TopFieldsItem
 import com.google.android.material.textfield.TextInputEditText
 import android.content.Context
-import android.graphics.Color
-import android.os.Build
-import android.view.Gravity
 import android.widget.TextView
 import co.idearun.game.R
-import timber.log.Timber
 
 
 class ChildItemPlayerAdapter(
@@ -54,8 +50,8 @@ class ChildItemPlayerAdapter(
         var layoutId = R.layout.item_field_text
         when (i) {
             VIEW_TYPE_TEXT_FIELD -> layoutId = R.layout.item_field_text
-            VIEW_TYPE_DROP_DOWN -> layoutId = R.layout.item_field_dropdown
-            VIEW_TYPE_TEXT_FIELD_NAME -> layoutId = R.layout.item_field_textview
+            VIEW_TYPE_DROP_DOWN -> layoutId = R.layout.item_field_status
+            VIEW_TYPE_TEXT_FIELD_NAME -> layoutId = R.layout.item_field_name
         }
         contexta = viewGroup.context
         val view: View = LayoutInflater
