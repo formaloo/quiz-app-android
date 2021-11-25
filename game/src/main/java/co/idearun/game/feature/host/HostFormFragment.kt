@@ -118,6 +118,7 @@ class HostFormFragment : BaseFragment() {
 
         formVm.submitForm.observe(this, {
             openAlert("your form submit!")
+            submitFormBtn.isEnabled = false
         })
 
         endGameBtn.setOnClickListener {
