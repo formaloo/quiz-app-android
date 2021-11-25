@@ -41,31 +41,26 @@ class HostFormFragment : BaseFragment() {
         adapter = FormFieldsAdapter(formVm)
         parentRecyclerView.adapter = adapter
 
+
         val liveCode = arguments?.getString("liveCode")
         val liveDashboardAddress = arguments?.getString("liveDashboardAddress")
         var slug: String? = null
-        var address : String? = null
+        var address: String? = null
+
 
         formVm.getFormDataWithLiveCode(liveCode!!)
-
         formVm.liveForm.observe(this, {
             address = it?.form?.address!!
             slug = it.form?.slug!!
 
-            Timber.i("$address vs slug: $slug")
             formVm.initLessonAddress(address!!)
             formVm.getFormData()
         })
 
 
-
-
-
         formVm.form1.observe(this, {
             formName.text = it.title
             formDesc.text = Html.fromHtml(it.description)
-            Timber.i("TAG get form $it")
-            Timber.i("TAG get form ${it.fields_list?.size}")
 
             val hiddenFieldSlug = it.fields_list?.find { it.type == "hidden" }
             PlayerInfo.updatePlayerNameSlug(hiddenFieldSlug?.slug)
@@ -74,62 +69,26 @@ class HostFormFragment : BaseFragment() {
             fieldsList?.removeIf {
                 it.type.equals("hidden")
             }
-
             adapter.submitList(fieldsList)
-
-            fieldsList?.forEach {
-                Timber.i("TAG field title ${it.title} = ${it.slug}")
-            }
         })
-
-
-/*        val body = ArrayMap<String, Any>()
-        submitFormBtn.setOnClickListener {
-
-            adapter.fieldSlugList.forEachIndexed { index, fields ->
-                val view = parentRecyclerView.getChildAt(index)
-                val viewHolder = adapter.FormFieldsViewHolder(view)
-
-                if (!viewHolder.fieldsEdt.text.toString().isBlank()) {
-                    Timber.i("test nulla")
-                    val value = viewHolder.fieldsEdt.text.toString()
-                    val slugField = fields.slug!!
-                    body[slugField] = value
-                }
-
-                // Timber.i(fields.title + " = " + slug + " = " + value)
-            }.also {
-                val bodyM = RequestBody.create(
-                    "application/json; charset=utf-8".toMediaTypeOrNull(),
-                    JSONObject(body).toString()
-                )
-
-                formVm.submitFormData(slug!!, bodyM)
-            }
-
-        }*/
 
         submitFormBtn.setOnClickListener {
             if (!formVm.body.value.isNullOrEmpty())
                 formVm.submitFormData(slug!!)
-            else openAlert("your form is empty! Please Fill")
+            else openAlert(getString(R.string.empty_form_fields))
         }
 
         formVm.submitForm.observe(this, {
-            openAlert("your form submit!")
+            openAlert(getString(R.string.form_submited))
             submitFormBtn.isEnabled = false
         })
 
         endGameBtn.setOnClickListener {
             requireContext().alertDialog {
                 message =
-                    "Tell your friends to submit their answers NOW! Once you hit this, anyone who didn't submit their answers will lose! Are you sure?"
+                    getString(R.string.disable_from_msg)
                 okButton {
-                    formVm.disableForm(
-                        slug!!,
-                        "JWT ${TokenContainer.authorizationToken}",
-                        false
-                    )
+                    formVm.disableForm(slug!!, "JWT ${TokenContainer.authorizationToken}", false)
                 }
                 cancelButton()
             }.onShow {
@@ -147,21 +106,21 @@ class HostFormFragment : BaseFragment() {
             findNavController().navigate(R.id.action_hostFormFragment_to_resultFragment, args)
         })
 
+
+        // handle failure
         formVm.failure.observe(this, {
             formVm.hideLoading()
             checkFailureStatus(it)
         })
 
+        // handle loading
         formVm.isLoading.observe(this, {
             if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
         })
 
+        // disable backpress button
         requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-
-            }
-
+            override fun handleOnBackPressed() {}
         })
-
     }
 }

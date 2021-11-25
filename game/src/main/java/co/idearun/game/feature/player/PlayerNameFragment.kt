@@ -35,7 +35,7 @@ class PlayerNameFragment : BaseFragment() {
                 PlayerInfo.updatePlayerName(playerName)
                 findNavController().navigate(R.id.action_playerNameFragment_to_playerFormFragment)
             } else {
-                openAlert("we need to know your name, please enter your name :)")
+                openAlert(getString(R.string.empty_name_msg))
             }
         }
 

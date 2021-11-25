@@ -15,10 +15,10 @@ import android.widget.TextView
 import co.idearun.game.R
 
 
-class ChildItemPlayerAdapter(
+class PlayerChildAdapter(
     var context: Context
 ) :
-    RecyclerView.Adapter<ChildItemPlayerAdapter.ChildViewHolder>() {
+    RecyclerView.Adapter<PlayerChildAdapter.ChildViewHolder>() {
 
     companion object {
         const val VIEW_TYPE_TEXT_FIELD = 0

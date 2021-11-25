@@ -11,7 +11,7 @@ import co.idearun.data.model.TopFieldsItem
 import co.idearun.game.base.BaseFragment
 import co.idearun.game.model.ParentItem
 import co.idearun.game.R
-import co.idearun.game.feature.adapter.ParentItemPlayerAdapter
+import co.idearun.game.feature.adapter.PlayerParentAdapter
 import co.idearun.game.feature.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_result.*
 import timber.log.Timber
@@ -22,7 +22,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 
 class PlayerResultFragment : BaseFragment() {
 
-    lateinit var adapterParent: ParentItemPlayerAdapter
+    lateinit var adapterParentParent: PlayerParentAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,8 +66,8 @@ class PlayerResultFragment : BaseFragment() {
         formVm.getSubmitsRow(liveDashboardAddress!!)
 
 
-        adapterParent = ParentItemPlayerAdapter(requireContext())
-        parentRecyclerView.adapter = adapterParent
+        adapterParentParent = PlayerParentAdapter(requireContext())
+        parentRecyclerView.adapter = adapterParentParent
 
         formVm.submits.observe(this, {
             var fieldDataMapList = arrayListOf<ArrayMap<String, FieldData>>()
@@ -88,7 +88,7 @@ class PlayerResultFragment : BaseFragment() {
                 topFieldsItem.add(topFieldData as List<TopFieldsItem>)
                 parentItem.add(ParentItem(it?.slug!!, topFieldsItem, fieldDataMapList))
             }
-            adapterParent.setItemList(parentItem)
+            adapterParentParent.setItemList(parentItem)
         })
 
 

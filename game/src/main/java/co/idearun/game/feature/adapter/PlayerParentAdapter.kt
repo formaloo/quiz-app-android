@@ -12,8 +12,8 @@ import co.idearun.game.R
 import co.idearun.game.model.ParentItem
 
 
-class ParentItemPlayerAdapter (var context: Context) :
-    RecyclerView.Adapter<ParentItemPlayerAdapter.ParentViewHolder>() {
+class PlayerParentAdapter (var context: Context) :
+    RecyclerView.Adapter<PlayerParentAdapter.ParentViewHolder>() {
 
     var itemList = arrayListOf<ParentItem>()
 
@@ -55,7 +55,7 @@ class ParentItemPlayerAdapter (var context: Context) :
 
         layoutManager.initialPrefetchItemCount = fieldList?.get(position)?.size!!
 
-        val childItemAdapter = ChildItemPlayerAdapter(context)
+        val childItemAdapter = PlayerChildAdapter(context)
         childItemAdapter.setChildItemValue(fieldValue?.get(position)!!)
         childItemAdapter.setChildItemList(fieldList?.get(position) as ArrayList<TopFieldsItem?>)
 

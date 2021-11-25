@@ -24,8 +24,7 @@ class HostFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        imageView3.startAnimation(AnimationUtils.loadAnimation(context, R.anim.slide_left))
+        imageView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.slide_left))
 
         beHostBtn.setOnClickListener {
             findNavController().navigate(R.id.action_hostFragment_to_gamesFragment)

@@ -32,30 +32,24 @@ class GamesFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-/*
 
-        val fadeIn: Animation = AlphaAnimation(0f, 1f)
-        fadeIn.setDuration(1000)
-
-        ivSelectGame.animation = fadeIn
-*/
-
-
+        // set anim for imageView
         ivSelectGame.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
 
+        val formVm: FormViewModel by viewModel()
+
         adapter = GamesAdapter()
+        rvGameList.adapter = adapter
+
+        /* get forms with Game Tag from formaloo server
+        * all game form has game tag*/
+        formVm.getFormTag(0)
+        formVm.formTag.observe(this, {
+            adapter.submitList(it.data?.forms?.toMutableList())
+        })
 
 
-       val formVm: FormViewModel by viewModel()
-//        val vmAuth: AuthViewModel by viewModel()
-        val args = Bundle()
-
-    /*    vmAuth.authorizeUser(TokenContainer.sessionToken!!)
-        vmAuth.authorizeData.observe(this,{
-            TokenContainer.authorizationToken = it.token
-        })*/
-
-        Timber.i("Token ${TokenContainer.authorizationToken}")
+        /* when click on a form with Game tag, copyForm request has copy it in your formaloo account*/
         adapter.setOnRvItemClickListener(object : OnRvItemClickListener<Form> {
             override fun onItemClick(item: Form, position: Int) {
                 formVm.copyForm(item.slug, "JWT ${TokenContainer.authorizationToken}")
@@ -63,43 +57,34 @@ class GamesFragment : BaseFragment() {
         })
 
 
-        formVm.form.observe(this,{
+        /*
+        * in this section you have game from on your formaloo account
+        * now we send form address and slug to form editor fragment to
+        * config your form name, description and view fields
+        */
+        formVm.form.observe(this, {
 
-            with(it){
+            val args = Bundle()
+            with(it) {
                 args.putString("formAddress", address)
                 args.putString("formSlug", slug)
             }
 
+            // navigate with navigation component
             findNavController().navigate(
                 R.id.action_gamesFragment_to_formEditorFragment, args
             )
         })
 
 
-        rvGameList.adapter = adapter
-
-        formVm.getFormTag(0)
-        formVm.formTag.observe(this, {
-
-            adapter.submitList(it.data?.forms?.toMutableList())
-            Timber.i("Tag list data $it")
-
-
-/*
-            val address = it.data?.forms?.get(0)?.address
-            Timber.i("TAG $address")
-            vm.initLessonAddress(address!!)
-            vm.getFormData()*/
-
-        })
-
-
+        // handle failure
         formVm.failure.observe(this, {
             formVm.hideLoading()
             checkFailureStatus(it)
         })
 
-        formVm.isLoading.observe(this,{
+        // handle loading
+        formVm.isLoading.observe(this, {
             if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
         })
 

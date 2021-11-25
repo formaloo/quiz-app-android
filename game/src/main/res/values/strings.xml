@@ -3,48 +3,47 @@
     <string name="no_internet">Check Internet Connection</string>
     <string name="auth_err">UnAuthorized</string>
     <string name="server_err">Server Error</string>
-    <string name="message_dialog">hello</string>
-    <string name="loading">loading…</string>
+    <string name="message_dialog">Hello</string>
+    <string name="loading">Loading…</string>
     <string name="start">Start</string>
     <string name="items">Items:</string>
-    <string name="enter_description">enter description</string>
-    <string name="enter_title">enter title</string>
-    <string name="end_game">End Game</string>
-    <string name="submit_form">Submit Form</string>
-    <string name="be_host">are you want to be host?</string>
+    <string name="enter_description">Enter description</string>
+    <string name="enter_title">Enter title</string>
+    <string name="end_game">End game</string>
+    <string name="submit_form">Submit form</string>
+    <string name="be_host">Are you want to be host?</string>
     <string name="host_new_game">Host a new game</string>
-    <string name="enter_user">enter user</string>
+    <string name="enter_user">Enter user</string>
     <string name="login">login</string>
     <string name="host">Host</string>
     <string name="play">Play</string>
-    <string name="enter_code">enter code</string>
+    <string name="enter_code">Enter code</string>
     <string name="next">Next</string>
-    <string name="your_name">what\'s your lovely name?</string>
+    <string name="your_name">What\'s your lovely name?</string>
     <string name="register">Register</string>
-    <string name="enter_email">enter email</string>
-    <string name="enter_pass">enter pass</string>
-    <string name="enter_name">enter name</string>
+    <string name="enter_email">Enter email</string>
+    <string name="enter_pass">Enter pass</string>
+    <string name="enter_name">Enter name</string>
     <string name="result_page">Result Page</string>
     <string name="lets_play">Let\'s Play</string>
     <string name="share_code">Share code</string>
     <string name="scategories">SCategories</string>
-    <string name="title">title</string>
+    <string name="title">Title</string>
     <string name="complete">Complete</string>
 
-    <string-array name="gender">
-        <item>male</item>
-        <item>female</item>
-    </string-array>
-
-
-    <string name="code_length_error">you code length must be 6 digit number</string>
-    <string name="invalid_live_code">invalid live code</string>
-    <string name="update_point">update point</string>
+    <string name="code_length_error">You code length must be 6 digit number</string>
+    <string name="invalid_live_code">Invalid live code</string>
+    <string name="update_point">Update point</string>
     <string name="play_again">Play Again</string>
-    <string name="enter_your_name">Enter Your Name</string>
-    <string name="game_item_preview">game item preview: </string>
-    <string name="set_game_config">set game config:</string>
-    <string name="empty_name_msg" />
+    <string name="enter_your_name">Enter your name</string>
+    <string name="game_item_preview">Game item preview: </string>
+    <string name="set_game_config">Set game config:</string>
+    <string name="empty_name_msg">We need to know your name, Please enter your name :)</string>
+    <string name="empty_form_fields">Your form is empty! Please Fill</string>
+    <string name="disable_from_msg">Tell your friends to submit their answers NOW! Once you hit this, anyone who didn\'t submit their answers will lose! Are you sure?</string>
+    <string name="form_submited">Your form submit!</string>
+    <string name="start_new_game">Start new game</string>
+    >
 
 
 </resources>

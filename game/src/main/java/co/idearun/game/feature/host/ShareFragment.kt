@@ -15,8 +15,10 @@ import kotlinx.android.synthetic.main.fragment_share.*
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
+import android.widget.Toast
 
 import co.idearun.game.R
+import kotlinx.android.synthetic.main.fragment_games.*
 
 
 class ShareFragment : Fragment() {
@@ -29,15 +31,21 @@ class ShareFragment : Fragment() {
         return root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val userInfoManager = UserInfoManager(requireContext())
 
+        imageView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
 
         val liveCode = arguments?.getString("liveCode")
         val liveDashboardAddress = arguments?.getString("liveDashboardAddress")
+
         liveCodeEdt.setText(liveCode, TextView.BufferType.EDITABLE)
+        liveCodeEdt.setOnClickListener {
+            (requireActivity().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager).apply {
+                setPrimaryClip(ClipData.newPlainText("simple text", liveCode))
+            }
+            Toast.makeText(context, "Copy in clipboard", Toast.LENGTH_LONG).show()
+        }
 
         shareLiveCodeBtn.setOnClickListener {
             shareAction(liveCode!!)
@@ -48,19 +56,9 @@ class ShareFragment : Fragment() {
             args.putString("liveCode", liveCode)
             args.putString("liveDashboardAddress", liveDashboardAddress)
             findNavController().navigate(R.id.action_shareFragment_to_hostFormFragment, args)
-
-
-            (requireActivity().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager).apply {
-                setPrimaryClip(ClipData.newPlainText("simple text", liveCode))
-            }
         }
-
-        startAnim(imageView3)
     }
 
-    private fun startAnim(view: View) {
-        view.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
-    }
 
     private fun shareAction(liveCode: String) {
         val shareIntent = Intent()

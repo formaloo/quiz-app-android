@@ -18,10 +18,10 @@ import androidx.core.widget.addTextChangedListener
 import co.idearun.game.R
 
 
-class ChildItemAdapter(
+class HostChildAdapter(
     var context: Context
 ) :
-    RecyclerView.Adapter<ChildItemAdapter.ChildViewHolder>() {
+    RecyclerView.Adapter<HostChildAdapter.ChildViewHolder>() {
 
 
     companion object {

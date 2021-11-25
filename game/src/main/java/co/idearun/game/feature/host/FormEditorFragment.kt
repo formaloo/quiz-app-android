@@ -16,12 +16,12 @@ import co.idearun.game.base.BaseFragment
 import co.idearun.game.feature.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_formeditor.*
 import org.koin.android.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class FormEditorFragment : BaseFragment() {
 
     lateinit var adapter: FormFieldsAdapter
 
+    // inflate layout
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,50 +31,47 @@ class FormEditorFragment : BaseFragment() {
         return root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         val formVm: FormViewModel by viewModel()
+
+        // setup list
         adapter = FormFieldsAdapter(formVm)
         adapter.disableField = true
-
         parentRecyclerView.adapter = adapter
+
+        // get arguments from prev fragment
         val formAddress = arguments?.getString("formAddress")
         val formSlug = arguments?.getString("formSlug")
 
-        Timber.i("TAG Address $formAddress")
-        Timber.i("TAG Slug $formSlug")
+        // get from data from server
         formVm.initLessonAddress(formAddress!!)
         formVm.getFormData()
 
-
         formVm.form1.observe(this, {
-            Timber.i("TAG get form $it")
-            Timber.i("TAG get form ${it.fields_list?.size}")
+            // set form title and description
+            formTitleEdt.setText(it.title)
+            formDescriptionEdt.setText(Html.fromHtml(it.description))
 
+            // delete player name field from fields preview
             val fieldsList = it.fields_list
             fieldsList?.removeIf {
                 it.type.equals("hidden")
             }
-
-            Timber.i("field size " + fieldsList?.size)
-
             adapter.submitList(it.fields_list)
-
-            formTitleEdt.setText(it.title)
-            formDescriptionEdt.setText(Html.fromHtml(it.description))
-
-            fieldsList?.forEach {
-                Timber.i("TAG field title ${it.title}")
-            }
-            //Toast.makeText(context, "title -> ${it.title} and slug -> ${it.slug} ", Toast.LENGTH_LONG).show()
-
         })
 
 
+        /* when click on start
+        * your form title, description send to formaloo server and update
+        *
+        * public rows allow to access make your form to formaloo live
+        * host name save to PlayerInfo object and submit with fields data */
         setBtn.setOnClickListener {
             val hostName = hostNameEdt.text.toString()
+
             if (!hostName.isBlank()) {
                 PlayerInfo.updatePlayerName(hostNameEdt.text.toString())
 
@@ -84,38 +81,41 @@ class FormEditorFragment : BaseFragment() {
                 req["public_rows"] = true
 
                 formVm.editForm(formSlug!!, "JWT ${TokenContainer.authorizationToken}", req)
-            }else {
+            } else {
                 openAlert(getString(R.string.empty_name_msg))
             }
         }
 
+        /* when form title, description, createLive request called
+        * createLive make your form to formaloo Live*/
         formVm.editForm.observe(this, {
             formVm.createLive(it.slug, "JWT ${TokenContainer.authorizationToken}")
         })
 
+        /* now your live is ready!
+        * we send live code and live dashboard address to share fragment*/
         formVm.liveForm.observe(this, {
             val args = Bundle()
-            Timber.i(it.code)
             args.putString("liveCode", it.code)
             args.putString("liveDashboardAddress", it.form?.liveDashboardAddress)
             findNavController().navigate(R.id.action_formEditorFragment_to_shareFragment, args)
-
         })
 
+        // handle failure
         formVm.failure.observe(this, {
             formVm.hideLoading()
             checkFailureStatus(it)
         })
 
+        // handle loading
         formVm.isLoading.observe(this, {
             if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
         })
 
+        // disable backpress button
         requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-
             }
-
         })
 
     }
