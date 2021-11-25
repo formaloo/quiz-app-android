@@ -57,14 +57,12 @@ class ParentItemAdapter(var context: Context, var vm: FormViewModel) :
 
         // Create an instance of the ParentItem
         // class for the given position
-        val (slug,ParentItemTitle, fieldList, fieldValue) = itemList[position]
+        val (slug, fieldList, fieldValue) = itemList[position]
 
 
         // For the created instance,
         // get the title and set it
         // as the text for the TextView
-
-        parentViewHolder.ParentItemTitle.text = ParentItemTitle
 
         // Create a layout manager
         // to assign a layout
@@ -92,7 +90,7 @@ class ParentItemAdapter(var context: Context, var vm: FormViewModel) :
         // adapter, layout manager and RecyclerViewPool
         val childItemAdapter = ChildItemAdapter(context)
         childItemAdapter.setChildItemValue(fieldValue?.get(position)!!)
-        childItemAdapter.setChildItemList(fieldList?.get(position)!! as ArrayList<TopFieldsItem?>)
+        childItemAdapter.setChildItemList(fieldList.get(position) as ArrayList<TopFieldsItem?>)
 
         Timber.i("khob $position")
         fieldValue?.get(position)!!.entries.forEach {
@@ -138,15 +136,10 @@ class ParentItemAdapter(var context: Context, var vm: FormViewModel) :
     // the parent RecyclerView
     inner class ParentViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
-        val ParentItemTitle: TextView
         val ChildRecyclerView: RecyclerView
         val actionButton: Button
 
         init {
-            ParentItemTitle = itemView
-                .findViewById(
-                    R.id.textView3
-                )
             ChildRecyclerView = itemView
                 .findViewById(
                     R.id.childRecyclerView

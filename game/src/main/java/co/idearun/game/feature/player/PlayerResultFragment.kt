@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.collection.ArrayMap
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import co.idearun.data.model.FieldData
 import co.idearun.data.model.TopFieldsItem
@@ -18,7 +17,6 @@ import co.idearun.game.R
 import co.idearun.game.adapter.ChildItemAdapter
 import co.idearun.game.adapter.ChildItemPlayerAdapter
 import co.idearun.game.adapter.ParentItemPlayerAdapter
-import co.idearun.game.model.ParentItemPlayer
 import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_result.*
 import timber.log.Timber
@@ -98,7 +96,7 @@ class PlayerResultFragment : BaseFragment() {
                 }
                 fieldDataMapList.add(fieldDataMap)
                 topFieldsItem.add(topFieldData as List<TopFieldsItem>)
-                parentItem.add(ParentItem(it?.slug!!, "asd", topFieldsItem, fieldDataMapList))
+                parentItem.add(ParentItem(it?.slug!!, topFieldsItem, fieldDataMapList))
             }
             adapterParent.setItemList(parentItem)
         })

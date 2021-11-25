@@ -11,6 +11,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="48dp"
+            android:layout_marginTop="@dimen/padding_large"
+            android:text="@string/set_game_config"/>
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/filledTextField"
             android:layout_width="match_parent"
@@ -24,6 +32,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/formTitleEdt"
+                android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -44,6 +53,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/formDescriptionEdt"
+                android:inputType="text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
@@ -73,7 +83,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="48dp"
             android:layout_marginTop="@dimen/padding_large"
-            android:text="@string/items" />
+            android:text="@string/game_item_preview" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/parentRecyclerView"

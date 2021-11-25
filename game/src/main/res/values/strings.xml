@@ -19,7 +19,7 @@
     <string name="play">Play</string>
     <string name="enter_code">enter code</string>
     <string name="next">Next</string>
-    <string name="your_name">what\'s your name?</string>
+    <string name="your_name">what\'s your lovely name?</string>
     <string name="register">Register</string>
     <string name="enter_email">enter email</string>
     <string name="enter_pass">enter pass</string>
@@ -42,6 +42,9 @@
     <string name="update_point">update point</string>
     <string name="play_again">Play Again</string>
     <string name="enter_your_name">Enter Your Name</string>
+    <string name="game_item_preview">game item preview: </string>
+    <string name="set_game_config">set game config:</string>
+    <string name="empty_name_msg">we need to know your name, please enter your name :)</string>
 
 
 </resources>

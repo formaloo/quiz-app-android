@@ -7,7 +7,9 @@
 
         <TextView
             android:id="@+id/dropdownSpinner"
-            android:text="mahditest"
+            android:text="Winner"
+            android:gravity="center"
+            android:textSize="@dimen/font_xlarge"
             android:background="@color/blue"
             android:layout_width="match_parent"
             android:layout_height="60dp"

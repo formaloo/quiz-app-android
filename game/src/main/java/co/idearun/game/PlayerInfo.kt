@@ -4,7 +4,7 @@ import co.idearun.data.model.live.LiveDashboardCode
 
 object PlayerInfo {
     var playerFormInfo: LiveDashboardCode? = null
-    var playerName: String? = ""
+    var playerName: String? = "player"
     var playerNameSlug: String? = ""
 
 

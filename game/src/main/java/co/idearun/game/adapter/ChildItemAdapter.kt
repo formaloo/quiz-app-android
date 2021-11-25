@@ -94,7 +94,7 @@ class ChildItemAdapter(
     ) {
         childViewHolder.bind(itemList[position]!!)
 
-        var list = Array(4, { i -> "" })
+        var list = Array(8, { i -> "" })
 
 
         val field = itemList[position]
@@ -111,9 +111,8 @@ class ChildItemAdapter(
                     childViewHolder.fieldsEdt?.setTextColor(context.resources.getColor(R.color.colorBlue))
                 }
 
-                if (!field?.title.equals("امتیاز"))
-                    disableEditText(childViewHolder?.fieldsEdt!!)
-                Timber.i("test test moo")
+                if (!field?.title.equals("Point"))
+                    disableEditText(childViewHolder.fieldsEdt!!)
                 childViewHolder.fieldsEdt?.hint = field?.title
 
 

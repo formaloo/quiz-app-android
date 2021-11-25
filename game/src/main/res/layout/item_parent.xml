@@ -13,17 +13,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/title"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/childRecyclerView"
         android:layout_width="match_parent"
@@ -43,6 +32,7 @@
         android:background="@drawable/button_bg"
         android:text="@string/update_point"
         android:textColor="@color/white"
+        android:layout_marginBottom="@dimen/padding_large"
         android:visibility="gone"/>
 
     </LinearLayout>

@@ -97,7 +97,7 @@ class ResultFragment : BaseFragment() {
                 }
                 fieldDataMapList.add(fieldDataMap)
                 topFieldsItem.add(topFieldData as List<TopFieldsItem>)
-                parentItem.add(ParentItem(it?.slug!!,"asd", topFieldsItem, fieldDataMapList))
+                parentItem.add(ParentItem(it?.slug!!, topFieldsItem, fieldDataMapList))
             }
             adapterParent.setItemList(parentItem)
         })

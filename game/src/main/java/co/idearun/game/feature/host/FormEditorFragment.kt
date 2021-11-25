@@ -58,7 +58,7 @@ class FormEditorFragment : BaseFragment() {
                 it.type.equals("hidden")
             }
 
-            Timber.i("field size "+ fieldsList?.size)
+            Timber.i("field size " + fieldsList?.size)
 
             adapter.submitList(it.fields_list)
 
@@ -74,14 +74,19 @@ class FormEditorFragment : BaseFragment() {
 
 
         setBtn.setOnClickListener {
-            PlayerInfo.updatePlayerName(hostNameEdt.text.toString())
+            val hostName = hostNameEdt.text.toString()
+            if (!hostName.isBlank()) {
+                PlayerInfo.updatePlayerName(hostNameEdt.text.toString())
 
-            val req = ArrayMap<String, Any>()
-            req["title"] = formTitleEdt.text.toString()
-            req["description"] = formDescriptionEdt.text.toString()
-            req["public_rows"] = true
+                val req = ArrayMap<String, Any>()
+                req["title"] = formTitleEdt.text.toString()
+                req["description"] = formDescriptionEdt.text.toString()
+                req["public_rows"] = true
 
-            formVm.editForm(formSlug!!, "JWT ${TokenContainer.authorizationToken}", req)
+                formVm.editForm(formSlug!!, "JWT ${TokenContainer.authorizationToken}", req)
+            }else {
+                openAlert(getString(R.string.empty_name_msg))
+            }
         }
 
         formVm.editForm.observe(this, {
@@ -102,7 +107,7 @@ class FormEditorFragment : BaseFragment() {
             checkFailureStatus(it)
         })
 
-        formVm.isLoading.observe(this,{
+        formVm.isLoading.observe(this, {
             if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
         })
 

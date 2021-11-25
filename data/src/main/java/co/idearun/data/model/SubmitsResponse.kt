@@ -39,6 +39,7 @@ data class FieldData(
     val type: String? = null,
     val title: String? = null,
     val value: String? = null,
+    val alias: String? = null,
     @SerializedName("admin_only")
     val adminOnly: Boolean? = null,
     val slug: String? = null,

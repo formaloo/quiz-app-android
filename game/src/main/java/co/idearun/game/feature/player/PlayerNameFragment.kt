@@ -32,9 +32,13 @@ class PlayerNameFragment : BaseFragment() {
         val vm: FormViewModel by viewModel()
 
         playBtn.setOnClickListener {
-            PlayerInfo.updatePlayerName(nameEdt.text.toString())
-            findNavController().navigate(R.id.action_playerNameFragment_to_playerFormFragment)
-
+            val playerName = nameEdt.text.toString()
+            if(!playerName.isBlank()) {
+                PlayerInfo.updatePlayerName(playerName)
+                findNavController().navigate(R.id.action_playerNameFragment_to_playerFormFragment)
+            } else {
+                openAlert(getString(R.string.empty_name_msg))
+            }
         }
 
         vm.failure.observe(this, {

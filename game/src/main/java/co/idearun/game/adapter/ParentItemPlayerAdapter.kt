@@ -14,8 +14,6 @@ import co.idearun.common.base.OnRvItemClickListener
 import co.idearun.data.model.TopFieldsItem
 import co.idearun.game.R
 import co.idearun.game.model.ParentItem
-import co.idearun.game.model.ParentItemPlayer
-import co.idearun.game.viewmodel.FormViewModel
 import timber.log.Timber
 
 
@@ -58,7 +56,7 @@ class ParentItemPlayerAdapter (var context: Context) :
 
         // Create an instance of the ParentItem
         // class for the given position
-        val (slug,ParentItemTitle, fieldList, fieldValue) = itemList[position]
+        val (slug, fieldList, fieldValue) = itemList[position]
 
 
 
@@ -66,7 +64,6 @@ class ParentItemPlayerAdapter (var context: Context) :
         // get the title and set it
         // as the text for the TextView
 
-        parentViewHolder.ParentItemTitle.text = ParentItemTitle
 
         // Create a layout manager
         // to assign a layout
@@ -99,14 +96,14 @@ class ParentItemPlayerAdapter (var context: Context) :
         }
 
 
-        layoutManager.initialPrefetchItemCount = fieldList?.get(position)?.size!!
+        layoutManager.initialPrefetchItemCount = fieldList.get(position).size
 
         // Create an instance of the child
         // item view adapter and set its
         // adapter, layout manager and RecyclerViewPool
         val childItemAdapter = ChildItemPlayerAdapter(context)
-        childItemAdapter.setChildItemValue(fieldValue?.get(position)!!)
-        childItemAdapter.setChildItemList(fieldList?.get(position)!! as ArrayList<TopFieldsItem?>)
+        childItemAdapter.setChildItemValue(fieldValue.get(position))
+        childItemAdapter.setChildItemList(fieldList.get(position) as ArrayList<TopFieldsItem?>)
 
 
         childItemAdapter.setOnRvItemClickListener(object: OnRvItemClickListener<ChildItemPlayerAdapter.callBackData>{
@@ -137,14 +134,10 @@ class ParentItemPlayerAdapter (var context: Context) :
     // the parent RecyclerView
     inner class ParentViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
-        val ParentItemTitle: TextView
         val ChildRecyclerView: RecyclerView
 
         init {
-            ParentItemTitle = itemView
-                .findViewById(
-                    R.id.textView3
-                )
+
             ChildRecyclerView = itemView
                 .findViewById(
                     R.id.childRecyclerView
