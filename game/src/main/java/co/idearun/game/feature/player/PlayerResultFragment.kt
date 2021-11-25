@@ -30,7 +30,6 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class PlayerResultFragment : BaseFragment() {
 
     lateinit var adapterParent: ParentItemPlayerAdapter
-    lateinit var adapterChield: ChildItemPlayerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,13 +70,11 @@ class PlayerResultFragment : BaseFragment() {
         }
 
 
-        // formVm.getLiveSubmits(formVm.userForm.value?.form?.liveDashboardAddress!!)
         formVm.getSubmitsRow(liveDashboardAddress!!)
 
 
         adapterParent = ParentItemPlayerAdapter(requireContext())
         parentRecyclerView.adapter = adapterParent
-        adapterChield = ChildItemPlayerAdapter(requireContext())
 
         formVm.submits.observe(this, {
             var fieldDataMapList = arrayListOf<ArrayMap<String, FieldData>>()
