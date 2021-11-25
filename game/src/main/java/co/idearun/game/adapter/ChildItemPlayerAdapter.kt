@@ -54,7 +54,7 @@ class ChildItemPlayerAdapter(
         var layoutId = R.layout.item_field_text
         when (i) {
             VIEW_TYPE_TEXT_FIELD -> layoutId = R.layout.item_field_text
-            VIEW_TYPE_DROP_DOWN -> layoutId = R.layout.item_field_text
+            VIEW_TYPE_DROP_DOWN -> layoutId = R.layout.item_field_dropdown
             VIEW_TYPE_TEXT_FIELD_NAME -> layoutId = R.layout.item_field_textview
         }
         contexta = viewGroup.context
@@ -72,15 +72,12 @@ class ChildItemPlayerAdapter(
         val fieldType = itemList[position]?.type
         if (fieldType.equals("dropdown")) {
             myItemViewType = VIEW_TYPE_DROP_DOWN
-            return VIEW_TYPE_DROP_DOWN
-        }
-
-        if (fieldType.equals("hidden")) {
+        } else if (fieldType.equals("hidden")) {
             myItemViewType = VIEW_TYPE_TEXT_FIELD_NAME
-            return VIEW_TYPE_TEXT_FIELD_NAME
+        } else {
+            myItemViewType = VIEW_TYPE_TEXT_FIELD
         }
-        myItemViewType = VIEW_TYPE_TEXT_FIELD
-        return VIEW_TYPE_TEXT_FIELD
+        return myItemViewType
     }
 
     override fun onBindViewHolder(
@@ -89,8 +86,6 @@ class ChildItemPlayerAdapter(
     ) {
 
         val field = itemList[position]
-        val fieldType = field?.type
-
 
         when (myItemViewType) {
 
@@ -103,26 +98,18 @@ class ChildItemPlayerAdapter(
                 childViewHolder.fieldsEdt?.hint = field?.title
                 disableEditText(childViewHolder.fieldsEdt!!)
 
-                childViewHolder.fieldsEdt?.setText(
-                    ItemValue.get(field?.slug)?.value,
-                    TextView.BufferType.EDITABLE
-                )
+                if (!ItemValue.get(field?.slug)?.value.isNullOrBlank()) {
+                    childViewHolder.fieldsEdt?.setText(
+                        ItemValue.get(field?.slug)?.value,
+                        TextView.BufferType.EDITABLE
+                    )
+                    childViewHolder.fieldsEdt?.setTextColor(context.resources.getColor(R.color.purple))
+                }
             }
 
             VIEW_TYPE_DROP_DOWN -> {
-                childViewHolder.fieldsEdt?.hint = field?.title
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    childViewHolder.fieldsEdt?.setBackgroundColor(context.getColor(R.color.colorBlue))
-                    childViewHolder.fieldsEdt?.setTextColor(context.getColor(R.color.white))
-
-                }
-
-                childViewHolder.fieldsEdt?.setText(
-                    ItemValue.get(field?.slug)?.value,
-                    TextView.BufferType.EDITABLE
-                )
-
+                childViewHolder.statusTextView?.hint = field?.title
+                childViewHolder.statusTextView?.text = ItemValue.get(field?.slug)?.value
             }
 
         }
@@ -143,10 +130,13 @@ class ChildItemPlayerAdapter(
         RecyclerView.ViewHolder(itemView) {
         var fieldsEdt: TextInputEditText? = null
         var itemTextView: TextView? = null
+        var statusTextView: TextView? = null
 
         init {
             if (myItemViewType.equals(VIEW_TYPE_TEXT_FIELD_NAME))
                 itemTextView = itemView.findViewById(R.id.itemTextView)
+            if (myItemViewType.equals(VIEW_TYPE_DROP_DOWN))
+                statusTextView = itemView.findViewById(R.id.dropdownSpinner)
             fieldsEdt = itemView.findViewById(R.id.fieldEdt)
         }
     }

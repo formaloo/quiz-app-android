@@ -78,16 +78,12 @@ class ChildItemAdapter(
         val fieldType = itemList[position]?.type
         if (fieldType.equals("dropdown")) {
             myItemViewType = VIEW_TYPE_DROP_DOWN
-            return VIEW_TYPE_DROP_DOWN
-        }
-
-        if (fieldType.equals("hidden")) {
+        } else if (fieldType.equals("hidden")) {
             myItemViewType = VIEW_TYPE_TEXT_FIELD_NAME
-            return VIEW_TYPE_TEXT_FIELD_NAME
+        } else {
+            myItemViewType = VIEW_TYPE_TEXT_FIELD
         }
-
-        myItemViewType = VIEW_TYPE_TEXT_FIELD
-        return VIEW_TYPE_TEXT_FIELD
+        return myItemViewType
     }
 
     override fun onBindViewHolder(
@@ -113,10 +109,13 @@ class ChildItemAdapter(
                 childViewHolder.fieldsEdt?.hint = field?.title
 
 
-                childViewHolder.fieldsEdt?.setText(
-                    ItemValue.get(field?.slug)?.value,
-                    TextView.BufferType.EDITABLE
-                )
+                if(!ItemValue.get(field?.slug)?.value.isNullOrBlank()) {
+                    childViewHolder.fieldsEdt?.setText(
+                        ItemValue.get(field?.slug)?.value,
+                        TextView.BufferType.EDITABLE
+                    )
+                    childViewHolder.fieldsEdt?.setTextColor(context.resources.getColor(R.color.purple))
+                }
             }
             VIEW_TYPE_DROP_DOWN -> {
 

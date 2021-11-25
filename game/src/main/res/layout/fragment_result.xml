@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/padding_small"
+            android:textColor="@color/purple"
             android:gravity="center_horizontal"
             android:text="@string/result_page"
             android:textSize="22sp" />
