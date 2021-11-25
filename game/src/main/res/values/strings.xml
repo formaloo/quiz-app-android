@@ -44,7 +44,7 @@
     <string name="enter_your_name">Enter Your Name</string>
     <string name="game_item_preview">game item preview: </string>
     <string name="set_game_config">set game config:</string>
-    <string name="empty_name_msg">we need to know your name, please enter your name :)</string>
+    <string name="empty_name_msg" />
 
 
 </resources>
