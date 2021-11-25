@@ -23,6 +23,8 @@ import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_result.*
 import timber.log.Timber
 import android.content.Intent.getIntent
+import android.text.Html
+import androidx.activity.OnBackPressedCallback
 import co.idearun.game.PlayerInfo
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -58,11 +60,10 @@ class PlayerResultFragment : BaseFragment() {
 
         formVm.form1.observe(this,{
             resultFormName.text = it.title
-            resultFormDesc.text = it.description
         })
 
         startAction.visibility = View.VISIBLE
-        startAction.text = "Play Again"
+        startAction.text = getString(R.string.play_again)
         startAction.setOnClickListener {
             findNavController().navigate(R.id.action_playerResultFragment_to_mainFragment)
         }
@@ -113,6 +114,12 @@ class PlayerResultFragment : BaseFragment() {
             if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
         })
 
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+
+            }
+
+        })
 
     }
 

@@ -135,6 +135,9 @@
             app:popUpToInclusive="false"
             android:id="@+id/action_playerFormFragment_to_playerResultFragment"
             app:destination="@id/playerResultFragment" />
+        <action
+            android:id="@+id/action_playerFormFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
 
     <fragment
@@ -142,8 +145,8 @@
         android:name="co.idearun.game.feature.host.ResultFragment"
         android:label="ResultFragment" >
         <action
-            android:id="@+id/action_resultFragment_to_gamesFragment"
-            app:destination="@id/gamesFragment" />
+            android:id="@+id/action_resultFragment_to_mainFragment"
+            app:destination="@id/mainFragment" />
     </fragment>
 
     <fragment

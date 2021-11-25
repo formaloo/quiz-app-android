@@ -40,6 +40,7 @@
     <string name="code_length_error">you code length must be 6 digit number</string>
     <string name="invalid_live_code">invalid live code</string>
     <string name="update_point">update point</string>
+    <string name="play_again">Play Again</string>
 
 
 </resources>

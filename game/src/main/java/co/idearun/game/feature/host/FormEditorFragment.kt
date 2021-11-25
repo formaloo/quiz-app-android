@@ -1,9 +1,11 @@
 package co.idearun.game.feature.host
 
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.collection.ArrayMap
 import androidx.navigation.fragment.findNavController
 import co.idearun.common.TokenContainer
@@ -54,7 +56,7 @@ class FormEditorFragment : BaseFragment() {
             adapter.submitList(it.fields_list)
 
             formTitleEdt.setText(it.title)
-            formDescriptionEdt.setText(it.description)
+            formDescriptionEdt.setText(Html.fromHtml(it.description))
 
             fields?.forEach {
                 Timber.i("TAG field title ${it.title}")
@@ -97,6 +99,13 @@ class FormEditorFragment : BaseFragment() {
 
         formVm.isLoading.observe(this,{
             if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
+        })
+
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+
+            }
+
         })
 
     }

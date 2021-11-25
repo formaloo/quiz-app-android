@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.collection.ArrayMap
 import androidx.navigation.fragment.findNavController
 import co.idearun.common.TokenContainer
@@ -39,16 +40,20 @@ class ResultFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val formVm: FormViewModel by viewModel()
+        val address = arguments?.getString("address")
         val slug = arguments?.getString("slug")
+        val liveCode = arguments?.getString("liveCode")
         val liveDashboardAddress = arguments?.getString("liveDashboardAddress")
 
 
-        formVm.initLessonSlug(slug!!)
-        formVm.getFormData()
+        Timber.i("$address vs slug: $slug")
+        formVm.getLiveSubmits(liveDashboardAddress!!)
 
-        formVm.form1.observe(this,{
-            resultFormName.text = it.title
-            resultFormDesc.text = it.description
+        formVm.getFormDataWithLiveCode(liveCode!!)
+
+        formVm.liveForm.observe(this,{
+            Timber.i("slug: $it")
+            resultFormName.text = it.form?.title
         })
 
 
@@ -58,7 +63,7 @@ class ResultFragment : BaseFragment() {
 
         resultAction.text = "Start new game"
         resultAction.setOnClickListener {
-            findNavController().navigate(R.id.action_resultFragment_to_gamesFragment)
+            findNavController().navigate(R.id.action_resultFragment_to_mainFragment)
         }
         //adapterChild = ChildItemAdapter()
         adapterParent = ParentItemAdapter(requireContext(), formVm)
@@ -106,6 +111,12 @@ class ResultFragment : BaseFragment() {
             if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
         })
 
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                findNavController().navigate(R.id.action_resultFragment_to_mainFragment)
+            }
+
+        })
 
     }
 }

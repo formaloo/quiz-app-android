@@ -1,9 +1,11 @@
 package co.idearun.game.feature.host
 
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import co.idearun.common.TokenContainer
 import co.idearun.game.R
@@ -11,6 +13,9 @@ import co.idearun.game.adapter.FormFieldsAdapter
 import co.idearun.game.base.BaseFragment
 import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_form_host.*
+import kotlinx.android.synthetic.main.fragment_form_host.loading
+import kotlinx.android.synthetic.main.fragment_form_host.parentRecyclerView
+import kotlinx.android.synthetic.main.fragment_result.*
 import org.koin.android.viewmodel.ext.android.viewModel
 import splitties.alertdialog.appcompat.*
 import timber.log.Timber
@@ -39,13 +44,16 @@ class HostFormFragment : BaseFragment() {
         val liveCode = arguments?.getString("liveCode")
         val liveDashboardAddress = arguments?.getString("liveDashboardAddress")
         var slug: String? = null
+        var address : String? = null
 
         formVm.getFormDataWithLiveCode(liveCode!!)
 
         formVm.liveForm.observe(this, {
-            val address = it?.form?.address!!
+            address = it?.form?.address!!
             slug = it.form?.slug!!
-            formVm.initLessonAddress(address)
+
+            Timber.i("$address vs slug: $slug")
+            formVm.initLessonAddress(address!!)
             formVm.getFormData()
         })
 
@@ -55,7 +63,7 @@ class HostFormFragment : BaseFragment() {
 
         formVm.form1.observe(this, {
             formName.text = it.title
-            formDesc.text = it.description
+            formDesc.text = Html.fromHtml(it.description)
             Timber.i("TAG get form $it")
             Timber.i("TAG get form ${it.fields_list?.size}")
             val fields = it.fields_list
@@ -123,8 +131,10 @@ class HostFormFragment : BaseFragment() {
 
         formVm.disableForm.observe(this, {
             val args = Bundle()
+            args.putString("address", address)
             args.putString("slug", slug)
             args.putString("liveDashboardAddress", liveDashboardAddress)
+            args.putString("liveCode", liveCode)
             findNavController().navigate(R.id.action_hostFormFragment_to_resultFragment, args)
         })
 
@@ -137,6 +147,12 @@ class HostFormFragment : BaseFragment() {
             if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
         })
 
+        requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+
+            }
+
+        })
 
     }
 }

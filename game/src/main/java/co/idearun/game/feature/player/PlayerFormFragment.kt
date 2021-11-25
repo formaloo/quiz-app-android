@@ -1,13 +1,11 @@
 package co.idearun.game.feature.player
 
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.collection.ArrayMap
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import co.idearun.data.model.FieldData
 import co.idearun.game.PlayerInfo
 import co.idearun.game.base.BaseFragment
 import co.idearun.game.adapter.FormFieldsAdapter
@@ -16,11 +14,6 @@ import co.idearun.game.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_form.*
 import kotlinx.android.synthetic.main.fragment_form.loading
 import kotlinx.android.synthetic.main.fragment_form.parentRecyclerView
-import kotlinx.android.synthetic.main.fragment_player_name.*
-import kotlinx.android.synthetic.main.fragment_result.*
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.RequestBody
-import org.json.JSONObject
 import org.koin.android.viewmodel.ext.android.viewModel
 import splitties.alertdialog.appcompat.*
 import timber.log.Timber
@@ -54,7 +47,7 @@ class PlayerFormFragment : BaseFragment() {
 
         formVm.form1.observe(this, {
             formName.text = it.title
-            formDesc.text = it.description
+            formDesc.text = Html.fromHtml(it.description)
 
             val fields = it.fields_list
             it.fields_list?.removeIf {
@@ -100,13 +93,13 @@ class PlayerFormFragment : BaseFragment() {
          }
  */
         formVm.submitForm.observe(this, {
-            openAlertWithNavigation("your form submit!")
+            openAlertWithNavigation("your form submit!",R.id.action_playerFormFragment_to_playerResultFragment)
         })
 
         formVm.failure.observe(this, {
             formVm.hideLoading()
             if (it.msgRes?.contains("404")!!) {
-                openAlert("you late, Game is over")
+                openAlertWithNavigation("you late, Game is over", R.id.action_playerFormFragment_to_mainFragment )
             } else {
                 checkFailureStatus(it)
             }
@@ -119,11 +112,11 @@ class PlayerFormFragment : BaseFragment() {
 
     }
 
-    fun openAlertWithNavigation(msg: String) {
+    fun openAlertWithNavigation(msg: String, navigateId: Int) {
         requireContext().alertDialog {
             message = msg
             setCancelable(false)
-            okButton { findNavController().navigate(R.id.action_playerFormFragment_to_playerResultFragment) }
+            okButton { findNavController().navigate(navigateId) }
         }.onShow {
             positiveButton.setTextColor(resources.getColor(android.R.color.holo_blue_dark))
         }.show()
