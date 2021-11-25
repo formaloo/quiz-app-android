@@ -157,12 +157,4 @@ class ChildItemPlayerAdapter(
         editText.isCursorVisible = false
         editText.keyListener = null
     }
-
-    private fun setPlayerNameEditText(editText: TextInputEditText) {
-        editText.setBackgroundColor(Color.TRANSPARENT)
-        editText.gravity = Gravity.CENTER
-        editText.textSize = 22f
-        editText.setTextColor(context.resources?.getColor(R.color.colorBlue)!!)
-    }
-
 }

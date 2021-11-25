@@ -29,8 +29,6 @@ class ParentItemPlayerAdapter (var context: Context) :
         i: Int
     ): ParentViewHolder {
 
-        // Here we inflate the corresponding
-        // layout of the parent item
         val view: View = LayoutInflater
             .from(viewGroup.context)
             .inflate(
@@ -54,8 +52,6 @@ class ParentItemPlayerAdapter (var context: Context) :
             LinearLayoutManager.VERTICAL,
             false
         )
-
-
 
         layoutManager.initialPrefetchItemCount = fieldList?.get(position)?.size!!
 

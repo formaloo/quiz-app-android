@@ -13,14 +13,12 @@ import com.google.android.material.textfield.TextInputEditText
 import timber.log.Timber
 import android.content.Context
 import android.graphics.Color
-import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Gravity
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
-import co.idearun.common.base.OnRvItemClickListener
 import co.idearun.game.R
 
 
@@ -29,16 +27,15 @@ class ChildItemAdapter(
 ) :
     RecyclerView.Adapter<ChildItemAdapter.ChildViewHolder>() {
 
-    private var onRvItemClickListener: OnRvItemClickListener<callBackData>? = null
-
 
     companion object {
         const val VIEW_TYPE_TEXT_FIELD = 0
         const val VIEW_TYPE_DROP_DOWN = 1
+        const val VIEW_TYPE_TEXT_FIELD_NAME = 2
     }
 
+
     var status = ""
-    var point = ""
     var itemList = arrayListOf<TopFieldsItem?>()
     var ItemValue = ArrayMap<String, FieldData>()
     var editTextValue = ArrayMap<String, Any>()
@@ -64,9 +61,9 @@ class ChildItemAdapter(
         when (i) {
             VIEW_TYPE_TEXT_FIELD -> layoutId = R.layout.item_field_text
             VIEW_TYPE_DROP_DOWN -> layoutId = R.layout.item_field_dropdown
+            VIEW_TYPE_TEXT_FIELD_NAME -> layoutId = R.layout.item_field_textview
         }
-        // Here we inflate the corresponding
-        // layout of the child item
+
         val view: View = LayoutInflater
             .from(viewGroup.context)
             .inflate(
@@ -84,6 +81,11 @@ class ChildItemAdapter(
             return VIEW_TYPE_DROP_DOWN
         }
 
+        if (fieldType.equals("hidden")) {
+            myItemViewType = VIEW_TYPE_TEXT_FIELD_NAME
+            return VIEW_TYPE_TEXT_FIELD_NAME
+        }
+
         myItemViewType = VIEW_TYPE_TEXT_FIELD
         return VIEW_TYPE_TEXT_FIELD
     }
@@ -92,7 +94,6 @@ class ChildItemAdapter(
         childViewHolder: ChildViewHolder,
         position: Int
     ) {
-        childViewHolder.bind(itemList[position]!!)
 
         var list = Array(8, { i -> "" })
 
@@ -101,16 +102,12 @@ class ChildItemAdapter(
         Timber.i("field size list ${itemList.size}")
 
         when (myItemViewType) {
+
+            VIEW_TYPE_TEXT_FIELD_NAME->{
+                childViewHolder.itemTextView?.text = ItemValue.get(field?.slug)?.value
+            }
+
             VIEW_TYPE_TEXT_FIELD -> {
-
-
-                if (field?.type == "hidden") {
-                    childViewHolder.fieldsEdt?.setBackgroundColor(Color.TRANSPARENT)
-                    childViewHolder.fieldsEdt?.gravity = Gravity.CENTER
-                    childViewHolder.fieldsEdt?.textSize = 22f
-                    childViewHolder.fieldsEdt?.setTextColor(context.resources.getColor(R.color.colorBlue))
-                }
-
                 if (!field?.title.equals("Point"))
                     disableEditText(childViewHolder.fieldsEdt!!)
                 childViewHolder.fieldsEdt?.hint = field?.title
@@ -124,8 +121,6 @@ class ChildItemAdapter(
             VIEW_TYPE_DROP_DOWN -> {
 
                 val field1 = itemList[position]
-                Timber.i("bib $position")
-                Timber.i("bib ${itemList[position]?.choiceItems?.size}")
 
                 field1?.choiceItems?.forEachIndexed { index, choiceItemsItem ->
                     list.set(index, choiceItemsItem?.title!!)
@@ -136,22 +131,14 @@ class ChildItemAdapter(
         }
 
 
-/*        onChange(childViewHolder.fieldsEdt!!, object: Runnable{
-            override fun run() {
-                Timber.i("text changed listener ${childViewHolder.fieldsEdt!!.text.toString()}")
-            }
-
-        })   */
-
 
 
         childViewHolder.fieldsEdt?.addTextChangedListener {
-            onChange(childViewHolder.fieldsEdt!!, {
-                Timber.i("text changed listener  ${itemList[position]?.title} is -> ${childViewHolder.fieldsEdt!!.text.toString()} ")
-            })
+            editTextValue.put(field?.slug, it.toString())
         }
+/*
 
-        childViewHolder.fieldsEdt?.addTextChangedListener(object: TextWatcher{
+        childViewHolder.fieldsEdt?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             }
 
@@ -164,10 +151,7 @@ class ChildItemAdapter(
             }
 
         })
-
-        childViewHolder.fieldsEdt?.setOnClickListener {
-            Timber.i("mio ${field?.title}")
-        }
+*/
 
         childViewHolder.fieldSpinner?.setOnClickListener {
             Timber.i("bib $position")
@@ -180,10 +164,11 @@ class ChildItemAdapter(
                     val selectedPosition: Int =
                         (dialog as AlertDialog).getListView().getCheckedItemPosition()
                     status = list[selectedPosition]
-                    Timber.i("status $status" + itemList.get(position)?.choiceItems?.get(selectedPosition)?.slug)
-                    var choiceItemSlug = itemList.get(position)?.choiceItems?.get(selectedPosition)?.slug
+
+                    var choiceItemSlug =
+                        itemList.get(position)?.choiceItems?.get(selectedPosition)?.slug
                     var fieldSlug = itemList.get(position)?.slug
-                    editTextValue.put(fieldSlug,choiceItemSlug)
+                    editTextValue.put(fieldSlug, choiceItemSlug)
                     editTextValue.forEach {
                         Timber.i("${it.key} data is -> ${it.value}")
                     }
@@ -191,20 +176,6 @@ class ChildItemAdapter(
                     // Do something useful withe the position of the selected radio button
                 })
                 .show()
-        }
-
-
-
-        if (onRvItemClickListener != null) {
-            childViewHolder.itemView.setOnClickListener {
-                var data: callBackData?
-                data = callBackData(status, "")
-                if (childViewHolder.fieldsEdt?.hint == "point") {
-                    data = callBackData(status, childViewHolder.fieldsEdt?.text.toString())
-                    Timber.i("data " + data + "status $status")
-                }
-                onRvItemClickListener!!.onItemClick(data, 2)
-            }
         }
 
 
@@ -216,23 +187,14 @@ class ChildItemAdapter(
     }
 
     override fun getItemCount(): Int {
-
-        // This method returns the number
-        // of items we have added
-        // in the ChildItemList
-        // i.e. the number of instances
-        // of the ChildItemList
-        // that have been created
         return itemList.size
     }
 
-    // This class is to initialize
-    // the Views present
-    // in the child RecyclerView
     inner class ChildViewHolder(itemView: View) :
         RecyclerView.ViewHolder(itemView) {
         var fieldsEdt: TextInputEditText? = null
         var fieldSpinner: TextView? = null
+        var itemTextView: TextView? = null
 
         init {
 
@@ -240,50 +202,10 @@ class ChildItemAdapter(
                 fieldsEdt = itemView.findViewById(R.id.fieldEdt)
             if (myItemViewType == VIEW_TYPE_DROP_DOWN)
                 fieldSpinner = itemView.findViewById(R.id.dropdownSpinner)
+            if (myItemViewType == VIEW_TYPE_TEXT_FIELD_NAME)
+                itemTextView = itemView.findViewById(R.id.itemTextView)
 
         }
-
-        fun bind(field: TopFieldsItem) {
-
-
-        }
-    }
-
-    fun setOnRvItemClickListener(onRvItemClickListener: OnRvItemClickListener<callBackData>) {
-        this.onRvItemClickListener = onRvItemClickListener
-    }
-
-    data class callBackData(
-        var status: String,
-        var point: String
-    )
-
-    fun comS(s1: String, s2: String): Boolean {
-        if (s1.length == s2.length) {
-            val l = s1.length
-            for (i in 0 until l) {
-                if (s1[i] != s2[i]) return false
-            }
-            return true
-        }
-        return false
-    }
-
-    fun onChange(EdTe: EditText, FRun: Runnable?) {
-        class finalS {
-            var s = ""
-        }
-
-        val dat = finalS()
-        EdTe.setOnFocusChangeListener(object : View.OnFocusChangeListener {
-            override fun onFocusChange(v: View?, hasFocus: Boolean) {
-                if (hasFocus) {
-                    dat.s = "" + EdTe.text
-                } else if (!comS(dat.s, "" + EdTe.text)) {
-                    Handler().post(FRun!!)
-                }
-            }
-        })
     }
 
     private fun disableEditText(editText: TextInputEditText) {

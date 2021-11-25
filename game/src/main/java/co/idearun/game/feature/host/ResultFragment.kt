@@ -23,7 +23,6 @@ import timber.log.Timber
 
 class ResultFragment : BaseFragment() {
 
-    lateinit var adapterChild: ChildItemAdapter
     lateinit var adapterParent: ParentItemAdapter
 
     override fun onCreateView(
@@ -47,6 +46,7 @@ class ResultFragment : BaseFragment() {
 
 
         Timber.i("$address vs slug: $slug")
+        //formVm.getLiveSubmits(liveDashboardAddress!!)
         formVm.getLiveSubmits(liveDashboardAddress!!)
 
         formVm.getFormDataWithLiveCode(liveCode!!)
@@ -68,14 +68,6 @@ class ResultFragment : BaseFragment() {
         //adapterChild = ChildItemAdapter()
         adapterParent = ParentItemAdapter(requireContext(), formVm)
         parentRecyclerView.adapter = adapterParent
-
-        adapterChild = ChildItemAdapter(requireContext())
-        adapterChild.setOnRvItemClickListener(object : OnRvItemClickListener<ChildItemAdapter.callBackData>{
-            override fun onItemClick(item: ChildItemAdapter.callBackData, position: Int) {
-                Timber.i("test test test ${item.point}   ${item.status}")
-            }
-
-        })
 
         //formVm.getSubmitsRow(liveDashboardAddress!!)
         formVm.getFormSubmits(slug!!, "JWT ${TokenContainer.authorizationToken}")
