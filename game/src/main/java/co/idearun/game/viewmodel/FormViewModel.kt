@@ -17,6 +17,7 @@ import co.idearun.data.model.live.LiveDashboardCode
 import co.idearun.data.model.live.LiveDashboardRes
 import co.idearun.data.model.submitForm.SubmitFormRes
 import co.idearun.data.repository.FormzRepo
+import co.idearun.game.PlayerInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -131,7 +132,7 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     }
 
     fun createBody(): RequestBody {
-        body.value?.put("name_field",userName.value.toString())
+        body.value?.put(PlayerInfo.playerNameSlug, PlayerInfo.playerName)
         body.value?.entries?.forEach {
             Timber.i("body content ${it.key} vs ${it.value}")
         }

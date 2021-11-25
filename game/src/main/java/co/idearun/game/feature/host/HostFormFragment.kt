@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import co.idearun.common.TokenContainer
+import co.idearun.game.PlayerInfo
 import co.idearun.game.R
 import co.idearun.game.adapter.FormFieldsAdapter
 import co.idearun.game.base.BaseFragment
@@ -66,10 +67,18 @@ class HostFormFragment : BaseFragment() {
             formDesc.text = Html.fromHtml(it.description)
             Timber.i("TAG get form $it")
             Timber.i("TAG get form ${it.fields_list?.size}")
-            val fields = it.fields_list
-            adapter.submitList(it.fields_list)
 
-            fields?.forEach {
+            val hiddenFieldSlug = it.fields_list?.find { it.type == "hidden" }
+            PlayerInfo.updatePlayerNameSlug(hiddenFieldSlug?.slug)
+
+            val fieldsList = it.fields_list
+            fieldsList?.removeIf {
+                it.type.equals("hidden")
+            }
+
+            adapter.submitList(fieldsList)
+
+            fieldsList?.forEach {
                 Timber.i("TAG field title ${it.title} = ${it.slug}")
             }
         })

@@ -12,7 +12,9 @@ import co.idearun.data.model.TopFieldsItem
 import com.google.android.material.textfield.TextInputEditText
 import timber.log.Timber
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
+import android.view.Gravity
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import co.idearun.common.base.OnRvItemClickListener
@@ -99,6 +101,14 @@ class ChildItemPlayerAdapter(
 
         when (myItemViewType) {
             ChildItemAdapter.VIEW_TYPE_TEXT_FIELD -> {
+
+                if (field?.type == "hidden") {
+                    childViewHolder.fieldsEdt?.setBackgroundColor(Color.TRANSPARENT)
+                    childViewHolder.fieldsEdt?.gravity = Gravity.CENTER
+                    childViewHolder.fieldsEdt?.textSize = 22f
+                    childViewHolder.fieldsEdt?.setTextColor(context.resources.getColor(R.color.colorBlue))
+                }
+
                 Timber.i("test test moo")
                 childViewHolder.fieldsEdt?.hint = field?.title
 

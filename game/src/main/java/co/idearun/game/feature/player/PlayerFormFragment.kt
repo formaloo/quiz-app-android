@@ -43,21 +43,22 @@ class PlayerFormFragment : BaseFragment() {
 
         formVm.initLessonAddress(PlayerInfo.playerFormInfo?.form?.address!!)
         formVm.getFormData()
-        
+
 
         formVm.form1.observe(this, {
             formName.text = it.title
             formDesc.text = Html.fromHtml(it.description)
 
-            val fields = it.fields_list
-            it.fields_list?.removeIf {
+            val hiddenFieldSlug = it.fields_list?.find { it.type == "hidden" }
+            PlayerInfo.updatePlayerNameSlug(hiddenFieldSlug?.slug)
+
+            val fieldsList = it.fields_list
+            fieldsList?.removeIf {
                 it.type.equals("hidden")
             }
-            adapter.submitList(it.fields_list)
 
-            fields?.forEach {
-                Timber.i("TAG field title ${it.title} = ${it.slug}")
-            }
+            adapter.submitList(fieldsList)
+
         })
 
         submitFormBtn.setOnClickListener {
@@ -93,13 +94,19 @@ class PlayerFormFragment : BaseFragment() {
          }
  */
         formVm.submitForm.observe(this, {
-            openAlertWithNavigation("your form submit!",R.id.action_playerFormFragment_to_playerResultFragment)
+            openAlertWithNavigation(
+                "your form submit!",
+                R.id.action_playerFormFragment_to_playerResultFragment
+            )
         })
 
         formVm.failure.observe(this, {
             formVm.hideLoading()
             if (it.msgRes?.contains("404")!!) {
-                openAlertWithNavigation("you late, Game is over", R.id.action_playerFormFragment_to_mainFragment )
+                openAlertWithNavigation(
+                    "you late, Game is over",
+                    R.id.action_playerFormFragment_to_mainFragment
+                )
             } else {
                 checkFailureStatus(it)
             }

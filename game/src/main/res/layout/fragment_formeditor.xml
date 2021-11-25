@@ -49,6 +49,25 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/filledTextField3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="48dp"
+            android:layout_marginVertical="@dimen/padding_2xsmall"
+            android:layout_marginTop="@dimen/padding_large"
+            android:hint="@string/enter_your_name"
+            android:textColorHint="@color/white"
+            app:boxBackgroundColor="#70D1FF"
+            app:hintTextColor="@color/white">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/hostNameEdt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

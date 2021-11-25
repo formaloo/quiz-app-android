@@ -41,6 +41,7 @@
     <string name="invalid_live_code">invalid live code</string>
     <string name="update_point">update point</string>
     <string name="play_again">Play Again</string>
+    <string name="enter_your_name">Enter Your Name</string>
 
 
 </resources>

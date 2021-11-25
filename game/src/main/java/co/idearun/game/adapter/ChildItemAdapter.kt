@@ -12,9 +12,11 @@ import co.idearun.data.model.TopFieldsItem
 import com.google.android.material.textfield.TextInputEditText
 import timber.log.Timber
 import android.content.Context
+import android.graphics.Color
 import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.Gravity
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
@@ -100,6 +102,15 @@ class ChildItemAdapter(
 
         when (myItemViewType) {
             VIEW_TYPE_TEXT_FIELD -> {
+
+
+                if (field?.type == "hidden") {
+                    childViewHolder.fieldsEdt?.setBackgroundColor(Color.TRANSPARENT)
+                    childViewHolder.fieldsEdt?.gravity = Gravity.CENTER
+                    childViewHolder.fieldsEdt?.textSize = 22f
+                    childViewHolder.fieldsEdt?.setTextColor(context.resources.getColor(R.color.colorBlue))
+                }
+
                 if (!field?.title.equals("امتیاز"))
                     disableEditText(childViewHolder?.fieldsEdt!!)
                 Timber.i("test test moo")

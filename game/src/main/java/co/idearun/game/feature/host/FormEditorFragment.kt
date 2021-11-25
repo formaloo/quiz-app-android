@@ -9,6 +9,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.collection.ArrayMap
 import androidx.navigation.fragment.findNavController
 import co.idearun.common.TokenContainer
+import co.idearun.game.PlayerInfo
 import co.idearun.game.R
 import co.idearun.game.adapter.FormFieldsAdapter
 import co.idearun.game.base.BaseFragment
@@ -51,14 +52,20 @@ class FormEditorFragment : BaseFragment() {
         formVm.form1.observe(this, {
             Timber.i("TAG get form $it")
             Timber.i("TAG get form ${it.fields_list?.size}")
-            val fields = it.fields_list
-            Timber.i("field size "+ fields?.size)
+
+            val fieldsList = it.fields_list
+            fieldsList?.removeIf {
+                it.type.equals("hidden")
+            }
+
+            Timber.i("field size "+ fieldsList?.size)
+
             adapter.submitList(it.fields_list)
 
             formTitleEdt.setText(it.title)
             formDescriptionEdt.setText(Html.fromHtml(it.description))
 
-            fields?.forEach {
+            fieldsList?.forEach {
                 Timber.i("TAG field title ${it.title}")
             }
             //Toast.makeText(context, "title -> ${it.title} and slug -> ${it.slug} ", Toast.LENGTH_LONG).show()
@@ -67,9 +74,7 @@ class FormEditorFragment : BaseFragment() {
 
 
         setBtn.setOnClickListener {
-            Timber.i(TokenContainer.authorizationToken)
-            Timber.i(TokenContainer.sessionToken)
-            //  vm.copyForm(formSlug!!, "JWT ${TokenContainer.authorizationToken}")
+            PlayerInfo.updatePlayerName(hostNameEdt.text.toString())
 
             val req = ArrayMap<String, Any>()
             req["title"] = formTitleEdt.text.toString()
