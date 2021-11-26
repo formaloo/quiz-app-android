@@ -15,7 +15,7 @@ import co.idearun.game.model.ParentItem
 import co.idearun.game.feature.viewmodel.FormViewModel
 
 
-class HostParentAdapter(var context: Context, var vm: FormViewModel) :
+class HostParentAdapter(var vm: FormViewModel) :
     RecyclerView.Adapter<HostParentAdapter.ParentViewHolder>() {
 
     var itemList = arrayListOf<ParentItem>()
@@ -56,7 +56,7 @@ class HostParentAdapter(var context: Context, var vm: FormViewModel) :
 
         layoutManager.initialPrefetchItemCount = fieldList?.get(position)?.size!!
 
-        val childItemAdapter = HostChildAdapter(context)
+        val childItemAdapter = HostChildAdapter()
         childItemAdapter.setChildItemValue(fieldValue?.get(position)!!)
         childItemAdapter.setChildItemList(fieldList.get(position) as ArrayList<TopFieldsItem?>)
 

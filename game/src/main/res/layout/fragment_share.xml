@@ -38,24 +38,23 @@
 
         </FrameLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/copy_in_clipboard"/>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/filledTextField"
+        <TextView
+            android:id="@+id/liveCodeTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="48dp"
             android:layout_marginTop="20dp"
-            android:enabled="false"
+            android:gravity="center"
+            android:textSize="@dimen/font_3xlarge"
+            android:textColor="@color/purple"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/liveCodeEdt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintTop_toBottomOf="@+id/view"/>
 
         <Button
             android:id="@+id/shareLiveCodeBtn"

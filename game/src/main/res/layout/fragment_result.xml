@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="#27B6FA"
-            android:text="update submits"
+            android:text="@string/update_submits"
             android:textColor="@color/white" />
 
         <Button
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="#27B6FA"
-            android:text="start new game"
+            android:text="@string/start_new_game"
             android:textColor="@color/white"
             android:visibility="gone"/>
 

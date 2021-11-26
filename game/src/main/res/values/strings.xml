@@ -42,7 +42,10 @@
     <string name="empty_form_fields">Your form is empty! Please Fill</string>
     <string name="disable_from_msg">Tell your friends to submit their answers NOW! Once you hit this, anyone who didn\'t submit their answers will lose! Are you sure?</string>
     <string name="form_submited">Your form submit!</string>
+    <string name="copy_clipboard">Copy in clipboard</string>
     <string name="start_new_game">Start new game</string>
+    <string name="update_submits">Update submits</string>
+    <string name="copy_in_clipboard">Click on live code to copy in your clip board</string>
     >
 
 

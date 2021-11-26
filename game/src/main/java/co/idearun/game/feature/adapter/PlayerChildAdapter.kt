@@ -16,7 +16,6 @@ import co.idearun.game.R
 
 
 class PlayerChildAdapter(
-    var context: Context
 ) :
     RecyclerView.Adapter<PlayerChildAdapter.ChildViewHolder>() {
 
@@ -26,7 +25,6 @@ class PlayerChildAdapter(
         const val VIEW_TYPE_TEXT_FIELD_NAME = 2
     }
 
-    var contexta: Context? = null
     var itemList = arrayListOf<TopFieldsItem?>()
     var ItemValue = ArrayMap<String, FieldData>()
     var myItemViewType = VIEW_TYPE_TEXT_FIELD
@@ -46,14 +44,12 @@ class PlayerChildAdapter(
         i: Int
     ): ChildViewHolder {
 
-        contexta = viewGroup.context
         var layoutId = R.layout.item_field_text
         when (i) {
             VIEW_TYPE_TEXT_FIELD -> layoutId = R.layout.item_field_text
             VIEW_TYPE_DROP_DOWN -> layoutId = R.layout.item_field_status
             VIEW_TYPE_TEXT_FIELD_NAME -> layoutId = R.layout.item_field_name
         }
-        contexta = viewGroup.context
         val view: View = LayoutInflater
             .from(viewGroup.context)
             .inflate(
@@ -99,7 +95,8 @@ class PlayerChildAdapter(
                         ItemValue.get(field?.slug)?.value,
                         TextView.BufferType.EDITABLE
                     )
-                    childViewHolder.fieldsEdt?.setTextColor(context.resources.getColor(R.color.purple))
+                    childViewHolder.fieldsEdt?.setTextColor(childViewHolder.fieldsEdt!!.context
+                        .resources.getColor(R.color.purple))
                 }
             }
 

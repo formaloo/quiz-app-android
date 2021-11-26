@@ -18,9 +18,7 @@ import androidx.core.widget.addTextChangedListener
 import co.idearun.game.R
 
 
-class HostChildAdapter(
-    var context: Context
-) :
+class HostChildAdapter:
     RecyclerView.Adapter<HostChildAdapter.ChildViewHolder>() {
 
 
@@ -110,7 +108,7 @@ class HostChildAdapter(
                         ItemValue.get(field?.slug)?.value,
                         TextView.BufferType.EDITABLE
                     )
-                    childViewHolder.fieldsEdt?.setTextColor(context.resources.getColor(R.color.purple))
+                    childViewHolder.fieldsEdt?.setTextColor(childViewHolder.fieldsEdt!!.context.resources.getColor(R.color.purple))
                 }
             }
             VIEW_TYPE_DROP_DOWN -> {
@@ -131,28 +129,10 @@ class HostChildAdapter(
         childViewHolder.fieldsEdt?.addTextChangedListener {
             editTextValue.put(field?.slug, it.toString())
         }
-/*
-
-        childViewHolder.fieldsEdt?.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                Timber.i(p0.toString())
-                editTextValue.put(field?.slug, p0.toString())
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-            }
-
-        })
-*/
 
         childViewHolder.fieldSpinner?.setOnClickListener {
-            Timber.i("bib $position")
 
-
-            AlertDialog.Builder(context)
+            AlertDialog.Builder(childViewHolder.fieldSpinner!!.context)
                 .setSingleChoiceItems(list, -1, null)
                 .setPositiveButton("ok", { dialog, whichButton ->
                     dialog.dismiss()

@@ -66,7 +66,7 @@ class PlayerResultFragment : BaseFragment() {
         formVm.getSubmitsRow(liveDashboardAddress!!)
 
 
-        adapterParentParent = PlayerParentAdapter(requireContext())
+        adapterParentParent = PlayerParentAdapter()
         parentRecyclerView.adapter = adapterParentParent
 
         formVm.submits.observe(this, {

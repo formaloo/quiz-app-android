@@ -36,21 +36,28 @@ class ShareFragment : Fragment() {
 
         imageView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_in))
 
+
+        /*** get liveCode and liveDashboardAddress from [FormEditorFragment]
+        */
         val liveCode = arguments?.getString("liveCode")
         val liveDashboardAddress = arguments?.getString("liveDashboardAddress")
 
-        liveCodeEdt.setText(liveCode, TextView.BufferType.EDITABLE)
-        liveCodeEdt.setOnClickListener {
+        // show live code and copy in clipboard when click on it
+        liveCodeTv.setText(liveCode, TextView.BufferType.EDITABLE)
+        liveCodeTv.setOnClickListener {
             (requireActivity().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager).apply {
                 setPrimaryClip(ClipData.newPlainText("simple text", liveCode))
             }
-            Toast.makeText(context, "Copy in clipboard", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, getString(R.string.copy_clipboard), Toast.LENGTH_LONG).show()
         }
 
+
+        // share live code with intent
         shareLiveCodeBtn.setOnClickListener {
             shareAction(liveCode!!)
         }
 
+        // play game
         playBtn.setOnClickListener {
             val args = Bundle()
             args.putString("liveCode", liveCode)
@@ -59,7 +66,7 @@ class ShareFragment : Fragment() {
         }
     }
 
-
+    // share live code with this method
     private fun shareAction(liveCode: String) {
         val shareIntent = Intent()
         shareIntent.action = Intent.ACTION_SEND
