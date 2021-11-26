@@ -35,9 +35,6 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     private val _isLoading = MediatorLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    var userForm = MutableLiveData<LiveDashboardCode>()
-    var userName = MutableLiveData<String>()
-
     var _body = MutableLiveData<ArrayMap<String, String>>()
     var body: LiveData<ArrayMap<String, String>> = _body
 

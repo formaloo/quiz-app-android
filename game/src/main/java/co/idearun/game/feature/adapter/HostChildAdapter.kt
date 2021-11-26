@@ -10,11 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import co.idearun.data.model.FieldData
 import co.idearun.data.model.TopFieldsItem
 import com.google.android.material.textfield.TextInputEditText
-import timber.log.Timber
-import android.content.Context
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.widget.addTextChangedListener
+import co.idearun.common.Constants
 import co.idearun.game.R
 
 
@@ -70,12 +69,12 @@ class HostChildAdapter:
 
     override fun getItemViewType(position: Int): Int {
         val fieldType = itemList[position]?.type
-        if (fieldType.equals("dropdown")) {
-            myItemViewType = VIEW_TYPE_DROP_DOWN
-        } else if (fieldType.equals("hidden")) {
-            myItemViewType = VIEW_TYPE_TEXT_FIELD_NAME
+        if (fieldType.equals(Constants.DROPDOWN)) {
+            myItemViewType = PlayerChildAdapter.VIEW_TYPE_DROP_DOWN
+        } else if (fieldType.equals(Constants.HIDDEN)) {
+            myItemViewType = PlayerChildAdapter.VIEW_TYPE_TEXT_FIELD_NAME
         } else {
-            myItemViewType = VIEW_TYPE_TEXT_FIELD
+            myItemViewType = PlayerChildAdapter.VIEW_TYPE_TEXT_FIELD
         }
         return myItemViewType
     }
@@ -89,7 +88,6 @@ class HostChildAdapter:
 
 
         val field = itemList[position]
-        Timber.i("field size list ${itemList.size}")
 
         when (myItemViewType) {
 
@@ -98,7 +96,7 @@ class HostChildAdapter:
             }
 
             VIEW_TYPE_TEXT_FIELD -> {
-                if (!field?.title.equals("Point"))
+                if (!field?.title.equals(Constants.POINT))
                     disableEditText(childViewHolder.fieldsEdt!!)
                 childViewHolder.fieldsEdt?.hint = field?.title
 
@@ -124,8 +122,6 @@ class HostChildAdapter:
         }
 
 
-
-
         childViewHolder.fieldsEdt?.addTextChangedListener {
             editTextValue.put(field?.slug, it.toString())
         }
@@ -134,7 +130,7 @@ class HostChildAdapter:
 
             AlertDialog.Builder(childViewHolder.fieldSpinner!!.context)
                 .setSingleChoiceItems(list, -1, null)
-                .setPositiveButton("ok", { dialog, whichButton ->
+                .setPositiveButton("Ok", { dialog, whichButton ->
                     dialog.dismiss()
                     val selectedPosition: Int =
                         (dialog as AlertDialog).getListView().getCheckedItemPosition()
@@ -144,9 +140,6 @@ class HostChildAdapter:
                         itemList.get(position)?.choiceItems?.get(selectedPosition)?.slug
                     var fieldSlug = itemList.get(position)?.slug
                     editTextValue.put(fieldSlug, choiceItemSlug)
-                    editTextValue.forEach {
-                        Timber.i("${it.key} data is -> ${it.value}")
-                    }
                     childViewHolder.fieldSpinner?.text = status
                     // Do something useful withe the position of the selected radio button
                 })

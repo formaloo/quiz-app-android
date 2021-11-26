@@ -10,6 +10,7 @@ import timber.log.Timber
 open class BaseFragment : Fragment() {
 
 
+    // Show alert dialog
     fun openAlert(msg: String) {
         requireContext().alertDialog {
             message = msg
@@ -20,6 +21,8 @@ open class BaseFragment : Fragment() {
         }.show()
     }
 
+
+    // handle Error and Failure
     fun checkFailureStatus(it: Failure) {
         when (it) {
             is Failure.FeatureFailure -> renderFailure(it.msgRes)

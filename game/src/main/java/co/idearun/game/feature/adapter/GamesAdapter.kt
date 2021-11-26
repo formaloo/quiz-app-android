@@ -20,8 +20,8 @@ class GamesAdapter : ListAdapter<Form, GamesAdapter.NewsViewHolder>(NewsDiffCall
 
     class NewsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        lateinit var titleGameTv : TextView
-        lateinit var avatarGameIv : ImageView
+        var titleGameTv : TextView
+        var avatarGameIv : ImageView
 
         init {
             titleGameTv = view.findViewById(R.id.tvItemGame)
@@ -30,10 +30,6 @@ class GamesAdapter : ListAdapter<Form, GamesAdapter.NewsViewHolder>(NewsDiffCall
 
         fun bind(form: Form) {
             titleGameTv.text = form.title
-
-            /*val url = Uri.parse(form.logo)
-            avatarGameIv.setImageURI(url)
-*/
         }
     }
 

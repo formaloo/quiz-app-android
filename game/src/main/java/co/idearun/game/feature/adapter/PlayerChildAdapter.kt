@@ -12,6 +12,7 @@ import co.idearun.data.model.TopFieldsItem
 import com.google.android.material.textfield.TextInputEditText
 import android.content.Context
 import android.widget.TextView
+import co.idearun.common.Constants
 import co.idearun.game.R
 
 
@@ -62,9 +63,9 @@ class PlayerChildAdapter(
 
     override fun getItemViewType(position: Int): Int {
         val fieldType = itemList[position]?.type
-        if (fieldType.equals("dropdown")) {
+        if (fieldType.equals(Constants.DROPDOWN)) {
             myItemViewType = VIEW_TYPE_DROP_DOWN
-        } else if (fieldType.equals("hidden")) {
+        } else if (fieldType.equals(Constants.HIDDEN)) {
             myItemViewType = VIEW_TYPE_TEXT_FIELD_NAME
         } else {
             myItemViewType = VIEW_TYPE_TEXT_FIELD

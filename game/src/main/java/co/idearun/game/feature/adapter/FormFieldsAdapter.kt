@@ -11,37 +11,28 @@ import androidx.collection.ArrayMap
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import co.idearun.common.base.OnRvItemClickListener
 import co.idearun.data.model.form.Fields
 import co.idearun.game.R
 import co.idearun.game.feature.viewmodel.FormViewModel
 import com.google.android.material.textfield.TextInputEditText
-import timber.log.Timber
 
 class FormFieldsAdapter(var vm: FormViewModel) :
     ListAdapter<Fields, FormFieldsAdapter.FormFieldsViewHolder>(FieldsDiffCallback) {
 
-    public var disableField = false
-    public var fieldSlugList = arrayListOf<Fields>()
-    public var fieldTextList = arrayListOf<String>()
+    var disableField = false
+    var fieldSlugList = arrayListOf<Fields>()
     var body = ArrayMap<String, String>()
-
-    private var onRvItemClickListener: OnRvItemClickListener<Fields>? = null
 
     inner class FormFieldsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        lateinit var fieldsEdt: TextInputEditText
+        var fieldsEdt: TextInputEditText
 
         init {
             fieldsEdt = view.findViewById(R.id.fieldEdt)
-
         }
 
         fun bind(field: Fields) {
-            //fieldsEdt.text = form.title,
-
             fieldsEdt.hint = field.title
-            Timber.i("slug in adapter ${field.slug}")
             fieldSlugList.add(field)
             if (disableField)
                 disableEditText(fieldsEdt)
@@ -75,24 +66,7 @@ class FormFieldsAdapter(var vm: FormViewModel) :
         fadeIn.setDuration(1000)
 
         holder.itemView.animation = fadeIn
-
-        if (onRvItemClickListener != null) {
-            holder.itemView.setOnClickListener {
-                onRvItemClickListener!!.onItemClick(getItem(position), position)
-            }
-        }
-
     }
-
-
-    fun getFieldsValue() {
-
-    }
-
-    fun setOnRvItemClickListener(onRvItemClickListener: OnRvItemClickListener<Fields>) {
-        this.onRvItemClickListener = onRvItemClickListener
-    }
-
 }
 
 object FieldsDiffCallback : DiffUtil.ItemCallback<Fields>() {

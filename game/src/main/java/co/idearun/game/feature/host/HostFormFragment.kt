@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
+import co.idearun.common.Constants
 import co.idearun.common.TokenContainer
 import co.idearun.game.feature.PlayerInfo
 import co.idearun.game.R
@@ -43,7 +44,6 @@ class HostFormFragment : BaseFragment() {
 
 
         val liveCode = arguments?.getString("liveCode")
-        val liveDashboardAddress = arguments?.getString("liveDashboardAddress")
         var slug: String? = null
         var address: String? = null
 
@@ -62,12 +62,12 @@ class HostFormFragment : BaseFragment() {
             formName.text = it.title
             formDesc.text = Html.fromHtml(it.description)
 
-            val hiddenFieldSlug = it.fields_list?.find { it.type == "hidden" }
+            val hiddenFieldSlug = it.fields_list?.find { it.type.equals(Constants.HIDDEN) }
             PlayerInfo.updatePlayerNameSlug(hiddenFieldSlug?.slug)
 
             val fieldsList = it.fields_list
             fieldsList?.removeIf {
-                it.type.equals("hidden")
+                it.type.equals(Constants.HIDDEN)
             }
             adapter.submitList(fieldsList)
         })
@@ -99,9 +99,7 @@ class HostFormFragment : BaseFragment() {
 
         formVm.disableForm.observe(this, {
             val args = Bundle()
-            args.putString("address", address)
             args.putString("slug", slug)
-            args.putString("liveDashboardAddress", liveDashboardAddress)
             args.putString("liveCode", liveCode)
             findNavController().navigate(R.id.action_hostFormFragment_to_resultFragment, args)
         })
