@@ -49,6 +49,8 @@
     <string name="empty_form_data">Your form is empty! Please Fill</string>
     <string name="your_from_submit">Your form submit!</string>
     <string name="you_late">You late, Game is over</string>
+    <string name="Register_title">Register</string>
+    <string name="login_title">Login</string>
     >
 
 

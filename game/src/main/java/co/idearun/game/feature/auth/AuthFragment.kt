@@ -19,18 +19,20 @@ class AuthFragment: Fragment() {
         return inflater.inflate(R.layout.fragment_auth, container,false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        /***
+         * create tabView with [CustomTabView] class
+         *  */
         tabView = CustomTabView(
             requireActivity(),
             childFragmentManager,
             R.id.tabAuth,
             R.id.viewPagerAuth
         )
-        tabView.add(RegisterFragment().javaClass, "Register")
-        tabView.add(LoginFragment().javaClass, "Login")
+        tabView.add(RegisterFragment().javaClass, getString(R.string.Register_title))
+        tabView.add(LoginFragment().javaClass, getString(R.string.login_title))
 
     }
 

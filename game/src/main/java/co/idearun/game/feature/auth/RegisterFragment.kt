@@ -34,6 +34,7 @@ class RegisterFragment : BaseFragment(){
         Animation.fadeInAnim(imageView,context)
         val authVm: AuthViewModel by viewModel()
 
+        // register user
         registerBtn.setOnClickListener {
             authVm.registerUser(
                 RegisterInfo(
@@ -50,32 +51,22 @@ class RegisterFragment : BaseFragment(){
             authVm.authorizeUser(token!!)
         })
 
+        // get authorization data with session token
         authVm.authorizeData.observe(this, {
             userInfoManager.saveAuthorizationToken(it.token)
             findNavController().navigate(R.id.action_authFragment_to_hostFragment)
 
         })
 
+        // handle failure
         authVm.failure.observe(this, {
             authVm.hideLoading()
             checkFailureStatus(it)
         })
 
-
+        // handle loading
         authVm.isLoading.observe(this,{
             if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
         })
-
-
     }
-
-    fun checkEmail(email: String): Boolean{
-        if(email.contains("@"))
-            return true
-
-        openAlert("your email is invalid")
-        return false
-    }
-
-
 }

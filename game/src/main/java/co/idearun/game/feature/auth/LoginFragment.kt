@@ -26,21 +26,21 @@ class LoginFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         val authVm: AuthViewModel by viewModel()
         val userInfoManager = UserInfoManager(context!!)
         Animation.fadeInAnim(imageView,context)
 
 
+        // get session token with user input data
         loginBtn.setOnClickListener {
             authVm.loginUser(userEdt.text.toString(), passEdt.text.toString())
         }
-
         authVm.loginData.observe(this, {
             userInfoManager.saveSessionToken(it.token)
             authVm.authorizeUser(it.token!!)
         })
 
+        // get authorization token with session token
         authVm.authorizeData.observe(this, {
             userInfoManager.saveAuthorizationToken(it.token)
             findNavController().navigate(R.id.action_authFragment_to_hostFragment)
