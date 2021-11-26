@@ -8,9 +8,7 @@ import androidx.navigation.fragment.findNavController
 import co.idearun.game.feature.PlayerInfo
 import co.idearun.game.base.BaseFragment
 import co.idearun.game.R
-import co.idearun.game.feature.viewmodel.FormViewModel
 import kotlinx.android.synthetic.main.fragment_player_name.*
-import org.koin.android.viewmodel.ext.android.viewModel
 
 class PlayerNameFragment : BaseFragment() {
 
@@ -23,12 +21,11 @@ class PlayerNameFragment : BaseFragment() {
         return root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val vm: FormViewModel by viewModel()
-
+        /*** get player name from user and save it in [PlayerInfo] object
+         * to send in hidden field when user submit form*/
         playBtn.setOnClickListener {
             val playerName = nameEdt.text.toString()
             if(!playerName.isBlank()) {
@@ -38,9 +35,5 @@ class PlayerNameFragment : BaseFragment() {
                 openAlert(getString(R.string.empty_name_msg))
             }
         }
-
-        vm.failure.observe(this, {
-            checkFailureStatus(it)
-        })
     }
 }

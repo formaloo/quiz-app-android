@@ -40,10 +40,11 @@ class PlayerFormFragment : BaseFragment() {
 
 
 
+        /*** get form detail and fields to show and play game
+        * we don't show hidden fields Therefore remove from list and save hidden field data
+        * in [PlayerInfo] object */
         formVm.initLessonAddress(PlayerInfo.playerFormInfo?.form?.address!!)
         formVm.getFormData()
-
-
         formVm.form1.observe(this, {
             formName.text = it.title
             formDesc.text = Html.fromHtml(it.description)
@@ -57,53 +58,31 @@ class PlayerFormFragment : BaseFragment() {
             }
 
             adapter.submitList(fieldsList)
-
         })
 
+
+        /*** submit form! body handle in [PlayerChildAdapter]
+         */
         submitFormBtn.setOnClickListener {
             if (!formVm.body.value.isNullOrEmpty()) {
                 formVm.submitFormData(PlayerInfo.playerFormInfo?.form?.slug!!)
-            } else openAlert("your form is empty! Please Fill")
+            } else openAlert(getString(R.string.empty_form_data))
         }
 
-        /*
-         val body = ArrayMap<String, Any>()
-         submitFormBtn.setOnClickListener {
-
-             adapter.fieldSlugList.forEachIndexed { index, fields ->
-                 val view = parentRecyclerView.getChildAt(index)
-                 val viewHolder = adapter.FormFieldsViewHolder(view)
-
-                 if (!viewHolder.fieldsEdt.text.toString().isBlank()) {
-                     val value = viewHolder.fieldsEdt.text.toString()
-                     val slugField = fields.slug!!
-                     body[slugField] = value
-
-                     Timber.i(fields.title + " = " + slugField + " = " + value)
-                 }
-                 body["name_field"] = formVm.userName.value
-             }.also {
-                 val bodyM = RequestBody.create(
-                     "application/json; charset=utf-8".toMediaTypeOrNull(),
-                     JSONObject(body).toString()
-                 )
-
-                 formVm.submitFormData(formVm.userForm.value?.form?.slug!!, bodyM)
-             }
-         }
- */
         formVm.submitForm.observe(this, {
             openAlertWithNavigation(
-                "your form submit!",
+                getString(R.string.your_from_submit),
                 R.id.action_playerFormFragment_to_playerResultFragment
             )
         })
 
+
+        // handle failure
         formVm.failure.observe(this, {
             formVm.hideLoading()
             if (it.msgRes?.contains("404")!!) {
                 openAlertWithNavigation(
-                    "you late, Game is over",
+                    getString(R.string.you_late),
                     R.id.action_playerFormFragment_to_mainFragment
                 )
             } else {
@@ -111,13 +90,14 @@ class PlayerFormFragment : BaseFragment() {
             }
         })
 
-
+        // handle loading
         formVm.isLoading.observe(this, {
             if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
         })
 
     }
 
+    // custom dialog alert
     fun openAlertWithNavigation(msg: String, navigateId: Int) {
         requireContext().alertDialog {
             message = msg

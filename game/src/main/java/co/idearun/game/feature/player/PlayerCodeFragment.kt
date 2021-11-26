@@ -29,6 +29,9 @@ class PlayerCodeFragment : BaseFragment() {
         val formVm: FormViewModel by viewModel()
 
 
+        /* get form information with live dashboard code
+        * and update PlayerInfo to use form address, slug in next fragments
+        * then navigate to next fragment with form data */
         nextBtn.setOnClickListener {
             val liveCode = codeEdt.text.toString()
             if (checkCodeLength(liveCode)) {
@@ -36,12 +39,12 @@ class PlayerCodeFragment : BaseFragment() {
             }
 
         }
-
         formVm.liveForm.observe(this, {
             PlayerInfo.updatePlayerFormInfo(it)
             findNavController().navigate(R.id.action_playerCodeFragment_to_playerNameFragment)
         })
 
+        // handle failure
         formVm.failure.observe(this, {
             formVm.hideLoading()
             if (it?.msgRes?.contains("404")!!) {
@@ -51,6 +54,7 @@ class PlayerCodeFragment : BaseFragment() {
             }
         })
 
+        // handle loading
         formVm.isLoading.observe(this,{
             if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
         })

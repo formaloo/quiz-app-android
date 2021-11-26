@@ -17,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_result.*
 import timber.log.Timber
 import androidx.activity.OnBackPressedCallback
 import co.idearun.game.feature.PlayerInfo
+import co.idearun.game.feature.adapter.HostParentAdapter
 import org.koin.android.viewmodel.ext.android.viewModel
 
 
@@ -39,49 +40,48 @@ class PlayerResultFragment : BaseFragment() {
 
 
         val formVm: FormViewModel by viewModel()
-        val slug = arguments?.getString("slug")
         val liveDashboardAddress = PlayerInfo.playerFormInfo?.form?.liveDashboardAddress
 
-        Timber.i("Live Dashboard $liveDashboardAddress")
 
-
+        // get form title with form address
         formVm.initLessonAddress(PlayerInfo.playerFormInfo?.form?.address!!)
         formVm.getFormData()
-
-        formVm.form1.observe(this,{
+        formVm.form1.observe(this, {
             resultFormName.text = it.title
         })
 
+        // play again section
         startAction.visibility = View.VISIBLE
         startAction.text = getString(R.string.play_again)
         startAction.setOnClickListener {
             findNavController().navigate(R.id.action_playerResultFragment_to_mainFragment)
         }
 
+        // update form result data
         resultAction.setOnClickListener {
             formVm.getSubmitsRow(liveDashboardAddress!!)
         }
 
 
-        formVm.getSubmitsRow(liveDashboardAddress!!)
-
+        /*** get form submits and show in recyclerview
+         * submits send to adapter in format of parent item model
+         * and we have a list of list data like table
+         * handle this section with recyclerView in recyclerView [PlayerChildAdapter] and [PlayerParentAdapter]*/
 
         adapterParentParent = PlayerParentAdapter()
         parentRecyclerView.adapter = adapterParentParent
 
+        formVm.getSubmitsRow(liveDashboardAddress!!)
         formVm.submits.observe(this, {
             var fieldDataMapList = arrayListOf<ArrayMap<String, FieldData>>()
             var topFieldsItem = arrayListOf<List<TopFieldsItem>>()
             var parentItem = arrayListOf<ParentItem>()
-
-            Timber.i("field size " + it?.data?.rows?.size)
 
             val topFieldData = it?.data?.topFields
 
             it.data?.rows?.forEach {
                 var fieldDataMap = ArrayMap<String, FieldData>()
                 it?.renderedData?.entries?.forEach {
-                    Timber.i("rendred ${it.key} vs ${it.value.rawValue}")
                     fieldDataMap.put(it.key, it.value)
                 }
                 fieldDataMapList.add(fieldDataMap)
@@ -92,23 +92,21 @@ class PlayerResultFragment : BaseFragment() {
         })
 
 
-
+        // handle failure
         formVm.failure.observe(this, {
             formVm.hideLoading()
             checkFailureStatus(it)
         })
 
+        // handle loading
         formVm.isLoading.observe(this, {
             if (it) loading.visibility = View.VISIBLE else loading.visibility = View.GONE
         })
 
+        // disable backpress
         requireActivity().onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-
             }
-
         })
-
     }
-
 }
