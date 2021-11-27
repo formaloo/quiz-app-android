@@ -7,7 +7,6 @@ import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
-import com.formaloo.common.TokenContainer
 import com.formaloo.data.model.TopFieldsItem
 import com.formaloo.game.R
 import com.formaloo.game.feature.adapter.model.ParentItem
@@ -65,7 +64,7 @@ class HostParentAdapter(var vm: FormViewModel) :
             .setRecycledViewPool(viewPool)
 
         parentViewHolder.actionButton.setOnClickListener {
-            vm.editRow(slug!!,TokenContainer.authorizationToken!!,childItemAdapter.editTextValue)
+            vm.editRow(slug!!,childItemAdapter.editTextValue)
         }
 
     }

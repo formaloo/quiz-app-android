@@ -51,7 +51,7 @@ class GamesFragment : BaseFragment() {
         /* when click on a form with Game tag, copyForm request has copy it in your formaloo account*/
         adapter.setOnRvItemClickListener(object : OnRvItemClickListener<Form> {
             override fun onItemClick(item: Form, position: Int) {
-                formVm.copyForm(item.slug, "JWT ${TokenContainer.authorizationToken}")
+                formVm.copyForm(item.slug)
             }
         })
 

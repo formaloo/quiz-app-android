@@ -80,7 +80,7 @@ class FormEditorFragment : BaseFragment() {
                 req["description"] = formDescriptionEdt.text.toString()
                 req["public_rows"] = true
 
-                formVm.editForm(formSlug!!, "JWT ${TokenContainer.authorizationToken}", req)
+                formVm.editForm(formSlug!!, req)
             } else {
                 openAlert(getString(R.string.empty_name_msg))
             }
@@ -89,7 +89,7 @@ class FormEditorFragment : BaseFragment() {
         /* when form title, description, createLive request called
         * createLive make your form to formaloo Live*/
         formVm.editForm.observe(this, {
-            formVm.createLive(it.slug, "JWT ${TokenContainer.authorizationToken}")
+            formVm.createLive(it.slug)
         })
 
         /* now your live is ready!

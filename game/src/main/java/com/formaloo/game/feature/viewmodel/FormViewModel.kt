@@ -76,15 +76,15 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         result.either(::handleFailure, ::handleFormData1)
     }
 
-    fun copyForm(slug: String, token: String) = viewModelScope.launch {
+    fun copyForm(slug: String) = viewModelScope.launch {
         showLoading()
-        val result = withContext(Dispatchers.IO) { repository.copyForm(slug, token) }
+        val result = withContext(Dispatchers.IO) { repository.copyForm(slug) }
         result.either(::handleFailure, ::handleFormData)
     }
 
-    fun createLive(slug: String, token: String) = viewModelScope.launch {
+    fun createLive(slug: String) = viewModelScope.launch {
         showLoading()
-        val result = withContext(Dispatchers.IO) { repository.createLive(slug, token) }
+        val result = withContext(Dispatchers.IO) { repository.createLive(slug) }
         result.either(::handleFailure, ::handleLiveFormData)
     }
 
@@ -94,17 +94,17 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         result.either(::handleFailure, ::handleLiveFormData)
     }
 
-    fun editForm(slug: String, token: String, body: ArrayMap<String, Any>) = viewModelScope.launch {
+    fun editForm(slug: String, body: ArrayMap<String, Any>) = viewModelScope.launch {
         showLoading()
 
         val requestBody = RequestBody.create(
             "application/json; charset=utf-8".toMediaTypeOrNull(), JSONObject(body).toString()
         )
-        val result = withContext(Dispatchers.IO) { repository.editForm(slug, token, requestBody) }
+        val result = withContext(Dispatchers.IO) { repository.editForm(slug, requestBody) }
         result.either(::handleFailure, ::handleEditFormData)
     }
 
-    fun disableForm(slug: String, token: String, activation: Boolean) = viewModelScope.launch {
+    fun disableForm(slug: String, activation: Boolean) = viewModelScope.launch {
         showLoading()
 
         val req = ArrayMap<String, Any>()
@@ -114,7 +114,7 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
             "application/json; charset=utf-8".toMediaTypeOrNull(), JSONObject(req).toString()
         )
 
-        val result = withContext(Dispatchers.IO) { repository.editForm(slug, token, requestBody) }
+        val result = withContext(Dispatchers.IO) { repository.editForm(slug,  requestBody) }
         result.either(::handleFailure, ::handleDisableForm)
     }
 
@@ -130,18 +130,15 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
 
     fun createBody(): RequestBody {
         body.value?.put(PlayerInfo.playerNameSlug, PlayerInfo.playerName)
-        body.value?.entries?.forEach {
-            Timber.i("body content ${it.key} vs ${it.value}")
-        }
         return RequestBody.create(
             "application/json; charset=utf-8".toMediaTypeOrNull(),
             JSONObject(body.value as Map<*, *>).toString()
         )
     }
 
-    fun getFormSubmits(slug: String, token: String) = viewModelScope.launch {
+    fun getFormSubmits(slug: String) = viewModelScope.launch {
         showLoading()
-        val result = withContext(Dispatchers.IO) { repository.getFormSubmits(slug, token) }
+        val result = withContext(Dispatchers.IO) { repository.getFormSubmits(slug) }
         result.either(::handleFailure, ::handleSubmitsData)
     }
 
@@ -157,7 +154,7 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         result.either(::handleFailure, ::handleLiveSubmitsData)
     }
 
-    fun editRow(slug: String, token: String, body: ArrayMap<String, Any>) = viewModelScope.launch {
+    fun editRow(slug: String, body: ArrayMap<String, Any>) = viewModelScope.launch {
         showLoading()
 
         val requestBody = RequestBody.create(
@@ -165,7 +162,7 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
             JSONObject(body as Map<*, *>).toString()
         )
         val result =
-            withContext(Dispatchers.IO) { repository.editRow(slug, "JWT $token", requestBody) }
+            withContext(Dispatchers.IO) { repository.editRow(slug, requestBody) }
         result.either(::handleFailure, ::handleEditRowData)
     }
 
@@ -215,7 +212,6 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
         hideLoading()
         res.data?.row?.let {
             _editRow.value = it
-            Timber.i("done $it")
         }
     }
 
@@ -258,7 +254,6 @@ class FormViewModel(private val repository: FormzRepo) : BaseViewModel() {
     }
 
     fun initLessonAddress(slug: String) {
-        Timber.i("TAG init")
         this.formAddress = slug
     }
 

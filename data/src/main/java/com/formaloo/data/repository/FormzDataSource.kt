@@ -25,15 +25,15 @@ interface FormzDataSource {
     suspend fun getForm(formAddress: String?): CreateFormRes?
 
     suspend fun getFormTag(page: Int): Either<Failure, FormListRes>
-    suspend fun copyForm(slug: String, token: String): Either<Failure, CreateFormRes>
-    suspend fun createLive(slug: String, token: String): Either<Failure, LiveDashboardRes>
+    suspend fun copyForm(slug: String): Either<Failure, CreateFormRes>
+    suspend fun createLive(slug: String): Either<Failure, LiveDashboardRes>
     suspend fun getFormDataWithLiveCode(body: String): Either<Failure, LiveDashboardRes>
-    suspend fun editForm(slug: String,token: String, body: RequestBody): Either<Failure, CreateFormRes>
+    suspend fun editForm(slug: String, body: RequestBody): Either<Failure, CreateFormRes>
     suspend fun submitFormData(slug: String, body: RequestBody?): Either<Failure, SubmitFormRes>
-    suspend fun getFormSubmits(slug: String, token: String ): Either<Failure, SubmitsResponse>
+    suspend fun getFormSubmits(slug: String): Either<Failure, SubmitsResponse>
     suspend fun getSubmitsRow(liveDashboardAddress: String): Either<Failure, SubmitsResponse>
     suspend fun getLiveSubmits(liveDashboardAddress: String): Either<Failure, LiveSubmits>
-    suspend fun editRow(slug: String,token: String, body: RequestBody): Either<Failure, EditRomRes>
+    suspend fun editRow(slug: String, body: RequestBody): Either<Failure, EditRomRes>
 
     suspend fun getFormFromDB(slug: String): Form?
     suspend fun getFormListFromDB(): List<Form>

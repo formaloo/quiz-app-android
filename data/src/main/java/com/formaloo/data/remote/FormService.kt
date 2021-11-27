@@ -36,7 +36,8 @@ interface FormService {
         private const val EDIT_FORM = "${VERSION3}forms/{slug}/"
         private const val EDIT_ROW = "${VERSION3}rows/{slug}/"
         private const val FORM_SUBMITS = "${VERSION1}forms/form/{slug}/submits/"
-        private const val LIVE_SUBMITS_ROW = "${VERSION3}live-dashboards/{liveDashboardAddress}/rows/"
+        private const val LIVE_SUBMITS_ROW =
+            "${VERSION3}live-dashboards/{liveDashboardAddress}/rows/"
         private const val LIVE_SUBMITS = "${VERSION3}live-dashboards/{liveDashboardAddress}/"
 
     }
@@ -93,8 +94,8 @@ interface FormService {
     @PATCH(EDIT_FORM)
     fun editForm(
         @Path("slug") slug: String,
+        @Body body: RequestBody?,
         @Header("Authorization") token: String,
-        @Body body: RequestBody?
     ): Call<CreateFormRes>
 
     @POST(GET_FORMDATA_WITH_LIVECODE)
@@ -119,21 +120,21 @@ interface FormService {
 
     @GET(LIVE_SUBMITS_ROW)
     fun getSubmitsRow(
-        @Path("liveDashboardAddress") liveDashboardCode : String,
+        @Path("liveDashboardAddress") liveDashboardCode: String,
     ): Call<SubmitsResponse>
 
 
     @GET(LIVE_SUBMITS)
     fun getLiveSubmits(
-        @Path("liveDashboardAddress") liveDashboardAddress : String,
+        @Path("liveDashboardAddress") liveDashboardAddress: String,
     ): Call<LiveSubmits>
 
 
     @PATCH(EDIT_ROW)
     fun editRow(
         @Path("slug") slug: String,
-        @Header("Authorization") token: String,
-        @Body body: RequestBody?
+        @Body body: RequestBody?,
+        @Header("Authorization") token: String
     ): Call<EditRomRes>
 
 

@@ -1,5 +1,6 @@
 package com.formaloo.common
 
+
 object TokenContainer {
     var sessionToken: String? = ""
     var authorizationToken: String? = ""

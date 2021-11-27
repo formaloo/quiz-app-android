@@ -1,6 +1,8 @@
 package com.formaloo.data.remote
 
 import com.formaloo.common.BuildConfig.FORM_TAG
+import com.formaloo.common.TokenContainer
+import com.formaloo.common.extension.toJWT
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
@@ -22,19 +24,21 @@ class FormDatasource(private val service: FormService) {
         files: List<MultipartBody.Part>?
     ) = service.submitForm(slug, req, files)
 
-    fun copyForm(slug: String, token: String) = service.copyForm(slug, token)
-    fun createLive(slug: String, token: String) = service.createLive(slug, token)
+    fun copyForm(slug: String) = service.copyForm(slug, TokenContainer.authorizationToken!!.toJWT())
+    fun createLive(slug: String) =
+        service.createLive(slug, TokenContainer.authorizationToken!!.toJWT())
+
     fun getFormDataWithLiveCode(body: RequestBody) =
         service.getFormDataWithLiveCode(body)
 
-    fun editForm(slug: String, token: String, body: RequestBody) =
-        service.editForm(slug, token, body)
+    fun editForm(slug: String, body: RequestBody) =
+        service.editForm(slug, body, TokenContainer.authorizationToken!!.toJWT())
 
     fun submitFormData(slug: String, body: RequestBody?) =
         service.submitFormData(slug, body)
 
-    fun getFormSubmits(slug: String, token: String) =
-        service.getFormSubmits(slug, token)
+    fun getFormSubmits(slug: String) =
+        service.getFormSubmits(slug, TokenContainer.authorizationToken!!.toJWT())
 
     fun getSubmitsRow(liveDashboardAddress: String) =
         service.getSubmitsRow(liveDashboardAddress)
@@ -42,7 +46,7 @@ class FormDatasource(private val service: FormService) {
     fun getLiveSubmits(liveDashboardAddress: String) =
         service.getLiveSubmits(liveDashboardAddress)
 
-    fun editRow(slug: String, token: String, body: RequestBody) =
-        service.editRow(slug, token, body)
+    fun editRow(slug: String, body: RequestBody) =
+        service.editRow(slug, body, TokenContainer.authorizationToken!!.toJWT())
 
 }

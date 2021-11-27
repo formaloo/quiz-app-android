@@ -307,8 +307,8 @@ class FormzRepo(
         }
     }
 
-    override suspend fun copyForm(slug: String, token: String): Either<Failure, CreateFormRes> {
-        val call = source.copyForm(slug, token)
+    override suspend fun copyForm(slug: String): Either<Failure, CreateFormRes> {
+        val call = source.copyForm(slug)
         return try {
             request(call, { it.toCreateFormRes() }, CreateFormRes.empty())
         } catch (e: Exception) {
@@ -317,10 +317,9 @@ class FormzRepo(
     }
 
     override suspend fun createLive(
-        slug: String,
-        token: String
+        slug: String
     ): Either<Failure, LiveDashboardRes> {
-        val call = source.createLive(slug, token)
+        val call = source.createLive(slug)
         return try {
             request(call, { it.toLiveDashboardRes() }, LiveDashboardRes.empty())
         } catch (e: Exception) {
@@ -349,10 +348,9 @@ class FormzRepo(
 
     override suspend fun editForm(
         slug: String,
-        token: String,
         body: RequestBody
     ): Either<Failure, CreateFormRes> {
-        val call = source.editForm(slug, token, body)
+        val call = source.editForm(slug, body)
         return try {
             request(call, { it.toCreateFormRes() }, CreateFormRes.empty())
         } catch (e: Exception) {
@@ -373,10 +371,9 @@ class FormzRepo(
     }
 
     override suspend fun getFormSubmits(
-        slug: String,
-        token: String
-    ): Either<Failure, SubmitsResponse> {  
-        val call = source.getFormSubmits(slug, token)
+        slug: String
+    ): Either<Failure, SubmitsResponse> {
+        val call = source.getFormSubmits(slug)
         return try {
             request(call, { it.toSubmitsResponse() }, SubmitsResponse.empty())
         } catch (e: Exception) {
@@ -404,10 +401,9 @@ class FormzRepo(
 
     override suspend fun editRow(
         slug: String,
-        token: String,
         body: RequestBody
     ): Either<Failure, EditRomRes> {
-        val call = source.editRow(slug, token, body)
+        val call = source.editRow(slug, body)
         return try {
             request(call, { it.toEditRomRes() }, EditRomRes.empty())
         } catch (e: Exception) {

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.formaloo.common.Constants
-import com.formaloo.common.TokenContainer
 import com.formaloo.game.feature.PlayerInfo
 import com.formaloo.game.R
 import com.formaloo.game.feature.adapter.FormFieldsAdapter
@@ -87,7 +86,7 @@ class HostFormFragment : BaseFragment() {
                 message =
                     getString(R.string.disable_from_msg)
                 okButton {
-                    formVm.disableForm(slug!!, "JWT ${TokenContainer.authorizationToken}", false)
+                    formVm.disableForm(slug!!, false)
                 }
                 cancelButton()
             }.onShow {

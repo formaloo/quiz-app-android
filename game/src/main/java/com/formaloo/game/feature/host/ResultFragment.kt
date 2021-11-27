@@ -68,7 +68,7 @@ class ResultFragment : BaseFragment() {
         var topFieldsItem = arrayListOf<List<TopFieldsItem>>()
         var parentItem = arrayListOf<ParentItem>()
 
-        formVm.getFormSubmits(slug!!, "JWT ${TokenContainer.authorizationToken}")
+        formVm.getFormSubmits(slug!!)
         formVm.submits.observe(this, {
             val topFieldData = it?.data?.topFields
 
