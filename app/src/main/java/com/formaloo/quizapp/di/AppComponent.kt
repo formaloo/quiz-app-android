@@ -8,14 +8,15 @@ import com.formaloo.data.remote.di.createRemoteFormModule
 import com.formaloo.data.repository.di.formRepositoryModule
 //import co.idearun.feature.di.featureModule
 import com.formaloo.game.di.gameAppModule
+import com.formaloo.quizapp.BuildConfig
 
 val appComponent = listOf(
-    createRemoteFormModule("https://api.staging.formaloo.com", "4638feb8378ac5799d6200889f97f2d3d88b9852"),
+    createRemoteFormModule(BuildConfig.BASE_URL, BuildConfig.X_API_KEY),
     formBuilderLocalModule,
     formRepositoryModule,
    // featureModule,
     gameAppModule,
-    createAuthRemoteModule("https://staging.icas.formaloo.com/","4638feb8378ac5799d6200889f97f2d3d88b9852"),
+    createAuthRemoteModule(BuildConfig.ICAS_BASE_URL, BuildConfig.X_API_KEY),
     authRepositoryModule,
     authModule
 )

@@ -25,6 +25,7 @@ android {
         buildConfigField("String", "X_API_KEY", apikeyProperties['X_API_KEY'])
         buildConfigField("String", "BASE_URL", apikeyProperties['BASE_URL'])
         buildConfigField("String", "FORM_TAG", apikeyProperties['FORM_TAG'])
+        buildConfigField("String", "ICAS_BASE_URL", apikeyProperties['ICAS_BASE_URL'])
 
     }
     buildFeatures {

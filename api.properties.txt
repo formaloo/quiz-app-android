@@ -1,3 +1,4 @@
-X_API_KEY:"717ed4b1fb84033653eaf6a69da4eb3be1011657"
-BASE_URL:"https://api.formaloo.net/"
+X_API_KEY:"4638feb8378ac5799d6200889f97f2d3d88b9852"
+BASE_URL:"https://api.staging.formaloo.com"
+ICAS_BASE_URL:"https://staging.icas.formaloo.com"
 FORM_TAG:"learn-android-tag"
