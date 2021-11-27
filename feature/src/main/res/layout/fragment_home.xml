@@ -7,7 +7,7 @@
 
         <variable
             name="vm"
-            type="co.idearun.feature.viewmodel.FormViewModel" />
+            type="com.formaloo.feature.viewmodel.FormViewModel" />
 
     </data>
 

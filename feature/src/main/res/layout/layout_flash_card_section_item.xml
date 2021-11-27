@@ -5,15 +5,15 @@
 
         <variable
             name="viewmodel"
-            type="co.idearun.feature.viewmodel.UIViewModel" />
+            type="com.formaloo.feature.viewmodel.UIViewModel" />
 
         
         <variable
             name="field"
-            type="co.idearun.data.model.form.Fields" />
+            type="com.formaloo.data.model.form.Fields" />
         <variable
             name="form"
-            type="co.idearun.data.model.form.Form" />
+            type="com.formaloo.data.model.form.Form" />
 
         
     </data>

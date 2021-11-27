@@ -6,7 +6,7 @@
 
         <variable
             name="form"
-            type="co.idearun.data.model.form.Form" />
+            type="com.formaloo.data.model.form.Form" />
     </data>
 
 

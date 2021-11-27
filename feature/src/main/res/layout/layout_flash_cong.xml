@@ -6,15 +6,15 @@
 
         <variable
             name="form"
-            type="co.idearun.data.model.form.Form" />
+            type="com.formaloo.data.model.form.Form" />
 
         <variable
             name="flashcardListener"
-            type="co.idearun.feature.lesson.listener.LessonListener" />
+            type="com.formaloo.feature.lesson.listener.LessonListener" />
 
         <variable
             name="viewmodel"
-            type="co.idearun.feature.viewmodel.UIViewModel" />
+            type="com.formaloo.feature.viewmodel.UIViewModel" />
 
         
     </data>

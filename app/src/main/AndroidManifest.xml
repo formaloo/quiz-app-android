@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="co.idearun.learnandroid">
+    package="com.formaloo.quizapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-sdk tools:overrideLibrary="com.microsoft.appcenter,com.microsoft.appcenter.analytics,com.microsoft.appcenter.crashes"/>
     <application
-        android:name="co.idearun.learnandroid.App"
+        android:name="com.formaloo.quizapp.App"
         android:allowBackup="true"
         android:fullBackupContent="false"
         android:icon="@mipmap/ic_launcher"
@@ -19,7 +19,7 @@
         android:usesCleartextTraffic="true">
         
         <activity
-            android:name="co.idearun.game.feature.MainActivity">
+            android:name="com.formaloo.game.feature.MainActivity">
             <!--android:theme="@style/SplashTheme">-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

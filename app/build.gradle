@@ -5,7 +5,7 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        applicationId "co.idearun.learnandroid"
+        applicationId 'com.formaloo.quizapp'
         minSdkVersion 19
         targetSdkVersion 30
         versionCode 1

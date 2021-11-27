@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="co.idearun.feature">
+	package="com.formaloo.feature">
 	
 	<application>
 		
-		<activity android:name=".lesson.LessonActivity"
+		<activity android:name="com.formaloo.feature.lesson.LessonActivity"
 			android:configChanges="orientation|screenSize"
 			android:screenOrientation="portrait"/>
-		<activity android:name=".AboutActivity"
+		<activity android:name="com.formaloo.feature.AboutActivity"
 			android:screenOrientation="portrait"/>
 	</application>
 

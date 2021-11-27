@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="co.idearun.game">
+    package="com.formaloo.game">
 
 
     <application>
         <activity
-            android:name=".feature.MainActivity"
+            android:name="com.formaloo.game.feature.MainActivity"
             android:windowSoftInputMode="stateHidden"/>
     </application>
 

@@ -7,10 +7,10 @@
 
         <variable
             name="listener"
-            type="co.idearun.feature.MainListener" />
+            type="com.formaloo.feature.MainListener" />
         <variable
             name="viewmodel"
-            type="co.idearun.feature.viewmodel.FormViewModel" />
+            type="com.formaloo.feature.viewmodel.FormViewModel" />
     </data>
 
     <androidx.drawerlayout.widget.DrawerLayout

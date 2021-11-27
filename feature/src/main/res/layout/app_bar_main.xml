@@ -7,7 +7,7 @@
     
         <variable
             name="listener"
-            type="co.idearun.feature.MainListener" />
+            type="com.formaloo.feature.MainListener" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         android:background="@color/bg"
         android:fitsSystemWindows="false"
-        tools:context="co.idearun.feature.MainActivity">
+        tools:context="com.formaloo.feature.MainActivity">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

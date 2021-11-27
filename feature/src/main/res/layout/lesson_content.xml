@@ -19,10 +19,10 @@
 
         <variable
             name="item"
-            type="co.idearun.data.model.form.Form" />
+            type="com.formaloo.data.model.form.Form" />
         <variable
             name="listener"
-            type="co.idearun.feature.home.adapter.LessonListListener" />
+            type="com.formaloo.feature.home.adapter.LessonListListener" />
     </data>
 
     <LinearLayout

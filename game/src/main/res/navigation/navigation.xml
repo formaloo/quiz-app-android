@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/registerFragment"
         tools:layout="@layout/fragment_register"
-        android:name="co.idearun.game.feature.auth.RegisterFragment"
+        android:name="com.formaloo.game.feature.auth.RegisterFragment"
         android:label="RegisterFragment" >
         <action
             android:id="@+id/action_registerFragment_to_hostFragment"
@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/authFragment"
         tools:layout="@layout/fragment_auth"
-        android:name="co.idearun.game.feature.auth.AuthFragment"
+        android:name="com.formaloo.game.feature.auth.AuthFragment"
         android:label="AuthFragment" >
         <action
             app:enterAnim="@anim/slide_left"
@@ -29,7 +29,7 @@
     <fragment
         android:id="@+id/mainFragment"
         tools:layout="@layout/fragment_main"
-        android:name="co.idearun.game.feature.MainFragment"
+        android:name="com.formaloo.game.feature.MainFragment"
         android:label="MainFragment" >
         <action
             app:enterAnim="@anim/slide_in_bottom"
@@ -48,7 +48,7 @@
     <fragment
         tools:layout="@layout/fragment_games"
         android:id="@+id/gamesFragment"
-        android:name="co.idearun.game.feature.host.GamesFragment"
+        android:name="com.formaloo.game.feature.host.GamesFragment"
         android:label="GamesFragment" >
         <action
             app:enterAnim="@anim/slide_left"
@@ -59,7 +59,7 @@
     <fragment
         android:id="@+id/formEditorFragment"
         tools:layout="@layout/fragment_formeditor"
-        android:name="co.idearun.game.feature.host.FormEditorFragment"
+        android:name="com.formaloo.game.feature.host.FormEditorFragment"
         android:label="FormEditorFragment" >
         <action
             app:enterAnim="@anim/slide_left"
@@ -70,7 +70,7 @@
     <fragment
         android:id="@+id/hostFragment"
         tools:layout="@layout/fragment_host"
-        android:name="co.idearun.game.feature.host.HostFragment"
+        android:name="com.formaloo.game.feature.host.HostFragment"
         android:label="HostFragment" >
         <action
             app:enterAnim="@anim/slide_in_bottom"
@@ -81,7 +81,7 @@
     <fragment
         android:id="@+id/loginFragment"
         tools:layout="@layout/fragment_login"
-        android:name="co.idearun.game.feature.auth.LoginFragment"
+        android:name="com.formaloo.game.feature.auth.LoginFragment"
         android:label="LoginFragment" >
         <action
             app:enterAnim="@anim/slide_left"
@@ -91,7 +91,7 @@
 
     <fragment
         android:id="@+id/shareFragment"
-        android:name="co.idearun.game.feature.host.ShareFragment"
+        android:name="com.formaloo.game.feature.host.ShareFragment"
         android:label="ShareFragment"
         tools:layout="@layout/fragment_share">
         <action
@@ -106,7 +106,7 @@
 
     <fragment
         android:id="@+id/playerCodeFragment"
-        android:name="co.idearun.game.feature.player.PlayerCodeFragment"
+        android:name="com.formaloo.game.feature.player.PlayerCodeFragment"
         android:label="PlayerCodeFragment"
         tools:layout="@layout/fragment_player_code">
         <action
@@ -117,7 +117,7 @@
 
     <fragment
         android:id="@+id/playerNameFragment"
-        android:name="co.idearun.game.feature.player.PlayerNameFragment"
+        android:name="com.formaloo.game.feature.player.PlayerNameFragment"
         android:label="PlayerNameFragment"
         tools:layout="@layout/fragment_player_name">
         <action
@@ -129,7 +129,7 @@
     <fragment
         android:id="@+id/playerFormFragment"
         tools:layout="@layout/fragment_form"
-        android:name="co.idearun.game.feature.player.PlayerFormFragment"
+        android:name="com.formaloo.game.feature.player.PlayerFormFragment"
         android:label="PlayerFormFragment" >
         <action
             app:popUpToInclusive="false"
@@ -142,8 +142,9 @@
 
     <fragment
         android:id="@+id/resultFragment"
-        android:name="co.idearun.game.feature.host.ResultFragment"
-        android:label="ResultFragment" >
+        android:name="com.formaloo.game.feature.host.ResultFragment"
+        android:label="ResultFragment"
+        tools:layout="@layout/fragment_result">
         <action
             android:id="@+id/action_resultFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
@@ -151,7 +152,8 @@
 
     <fragment
         android:id="@+id/hostFormFragment"
-        android:name="co.idearun.game.feature.host.HostFormFragment"
+        tools:layout="@layout/fragment_form_host"
+        android:name="com.formaloo.game.feature.host.HostFormFragment"
         android:label="HostFormFragment" >
         <action
             app:popUpToInclusive="true"
@@ -161,7 +163,7 @@
     </fragment>
     <fragment
         android:id="@+id/playerResultFragment"
-        android:name="co.idearun.game.feature.player.PlayerResultFragment"
+        android:name="com.formaloo.game.feature.player.PlayerResultFragment"
         android:label="PlayerResultFragment"
         tools:layout="@layout/fragment_result">
         <action
