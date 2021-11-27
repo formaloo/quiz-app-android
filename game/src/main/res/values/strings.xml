@@ -44,7 +44,7 @@
     <string name="form_submited">Your form submit!</string>
     <string name="copy_clipboard">Copy in clipboard</string>
     <string name="start_new_game">Start new game</string>
-    <string name="update_submits">Update submits</string>
+    <string name="update_responses">Update responses</string>
     <string name="copy_in_clipboard">Click on live code to copy in your clip board</string>
     <string name="empty_form_data">Your form is empty! Please Fill</string>
     <string name="your_from_submit">Your form submit!</string>

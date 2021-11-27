@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="#27B6FA"
-            android:text="@string/update_submits"
+            android:text="@string/update_responses"
             android:textColor="@color/white" />
 
         <Button
